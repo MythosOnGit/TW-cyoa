@@ -6,6 +6,3 @@ SiteSubtitle: Choose Your Own Adventure
 palette: $:/palettes/Blanca
 
 config/RelinkOnRename: yes
-
-# makes it so the map tab is open to begin with
-state/tab/sidebar--595412856: $:/plugins/felixhayashi/tiddlymap/hook/editor

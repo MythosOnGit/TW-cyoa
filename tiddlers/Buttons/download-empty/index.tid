@@ -5,11 +5,17 @@ tmap.id: 8edbcb8f-ee96-4174-8db2-c4ddddccdddb
 <$vars
 	old-start={{$:/config/mythos/cyoa/start}}
 	old-default={{$:/plugins/felixhayashi/tiddlymap/graph/views/Default!!isview}}
+	old-sidebar={{$:/state/tab/sidebar--595412856}}
 >
 <$button class="downloadEmpty">
 <$action-setfield $tiddler="$:/config/mythos/cyoa/start" text="Start"/>
 <$action-setfield $tiddler="$:/plugins/felixhayashi/tiddlymap/graph/views/Default" isview="true"/>
+<!--Set the sidebar to the map pane for the skeleton project -->
+<$action-setfield $tiddler="$:/state/tab/sidebar--595412856" text="$:/plugins/felixhayashi/tiddlymap/hook/editor"/>
+
 <$action-sendmessage $message="tm-download-file" $param="Buttons/download-empty/action" filename="empty.html"/>
+
+<$action-setfield $tiddler="$:/state/tab/sidebar--595412856" text=<<old-sidebar>>/>
 <$action-setfield $tiddler="$:/plugins/felixhayashi/tiddlymap/graph/views/Default" isview=<<old-default>>/>
 <$action-setfield $tiddler="$:/config/mythos/cyoa/start" text=<<old-start>> />
 Download Ready-to-go Project {{$:/core/images/save-button}}
