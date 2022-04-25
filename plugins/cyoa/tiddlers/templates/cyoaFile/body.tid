@@ -1,0 +1,14 @@
+title: $:/plugins/mythos/cyoa/templates/cyoaFile/body
+type: text/vnd.tiddlywiki
+
+\rules only filteredtranscludeinline transcludeinline
+<ul class="cyoa-error"></ul>
+<div class="cyoa-header">
+{{$:/cyoaHeader|| $:/core/templates/html-tiddler }}
+</div>
+<div class="cyoa-content">
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline}}
+</div>
+<div class="cyoa-footer">
+{{$:/cyoaFooter|| $:/core/templates/html-tiddler }}
+</div>

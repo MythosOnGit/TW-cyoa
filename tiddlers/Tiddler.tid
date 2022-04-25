@@ -1,0 +1,6 @@
+title: Tiddler
+tmap.id: 5e9a66b9-3af9-4ff9-8a78-1af8b65d444f
+
+A tiddler is the fundamental object of TiddlyWiki. They act as the pages of the wiki, but they're also a lot more versatile in ways you'll learn as you get to know ~TiddlyWiki. For now, thinking of them as pages is fine, especially since tiddlers translate directly to the [[pages|Page]] that appear in your generated Cyoa story. (e.g. The tiddler "My First Adventure" would become the "My First Adventure" page in your story.)
+
+[[The main TiddlyWiki documentation goes into more detail.|https://tiddlywiki.com/#Tiddlers]]

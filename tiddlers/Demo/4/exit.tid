@@ -1,0 +1,17 @@
+tags: [[Demo 4/atrium]]
+title: Demo 4/exit
+cyoa.append: [[Demo 4/locked]] [[Demo 4/end]]
+cyoa.caption: Head to the exit.
+tmap.id: 7fbe80bf-eab3-4b6a-87f9-a1e2dd98b19c
+
+<<annotate """
+
+This page has no content, but it appends other pages. That makes this a "control page", which is a page whose entire purpose is to contain logic which controls the story flow.
+
+In this case, it appends multiple pages, the first is only shown once, then the second is shown in all other cases.
+""" >>
+
+<<annotate """
+
+Also, take note how this tiddler has a <<field list-after>> field with an empty-string value. This makes sure that it appears as the last option in any tag lists, such as the list of options in the <<wlink OptionsWidget>> widgets on [[Demo 4/atrium]]. This is the part of the [[Tiddlywiki way|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]] for ordering tag lists.
+""" >>

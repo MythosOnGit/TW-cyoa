@@ -1,0 +1,8 @@
+title: Basic Features
+tmap.id: b24ce482-c5e2-46cc-895f-a2c7f1c57f72
+
+! Basic features
+
+These are the basic, easy-to-use features of cyoa.
+
+<ul><$list filter="[prefix[features/]]"><li><$link to=<<currentTiddler>> >{{!!caption}}</$link></li></$list></ul>

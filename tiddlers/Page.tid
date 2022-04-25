@@ -1,0 +1,4 @@
+title: Page
+tmap.id: a0a910c9-50d0-44ce-9690-f87df08fc540
+
+A page is a [[tiddler|Tiddler]] which is compiled in the generated cyoa. Which tiddlers become pages is decided by the [[Page Filter configuration|Configuration]].

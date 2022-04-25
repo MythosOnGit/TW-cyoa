@@ -1,0 +1,14 @@
+title: Active Node
+tmap.id: a61e0ff6-d42e-4fc4-9c65-ba85514e72d7
+
+An active node is an html element created by any of the widgets: <<wlink CyoaWidget>>, <<wlink ElseWidget>>, <<wlink FirstWidget>>, or <<wlink VisitedWidget>>. The <<wlink OptionsWidget>> creates a series of active nodes.
+
+Active nodes can be nested as much as desired.
+
+!!! In Tiddlywiki
+
+Active nodes are outlined using shaded rectangles. These rectangles do not appear in the generated cyoa novel, and are merely as a visual aid for you. Mousing over them reveals a small popup explaining the constraints and actions associated with that node.
+
+!!! In the generated cyoa novel
+
+When a page is rendered, the <<plugin>> engine traverses the DOM tree of that page, and for every active node it encounters, it evaluates it. If its true, it renders it, executes any actions associated with it, and recurses into it for any other active nodes. If its false, that node is hidden from view, none of its actions are performed, and its contents are skipped.

@@ -1,0 +1,26 @@
+{
+  "tiddlers": [
+    {
+      "file": "cyoa.css",
+      "fields": {
+        "title": "$:/plugins/mythos/cyoa/cyoa.css",
+        "type": "text/css",
+        "tags": [ "$:/tags/Stylesheet" ]
+      }
+    },
+    {
+      "file": "templates_cyoa.css",
+      "fields": {
+        "title": "$:/plugins/mythos/cyoa/templates/cyoa.css",
+        "type": "text/css"
+      }
+    },
+    {
+      "file": "images/compile.svg",
+      "fields": {
+        "title": "$:/plugins/mythos/cyoa/images/compile",
+        "tags": [ "$:/tags/Image" ]
+      }
+    }
+  ]
+}

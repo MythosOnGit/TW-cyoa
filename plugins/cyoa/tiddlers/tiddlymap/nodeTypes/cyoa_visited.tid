@@ -1,0 +1,7 @@
+description: Nodes of this type are have a condition such that they only are only viewable after they've been shown at least once already. (that first time must be through a direct link)
+priority: 1
+scope: [cyoa.only[visited]]
+style: {"color":{"border":"Green"}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa:visited
+type: text/vnd.tiddlywiki
+

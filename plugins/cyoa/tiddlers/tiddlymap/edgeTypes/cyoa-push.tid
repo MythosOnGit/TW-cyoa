@@ -1,0 +1,5 @@
+show-label: false
+style: {"color":{"color":"rgba(196,7,182,1)","highlight":"rgba(255,121,227,1)","hover":"rgba(255,100,226,1)"},"smooth":{"enabled":false}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-field:cyoa.push
+type: text/vnd.tiddlywiki
+

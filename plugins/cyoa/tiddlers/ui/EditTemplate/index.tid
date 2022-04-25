@@ -1,0 +1,31 @@
+list-before: $:/core/ui/EditTemplate/body
+tags: $:/tags/EditTemplate
+title: $:/plugins/mythos/cyoa/ui/EditTemplate
+
+<$list filter="[all[current]!prefix[Draft of '$:/]]">
+
+ <$qualify name="cyoa-option-state" title={{{ [[$:/state/mythos/cyoa/edit/]addsuffix<currentTiddler>] }}}>
+  <$reveal type="nomatch" stateTitle=<<cyoa-option-state>> text="open">
+   <$button setTitle=<<cyoa-option-state>> setTo="open" class="tc-btn-invisible tc-popup-keep">
+    {{$:/core/images/right-arrow}}
+    Cyoa
+   </$button>
+  </$reveal>
+  <$reveal type="match" stateTitle=<<cyoa-option-state>> text="open">
+   <$button setTitle=<<cyoa-option-state>> setTo="close" class="tc-btn-invisible tc-popup-keep">
+    {{$:/core/images/down-arrow}}
+    Cyoa
+   </$button>
+  </$reveal>
+  <$reveal type="match" stateTitle=<<cyoa-option-state>> text="open">
+
+   <table><tbody>
+   <$list filter="[all[shadows+tiddlers]tag[$:/plugins/mythos/cyoa/tags/EditTemplate]!has[draft.of]]" variable="listItem">
+    <$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
+     <$transclude tiddler=<<listItem>>/>
+    </$set>
+   </$list>
+   </tbody></table>
+  </$reveal>
+ </$qualify>
+</$list>

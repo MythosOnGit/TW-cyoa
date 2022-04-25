@@ -1,0 +1,7 @@
+description: A transclusion that is contained in the tiddler's body pointing to another resource.
+label: transcludes
+show-label: false
+style: {"color":{"color":"darkred","highlight":"red","hover":"darkred"},"dashes":false,"smooth":{"enabled":false}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-body:transclude
+type: text/vnd.tiddlywiki
+

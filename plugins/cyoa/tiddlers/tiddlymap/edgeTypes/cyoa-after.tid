@@ -1,0 +1,6 @@
+description: This tiddler comes only 'after' the pointed-to tiddler.
+label: only after
+show-label: false
+style: {"color":{"color":"Green","highlight":"Green","hover":"Green"},"dashes":true,"smooth":{"enabled":false}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.after
+type: text/vnd.tiddlywiki

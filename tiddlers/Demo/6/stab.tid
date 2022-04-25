@@ -1,0 +1,17 @@
+tags: [[Demo 6/troll]]
+title: Demo 6/stab
+cyoa.append: [[Demo 6/troll]]
+cyoa.before: [[Demo 6/victory]]
+cyoa.after: [[Demo 4/dagger]]
+cyoa.caption: Stab the troll with the Incan dagger.
+cyoa.touch: [[Demo 6/victory]]
+tmap.id: d25c6168-3d13-47ab-9b40-02dac1d116b3
+
+As the troll is stomping down a market stall, you sneak up behind him and stab him like a street thief. The troll howls in pain, staggers about, and falls prone.
+
+The beast is no more.
+
+<<annotate """
+
+This page is the second page which touches <<tid "Demo 6/victory">>, the first being <<tid "Demo 6/throw">>. There are two paths to victory here, but since they touch the same flag, than the victory page (<<tid "Demo 6">>), only needs to check <<tid "Demo 6/victory">>, it doesn't matter what other page was the one that touched it.
+""" >>

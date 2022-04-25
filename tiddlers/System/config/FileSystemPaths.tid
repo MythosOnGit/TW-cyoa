@@ -1,0 +1,6 @@
+title: $:/config/FileSystemPaths
+type: text/vnd.tiddlywiki
+
+[is[draft]removeprefix[Draft of ']removesuffix[']addprefix[_drafts/]]
+[is[system]removeprefix[$:/]addprefix[_system/]]
+[all[]]

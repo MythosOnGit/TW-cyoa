@@ -1,0 +1,22 @@
+title: Virtual Page
+tmap.id: a2f4315b-b644-4b39-a2ac-1981da85e616
+
+Virtual pages are tiddlers which are [[excluded from the cyoa build|Configuration/General]], but they are still [[tracked|Tracking]]. That means that other pages and active nodes can touch and reset a virtual page, and they can also set "before" and "after" constraints dependent on them.
+
+The reasons to make a tiddler into a virtual page may be:
+
+* Because it is a state tiddler which represents a concept rather than a page. And you manipulate it only through touch, reset, before, and after.
+* It's a page whose contents you transclude into other pages, but you never visit the page itself.
+* The page contains notes for your benefit, which the reader should never see.
+
+Making pages virtual reduces unnecessary content in the generated cyoa. If a page's content will never be viewed (and should never be viewed), then making it virtual prevents its text content from ever compiling in.
+
+! Tiddlymap
+
+<<plugin>> has a Tiddlymap node-type which represents virtual pages. They appear as dots. This can be configured through the Tiddlymap "Manage node-types" menu.
+
+! Examples
+
+Every tiddler that is tagged with <$macrocall $name="tag" tag=<<currentTiddler>> /> is an example of a virtual page, or a page used exclusively for transclusion. This demo's Page Filter configuration is <code>{{$:/config/mythos/cyoa/page-filter}}</code>. The "!tag[Virtual Page]" part is what keeps all the tagged tiddlers from being included.
+
+<<list-links "[tag<currentTiddler>]" >>

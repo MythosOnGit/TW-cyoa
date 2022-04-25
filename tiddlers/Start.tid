@@ -1,0 +1,8 @@
+title: Start
+tmap.id: ed581aad-e63f-49f5-9cfc-8f20a1d7d348
+
+! The Title
+
+This is the first page that will be shown in your generated CYOA story. ''Delete its contents and put in whatever you want.''
+
+Also, you may want to check out [[the CYOA configuration page|$:/plugins/mythos/cyoa]], but you don't have to right now. Everything should already work.

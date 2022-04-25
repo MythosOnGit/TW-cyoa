@@ -1,0 +1,35 @@
+caption: Versioning
+title: Configuration/Versioning
+tmap.id: 0daa8ac8-b9af-4452-b7e8-7de5a36734f2
+tags: Configuration
+
+<<plugin>> supports versioning. This is where subsequent generations of your file are compatible with saved URLs from previous versions. This way, you can push changes to your website, and your readers can refresh and continue playing without having to restart.
+
+However, versioning has caveats. Even with the support <<plugin>> has for it, you must refrain from performing certain actions while developing your story. For that reason, unless you have a particularly large story, you probably don't want to deal with the hassle.
+
+!!What <<plugin>> does
+
+<<plugin>> gives you the options to "commit" your work from its "Version" configuration menu. Doing so will write a record of all existing tracked pages and their corresponding IDs. That way, you do not need to worry that any later pages you add will interfere with preexisting IDs that might be in use in older URIs your readers might have of your story.
+
+Also, if you rename tracked pages, <<plugin>> will appropriately update its own records so the new page retains its old ID. This does not work if you delete a page, and then recreate it.
+
+!!What you must do yourself
+
+Even with <<plugin>> committing your pages, there are certain actions you must not do if you wish to retain backward-compatibility.
+
+# ''Don't delete existing tracked pages.'' Doing so will cause IDs in your readers' URI to correspond to nothing. Any pages implying those deleted pages will also now have an undefined state.
+# ''Don't delete any pages which a reader can directly visit.'' If a user has a certain page open (i.e. it's after the '#' in the URI), and they refresh the page to a version where that page is deleted, they will get the "missing page" page.
+# ''Don't change implications for existing pages.'' Doing so can have undefined behavior, especially for bitfield sets (which is what the default page group uses by default).
+# ''Don't add or remove existing pages from exclusion groups.'' Readers could have already have that page and another in the exclusion group touched, in which case the results are undefined. This is particularly problematic with bitfield sets. However, it is safe to add new pages to an existing exclusion group.
+
+!!Clearing your commit history
+
+Sometimes you may want to make backward incompatible change. This might be reflected with a major version update of your story. (Creating a fresh version also gives your bitfield sets an opportunity to repack more efficiently.)
+
+In the "Version" tab of the [[the Configuration page|$:/plugins/mythos/cyoa/configuration]] and click the "Clear Version History" button. Subsequent builds you make will not be constrained in any way, and you can click the "Commit Pages" button whenever you're ready.
+
+If the "Clear Version History" button is no there, that means you have no commit history to clear.
+
+!!Enabling automatic versioning
+
+You can check "Enable automatic versioning" if you wish, which will cause your project to commit any new pages any time you generate a new CYOA.

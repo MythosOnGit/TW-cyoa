@@ -1,0 +1,12 @@
+tags: $:/tags/Macro
+title: Macros/demo
+tmap.id: d4fb5572-d999-4482-ba26-939062d70a2e
+
+\define demo(name)
+<$list
+	filter="[[$:/plugins/felixhayashi/tiddlymap]!is[tiddler]]"
+	emptyMessage="<$tiddlymap view=<<__name__>> ></$tiddlymap>">
+<$tiddler tiddler=<<__name__>>><$link><$transclude field="caption">{{!!title}}</$transclude></$link></$tiddler></$list>
+
+\end
+\relink demo name

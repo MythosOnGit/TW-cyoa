@@ -1,0 +1,13 @@
+title: Hard Links
+tmap.id: 118e7c98-ee23-4159-b88f-9429e676cecc
+
+Hard links are tiddlylinks such as the following:
+
+* `[[TiddlerName]]`
+* `[[Caption text|TiddlerName]]`
+* `<$link to="TiddlerName">Caption text</$link>`
+* `<$cyoa to="TiddlerName">Caption text</$link>`
+
+These will translate to functional links inside your generated cyoa. However, they will be hard links, which means those links will always render, and will always be clickable, even if the page they're pointing to would [[evaluate to false|Evaluation]].
+
+The alternative to hard links are active links, such as the <<wlink OptionsWidget>> widget.

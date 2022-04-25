@@ -1,0 +1,16 @@
+title: Demo 3/end
+tmap.id: 9408f3ca-4c41-4289-8914-d1561f20d600
+
+You finally arrive at a grand stone door. Before it is a pedestal with an inset, and just as you suspected, the statue fits right in. The door opens, leading to a way out.
+
+Congratulations. You have escaped the temple having survived its trial.
+
+[[Proceed back to the lobby.|Demo]]
+
+<<annotate """
+
+Both append and transclude are more versatile than demonstrated in this demo.
+For append, we'll cover the topic in greater detail after we get into constraints.
+
+For transclusion, see the [[Tiddlywiki documentation|https://tiddlywiki.com/#Transclusion]] for tricks like templating, data tiddlers, and others. All tricks that work in Tiddlywiki will translate to your generated CYOA.
+""" >>

@@ -1,0 +1,25 @@
+title: Demo 4/atrium
+list-after: 
+cyoa.caption: Return to the atrium.
+tmap.id: 4f04279d-f5cd-4127-ad30-8321d9c01f38
+
+<$first>
+
+You're inside the atrium of a museum. No one else is here, the lights are off, and the skylights hardly glow with predawn light. You're having trouble seeing your way around.
+</$first>
+
+<<annotate """If you're visiting the page for the first time, the above text displays. All other times, the below text will display. <<plugin>> takes care of this automatically by making this page a [[tracked page|Tracking]].""" >>
+
+<$visited>
+
+You're back at the museum's atrium.
+</$visited>
+
+<<annotate """
+
+Below is an <<wlink OptionsWidget>> list containing all the pages which have <<currentTiddler>> as a tag. It uses each page's <<flink CaptionField>> field for display text.
+
+{{$:/core/images/warning}} ''Note:'' If you edit this tiddler, you'll see there is a newline after `<$options />`. This is a required piece of whitespace which tells Tiddlywiki to treat that widget like a "block" rather than "inline". [[See here for more explanation.|Block vs. Inline]]
+""" >>
+
+<$options/>

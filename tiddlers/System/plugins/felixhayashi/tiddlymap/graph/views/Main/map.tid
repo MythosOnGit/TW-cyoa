@@ -1,0 +1,38 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Main/map
+
+{
+ "611bb207-5883-44e9-895e-3f9b2bf276f7": {
+  "x": 0,
+  "y": 0
+ },
+ "6612a699-2f64-4094-a956-0724e6ae5e0b": {
+  "open-view": "Demo 1",
+  "x": 0,
+  "y": -200
+ },
+ "49c3c0b2-2fdc-4221-8b09-b38640a202cf": {
+  "open-view": "Demo 2",
+  "x": 141,
+  "y": -141
+ },
+ "0e14191d-a76a-4c89-8656-f2f254882a35": {
+  "open-view": "Demo 3",
+  "x": 200,
+  "y": 0
+ },
+ "c5ec3107-ad91-4c33-ba20-e3f817a48f6e": {
+  "open-view": "Demo 4",
+  "x": 141,
+  "y": 141
+ },
+ "5b076475-b308-4653-ac5a-6baf5eafcf9a": {
+  "open-view": "Demo 5",
+  "x": 0,
+  "y": 200
+ },
+ "cc253232-a09d-409c-8327-e17e214d9f7d": {
+  "open-view": "Demo 6",
+  "x": -141,
+  "y": 141
+ }
+}

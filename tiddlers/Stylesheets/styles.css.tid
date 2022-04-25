@@ -1,0 +1,23 @@
+title: Stylesheets/styles.css
+tags: $:/tags/Stylesheet
+tmap.id: d4d63c5c-85c4-47dd-9d4a-7985016386d0
+
+.doc-attr,
+.doc-field,
+.doc-tiddler,
+.doc-var,
+.doc-widget {
+	background-color: <<color background>>;
+	border: none;
+	color: <<color very-muted-foreground>>;
+	font-weight: bold;
+	padding: 0;
+}
+
+a .doc-attr,
+a .doc-field,
+a .doc-tiddler,
+a .doc-var,
+a .doc-widget {
+	color: <<color tiddler-link-foreground>>;
+}

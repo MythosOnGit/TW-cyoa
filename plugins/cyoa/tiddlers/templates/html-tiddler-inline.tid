@@ -1,0 +1,7 @@
+title: $:/plugins/mythos/cyoa/templates/html-tiddler-inline
+
+<!--
+
+This template is used for saving tiddlers as raw HTML
+
+--><$view field="text" format="htmlwikified" mode="inline" />

@@ -1,0 +1,17 @@
+caption: ~TiddlyMap
+tags: Plugins
+template: Templates/plugins
+title: Plugins/TiddlyMap
+tmap.id: c66fe77e-ab51-49b3-bc94-e7541f283b1c
+
+\define plugin() $:/plugins/felixhayashi/tiddlymap
+\define source() http://tiddlymap.org/
+\rules except wikilink
+
+TiddlyMap allows for visualization of your interactive novel by showing links and interactions between your pages. This can be immensely helpful for larger projects. However, it's entirely optional.
+
+It requires the following additional plugins to be installed, but the TiddlyMap website will walk you through that.
+
+* TW5-Vis.js
+* TW5-Hotzone
+* TW5-TopStoryView

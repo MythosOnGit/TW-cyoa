@@ -1,0 +1,70 @@
+title: $:/plugins/mythos/cyoa/templates/groups/editor
+
+\define prefix() $:/plugins/mythos/cyoa/groups/
+
+<$tiddler tiddler=<<currentTab>> >
+
+<$set name="currentGroup" filter="[<currentTiddler>removeprefix<prefix>]">
+
+! <$link><$text text=<<currentGroup>> /></$link>
+
+<em>Group Handler:</em> <$list variable="dummy" filter="[{##magic}!match[yes]]" emptyMessage={{##handler}}><$select index="handler"><$list filter="[cyoa:grouphandlers[]sort[title]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select></$list>
+
+<$reveal state="##handler" type="nomatch" text=''>
+
+<table><tbody>
+<tr>
+	<td align="left">Variable:</td>
+	<td align="left"><$edit-text
+		index="variable"
+		default=""
+		placeholder=<<currentGroup>>
+		tag="input" /></td></tr>
+<$list variable="dummy" filter="[{##magic}!match[yes]]"><tr>
+	<td align="left">Type:</td>
+	<td align="left"><$select index="style" default="string" >
+		<$let
+			handler={{##handler}}>
+			<$list
+				filter="[[cyoagrouphandlerstyle]modules[]] :filter[all[current]moduleproperty[only]else<handler>match<handler>]"
+				variable="module">
+				<$let
+					style={{{ [<module>moduleproperty[name]] }}}
+					description={{{ [<module>get[description]] }}}>
+					<option value=<<style>>><$text text=<<description>> /></option></$let></$list></$let></$select></td></tr>
+<$reveal
+	tag="tr"
+	state="##style"
+	type="match"
+	text="string"
+	default="string">
+	<td align="left">Filter:</td>
+	<td align="left"><$edit-text
+		index="filter"
+		tag="input"
+		placeholder="[get[title]]"/></td></$reveal></$list>
+</tbody></table></$reveal>
+
+{{##description}}
+
+<$list variable="dummy" filter="[{##magic}!match[yes]]">
+
+!! Pages
+
+<$list
+	variable="anyExclusives"
+	filter="[cyoa:group<currentGroup>tags[]tag[$:/tags/cyoa/Exclusive]first[]]">
+
+</$list>
+
+//<small>Count: <$count filter="[all[shadows+tiddlers]cyoa:group<currentGroup>]" /></small>//
+
+<ul class="tc-cyoa-imply-list">
+<$list filter="[all[shadows+tiddlers]cyoa:group<currentGroup>!has[cyoa.imply]sort[title]]">
+<li>{{||$:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node}}</li>
+</$list>
+</ul>
+
+</$list>
+</$set>
+</$tiddler>

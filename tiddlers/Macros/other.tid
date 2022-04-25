@@ -1,0 +1,12 @@
+tags: $:/tags/Macro
+title: Macros/other
+tmap.id: f874efd4-e7d1-48b4-bed6-d226dda88494
+
+\define other(this, that)
+<$vars index={{{ [tag<__this__>allbefore<currentTiddler>count[]add[1]] }}}>
+<$list emptyMessage="""//no <$text text=<<__that__>> />//""" filter="[tag<__that__>nth<index>]"><$link><$transclude field='caption'>{{!!title}}</$transclude></$link></$list>
+</$vars>
+\end
+\relink other this that
+
+Returns linked caption to corresponding tiddler of //that// tag which corresponds with the index of //this// tag.

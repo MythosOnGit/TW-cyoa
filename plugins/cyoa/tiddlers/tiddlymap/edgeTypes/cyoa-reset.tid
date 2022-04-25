@@ -1,0 +1,6 @@
+description: This tiddler 'resets' the pointed-to tiddlers.
+label: resets
+show-label: false
+style: {"color":{"color":"MediumTurquoise","highlight":"MediumTurquoise","hover":"MediumTurquoise"},"dashes":true,"smooth":{"enabled":true}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.reset
+type: text/vnd.tiddlywiki

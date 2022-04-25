@@ -1,0 +1,6 @@
+title: Page Run
+tmap.id: 088eb7b4-e13b-4dba-8114-3f172a3aab9e
+
+A Page Run is the sequence of [[pages|Page]] which can be shown together in the generated cyoa. Page runs are created through [[Appending]], and depending on the constraints of the pages, may include different combinations of pages depending on the story's state.
+
+There is no limit to how long a page run can be, however, no page can appear in a page run more than once.

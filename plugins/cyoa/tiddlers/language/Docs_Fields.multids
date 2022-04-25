@@ -1,0 +1,12 @@
+title: $:/language/Docs/Fields/
+
+cyoa.after: List of Tiddlers which all must have been visited before this tiddler evaluates to true
+cyoa.append: List or filter of tiddlers to be appended
+cyoa.before: List of Tiddlers which all must be unvisited for current tiddler to evaluate to true
+cyoa.depend: List or filter of tiddlers, one of which must be true for the current tiddler to be true
+cyoa.do: JS code snippet to run if this tiddler is displayed in cyoa
+cyoa.if: JS code snippet to test when evaluating a tiddler in cyoa
+cyoa.imply: List of tiddlers for which if the current tiddler is true, those are true. If they are false, then the current tiddler is false.
+cyoa.caption: Display text used when a tiddler is listed in options or conversation widgets
+cyoa.push: Another tiddler to be pushed to the cyoa.stack when current tiddler is opened in cyoa
+cyoa.touch: List of Tiddlers to be marked as visited if current tiddler is displayed

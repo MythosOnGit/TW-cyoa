@@ -1,0 +1,44 @@
+.cyoa-state:not(:empty) {
+    position: relative;
+    /*outline-style: solid;
+      outline-width: thin;
+      outline-color: #888888;
+      I'd rather use the outline for these boxes, but nooooo.
+      Firefox has an outstanding bug about this that's lasted 4 years. Lazy, asses.
+    */
+    box-shadow: 0px 0px 0px 1px #888888;
+    background-color: #BBB4;
+}
+
+.cyoa-state:empty:before {
+    content: var(--cyoa-info);
+    white-space: pre;
+    display: block;
+    background-color: #CFEEEE;
+    outline-style: solid;
+    outline-width: thin;
+    outline-color: #888888;
+}
+
+.cyoa-state:not(:empty):hover:before {
+    content: var(--cyoa-info);
+    white-space: pre;
+    position:absolute;
+    bottom: 100%;
+    right: 0;
+    background-color:#FFF8DC;
+    outline-style: solid;
+    outline-width: thin;
+    outline-color: #888888;
+}
+
+.tc-cyoa-imply-list {
+	padding-left: 20px;
+}
+
+/* This happens to be the only way to make the
+ * EditTemplate group list not have italics.
+ */
+a.cyoa-group-listitem {
+	font-style: normal;
+}

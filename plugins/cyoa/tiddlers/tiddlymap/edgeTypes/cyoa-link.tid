@@ -1,0 +1,7 @@
+description: A cyoa widget is contained in the tiddler's body pointing to another resource.
+label: links to
+show-label: false
+style: {"color":{"color":"darkgoldenrod","highlight":"goldenrod","hover":"darkgoldenrod"},"dashes":false,"smooth":{"enabled":false}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-body:cyoa.link
+type: text/vnd.tiddlywiki
+

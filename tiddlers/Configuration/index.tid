@@ -1,0 +1,7 @@
+tags: Reference
+title: Configuration
+tmap.id: 19d6db1f-a44b-4e5e-b2ab-250d994f2c8c
+
+<<plugin>> can be configured. Go to [[the Configuration page|$:/plugins/mythos/cyoa/configuration]] where there will be several tabs for and make the basic required setup for cyoa.
+
+<<list-links "[tag<currentTiddler>]">>

@@ -1,0 +1,23 @@
+tags: [[Demo 6/troll]]
+title: Demo 6/bakery
+cyoa.after: [[Demo 6/search]]
+cyoa.caption: Locate the bakery.
+tmap.id: 9b230877-a9f0-4aea-b3b3-7f5816c802ff
+
+You duck inside the bakery while the troll is distracted. The smells are divine. In the kitchen you find a whole rack of cooling trays.
+
+<$cyoa before="[[Demo 6/pie]]" touch="[[Demo 6/pie]]">
+
+You take one. It's big, and it's all you can carry.
+</$cyoa>
+<$else>
+
+Seeing as how you already have a pie, and you can't carry another, you don't take one.
+</$else>
+
+<<annotate """
+
+These active nodes not only manage what text gets displayed, but the first block will touch [[Demo 6/pie]] to indicate a pie has been added to your inventory, but ''only'' if that node evaluates true and renders (which occurs if [[Demo 6/pie isn't visited).
+""" >>
+
+[[Return to the town square|Demo 6/troll]]

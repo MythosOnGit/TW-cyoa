@@ -1,0 +1,12 @@
+title: TiddlyWiki
+tmap.id: 5572b5a3-28a3-41b3-a166-10888300085e
+
+\rules except wikilink
+
+In its own words: TiddlyWiki is a unique, non-linear notebook for capturing, organising, and sharing complex information.
+
+In my words: It's a wiki, but really small. The whole thing (contents, engine, etc...) is contained in a single html file which works on any system. It's great for all sorts of personal projects.
+
+In this case, it's also useful for writing and generating CYOA stories. ...once you install <<plugin>>, the plugin featured here.
+
+You do not need to know how to use TiddlyWiki to get started with <<plugin>>, but if you would like more information, visit [[TiddlyWiki's main website|https://tiddlywiki.com/]].

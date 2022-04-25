@@ -1,0 +1,21 @@
+caption: HTML Native File System Saver
+tags: Plugins
+template: Templates/plugins
+title: Plugins/Browser-Nativesaver
+tmap.id: 11cb9f04-8bb0-4488-8568-b141d719fb0a 
+
+\define this-plugin() $:/plugins/slaymaker1907/browser-nativesaver
+\define source() https://github.com/slaymaker1907/TW5-browser-nativesaver
+
+The <<plugin>> starter project packages the "HTML Native File System Saver" plugin to provide an easy way for people new to TiddlyWiki to save their projects. This plugin is entirely optional, and in fact, once you get accustom to ~TiddlyWiki, you may likely want to select another saving method [[from the many available|https://tiddlywiki.com/#GettingStarted]].
+
+!! This plugin requires Chrome
+
+~TiddlyWiki and <<plugin>> work with all browsers, but as long as you use this plugin, you're limited to Chrome-based browsers, which means only Chrome and Microsoft Edge.
+
+!! This plugin is fairly new
+
+It's not perfect. It does not have much documentation. It hassles you a lot whenever you open your project if you don't understand the settings. Here's my advice when using this saver.
+
+* Uncheck "Show welcome modal?" so it doesn't give you a pop up every time you open the project.
+* Check "Allow FS to use indexedDB" despite the security issue. This allows the browser to remember where it's saving your project, and whenever you start up, you need only confirm the file location rather than pick it out again.

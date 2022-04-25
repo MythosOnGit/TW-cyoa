@@ -1,0 +1,12 @@
+caption: Installing or Updating
+tags: Main
+title: Installing
+tmap.id: a4fa3053-a1d3-47e5-812b-72058ff4f881
+
+Installing or updating <<plugin>> in your existing project is simple, and it's done the same way for both. All you do is drag the following button onto your your open project:
+
+{{Buttons/drag-project}}
+
+Your project will ask you to confirm the import. Say yes. After that, refresh, and cyoa will be installed (or updated).
+
+However, this gives you just the plugin without any skeleton framework to get you started. If you'd like a basic "Hello World" style starting project, [[go here|Tutorial 1]].

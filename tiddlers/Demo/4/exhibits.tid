@@ -1,0 +1,20 @@
+tags: [[Demo 4/atrium]]
+title: Demo 4/exhibits
+cyoa.caption: Explore the exhibits.
+tmap.id: 09e077a1-83c7-4997-bef9-d2ae3bcf5fbe
+
+You're in the Incan exhibit. Giant delapidated statues rest on pedestals behind velvet ropes. Display cases contain all manner of ancient artifacts, from daggers to gems.
+
+<<annotate """
+
+This <<wlink OptionsWidget>> widget explicitly lists the pages it lists instead of relying on a tag system. For short or fixed-sized lists, this can be more convenient.
+
+Notice however that both "gem" and "dagger" are both flagged to only show once, so even though they're explicitly listed, after seeing them and returning to this page, they will no longer appear in the list. "Returning to the atrium" however, has no such contraint, so it will always appear.
+
+""" >>
+
+<$options filter="
+	[[Demo 4/dagger]]
+	[[Demo 4/gem]]
+	[[Demo 4/atrium]]
+"/>

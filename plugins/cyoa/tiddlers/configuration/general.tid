@@ -1,0 +1,15 @@
+caption: General
+tags: $:/plugins/mythos/cyoa/tags/Configuration
+title: $:/plugins/mythos/cyoa/configuration/general
+
+\define set-type(tiddler, type) <$action-setfield $tiddler="$tiddler$" type="text/x-tiddler-$type$" />
+
+Please see the [[Readme file|$:/plugins/mythos/cyoa/readme]] for more information on the options.
+
+|[[Starting Page|$:/config/mythos/cyoa/start]] |<$edit-text tiddler='$:/config/mythos/cyoa/start' inputActions=<<set-type '$:/config/mythos/cyoa/start' title>> default='' placeholder={{{ [subfilter{$:/DefaultTiddlers}cyoa:page[]first[]] }}} tag='input' /> |
+|[[Default Page|$:/config/mythos/cyoa/default]] |<$edit-text tiddler='$:/config/mythos/cyoa/default' inputActions=<<set-type '$:/config/mythos/cyoa/default' title>> default='' placeholder={{{ [{$:/config/mythos/cyoa/start}!match[]] ~[subfilter{$:/DefaultTiddlers}cyoa:page[]first[]] }}} tag='input' /> |
+|[[Page Filter|$:/config/mythos/cyoa/page-filter]] |<$edit-text tiddler='$:/config/mythos/cyoa/page-filter' inputActions=<<set-type '$:/config/mythos/cyoa/page-filter' filter>> default='' placeholder='[all[]]' /> |
+|[[Filename (*.html)|$:/config/mythos/cyoa/filename]] |<$edit-text tiddler='$:/config/mythos/cyoa/filename' tag='input' /> |
+|[[HTML Title|$:/config/mythos/cyoa/title]] | <$edit-text tiddler='$:/config/mythos/cyoa/title' tag='input' /> |
+|[[Header Content|$:/cyoaHeader]] |This content appears before the story pages in cyoa files.<br><$edit tag='textarea' tiddler='$:/cyoaHeader' default='' /> |
+|[[Footer Content|$:/cyoaFooter]] |This content appears after the story pages in cyoa files.<br><$edit tag='textarea' tiddler='$:/cyoaFooter' default='' /> |

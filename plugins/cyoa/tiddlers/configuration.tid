@@ -1,0 +1,5 @@
+title: $:/plugins/mythos/cyoa/configuration
+
+<div class="tc-control-panel">
+<<tabs "[all[shadows+tiddlers]tag[$:/plugins/mythos/cyoa/tags/Configuration]!has[draft.of]]" "$:/plugins/mythos/cyoa/configuration/general">>
+</div>

@@ -1,0 +1,7 @@
+title: $:/config/mythos/cyoa/
+
+meta/cyoa-version: {{$:/plugins/mythos/cyoa!!version}}
+meta/format-detection: telephone=no
+meta/generator: TiddlyWiki: Cyoa plugin
+filename: cyoa
+title: {{$:/core/wiki/title}}

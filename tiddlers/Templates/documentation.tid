@@ -1,0 +1,4 @@
+title: Templates/documentation
+tmap.id: 1fad4fd5-1ec6-466b-a40d-72b0eab3b40a
+
+<$transclude tiddler={{{ [all[current]get[template]] ~[all[current]] }}} />

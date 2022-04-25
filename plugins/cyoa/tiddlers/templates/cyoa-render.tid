@@ -1,0 +1,12 @@
+title: $:/plugins/mythos/cyoa/templates/cyoa-render
+
+<!-- This renders any tiddler as though it were being compiled into the cyoa
+file instead of being rendered in tiddlywiki. cyoa widgets will be active
+instead of being fully expanded for ease of editing.
+--><$set name="cyoa-render" value="yes">
+
+<$transclude>
+
+</$transclude>
+
+</$set>

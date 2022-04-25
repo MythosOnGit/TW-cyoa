@@ -1,0 +1,7 @@
+title: $:/plugins/mythos/cyoa/groups/default
+type: application/x-tiddler-dictionary
+
+handler: set
+description: Any tiddlers that are tracked in any way, but are not assigned to a page group are automatically lumped into this group.
+variable: state
+style: bitfield

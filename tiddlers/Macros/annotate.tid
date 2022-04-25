@@ -1,0 +1,10 @@
+tags: $:/tags/Macro
+title: Macros/annotate
+tmap.id: ba05b121-d7dc-4498-94c1-0bb28d4f7c69
+
+\define annotate(text)
+<$list filter='[<cyoa-render>!match[yes]]' variable='render'><div class='cyoa-demo-annotate'>$text$</div></$list>
+\end
+\relink annotate text:wikitext
+
+This macro only shows up in ~TiddlyWiki. It does not appear in the generated CYOA.

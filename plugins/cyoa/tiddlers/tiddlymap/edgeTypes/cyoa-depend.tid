@@ -1,0 +1,7 @@
+description: Tiddler depends on this or others regarding when to render in cyoa.
+label: depends
+show-label: false
+style: {"color":{"color":"#A569BD","highlight":"rgba(91,44,111,1)","hover":"rgba(91,44,111,1)"},"dashes":true,"smooth":{"enabled":false}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.depend
+type: text/vnd.tiddlywiki
+

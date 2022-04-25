@@ -1,0 +1,14 @@
+caption: Page Set
+tags: $:/tags/TiddlerInfo
+title: $:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet
+
+<$list
+	variable="group"
+	filter="[all[current]cyoa:getgroup[]]"
+	emptyMessage="This tiddler is not in a page group">
+
+<$vars actualTiddler=<<currentTiddler>> >
+
+{{||$:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Root}}
+</$vars>
+</$list>

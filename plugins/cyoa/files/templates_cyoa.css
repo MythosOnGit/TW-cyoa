@@ -1,0 +1,52 @@
+/*
+ * Core Stylesheet settings for generated cyoa pages.
+ *
+ * This ".cyoa-page" and ".cyoa-scripts" setting is critical to cyoa
+ * functioning. Everything else can be overridden.
+ */
+.cyoa-page, .cyoa-scripts, .cyoa-state:not(.cyoa-active) {
+	display: none;
+}
+
+.cyoa-page.cyoa-active {
+	display: block;
+}
+
+.cyoa-error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    border-radius: 8px;
+}
+
+a.tc-tiddlylink {
+	text-decoration: none;
+	font-weight: normal;
+	color: #5778d8;
+}
+a.tc-tiddlylink:hover {
+	text-decoration: underline;
+}
+a.tc-tiddlylink-resolves {
+}
+a.tc-tiddlylink-shadow {
+	font-weight: bold;
+}
+a.tc-tiddlylink-shadow.tc-tiddlylink-resolves {
+	font-weight: normal;
+}
+a.tc-tiddlylink-missing {
+	font-style: italic;
+}
+a.tc-tiddlylink-external {
+	text-decoration: underline;
+	color: #0000ee;
+	background-color: inherit;
+}
+a.tc-tiddlylink-external:visited {
+	color: #0000aa;
+	background-color: inherit;
+}
+a.tc-tiddlylink-external:hover {
+	color: inherit;
+	background-color: inherit;
+}

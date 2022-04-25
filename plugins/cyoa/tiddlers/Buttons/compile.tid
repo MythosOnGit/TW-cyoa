@@ -1,0 +1,15 @@
+title: $:/plugins/mythos/cyoa/Buttons/compile
+caption: {{$:/plugins/mythos/cyoa/images/compile}} compile cyoa
+description: Compile the cyoa file
+tags: $:/tags/PageControls
+type: text/vnd.tiddlywiki
+
+<$button tooltip="Compile the cyoa file" aria-label="compile cyoa" class=<<tv-config-toolbar-class>> selectedClass="tc-selected">
+<$action-sendmessage $message="tm-download-file" $param="$:/plugins/mythos/cyoa/templates/cyoaFile" filename=<<cyoa-filename>> />
+<$list filter="[<tv-config-toolbar-icons>prefix[yes]]">
+{{$:/plugins/mythos/cyoa/images/compile}}
+</$list>
+<$list filter="[<tv-config-toolbar-text>prefix[yes]]">
+<span class="tc-btn-text">compile cyoa</span>
+</$list>
+</$button>

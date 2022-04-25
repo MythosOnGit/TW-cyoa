@@ -1,0 +1,8 @@
+title: Create a New Tiddler
+tmap.id: 5a70c7f8-3044-409d-a257-d461d5a2c753
+
+There are many ways to create new tiddlers in TiddlyWiki.
+
+* ''Follow a link to a non-existent tiddler.'' This is the method described in [[Tutorial 2]]. If you have a link to a tiddler which doesn't exist yet, clicking that link will open up an empty tiddler with the corresponding title. Edit and save, and the tiddler now exists.
+* ''Click the {{$:/core/ui/Buttons/new-tiddler}} button.'' It's on the Page controls beneath the search bar. This will create a new blank tiddler which you must name and fill out.
+* ''Double click on a blank area on your graph.'' This will pop up a dialog for adding an existing tiddler to the map, or creating a new tiddler (which will be added to the map).

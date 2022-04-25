@@ -1,0 +1,16 @@
+caption: Metadata
+tags: Configuration
+title: Configuration/Metadata
+tmap.id: c6d88825-d7a4-4f61-b59f-21e1cecfca98
+
+This is a list of metadata key/value pairs which will be written to <<value "<meta name='X' content='Y'>">> elements in the header of the compiled CYOA file. This is where you'd include information for search engines, such as keywords, or data used by Twitter or Facebook, or other platforms which create preview links.
+
+!! Built-in Key Pairs
+
+''cyoa-version'': This is the version of <<plugin>> which was used to compile the CYOA file.
+
+''format-detection'': This is initially set to <<value "telephone=no">>, which affects the way your story will appear on mobile.
+
+''generator'': This specifies <<plugin>>, but you can change it.
+
+To prevent a built-in key pair from being written, leave the value blank.

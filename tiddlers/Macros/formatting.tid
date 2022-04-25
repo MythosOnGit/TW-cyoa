@@ -1,0 +1,19 @@
+tags: $:/tags/Macro
+title: Macros/syntax
+tmap.id: c4685ccf-c94f-483f-9f07-d03579d007ea
+
+\define field(_) <code class="doc-field">$_$</code>
+\define flink(to) <$link to=<<__to__>>><<field {{$to$!!caption}}>></$link>
+\define widget(_) <code class="doc-widget">$$_$</code>
+\define wlink(to) <$link to=<<__to__>>><<widget {{$to$!!caption}}>></$link>
+\define elem(_) "$_$"
+\define value(_) `$_$`
+\define var(_) <code class="doc-var">$_$</code>
+\define attr(_) <code class="doc-attr">$_$</code>
+\define page(_) <code class="doc-tiddler">$_$</code>
+\define plugin() //TW5-cyoa//
+\define tid(_) <code class="doc-tiddler">$_$</code>
+\relink wlink to
+\relink flink to
+
+Contains various macro wrappers so this demo can remain consistent about how it formats various terms.

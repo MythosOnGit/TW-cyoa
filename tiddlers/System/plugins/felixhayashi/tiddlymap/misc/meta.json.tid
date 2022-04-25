@@ -1,0 +1,8 @@
+title: $:/plugins/felixhayashi/tiddlymap/misc/meta
+type: application/json
+
+{
+    "originalVersion": "0.17.8+10011",
+    "dataStructureState": "0.11.0",
+    "showWelcomeMessage": false
+}

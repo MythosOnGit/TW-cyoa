@@ -1,0 +1,11 @@
+tags: $:/plugins/mythos/cyoa/tags/EditTemplate
+title: $:/plugins/mythos/cyoa/ui/EditTemplate/only
+
+<tr>
+<td><em class="tc-edit tc-cyoa-edit-only">Show only:</em></td>
+<td>
+<$button class="tc-btn-invisible"><$radio field="cyoa.only" value=""><$action-deletefield $field="cyoa.only"/></$radio></$button> always
+ &nbsp; <$radio field="cyoa.only" value="first"> first</$radio>
+ &nbsp; <$radio field="cyoa.only" value="visited"> visited</$radio>
+</td>
+</tr>

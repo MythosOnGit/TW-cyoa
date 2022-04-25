@@ -1,0 +1,5 @@
+title: Buttons/neighbourhood
+tmap.id: c658967d-ec7e-4cc3-850e-27752feb6cd6
+
+<$button class="tmap-unicode-button"
+>{{$:/core/images/preview-open}}</$button>

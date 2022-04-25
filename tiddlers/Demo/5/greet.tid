@@ -1,0 +1,19 @@
+title: Demo 5/greet
+tags: [[Demo 5/topics]]
+cyoa.append: [[Demo 5/topics]]
+cyoa.before: [[Demo 5/who]]
+cyoa.caption: "Good to meet you! I'm an adventurer."
+cyoa.only: first
+list-before: 
+tmap.id: adad04bf-97f6-4693-89b3-0dab9f98ac13
+
+"It's always a pleasure to meet a new face," he replies. "My name is Oleg Orphanson."
+
+<<annotate """
+
+This tiddler and [[Demo 5/who]] both specify they must come before the other. That way, only one of them can be visited. That's because they're both introductory tiddlers, and after introductions are done, why do them again?
+""" >>
+<<annotate """
+
+Also, both this tiddler and [[Demo 5/who]] have the <<field list-before>> field set to an empty string. This makes sure they're both floated to the top of [[Demo 5/topics]]'s options list.
+""" >>

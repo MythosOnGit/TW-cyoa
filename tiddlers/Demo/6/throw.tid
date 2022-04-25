@@ -1,0 +1,25 @@
+tags: [[Demo 6/troll]]
+title: Demo 6/throw
+cyoa.caption: Throw the pie at the troll.
+cyoa.append: [[Demo 6/troll]]
+cyoa.before: [[Demo 6/victory]]
+cyoa.after: [[Demo 6/pie]]
+cyoa.reset: [[Demo 6/pie]]
+tmap.id: 69a7d78c-5ff4-4273-9cb0-7104536f3f53
+
+<$first>
+
+You run up to the troll and toss your pie in its face. It howls in anger and swings its great arms at you, except it's blinded by the pie in its face, and you easily dodge away and hide.
+</$first>
+<$else touch="[[Demo 6/victory]]">
+
+While the troll is still rubbing cream from his eyes, you land another pie on top of his head. Scared and confused, the troll covers himself with his arms and runs off out of town.
+</$else>
+
+<<annotate """
+
+This page can be visited twice, both times it flips a different flag.
+
+* The first time, it touches itself simply by being visited.
+* The second time, the <<widget first>> node evaluates false, so the <<widget else>> block renders, which touches <<tid "Demo 6/victory">>, the second flag. Technically, the page touches itself again, but since it was already visited, nothing comes of it.
+""" >>

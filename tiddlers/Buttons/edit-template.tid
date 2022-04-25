@@ -1,0 +1,6 @@
+title: Buttons/edit-template
+tmap.id: 771a5e9c-7b5f-4f11-879a-ca058938f150
+
+\define lingo-base() $:/plugins/mythos/cyoa/language/EditTemplate/
+<$button class="tc-btn-invisible">{{$:/core/images/right-arrow}}</$button>
+<<lingo Caption>>

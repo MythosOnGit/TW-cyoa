@@ -1,0 +1,24 @@
+description: Choose Your Own Adventure
+extension: .html
+title: $:/plugins/mythos/cyoa/templates/cyoaFile
+type: text/vnd.tiddlywiki
+
+\define tv-wikilink-template() #$uri_encoded$
+\define tv-config-toolbar-icons() no
+\define tv-config-toolbar-text() no
+\define tv-config-toolbar-class() tc-btn-invisible
+&lt;!doctype html>
+&lt;html>
+&lt;head>
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/head}}
+
+</head>
+&lt;body class="cyoa-body">
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/body||$:/plugins/mythos/cyoa/templates/cyoa-render}}
+&lt;div class="cyoa-scripts" type="application/json">
+{{{ [[$:/tags/mythos/cyoa/Javascript]tagging[]!is[draft]type[application/javascript]sort[]] ||$:/plugins/mythos/cyoa/templates/div-js-module}}}
+<$vars format="plainwikified">{{{ [[$:/tags/mythos/cyoa/Javascript]tagging[]!is[draft]!type[application/javascript]sort[]] ||$:/plugins/mythos/cyoa/templates/div-js-module }}}</$vars>
+</div>
+{{$:/plugins/mythos/cyoa/js/boot.js||$:/core/templates/javascript-tiddler}}
+</body>
+</html>

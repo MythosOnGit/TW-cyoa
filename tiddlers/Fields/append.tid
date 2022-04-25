@@ -1,0 +1,6 @@
+tags: Fields
+caption: cyoa.append
+title: AppendField
+tmap.id: a79177ce-9b3b-4bdb-83cb-5a8706d1d7aa
+
+The <<field cyoa.append>> field takes a [[filter argument|https://tiddlywiki.com/#Filters]] which specifies a list of tiddlers to append to the current page in the generated cyoa. [[See the page on appending for more details.|Appending]]

@@ -1,0 +1,12 @@
+list-after: $:/core/ui/ViewTemplate/subtitle
+tags: $:/tags/ViewTemplate
+title: $:/plugins/mythos/cyoa/ui/ViewTemplate/group
+
+<$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<$list variable="group" filter="[all[current]cyoa:getgroup[]]">
+<div class="tc-subtitle">
+''Group:'' <<group>>
+</div>
+
+</$list>
+</$reveal>

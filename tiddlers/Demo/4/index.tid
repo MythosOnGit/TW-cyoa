@@ -1,0 +1,12 @@
+tags: Demo
+title: Demo 4
+caption: Demo 4: First and Visited
+cyoa.append: [[Demo 4/atrium]]
+cyoa.caption: Demo 4: First and Visited
+tmap.id: c5ec3107-ad91-4c33-ba20-e3f817a48f6e
+
+<<annotate """
+
+This demo corresponds to <<other Demo Tutorial>>.""" >>
+
+You awake to find you're lying on cold tiles. Your head is hammering. Standing up you take stock of where you are.

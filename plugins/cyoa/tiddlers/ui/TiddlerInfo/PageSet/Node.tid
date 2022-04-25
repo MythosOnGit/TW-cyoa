@@ -1,0 +1,28 @@
+title: $:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node
+
+\whitespace trim
+<$list
+	filter="[<currentTiddler>match<actualTiddler>]"
+	emptyMessage="<$link />">
+	''<$text text=<<currentTiddler>> />''
+</$list>
+<$list filter="[list[!!cyoa.exclude]]">
+	&#32;
+	{{||$:/plugins/mythos/cyoa/templates/exclude-pill}}
+</$list>
+<$list
+	filter="[all[current]listed[cyoa.imply]!is[draft]first[]]"
+	variable="hasChildren">
+	<$list
+		filter="[<showAllChildren>match[yes]] ~[list[!!cyoa.imply]first[]else[]match<parent>]"
+		variable="firstChild"
+		emptyMessage="&#32;...">
+		<ul class="tc-cyoa-imply-list">
+			<$let parent=<<currentTiddler>> >
+				<$list filter="[all[current]listed[cyoa.imply]!is[draft]]">
+					<li>{{||$:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node}}</li>
+				</$list>
+			</$let>
+		</ul>
+	</$list>
+</$list>

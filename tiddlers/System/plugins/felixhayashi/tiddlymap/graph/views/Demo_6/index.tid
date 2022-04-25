@@ -1,0 +1,6 @@
+config.central-topic: cc253232-a09d-409c-8327-e17e214d9f7d
+config.neighbourhood_directions: out
+config.neighbourhood_scope: 1
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 6

@@ -1,0 +1,24 @@
+caption: Groups
+tags: $:/plugins/mythos/cyoa/tags/Configuration
+title: $:/plugins/mythos/cyoa/configuration/groups
+
+\define state() $:/state/cyoa/group-name
+<em class="tc-edit">Add new group:</em>
+<$edit-text tiddler=<<state>> tag="input" default="" placeholder="group name" />
+<$button tooltip="Add a new cyoa group with the given unique name" >
+<$set name="groupName" filter="[<state>get[text]addprefix[$:/plugins/mythos/cyoa/groups/]]">
+<$action-createtiddler $basetitle=<<groupName>> type="application/x-tiddler-dictionary" />
+</$set>
+<$action-deletetiddler $tiddler=<<state>> />
+<$text text="add"/>
+</$button>
+
+<$macrocall
+	$name="tabs"
+	tabsList="[all[shadows+tiddlers]prefix[$:/plugins/mythos/cyoa/groups/]]"
+	default="$:/plugins/mythos/cyoa/groups/default"
+	state="$:/state/mythos/cyoa/groupsTab"
+	class="tc-vertical"
+	template="$:/plugins/mythos/cyoa/templates/groups/editor"
+	buttonTemplate="$:/plugins/mythos/cyoa/templates/groups/button"
+/>

@@ -1,0 +1,11 @@
+tags: Reference
+title: Widgets
+tmap.id: 761561ae-4b9a-4c94-8c8e-574a7278c6ad
+
+<<plugin>> defines numerous widgets used to create content for your generated story.
+
+In Tiddlywiki, their contents will always be displayed, and it will be displayed inside a shaded background which will reveal information if you mouse over it.
+
+In the generated file, widgets will not have any special rendering except that they won't render if they [[evaluate|Evaluation]] to false. Instead their visibility is governed by the constraints associated with them.
+
+<<list-links "[tag<currentTiddler>]">>

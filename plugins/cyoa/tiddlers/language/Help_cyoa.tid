@@ -1,0 +1,14 @@
+description: Generates a Choose-Your-Own-Adventure file
+title: $:/language/Help/cyoa
+
+Generate a cyoa file and save it to the specified filename. This uses all configurations specified in the tiddlywiki, except for the default filename.
+
+```
+--cyoa [<filename>]
+```
+
+By default, the filename is resolved relative to the `output` subdirectory of the edition directory. The `--output` command can be used to direct output to a different directory.
+
+Any missing directories in the path to the filename are automatically created.
+
+If a filename is not specified, then the name specified in the Tiddler's cyoa configuration is used instead, or "cyoa.html" is it's not configured.

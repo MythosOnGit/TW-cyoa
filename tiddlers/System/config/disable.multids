@@ -1,0 +1,6 @@
+title: $:/config/Plugins/Disabled/$:/plugins/
+
+# We don't want relinking during the tests, because it messes some of them up
+flibbles/relink: yes
+# We also don't want saving in the actual demo site
+slaymaker1907/browser-nativesaver: yes

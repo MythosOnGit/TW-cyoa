@@ -1,0 +1,8 @@
+<svg class="tc-image-export-cyoa-button tc-image-button" width="22pt" hieght="22pt" viewBox="0 0 128 128">
+ <path d="m 8,128 h 112 c 4,0 8,-4 8,-8 v -46 c 0,-4 -4,-8 -8,-8 -4,0 -8,4 -8,8 v38 h-96 v-38 c 0,-4 -4,-8 -8,-8 -4,0 -8,4 -8,8 v46 c 0,4 4,8 8,8 " />
+ <circle cx="14" cy="35" r="13" />
+ <circle cx="114" cy="35" r="13" />
+ <circle cx="64" cy="14" r="13" />
+ <circle cx="64" cy="60" r="13" />
+ <path d="m 60,98 V63 L 10,38 18,32 60,53 60,14 68,14 68,53 110,32 118,38 68,63 68,98 c 0,2 -2,4 -4,4 -2,0 -4,-2,-4,-4" />
+</svg>

@@ -1,0 +1,31 @@
+caption: visited
+tags: Widgets
+title: VisitedWidget
+tmap.id: 01f81ce3-87f6-4804-a72d-574aa793d650
+
+! Introduction
+
+The <<widget visited>> widget displays its contents in the generated cyoa only if the current page has already been touched (meaning it's been viewed before). On the first visit to the page, the contents inside "visited" will not be shown. If the current page is ever reset, then the contents in "visited" won't display the following time it's viewed.
+
+Using <<widget visited>> widgets inside a tiddler will cause <<plugin>> to automatically flag that tiddler as a [[tracked page|Tracking]] if it isn't already.
+
+! Attributes
+
+The <<widget visited>> widget is a derivation of the <<wlink CyoaWidget>> widget, and thus accepts all of the same attributes. In fact, ``<$visited>...</$visited>`` is functionally equivalent to ``<$cyoa only=visited>...</$cyoa>``.
+
+! Examples
+
+''block usage''
+
+<<example """You enter the dungeon.
+<$visited>
+
+It's much the same as you remember, if not a little colder.
+</$visited>
+""" >>
+
+''inline usage''
+
+<<example [["Hello," said the merchant. <$visited>"It's good to see you again."</$visited>]] >>
+
+Note the usage of newlines after the opening tag to [[delineate block usage|Block vs. Inline]].

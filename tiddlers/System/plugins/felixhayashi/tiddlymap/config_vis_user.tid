@@ -1,0 +1,12 @@
+title: $:/plugins/felixhayashi/tiddlymap/config/vis/user
+type: application/json
+
+{
+	"nodes": {
+		"widthConstraint": {
+			"maximum": 480
+		}
+	}
+}
+
+

@@ -1,0 +1,44 @@
+title: $:/config/flibbles/relink/
+
+fields/cyoa.after: filter
+fields/cyoa.append: filter
+fields/cyoa.before: filter
+fields/cyoa.caption: wikitext
+fields/cyoa.depend: filter
+fields/cyoa.exclude: list
+fields/cyoa.imply: list
+fields/cyoa.push: title
+fields/cyoa.reset: filter
+fields/cyoa.touch: filter
+
+attributes/$options/filter: filter
+attributes/$options/tiddler: title
+
+attributes/$cyoa/to: title
+attributes/$cyoa/after: filter
+attributes/$cyoa/before: filter
+attributes/$cyoa/depend: filter
+attributes/$cyoa/reset: filter
+attributes/$cyoa/touch: filter
+attributes/$cyoa/push: title
+attributes/$first/to: title
+attributes/$first/after: filter
+attributes/$first/before: filter
+attributes/$first/depend: filter
+attributes/$first/reset: filter
+attributes/$first/touch: filter
+attributes/$first/push: title
+attributes/$else/to: title
+attributes/$else/after: filter
+attributes/$else/before: filter
+attributes/$else/depend: filter
+attributes/$else/reset: filter
+attributes/$else/touch: filter
+attributes/$else/push: title
+attributes/$visited/to: title
+attributes/$visited/after: filter
+attributes/$visited/before: filter
+attributes/$visited/depend: filter
+attributes/$visited/reset: filter
+attributes/$visited/touch: filter
+attributes/$visited/push: title

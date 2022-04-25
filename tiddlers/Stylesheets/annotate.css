@@ -1,0 +1,15 @@
+/** Annotate css */
+
+.cyoa-demo-annotate {
+	color: #555;
+	font-style: italic;
+	background-color: #F6F0E2;
+	border-style: solid;
+	border-width: thin;
+	border-radius: 16px;
+	border-color: #444;
+	padding-left: 16px;
+	padding-right: 16px;
+	margin-left: 32px;
+	margin-right: 32px;
+}

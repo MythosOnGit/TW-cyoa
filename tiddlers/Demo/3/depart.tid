@@ -1,0 +1,10 @@
+title: Demo 3/depart
+cyoa.append: [[Demo 3/end]]
+tmap.id: 426391fa-48d8-4900-ac4c-2a57de68268a
+
+With the statue in hand, you continue along the hallway. It's featureless apart from a few potted plants and motivational posters along the wall.
+
+<<annotate """
+
+This tiddler appends [[Demo 3/end]] in its <<flink AppendField>> field. Since [[Demo 3/end]] has a space in it, it's wrapped in double brackets. This is because cyoa.append accept multiple values for reasons that'll be explained in later tutorials.
+""" >>

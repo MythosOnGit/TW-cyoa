@@ -1,0 +1,14 @@
+tags: Fields
+caption: cyoa.caption
+title: CaptionField
+tmap.id: 5af07c13-8e77-4218-8e55-f51fcc529dcd
+
+The <<field cyoa.caption>> field of a tiddler is the caption used by widgets such as <<wlink OptionsWidget>> and <<wlink CyoaWidget>> as a caption when creating a link.
+
+! Examples
+
+The tiddler [[Demo 4/atrium]] has a <<field cyoa.caption>> set to <$macrocall $name="value" _={{Demo 4/atrium!!cyoa.caption}} />.
+
+Then options widget acts like the following:
+
+<<example """<$options filter="[[Demo 4/atrium]]" />""">>

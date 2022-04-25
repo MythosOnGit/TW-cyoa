@@ -1,0 +1,27 @@
+{
+	"description": "Testing CYOA",
+	"plugins": [
+		"tiddlywiki/jasmine",
+		"tiddlywiki/xmldom",
+		"tiddlywiki/highlight",
+		"felixhayashi/tiddlymap",
+		"felixhayashi/vis",
+		"felixhayashi/hotzone",
+		"felixhayashi/topstoryview",
+		"flibbles/relink",
+		"slaymaker1907/browser-nativesaver"
+	],
+	"themes": [
+		"tiddlywiki/vanilla",
+		"tiddlywiki/snowwhite"
+	],
+	"build": {
+		"test": [
+			"--rendertiddler","$:/core/save/all","test.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/]!prefix[$:/plugins/tiddlywiki/]!prefix[$:/plugins/mythos/]!match[$:/plugins/tiddlywiki/highlight]]"
+		],
+		"dist": [
+			"--setfield", "$:/plugins/mythos/cyoa", "created", "Templates/now", "text/plain",
+			"--rendertiddler","$:/core/save/all","index.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/tiddlywiki/]!match[$:/plugins/tiddlywiki/highlight]] -[prefix[test/]] -[[cyoa.js]] -[[$:/config/Plugins/Disabled/$:/plugins/flibbles/relink]]"
+		]
+	}
+}

@@ -1,0 +1,16 @@
+list-after: $:/core/ui/ViewTemplate/body
+tags: $:/tags/ViewTemplate
+title: $:/plugins/mythos/cyoa/ui/ViewTemplate/append
+
+<$list variable="dontUse" filter="[all[current]cyoa:page[]cyoa:appends[]first[]]">
+<$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-fq-append tc-subtitle">
+
+Appends
+
+<$list filter="[all[current]cyoa:appends[]]"><div><$list variable="weight" filter="[all[current]get[cyoa.weight]]"><<weight>>- </$list><$link><<currentTiddler>></$link></div></$list>
+
+</div>
+
+</$reveal>
+</$list>

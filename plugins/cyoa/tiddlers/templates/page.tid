@@ -1,0 +1,19 @@
+title: $:/plugins/mythos/cyoa/templates/page
+type: text/vnd.tiddlywiki
+
+\define page(class, attributes)
+<$cyoa page id=<<currentTiddler>> class="$class$" $attributes$>
+
+<$list filter="[all[current]!has[plugin-type]!field:hide-body[yes]]">
+
+<$transclude />
+
+\end
+
+<$vars
+	class={{{ [all[current]cyoa:start[]then[cyoa-start cyoa-active]else[]] }}}
+	attributes={{{ [all[current]fields[]removeprefix[cyoa.]!match[group]!match[imply]search-replace::regexp[.*],[$&={{!!cyoa.$&}}]join[ ]] }}} >
+
+<$entity entity="&#10;"/>
+
+<$macrocall $name=page class=<<class>> attributes=<<attributes>> />

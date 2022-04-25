@@ -1,0 +1,10 @@
+caption: Relink
+tags: Plugins
+template: Templates/plugins
+title: Plugins/Relink
+tmap.id: f2b5cbaf-11b6-447f-a70e-1ce08d4fc512
+
+\define plugin() $:/plugins/flibbles/relink
+\define source() https://flibbles.github.io/tw5-relink/
+
+Relink is a plugin which aids in updating all links and references to a tiddler when its renamed. It's not necessary for <<plugin>>, but it's really helpful, and <<plugin>> is configured to fully integrate with it automatically.

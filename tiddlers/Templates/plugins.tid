@@ -1,0 +1,10 @@
+title: Templates/plugins
+tmap.id: 7d5085a8-b3cd-4b6d-9c13-be352353d438
+
+\import [all[current]]
+
+! {{!!caption}}
+
+''Source:'' <<source>>
+
+<$transclude />

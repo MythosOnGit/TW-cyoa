@@ -1,0 +1,8 @@
+tags: Fields
+caption: cyoa.only
+title: OnlyField
+tmap.id: 3277fd20-852e-42ed-8b2b-ff6da74ed0c5
+
+The 'cyoa.only' field is a ''hidden field''. You should not interact with it directly.
+
+This corresponds to the "Show only" setting in every tiddler's {{Buttons/edit-template}} section. Setting the radio buttons will automatically set this field. It has only two legal values: 'first' and 'visited'.

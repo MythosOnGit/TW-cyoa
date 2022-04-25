@@ -1,0 +1,7 @@
+list-after: $:/plugins/mythos/cyoa/ui/ViewTemplate/group
+tags: $:/tags/ViewTemplate
+title: $:/plugins/mythos/cyoa/ui/ViewTemplate/only
+
+<$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-subtitle"><<cyoa-page-info>></div>
+</$reveal>

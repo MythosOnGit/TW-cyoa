@@ -1,0 +1,6 @@
+title: $:/plugins/mythos/cyoa/readme
+type: text/vnd.tiddlywiki
+
+Cyoa generates Choose-Your-Own-Adventure style novels and games from TiddlyWiki.
+
+See [[the project page|https://github.com/MythosOnGit/TW-cyoa]] for more details.

@@ -1,0 +1,5 @@
+description: These nodes are excluded from the cyoa build, but they can still be used for tracking.
+priority: 1
+scope: [!cyoa:page[]]
+style: {"shape":"dot","size":15}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa:virtual

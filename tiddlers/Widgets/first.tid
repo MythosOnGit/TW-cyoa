@@ -1,0 +1,31 @@
+caption: first
+tags: Widgets
+title: FirstWidget
+tmap.id: 6ffbed0f-a642-4f86-b9f9-a1fc72c69ee1
+
+! Introduction
+
+The <<widget first>> widget displays its content in the generated cyoa only if the current page is currently untouched (meaning it's never been viewed before). On subsequent visits to the same page, the content inside "first" will not be shown. If the current page is ever reset, then the content in "first" may be displayed again.
+
+Using <<widget first>> widgets inside a tiddler will cause <<plugin>> to automatically flag that tiddler as a [[tracked page|Tracking]] if it isn't already.
+
+! Attributes
+
+The <<widget first>> widget is a derivation of the <<wlink CyoaWidget>> widget, and thus accepts all of the same attributes. In fact, ``<$first>...</$first>`` is functionally equivalent to ``<$cyoa only=first>...</$cyoa>``.
+
+! Examples
+
+''block usage''
+
+<<example """You enter the dungeon.
+<$first>
+
+As your first time in the here, you're startled by how cold it is.
+</$first>
+""" >>
+
+''inline usage''
+
+<<example [["Hello," said the merchant. <$first>"I haven't seen you before."</$first>]] >>
+
+Note the usage of newlines after the opening tag to [[delineate block usage|Block vs. Inline]].

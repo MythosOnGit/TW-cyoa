@@ -1,0 +1,65 @@
+caption: Versioning
+tags: $:/plugins/mythos/cyoa/tags/Configuration
+title: $:/plugins/mythos/cyoa/configuration/versioning
+
+See the documentation for details on how versioning works. If you use it, there are constraints you must work within.
+
+<!-- Kind of a hack here. This action will execute during load and refresh.
+     It will update the state tiddler -->
+<$action-cyoa $job="checkStatus" />
+
+<$reveal
+	tag="span"
+	type="nomatch"
+	text="no"
+	state="$:/state/mythos/cyoa/dirty">
+
+<$button>
+
+<$action-cyoa $job="commit"/>
+Commit Pages
+</$button>
+</$reveal>
+<$reveal
+	tag="span"
+	type="match"
+	text="no"
+	state="$:/state/mythos/cyoa/dirty">
+
+<$button disabled="yes">
+
+Committed {{$:/core/images/save-button}}
+</$button>
+</$reveal>
+
+<$reveal
+	tag="span"
+	style="padding-left:15px;"
+	type="nomatch"
+	text=""
+	state="$:/config/mythos/cyoa/records/default">
+
+<$button>
+
+<$action-confirm $message="Are you sure you wish to clear your page version record? Any future CYOAs you generate will not be backward compatible with past ones.">
+<$action-cyoa $job="clear"/>
+Clear Version History
+</$action-confirm>
+</$button>
+</$reveal>
+
+<div style="border-top:1px solid #eee;">
+
+!! Automatic versioning
+
+You can enable CYOA to automatically commit any new tracked pages whenever it generates a new file.
+
+<$checkbox
+	tiddler="$:/config/mythos/cyoa/autoVersioning"
+	field="text"
+	checked="enable"
+	unchecked="disable"
+	default="disable">
+[[Enable automatic versioning|$:/config/mythos/cyoa/autoVersioning]]</$checkbox>
+
+</div>

@@ -1,0 +1,31 @@
+title: Buttons/download-empty/filter
+tmap.id: 7b6db5bb-c19d-448b-a82a-8b3138c3dcf1
+type: text/plain
+
+[[$:/core]]
+[[$:/isEncrypted]]
+[[$:/themes/tiddlywiki/snowwhite]]
+[[$:/themes/tiddlywiki/vanilla]]
+-[[$:/boot/boot.css]]
+-[type[application/javascript]library[yes]]
+-[[$:/boot/boot.js]]
+-[[$:/boot/bootprefix.js]]
+
+[[$:/plugins/felixhayashi/tiddlymap]]
+[[$:/plugins/felixhayashi/vis]]
+[[$:/plugins/felixhayashi/hotzone]]
+[[$:/plugins/felixhayashi/topstoryview]]
+[[$:/plugins/flibbles/relink]]
+[[$:/plugins/mythos/cyoa]]
+[[$:/plugins/slaymaker1907/browser-nativesaver]]
+
+[prefix[$:/plugins/felixhayashi/tiddlymap/graph/views/Default]]
+[prefix[$:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/]]
+[[$:/config/mythos/cyoa/start]]
+[[$:/config/RelinkOnRename]]
+[[$:/plugins/felixhayashi/tiddlymap/misc/meta]]
+[[$:/state/tab/sidebar--595412856]]
+[[Start]]
+[[Stylesheet.css]]
+
++[sort[title]]

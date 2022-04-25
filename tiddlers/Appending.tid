@@ -1,0 +1,25 @@
+tags: Concepts
+caption: Appending
+title: Appending
+tmap.id: d3bf2b20-5bb8-4ff2-bfd0-83a17a6387cd
+
+Appending is a means of specifying pages that should be displayed after the current page. This is done through the <<flink AppendField>> field, which accepts a [[filter argument|https://tiddlywiki.com/#Filters]]. The filter argument can result in multiple tiddlers, but only one of the tiddlers will be appended. This is determined by sequentially [[evaluating|Evaluation]] each page listed, and the first one to evaluate true is appended.
+
+If that appended page has it's own list of pages listed in its <<field cyoa.append>> field, then one of those pages may be appended after that one, and so on, creating a [[Page Run]].
+
+!!! Example
+
+If the filter for tiddler <<tid root>> is <<value "[tag[MyVariants]]">>, then all tiddlers with the tag <<tid MyVariants>> will be possible candidates to be appended to <<tid root>>. Let's say that's <<tid A>>, <<tid B>>, and <<tid C>>. In the generated CYOA, <<tid A>> will be tested. If it is true, then your page run will be <<tid root>>+<<tid A>>+(whatever <<tid A>> may append). If it is false, then <<tid B>> is tested, and if true, your page run will be <<tid root>>+<<tid B>>+(whatever <<tid B>> may append). And so on.
+
+!!! Loops
+
+You cannot create loops with your append chains. Thus, <<tid A>> can append <<tid B>>, and <<tid B>> can append <<tid C>>, but <<tid C>> cannot then append <<tid A>>. If you have any combination of page runs which would produce loops, you will get a warning during compile time, and a link in the loop will be arbitrarily removed.
+
+!!! Pros
+
+* Appending allows for efficient recycling of content. If two pages, <<tid X>> and <<tid Y>> append <<tid Z>>, then <<tid Z>> only needs to exist in the generated CYOA once, even though it appears in two page runs.
+* Appending is conditional based on what appended pages evaluate true. This allows for sophisticated page logic.
+
+!!! Cons
+
+* Appending cannot be used to inject reused content into the middle or beginning of a page. For that, you need [[Transclusion|Transclude]].

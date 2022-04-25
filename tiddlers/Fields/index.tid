@@ -1,0 +1,7 @@
+tags: Reference
+title: Fields
+tmap.id: 6ee44100-fa4a-4ef0-a3ab-d24b278c4c0c
+
+<<plugin>> defines several tiddlerfields which can be used to for various cyoa purposes.
+
+<<list-links "[tag<currentTiddler>]">>

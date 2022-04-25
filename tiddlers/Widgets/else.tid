@@ -1,0 +1,84 @@
+caption: else
+tags: Widgets
+title: ElseWidget
+tmap.id: dec6dd6e-bd14-4a14-96e3-3a2b9233ae5f
+
+\rules except wikilink
+
+! Introduction
+
+The <<widget else>> widget only displays its contents in the generated cyoa only if [[Active Node]] which came before it evaluated false.
+
+! Attributes
+
+The <<widget else>> widget is a derivation of the <<wlink CyoaWidget>> widget, and thus accepts all of the same attributes. In fact, `<$else>...</$else>` is functionally equivalent to `<$cyoa else>...</$cyoa>`.
+
+! Chaining
+
+You can chain together <<widget else>> widgets. Thus, for an <<widget else>> to evaluate true, the active node that comes before an <<widget else>> must evaluate false, but if it's also an <<widget else>>, then so must the active node that came before //that// also be false, and so on. Take this example:
+
+<<example """<$cyoa after="Tiddler_A">
+
+Contents for Tiddler_A.
+</$cyoa>
+<$else after="Tiddler_B">
+
+Contents for Tiddler_B
+</$else>
+<$else>
+
+Default contents.
+</$else>
+""">>
+
+* If TiddlerA has been visited, the first widget is shown, and the subsequent widgets are hidden.
+* Else If TiddlerB has been visited, the middle widget is shown, and the surrounding widgets are hidden.
+* Else the last widget is shown, and the first two are hidden.
+
+Any number of <<widget else>> widgets can be chained together in this way.
+
+! Nesting 
+
+Active nodes can be nested within other nested nodes. In those cases, <<widget else>> widgets always compare themselves only to their preceding sibling, to to any children those siblings may have, For example:
+
+```html
+<$cyoa>
+	<$cyoa id="A" ...>...</$cyoa>
+</$cyoa>
+<$else id="B">...</$else>
+```
+
+Even if widget "A" evaluates false, widget "B" will never render, because it's preceding sibling is not "A", but the parent of "A", which evaluated true (since in this case it has no constraints).
+
+Likewise, <<widget else>> also ignores the preceding siblings of its parent (uncle nodes). For example:
+
+```html
+<$cyoa id="C" ...>...</$cyoa>
+
+<$cyoa>
+	<$else id="D">...</$else>
+</$cyoa>
+```
+
+In this case, if node "C" evaluates true, then the <<widget else>> widget "D" will still be rendered, because "C" is not a preceding sibling of "D", but rather "D"'s parent. In fact, the "else" quality of "D" is entirely ignored, since "D" has no preceding siblings.
+
+! Other HTML elements
+
+Other HTML elements and text content have no bearing on the evaluation of <<widget else>> widgets. For example:
+
+<<example """
+<div>
+	<$cyoa id="X" after="TiddlerX">Contents of X.</$cyoa>
+</div>
+
+This is some inbetween text content, but it has no bearing.
+
+<$else id="Y" after="TiddlerY">Contents of Y.</$else>
+<ul>
+	<li>
+		<$else id="Z">Contents of Z.</$else>
+	</li>
+</ul>
+""" segue: """In this case, the nodes "X", "Y", and "Z" are considered siblings, and they create a legal <<widget else>> chain despite some of the nodes being nested inside extraneous html elements. This makes perfect sense when you see how it renders:""" >>
+
+Visually, each node appears after one another, and none are nested inside active nodes, so they're intuitively siblings. In fact, an <<widget else>> widget at the bottom of the page will constrain itself based on a <<widget cyoa>> widget at the top, so long as no other active nodes are between them. No amount of html content between them makes a difference.

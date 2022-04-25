@@ -1,0 +1,47 @@
+tags: Demo
+title: Demo 2
+caption: Demo 2: Turn to Page X
+cyoa.caption: Demo 2: Turn to Page X
+tmap.id: 49c3c0b2-2fdc-4221-8b09-b38640a202cf
+
+<<annotate """
+
+This demo corresponds to <<other Demo Tutorial>>.
+
+If you'd like, you can see how this demo (and all the demos) play out by clicking on the Generate CYOA button here: {{$:/plugins/mythos/cyoa/Buttons/compile}}. You can do this because this demo website is actually a Cyoa project itself. Its "story" is the compilation of the available demos.
+""" >>
+
+<<annotate """
+
+The text in these colored bubbles are annotations specific to these demos. They show up here to explain the tricks and techniques being showcased, but they won't show up in the generated cyoa story.
+
+Now, let's get to the demo...
+""" >>
+
+You find yourself in a dungeon. Ahead of you is a door bearing a large skull, and nailed below the skull is a sign.
+
+<<<
+!!! Beware
+
+Within this dungeon is a //terrible// beast of ''unimaginable'' power. __Do not enter unprepared!__ If you must, make sure you have the following.
+
+* A ~~gun~~ formidable sword
+* A Mighty Healing Potion^^tm^^
+* A trustworthy friend---anyone who can drag your corpse home.
+
+//You have been warned.//
+
+<<annotate """
+
+Tiddlywiki has a diverse and flexible markup language called wikitext, and all of it will translate directly into your generated CYOA. [[See the Tiddlywiki Wikitext page for more info.|https://tiddlywiki.com/#WikiText]]
+""" >>
+<<<
+
+[[Enter the door.|Demo 2/goblin]]
+
+<<annotate """
+
+Any link in Tiddlywiki will become a link in your generated cyoa. They'll function exactly as you'd expect. You can follow the "Enter the door" link here to see the next bit of this demo.
+
+See [[Hard Links]] for more information.
+""" >>
