@@ -1,0 +1,38 @@
+title: Demo 8/end
+cyoa.caption: Join this team.
+tmap.id: 58715fcb-4aa6-435d-b302-e8cd1f1abb8f
+
+<<annotate """
+
+This page is visited after any of the three tents. We want to acknowledge which team the reader chose with a "You throw in with...", but if we were to list out the team names individually, we'd always have to remember to edit this page if we added/changed/removed any teams.
+
+Instead, we use a nifty little <<widget list>> widget to enumerate each page in the <<page "Demo 8/tent">> set and print out their <<field name>> field.
+""" >>
+
+You decide to throw in with the
+<$list filter="[[Demo 8/tent]listed[cyoa.exclude]]">
+<$cyoa after="[<currentTiddler>]">{{!!name}},</$cyoa>
+</$list>
+and they readily accept you. The tournament soon begins. The Blue Starlets and the Green Prowlers both break into expert dance. However, not one minute later, the Red Warriors charge the others with clubs and bats. They bludgeon the other two teams senseless.
+
+<<annotate """
+
+The following are just the various outcomes. Red always wins, unless the player brought the dagger from [[Demo 4]].
+""">>
+
+<$cyoa after="[[Demo 8/red]]">
+
+You don't really help, seeing as how you were expecting to dance, but it doesn't matter. Afterward, the Red Warriors break into celebratory pelvic thrusts. It's technically dancing, and since the other two teams are too concussed to do anything, your team wins by default.
+
+[[Exit.|Demo]]
+</$cyoa><$else before="[[Demo 4/dagger]]">
+
+You are one of the many victims to get beaten down. Half-conscious, you've vaguely aware of the red team performing crude dances over your fallen teammates. They win. You lose.
+
+!! Game Over
+</$else><$else>
+
+Fortunately, you brought a dagger to a dance-off. A quick slashes across a few bellies, and the Red team quickly give you distance. They don't spare the other team though, and since your team is the only one that can dance, it's an easy victory.
+
+[[Exit.|Demo]]
+</$else>

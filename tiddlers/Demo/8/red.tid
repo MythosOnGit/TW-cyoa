@@ -1,0 +1,14 @@
+cyoa.append: [[Demo 8/actions]]
+cyoa.caption: Approach the red tent.
+cyoa.exclude: [[Demo 8/tent]]
+cyoa.only: first
+name: Red Warriors
+title: Demo 8/red
+tmap.id: 5838f996-49db-435a-b28a-4ff807de69b7
+
+You approach the tent of the Red Warriors. These are a bunch of crude, long-haired, bearded men. Most are drunk. Many aren't wearing shirts, and it doesn't seem like any of them have any kind of dancing talent.
+
+<<annotate """
+
+Like the other two "tent" pages, this is a member of the <<page "Demo 8/tent">> exclusion set, which means that once this is visited, the other two automatically reset. Effectively, the protagonist can only be standing under one tent at a time.
+""" >>

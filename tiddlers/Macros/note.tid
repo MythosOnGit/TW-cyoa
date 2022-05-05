@@ -1,0 +1,7 @@
+tags: $:/tags/Macro
+title: Macro/note
+tmap.id: 17ceba1d-d1f0-4f41-998b-4c63e5f4c241
+
+\define note(text, type: "Note") {{$:/core/images/warning}} ''$type$'': $text$
+
+Used to create emphasized notes in the tutorials

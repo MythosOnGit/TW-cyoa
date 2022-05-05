@@ -16,7 +16,7 @@ This works much the same as with <<field cyoa.append>>. Edit page "Rescue_Prince
 
 Just like <<field cyoa.append>>, Both <<field cyoa.after>> and <<field cyoa.before>> are [[filter field|https://tiddlywiki.com/#Filters]]. This means you can specify multiple tiddlers, such as making <<field cyoa.after>> equal <<value "Slay_Dragon Slay_Minotaur Slay_Wendigo">>, or even <<value "[prefix[Slay_]]">>. "Rescue_Princess" will only [[evaluate true|Evaluation]] only if //all// pages in <<field cyoa.after>> have been visited. And //all// pages in <<field cyoa.before>> have not been visited.
 
-{{$:/core/images/warning}} ''Note:'' Because it's a filter field, take care to wrap titles with spaces in brackets. (e.g. <<value "[[Slay Dragon]]">>).
+<<note """Because it's a filter field, take care to wrap titles with spaces in brackets. (e.g. <<value "[[Slay Dragon]]">>).""" >>
 
 !!! Visually
 

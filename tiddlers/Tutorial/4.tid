@@ -32,7 +32,7 @@ Options will expand into a list of possible links. By default, the list consists
 
 As you may have guessed, if any of these linked tiddlers have their "Show only" set to "first", then they will not show up in the list if that page has ever been visited before, even as part of another page's page run.
 
-{{$:/core/images/warning}} ''Note:'' It may seem backwards to have the possible tiddlers specify that they're a part of Merchant page's list through tags, rather than have the Merchant page explicitly list them, but this declarative style will create much more maintainable CYOA projects. However, see the <<wlink OptionsWidget>> page for other means, some which are more explicit, and may be simpler for smaller lists.
+<<note """It may seem backwards to have the possible tiddlers specify that they're a part of Merchant page's list through tags, rather than have the Merchant page explicitly list them, but this declarative style will create much more maintainable CYOA projects. However, see the <<wlink OptionsWidget>> page for other means, some which are more explicit, and may be simpler for smaller lists.""" >>
 
 !!! Appending
 

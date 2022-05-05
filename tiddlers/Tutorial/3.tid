@@ -22,11 +22,15 @@ In your generated CYOA novel, you'll want pages both <<page Left>> and <<page Ri
 
 Edit page <<page Left>>. In the "Add a new field" text-boxes at the bottom of the Edit pane, specify a field name of <<field cyoa.append>> and a field value of <<value Merge>>. Then click "add". After you save the tiddler, you should see your <<tid Merge>> tiddler listed at the bottom of the page <<page Left>>'s view.
 
-{{$:/core/images/warning}} ''Note:'' If tiddler <<tid Merge>>'s actual title includes spaces (e.g. <<page "Roads Merge">>), you'll need to wrap that name in quotation, like <<value [["Roads Merge"]]>> or <<value "[[Roads Merge]]">>. This is because the <<flink AppendField>> field actually accept a [[filter|https://tiddlywiki.com/#Filters]] which allows multiple values. Don't worry about that means right now. We'll cover it later. Just be aware of the need for quotation if your title has spaces.
+<<note """If tiddler <<tid Merge>>'s actual title includes spaces (e.g. <<page "Roads Merge">>), you'll need to wrap that name in quotation, like <<value [["Roads Merge"]]>> or <<value "[[Roads Merge]]">>. This is because the <<flink AppendField>> field actually accept a [[filter|https://tiddlywiki.com/#Filters]] which allows multiple values. Don't worry about that means right now. We'll cover it later. Just be aware of the need for quotation if your title has spaces.""" >>
+
+<<note "You cannot delete append edges through TiddlyMap. You must edit the tiddler and remove the title from the <<field cyoa.append>> field. This is because of a limitation concerning TiddlyMap and filter-type edges.">>
 
 !!! Visually
 
 Now let's set up page <<page Right>> to append <<page Merge>>. If you're using TiddlyMap, appending is represented with solid blue edges, and you probably saw just a line appear after creating the append between <<page Left>> and <<page Merge>> above. You can actually draw these edges visually. Let's do that. Clicking on {{$:/plugins/felixhayashi/vis/img/network/connectIcon.png}} ''Add Edge'' above the tiddlymap view, and then drag a line from nodes <<page Right>> to <<page Merge>>. In the resulting "Edge type specification" popup, specify `tw-filter:cyoa.append` and click ''OK''. That's it. <<page Right>> will now append <<page Merge>> in your generated CYOA. This created the <<field cyoa.append>> field automatically.
+
+
 
 !!! Longer page runs
 

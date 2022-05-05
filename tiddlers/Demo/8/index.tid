@@ -1,0 +1,16 @@
+tags: Demo
+title: Demo 8
+caption: Demo 8: Exclusions
+cyoa.append: [[Demo 8/actions]]
+cyoa.caption: Demo 8: Exclusions
+tmap.id: 8341c683-124b-4eba-a0c4-db1e971273c2
+
+<<annotate """
+
+This demo corresponds to <<other Demo Tutorial>>.
+
+Here we demonstrate a simple usage of exclusion. There are three teams in this demo, each under its own tent. The reader can only side with one, so the teams are in an exclusion set. That way, each time the reader visits one, that becomes the only team which is set.""" >>
+
+You arrive at a wooded camp where throngs of people have gathered under three erected tents of different colors. It seems some sort of festival or tournament is about to begin.
+
+A man waves you over. "Hello, hello. Welcome to the Shrovetide tournament, where the surrounding townships gather to compete in synchronized dance numbers. Join a team."

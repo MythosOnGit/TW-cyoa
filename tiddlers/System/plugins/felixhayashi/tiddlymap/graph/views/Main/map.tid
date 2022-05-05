@@ -34,5 +34,15 @@ title: $:/plugins/felixhayashi/tiddlymap/graph/views/Main/map
   "open-view": "Demo 6",
   "x": -141,
   "y": 141
+ },
+ "47a6c9d7-74a2-4951-a3ce-38d629ddf912": {
+  "open-view": "Demo 7: Implications",
+  "x": -200,
+  "y": 0
+ },
+ "8341c683-124b-4eba-a0c4-db1e971273c2": {
+  "open-view": "Demo 8: Exclusions",
+  "x": -141,
+  "y": -141
  }
 }

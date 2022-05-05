@@ -1,0 +1,32 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 7: Implications/map
+
+{
+ "47a6c9d7-74a2-4951-a3ce-38d629ddf912": {
+  "x": -180,
+  "y": 0
+ },
+ "da8e13f9-8ab4-4627-8218-55f989befeeb": {
+  "x": -40,
+  "y": 0
+ },
+ "2861b2da-2f70-46b9-955a-edd55c6dd65c": {
+  "x": 25,
+  "y": 100
+ },
+ "e478f0db-6961-45e5-b914-e6bf6305eb90": {
+  "x": 25,
+  "y": -100
+ },
+ "0e87a541-45c5-4875-9067-bcb40cce7e2b": {
+  "x": 140,
+  "y": 60
+ },
+ "187b3d8b-eeeb-4e51-8650-498ca038e692": {
+  "x": 140,
+  "y": -60
+ },
+ "a0ba66b3-6be2-4d44-9ae8-077ccea41b9b": {
+  "x": 180,
+  "y": 0
+ }
+}

@@ -1,0 +1,32 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 8: Exclusions/map
+
+{
+ "8341c683-124b-4eba-a0c4-db1e971273c2": {
+  "x": -200,
+  "y": 25
+ },
+ "58715fcb-4aa6-435d-b302-e8cd1f1abb8f": {
+  "x": -200,
+  "y": -25
+ },
+ "7401cc29-54d2-4c98-9a9c-d25fe6672733": {
+  "x": -60,
+  "y": 0
+ },
+ "5838f996-49db-435a-b28a-4ff807de69b7": {
+  "x": 90,
+  "y": -50
+ },
+ "6fc281e4-f8e5-44dd-b08c-1fc4075321da": {
+  "x": 90,
+  "y": 0
+ },
+ "72cddba5-a34b-4577-aba0-091020ef7d4f": {
+  "x": 90,
+  "y": 50
+ },
+ "6d68fe49-90fb-4bf0-b119-dd7bef3da1fd": {
+  "x": 200,
+  "y": 0
+ }
+}

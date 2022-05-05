@@ -1,0 +1,21 @@
+cyoa.append: [[Demo 7/actions]]
+cyoa.caption: Drink "Drink Me".
+cyoa.imply: [[Demo 7/small]] [[Demo 7/cookie]]
+cyoa.only: first
+tags: [[Demo 7/actions]]
+title: Demo 7/tiny
+tmap.id: 187b3d8b-eeeb-4e51-8650-498ca038e692
+
+You take a sip of the drink labeled "Drink Me". With painful, muscle-shriveling, bone-breaking speak, your body shrink down until you're less than a foot tall.
+
+<$cyoa before="[[Demo 7/cookie]]">
+
+You can no longer reach the table, but now that you can see under it just fine, you notice behind a table leg a box with little cookies, each labeled, "Eat Me".
+</$cyoa>
+
+<<annotate """
+
+This page implies [[Demo 7/small]] and [[Demo 7/cookie]]. Thus, when this page is set, both of those pages will automatically be set too. If either of those pages are reset, this page is also reset.
+
+''However'': If this page is set, and then reset, both <<page "Demo 7/small">> and <<page "Demo 7/cookie">> will remain set.
+""" >>

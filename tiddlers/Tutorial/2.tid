@@ -6,7 +6,7 @@ tmap.id: a0079662-b9db-4318-b8ac-432f3c247264
 
 At the bottom of their pages, paperback CYOA novels always have at the famous, "To do X, turn to page Y," which make up the basis for their interactivity. Of course <<plugin>> can do this too. Let's add some choices to our novel.
 
-{{$:/core/images/warning}} ''Note:'' This tutorial picks up assuming you've just finished [[Tutorial 1]], and you have a project with a "Start" tiddler.
+<<note """This tutorial picks up assuming you've just finished [[Tutorial 1]], and you have a project with a "Start" tiddler.""">>
 
 !! Writing your own content
 
