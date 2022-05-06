@@ -7,6 +7,17 @@ title: $:/plugins/mythos/cyoa/ui/ViewTemplate/group
 <div class="tc-subtitle">
 ''Group:'' <<group>>
 </div>
+</$list>
 
+<$list variable="has-imply" filter="[all[current]has[cyoa.imply]]">
+<div class="tc-subtitle">
+''Implies:''<$list filter="[list[!!cyoa.imply]]"> <$link/></$list>
+</div>
+</$list>
+
+<$list variable="has-imply" filter="[all[current]has[cyoa.exclude]]">
+<div class="tc-subtitle">
+''Excludes:''<$list filter="[list[!!cyoa.exclude]]"> {{||$:/plugins/mythos/cyoa/templates/exclude-pill}}</$list>
+</div>
 </$list>
 </$reveal>
