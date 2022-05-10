@@ -4,13 +4,12 @@ tmap.id: 97943000-8c67-43fb-9701-6e4d37a85d5b
 
 \rules except wikilink
 
-<<plugin>> manages state by using pages the same way other engines may use variables. It will track which pages have been visited, and which ones haven't. Thus, every page in your generated cyoa can have two states:
+<<plugin>> manages state by using pages the same way other engines may use variables. It will track which pages have been visited, and which ones haven't. Thus, every page in your generated cyoa can have two ''states'':
 
-''Touched'': This page state indicates the given page has either been visited (viewed as a part of any [[Page Run]]), or it's been touched by another page or node. 
+* ''Set'': This page state indicates the given page has either been visited (viewed as a part of any [[Page Run]]), or it's been touched by another page or node. 
+* ''Unset'': This page state indicates that the given page has never been visited or touched, or it's been reset since the last time it's been touched or visited.
 
-''Untouched'': This page state indicates that the given page has never been visited, or it's been reset since the last time it's been touched or visited.
-
-''Any'' tiddler can be a tracking page, even if it's not a [[page|Page]]. Such a tiddler would by a type of [[Virtual Page]] which would be manipulated through touches and resets rather than by the story flow ever visiting it.
+//Any// tiddler can be tracked and have state, even if it's not a [[page|Page]]. Such a tiddler would by a type of [[Virtual Page]] which would be manipulated through touches and resets rather than by the story flow ever visiting it.
 
 ! Groups
 
@@ -18,6 +17,6 @@ All tracked tiddlers must belong to a page group. Pages in a group will have som
 
 !! Default group (and automatic tracking)
 
-<<plugin>> will create state for all pages that require tracking. It does this by examining the all tiddlers. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. If other tiddlers depend on one using "cyoa.after" fields, then that tiddler will be added. And so forth.
+<<plugin>> will create and maintain states for any pages that require tracking. It does this by examining the all tiddlers during compile. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. If other tiddlers depend on one using "cyoa.after" fields, then that tiddler will be added. And so forth.
 
 It does a fairly good job of figuring out what tiddlers need to be tracked, and which don't, but some complicated wikitext can confuse it. For instance, given: `<$tiddler tiddler="TrickyPage"><$cyoa after="[all[current]]"/></$tiddler>`, the engine won't figure out that "TrickyPage" needs to be tracked, and you'll get a warning at compile time. To remedy this, explicitly add TrickyPage to the default group using the tiddler's edit options under the {{Buttons/edit-template}} menu.
