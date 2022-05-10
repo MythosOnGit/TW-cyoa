@@ -28,6 +28,6 @@ Exclusion sets can be as intricate and as overlapped as you'd like. However, two
 
 ! Demo
 
-Here is an annotated example project that shows off how implications and exclusions can be utilized effectively: <<demo "Demo 8: Exclusions">>
+Here is an annotated example project that shows off how implications and exclusions can be utilized effectively: <<demo>>
 
 <<next Tutorial>>

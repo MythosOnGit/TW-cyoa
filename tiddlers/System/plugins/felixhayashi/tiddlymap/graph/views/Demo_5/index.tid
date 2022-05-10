@@ -3,4 +3,4 @@ config.neighbourhood_directions: out
 config.neighbourhood_scope: 1
 config.physics_mode: false
 isview: true
-title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 5
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 5: Before and After

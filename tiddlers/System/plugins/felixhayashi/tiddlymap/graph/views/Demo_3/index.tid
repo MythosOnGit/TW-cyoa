@@ -1,4 +1,4 @@
 config.central-topic: 0e14191d-a76a-4c89-8656-f2f254882a35
 config.physics_mode: false
 isview: true
-title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 3
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 3: Append and Transclude

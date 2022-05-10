@@ -26,7 +26,7 @@ After that, you will be in your main view. On the left is your [[story river|htt
 <$list
 	filter="[[$:/plugins/felixhayashi/tiddlymap]is[tiddler]]"
 	emptyMessage="The other tiddlers included with your project are as follows:"
-		>On the right is your map view ([[assuming you're not in mobile mode|Mobile Mode]]), you'll see a graph to the right that looks like this: <$tiddlymap view="Demo 1"></$tiddlymap></$list>
+		>On the right is your map view ([[assuming you're not in mobile mode|Mobile Mode]]), you'll see a graph to the right that looks like this: <$tiddlymap view="Demo 1: Hello Adventure"></$tiddlymap></$list>
 
 * ''Start'': This node is a tiddler which currently acts as the first [[page|Page]] of your novel. Double click on it to open it. You'll find some dummy content along with a link to the CYOA configuration page. You can click on //that// to find a few cyoa-specific settings you can configure ([[see here for details|Configuration]]), but you don't have to deal with any of that right now if you don't want. These settings are always available through the cyoa plugin page in the TiddlyWiki settings.
 * ''Stylesheet.css'': This tiddler contains some basic CSS for your generated project. It should be sufficient until you're ready to customize your interactive novel's aesthetic. (//There is no reason for it to be on the graph except that it's easy to access there. It won't ever connect to any story pages. You can drag it off to the side and forget about it until you need it.//)

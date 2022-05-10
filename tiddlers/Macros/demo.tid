@@ -2,11 +2,13 @@ tags: $:/tags/Macro
 title: Macros/demo
 tmap.id: d4fb5572-d999-4482-ba26-939062d70a2e
 
-\define demo(name)
+\define demo(this:Tutorial that:Demo)
+<$let	index={{{ [tag<__this__>allbefore<currentTiddler>count[]add[1]] }}}
+	currentTiddler={{{ [tag<__that__>nth<index>] }}}>
 <$list
 	filter="[[$:/plugins/felixhayashi/tiddlymap]!is[tiddler]]"
-	emptyMessage="<$tiddlymap view=<<__name__>> ></$tiddlymap>">
-<$tiddler tiddler=<<__name__>>><$link><$transclude field="caption">{{!!title}}</$transclude></$link></$tiddler></$list>
-
+	emptyMessage="<$tiddlymap view={{{ [config.central-topic{!!tmap.id}removeprefix[$:/plugins/felixhayashi/tiddlymap/graph/views/]] }}} ></$tiddlymap>">
+<$link><$transclude field="caption">{{!!title}}
+</$transclude></$link></$list></$let>
 \end
 \relink demo name
