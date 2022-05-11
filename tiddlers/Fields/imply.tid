@@ -7,22 +7,24 @@ The <<field cyoa.imply>> field specifies a [[title list|https://tiddlywiki.com/#
 
 The contrapositive is also true, if any pages that this page implies are ''not'' set, then this page must not be set either.
 
-Implications are an alternative to having a page touch another. There are several advantages to implications over using <<flink cyoa.touch>>.
+Implications are an alternative to having a page touch another. There are several advantages to implications over using <<flink TouchField>>.
 
 * Implications are always enforced. If page <<page A>> implies <<page B>> then it is impossible for <<page A>> to be set, and <<page B>> not to be. Using <<field cyoa.touch>> might not guarantee such a relationship if other pages potentially touch <<page A>> without knowing about its relationship to <<page B>>.
-* Implications help <<plugin>> minimize the size of your story's [[URI query string]]. This varies depending on what sort of serialization method your page groups use, but all of them benefit at least somewhat. (For example, if <<page A>> implies <<page B>> there's no need to represent <<page B>> in the URI if <<page A>> is set.)
+* Implications help <<plugin>> minimize the size of your story's [[URI query string]]. For example, if <<page A>> implies <<page B>> there's no need to represent <<page B>> in the URI if <<page A>> is set.
 
 There are some reasons to prefer <<field cyoa.touch>>.
+
 * Any page can touch another page. The touching page doesn't have to be tracked. <<field cyoa.imply>> however, requires that the both the implying and implied pages are part of the same page group.
 * If there may exist any circumstance where a page might not be set, but a page it would implies is, then you must rely on <<field cyoa.touch>>
+* If you're using [[versioning|Configuration/Versioning]], implication relationships cannot be dismantled without creating a backward-incompatible change. This is not the case for <<field cyoa.touch>>.
 
 Two final notes:
 
 * Pages cannot imply any pages which in turn imply itself. (<<page A>> cannot imply <<page B>> if <<page B>> implies <<page A>>, directly or indirectly.) Doing so will result in a warning at compile time, and the implication relationship will be discarded.
-* Pages cannot imply any page with which it share an exclusion set. (<<page A>> cannot imply <<page B>> if both <<page A>> and <<page B>> are in exclusion set <<page items>>.) This also results in a compile-time warning and the relationship is discarded.
+* Pages cannot imply any page with which it shares an exclusion set. (<<page A>> cannot imply <<page B>> if both <<page A>> and <<page B>> are in exclusion set <<page items>>.) This also results in a compile-time warning and the relationship is discarded.
 
 
-In Tiddlymap, it's represented with a curved dotted olive-green edge, but this can be customized.
+In Tiddlymap, implications are represented with a curved dotted olive-green edge, but this can be customized.
 
 
-See the [[tutorial|Tutorial 8]] for more details on how <<field cyoa.imply>> functions.
+See the [[tutorial on implications|Tutorial 8]] for more details on how <<field cyoa.imply>> functions.
