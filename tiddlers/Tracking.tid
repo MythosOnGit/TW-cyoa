@@ -13,7 +13,7 @@ tmap.id: 97943000-8c67-43fb-9701-6e4d37a85d5b
 
 ! Groups
 
-All tracked tiddlers must belong to a page group. Pages in a group will have some form of representation in the generated cyoa's URI. Unless otherwise specified, they will be added to the default group.
+All tracked tiddlers must belong to a page group. Pages in a group will have some form of representation in the generated cyoa's URL. Unless otherwise specified, they will be added to the default group.
 
 !! Default group (and automatic tracking)
 

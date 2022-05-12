@@ -10,7 +10,7 @@ The contrapositive is also true, if any pages that this page implies are ''not''
 Implications are an alternative to having a page touch another. There are several advantages to implications over using <<flink TouchField>>.
 
 * Implications are always enforced. If page <<page A>> implies <<page B>> then it is impossible for <<page A>> to be set, and <<page B>> not to be. Using <<field cyoa.touch>> might not guarantee such a relationship if other pages potentially touch <<page A>> without knowing about its relationship to <<page B>>.
-* Implications help <<plugin>> minimize the size of your story's [[URI query string]]. For example, if <<page A>> implies <<page B>> there's no need to represent <<page B>> in the URI if <<page A>> is set.
+* Implications help <<plugin>> minimize the size of your story's [[URL query string|URL Query String]]. For example, if <<page A>> implies <<page B>> there's no need to represent <<page B>> in the URL if <<page A>> is set.
 
 There are some reasons to prefer <<field cyoa.touch>>.
 

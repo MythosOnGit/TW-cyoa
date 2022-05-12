@@ -1,0 +1,14 @@
+tags: Concepts
+title: URL Query String
+tmap.id: f7600edb-cdda-4632-87f2-9b638229fb46
+
+<<plugin>> stores the entire state for your story inside the URL's query string.
+
+```
+https://mySite/myAdventure.html?state=x4ftE3&stack=page1.page2#page5
+```
+: It's the part after the `?` and before the `#`.
+
+The advantage of storing your story's state in this way is it removes the need for any cookies, or downloads, or special javascript saving features. A reader can resume your story at the exact location and state simply by revisiting the same URL. Saving progress is as simple as bookmarking a page, and readers can backtrack in a story simply by hitting their browser's "Back" button. It's simplicity itself.
+
+If there's any downside to this, it's that query strings can be limited in length in some browsers. This limit is usually pretty generous, but regardless, <<plugin>> goes to great lengths to compress the query string as much as possible. For instance, the default behavior for all state in your story is stored in a bitfield assigned to the query-string value "state". This bitfield is highly optimized using all [[Implications|ImplyField]] and [[Exclusions|ExcludeField]] to remove any impossible states and represent only the bare minimum necessary.

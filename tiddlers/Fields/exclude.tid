@@ -8,7 +8,7 @@ The <<field cyoa.exclude>> field specifies a [[title list|https://tiddlywiki.com
 Exclusion sets are an alternative to having a page reset another. There are several advantages to implications over using <<flink TouchField>>.
 
 * Exclusion sets are automatic. If page <<page A>> is in exclusion set <<page items>> then it is impossible for <<page A>> to be set if any other page in <<page items>> already are. The field <<field cyoa.reset>> can emulate this using a standard [[TiddlyWiki tag|https://tiddlywiki.com/#Tagging]] (i.e. cyoa.reset=<<value [tag[items]]>>), but if any pages in <<page items>> were touched by an outside page, that outside page might not remember to reset all other pages in <<page items>>.
-* Exclusion sets help <<plugin>> minimize the size of your story's [[URI query string]] for any page groups using bitfield serialization (which is the default).
+* Exclusion sets help <<plugin>> minimize the size of your story's [[URL query string|URL Query String]] for any page groups using bitfield serialization (which is the default).
 
 There are some reasons to prefer <<field cyoa.reset>>.  
 
