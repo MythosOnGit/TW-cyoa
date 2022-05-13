@@ -1,9 +1,9 @@
-cyoa.append: [[Demo 7/actions]]
-cyoa.after: [[Demo 7/small]]
+cyoa.append: Demo_7/actions
+cyoa.after: Demo_7/small
 cyoa.caption: Enjoy the carnival rides.
 cyoa.only: first
-tags: [[Demo 7/actions]]
-title: Demo 7/ride
+tags: Demo_7/actions
+title: Demo_7/ride
 tmap.id: e478f0db-6961-45e5-b914-e6bf6305eb90
 
 <<annotate """
@@ -12,9 +12,9 @@ This page does something noteworthy.
 
 In theory, there's no reason why the reader can't ride the carnival rides over and over. That would mean the reader could click on the "{{!!cyoa.caption}}" link more than once, but doing so would result in the //exact// same page presentation each time. The reader might not realize anything happened at all, and they might think the story is broken. This is bad.
 
-Instead, this page is "first only", and you'll see that [[Demo 7/actions]] actually resets this. What this does is it makes it so that the link can be clicked many times, but //not twice in a row//. At least one other thing has to happen between carnival rides. This way, no repeat pages.
+Instead, this page is "first only", and you'll see that [[Demo_7/actions]] actually resets this. What this does is it makes it so that the link can be clicked many times, but //not twice in a row//. At least one other thing has to happen between carnival rides. This way, no repeat pages.
 
-This works because pages and nodes perform their touches and resets after all their interal content is process. So <<page "Demo 7/actions">> resets this page only after it's rendered its <<wlink OptionsWidget>> once without it.
+This works because pages and nodes perform their touches and resets after all their interal content is process. So <<page Demo_7/actions>> resets this page only after it's rendered its <<wlink OptionsWidget>> once without it.
 """>>
 
 Now that you're small enough, you go outside the tent and enjoy the rollercoaster rides. It's great fun, and you return to the tent exhausted. Somehow, a day has passed, yet it seems like only a few hours have. It all seemed like a blur.

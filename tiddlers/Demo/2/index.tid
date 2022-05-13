@@ -1,5 +1,5 @@
 tags: Demo
-title: Demo 2
+title: Demo_2
 caption: Demo 2: Turn to Page X
 cyoa.caption: Demo 2: Turn to Page X
 tmap.id: 49c3c0b2-2fdc-4221-8b09-b38640a202cf
@@ -37,7 +37,7 @@ Tiddlywiki has a diverse and flexible markup language called wikitext, and all o
 """ >>
 <<<
 
-[[Enter the door.|Demo 2/goblin]]
+[[Enter the door.|Demo_2/goblin]]
 
 <<annotate """
 

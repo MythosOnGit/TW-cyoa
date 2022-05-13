@@ -1,7 +1,7 @@
 tags: Demo
-title: Demo 5
+title: Demo_5
 caption: Demo 5: Before and After
-cyoa.append: [[Demo 5/topics]]
+cyoa.append: Demo_5/topics
 cyoa.caption: Demo 5: Before and After
 tmap.id: 5b076475-b308-4653-ac5a-6baf5eafcf9a
 

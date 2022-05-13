@@ -1,5 +1,5 @@
-title: Demo 4/dagger
-cyoa.append: [[Demo 4/exhibits]]
+title: Demo_4/dagger
+cyoa.append: Demo_4/exhibits
 cyoa.caption: Take a dagger.
 cyoa.only: first
 tmap.id: 327d8a94-58b1-4e4d-ae06-674f5cbd187f

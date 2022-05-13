@@ -1,5 +1,5 @@
 tags: Demo
-title: Demo 3
+title: Demo_3
 caption: Demo 3: Append and Transclude
 cyoa.caption: Demo 3: Appending and Transcluding
 tmap.id: 0e14191d-a76a-4c89-8656-f2f254882a35
@@ -12,6 +12,6 @@ You find yourself before an Aztec-style temple with two massive doors before you
 
 ''"Choose your trial,"'' says a disembodied booming voice.
 
-[[Choose the Path of Passion.|Demo 3/passion]]
+[[Choose the Path of Passion.|Demo_3/passion]]
 
-[[Choose the Path of Reason.|Demo 3/reason]]
+[[Choose the Path of Reason.|Demo_3/reason]]

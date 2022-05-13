@@ -1,14 +1,14 @@
-cyoa.append: [[Demo 8/actions]]
+cyoa.append: Demo_8/actions
 cyoa.caption: Approach the blue tent.
-cyoa.exclude: [[Demo 8/tent]]
+cyoa.exclude: Demo_8/tent
 cyoa.only: first
 name: Blue Starlets
-title: Demo 8/blue
+title: Demo_8/blue
 tmap.id: 72cddba5-a34b-4577-aba0-091020ef7d4f
 
 You approach the tent of the Blue Starlets. This group is largely made up of women, who stretch and prepare themselves for dance routines of astonishing grace and beauty. If this is a dance-off, they seem like clear winners.
 
 <<annotate """
 
-Like the other two "tent" pages, this is a member of the <<page "Demo 8/tent">> exclusion set, which means that once this is visited, the other two automatically reset. Effectively, the protagonist can only be standing under one tent at a time.
+Like the other two "tent" pages, this is a member of the <<page "Demo_8/tent">> exclusion set, which means that once this is visited, the other two automatically reset. Effectively, the protagonist can only be standing under one tent at a time.
 """ >>

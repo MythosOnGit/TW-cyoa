@@ -1,2 +1,2 @@
-filter: [[Demo 3]] [prefix[Demo 3/]]
+filter: [[Demo_3]] [prefix[Demo_3/]]
 title: $:/plugins/felixhayashi/tiddlymap/graph/views/Demo 3: Append and Transclude/filter/nodes

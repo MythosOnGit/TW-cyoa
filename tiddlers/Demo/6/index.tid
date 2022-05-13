@@ -1,7 +1,7 @@
 tags: Demo
-title: Demo 6
-caption: Demo 6: Touch and Reset
-cyoa.caption: Demo 6: Touch and Reset
+title: Demo_6
+caption: Demo_6: Touch and Reset
+cyoa.caption: Demo_6: Touch and Reset
 tmap.id: cc253232-a09d-409c-8327-e17e214d9f7d
 
 \define return() [[Return.|Demo]]
@@ -10,7 +10,7 @@ tmap.id: cc253232-a09d-409c-8327-e17e214d9f7d
 
 This demo corresponds to <<other Demo Tutorial>>.""" >>
 
-<$cyoa before="[[Demo 6/troll]]" >
+<$cyoa before="Demo_6/troll" >
 
 After spending a night in a friar, you set out in the morning and hike until you come upon a town. It seems everyone who lives here is crowded on the road just outside. People look fearful.
 
@@ -22,7 +22,7 @@ Children cry. Old women pray. Men talk about how they'd do something about it, b
 
 You feel compelled to do something about this.
 
-[[Go into town and do something about this.|Demo 6/troll]]
+[[Go into town and do something about this.|Demo_6/troll]]
 </$cyoa>
 <$else>
 
@@ -35,7 +35,7 @@ You return to the townsfolk.
 This is the first occurrence in these demos of nested active nodes. If you weren't aware already, nodes can be nested indefinitely. Inner nodes are only evaluated and possibly rendered if their containing node evaluated true.
 """ >>
 
-<$cyoa before="[[Demo 6/victory]]">
+<$cyoa before="Demo_6/victory">
 
 "It is," you say.
 
@@ -43,7 +43,7 @@ The crowd groans in despair.
 
 "Please," the woman asks. "Can you help us?"
 
-[[Return to the town square.|Demo 6/troll]]
+[[Return to the town square.|Demo_6/troll]]
 </$cyoa><$else>
 
 "No," you say. "I have gotten rid of the troll."
@@ -54,7 +54,7 @@ Congratulations. You have complete a most frightful quest.
 
 <<annotate """
 
-In this case, the starting page of this adventure is also the ending page, but if you examine the <<wlink ElseWidget>> chain, you'll see it's only reachable if both <<tid "Demo 6/troll">> and <<tid "Demo 6/victory">> is visited.
+In this case, the starting page of this adventure is also the ending page, but if you examine the <<wlink ElseWidget>> chain, you'll see it's only reachable if both <<tid "Demo_6/troll">> and <<tid "Demo_6/victory">> is visited.
 """ >>
 
 <!--	HEY READER

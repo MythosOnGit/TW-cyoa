@@ -1,14 +1,14 @@
-title: Demo 8/actions
+title: Demo_8/actions
 tmap.id: 7401cc29-54d2-4c98-9a9c-d25fe6672733
 
 <<annotate """
 
 Here we provide a list to each "colored tent" option.
 
-We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Demo 8/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<page "Demo 8/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
+We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Demo_8/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<page "Demo_8/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
 """ >>
 
-<$options filter="[[Demo 8/tent]listed[cyoa.exclude]]"/>
+<$options filter="[[Demo_8/tent]listed[cyoa.exclude]]"/>
 
 <<annotate """
 
@@ -17,6 +17,6 @@ Below is a link which should appear only if ''any'' of "colored tent" pages have
 We test that //all// of the "colored tent" pages are ''not'' visited in a [[control node]], and then we have an <<wlink ElseWidget>> right after it which is the actual link. Therefore, the link shows if "all of the tent pages are not visited" is //not// true, or in other words, the opposite: "any of the tent pages are visited".
 """ >>
 
-<$cyoa before="[[Demo 8/tent]listed[cyoa.exclude]]"/>
+<$cyoa before="[[Demo_8/tent]listed[cyoa.exclude]]"/>
 
-<$else to="Demo 8/end"/>
+<$else to="Demo_8/end"/>

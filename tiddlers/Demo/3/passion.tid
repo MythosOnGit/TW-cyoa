@@ -1,11 +1,11 @@
-title: Demo 3/passion
+title: Demo_3/passion
 statue: a paunchy office employee
 tmap.id: a4d7bf08-a664-46ad-a516-c5ef05c42009
 
 You follow the hall into the dark until arriving at the precipice of a large chasm. The only way across is by hopping along the tops of narrow columns. You deftly jump from one to the other. Across the chasm is an altar, upon which is a temple key, but to reach it you have to climb along the hall's wall over the abyss. Traps inset in the wall fire poisonous darts. Gargoyal statues spew fire when you pass before them, but finally you reach the other side.
 
-{{||Demo 3/treasure}}
+{{||Demo_3/treasure}}
 
 However, it rests upon a pressure plate, and you're sure some trap will initiate once you take it.
 
-[[Take the treasure.|Demo 3/escape]]
+[[Take the treasure.|Demo_3/escape]]

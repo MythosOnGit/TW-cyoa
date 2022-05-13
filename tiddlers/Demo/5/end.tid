@@ -1,5 +1,5 @@
-title: Demo 5/end
-tags: [[Demo 5/topics]]
+title: Demo_5/end
+tags: Demo_5/topics
 list-after: 
 cyoa.caption: "I must continue on my way."
 tmap.id: 5f6e910f-970c-436a-9b9f-705088778f48
@@ -10,11 +10,11 @@ You bid the man good day and continue walking until coming upon an small friary 
 
 <<annotate """This tiddler demonstrates an <<widget else>> chain...""" >>
 
-<$cyoa after="[[Demo 5/trade]]">
+<$cyoa after="Demo_5/trade">
 
 <<annotate """
 
-This block (block A) only shows up if [[Demo 5/trade]] is visited.
+This block (block A) only shows up if [[Demo_5/trade]] is visited.
 """ >>
 
 "Ah!" He notes the old coin necklace about your neck. "That's Oleg's coin, isn't it?"
@@ -23,11 +23,11 @@ This block (block A) only shows up if [[Demo 5/trade]] is visited.
 
 "You're most generous. Please, I insist you rest here at the friar tonight. It's late, and we always have room for good people such as yourself."
 </$cyoa>
-<$else before="[[Demo 5/who]] [[Demo 5/greet]]">
+<$else before="Demo_5/who Demo_5/greet">
 
 <<annotate """
 
-This block (block B) is an <<widget else>> block. It only shows up if block A evaluated false ''and'' [[Demo 5/who]] and [[Demo 5/greet]] are not visited.
+This block (block B) is an <<widget else>> block. It only shows up if block A evaluated false ''and'' [[Demo_5/who]] and [[Demo_5/greet]] are not visited.
 """ >>
 
 "Excuse me," he says. "You wouldn't happen to have run across Oleg on your way, have you?"

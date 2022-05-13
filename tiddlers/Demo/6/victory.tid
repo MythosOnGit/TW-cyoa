@@ -1,5 +1,5 @@
 tags: [[Virtual Page]]
-title: Demo 6/victory
+title: Demo_6/victory
 tmap.id: f2fd3ff1-5828-4008-9002-ad9fe21d6700
 
 \define tv-config-toolbar-class() tc-btn-invisible tc-page-controls
@@ -8,7 +8,7 @@ This flag indicates that troll has been defeated in some way.
 
 <<annotate """
 
-This page is touched by two places. The first is the page [[Demo 6/stab]], which is visually represented on the Tiddlymap graph. The second touch is a widget inside of [[Demo 6/throw]], but since it's an internal widget and not the page itself, it's not reflected on Tiddlymap, and thus it's not readily apparent that it's touch in two places.
+This page is touched by two places. The first is the page [[Demo_6/stab]], which is visually represented on the Tiddlymap graph. The second touch is a widget inside of [[Demo_6/throw]], but since it's an internal widget and not the page itself, it's not reflected on Tiddlymap, and thus it's not readily apparent that it's touch in two places.
 
 For more comprehensive info about what pages interact with this one, click on the info button of this tiddler:
 <div style="text-align:center;">

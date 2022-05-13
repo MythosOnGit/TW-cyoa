@@ -1,10 +1,12 @@
-title: Demo 3/depart
-cyoa.append: [[Demo 3/end]]
+title: Demo_3/depart
+cyoa.append: [[Demo_3/way out]]
 tmap.id: 426391fa-48d8-4900-ac4c-2a57de68268a
 
 With the statue in hand, you continue along the hallway. It's featureless apart from a few potted plants and motivational posters along the wall.
 
 <<annotate """
 
-This tiddler appends [[Demo 3/end]] in its <<flink AppendField>> field. Since [[Demo 3/end]] has a space in it, it's wrapped in double brackets. This is because cyoa.append accept multiple values for reasons that'll be explained in later tutorials.
+This tiddler appends [[Demo_3/way out]] in its <<flink AppendField>> field. Since <<page "Demo_3/way out">> has a space in it, [[it must be wrapped in double brackets|Pages with Spaces]]. (This is because <<field cyoa.append>> accepts multiple values for reasons that'll be explained in later tutorials.)
+
+Most pages in these demos will not contain spaces so that this is not necessary. I recommend you avoid spaces as well. They're allowed, but they can be troublesome.
 """ >>

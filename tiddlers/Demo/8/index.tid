@@ -1,7 +1,7 @@
 tags: Demo
-title: Demo 8
+title: Demo_8
 caption: Demo 8: Exclusions
-cyoa.append: [[Demo 8/actions]]
+cyoa.append: Demo_8/actions
 cyoa.caption: Demo 8: Exclusions
 tmap.id: 8341c683-124b-4eba-a0c4-db1e971273c2
 

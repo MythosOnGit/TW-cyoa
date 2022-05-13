@@ -1,7 +1,7 @@
-title: Demo 5/trade
-tags: [[Demo 5/topics]]
-cyoa.after: [[Demo 5/why]] [[Demo 4/gem]]
-cyoa.append: [[Demo 5/topics]]
+title: Demo_5/trade
+tags: Demo_5/topics
+cyoa.after: Demo_5/why Demo_4/gem
+cyoa.append: Demo_5/topics
 cyoa.caption: "Would you be interested in this Incan gem?"
 cyoa.only: first
 tmap.id: dd5f2c54-a2d6-4cbd-a416-6b7e913134bb
@@ -12,7 +12,7 @@ His eyes boggle at the sight of the emerald-encrusted bracelet. Taking it, bows 
 
 <<annotate """
 
-This tiddler must come after //two// others, and one of them is [[Demo 4/gem]], which isn't normally a part of this demo's view, but it still shows up as a shadowy version of itself because the view's neighbourhood scope is set to "1 step distance".
+This tiddler must come after //two// others, and one of them is [[Demo_4/gem]], which isn't normally a part of this demo's view, but it still shows up as a shadowy version of itself because the view's neighbourhood scope is set to "1 step distance".
 
 This is a useful trick if you decide to split you decide to split your project into multiple views. Tiddlymap will recognize edges that connect outside the view and show them anyway.
 

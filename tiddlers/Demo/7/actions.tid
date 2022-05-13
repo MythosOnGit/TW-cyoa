@@ -1,5 +1,5 @@
-title: Demo 7/actions
-cyoa.reset: [[Demo 7/ride]]
+title: Demo_7/actions
+cyoa.reset: Demo_7/ride
 tmap.id: da8e13f9-8ab4-4627-8218-55f989befeeb
 
 <$options />

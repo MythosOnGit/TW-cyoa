@@ -1,5 +1,5 @@
-title: Demo 4/gem
-cyoa.append: [[Demo 4/exhibits]]
+title: Demo_4/gem
+cyoa.append: Demo_4/exhibits
 cyoa.caption: Take a gem.
 cyoa.only: first
 tmap.id: 4e77f7e2-f866-4a58-8198-d6494b98a42a

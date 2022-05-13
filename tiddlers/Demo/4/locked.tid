@@ -1,4 +1,4 @@
-title: Demo 4/locked
+title: Demo_4/locked
 cyoa.only: first
 tmap.id: a8e66db9-1cff-448c-aada-72e0cd4ef8e3
 
@@ -6,7 +6,7 @@ You reach the museum exit. Unfortunately, door out is locked. A sign indicates t
 
 <<annotate """
 
-This link is using an <<wlink OptionsWidget>> widget, even though it's for only one option, and that option isn't tracked. The reason for this is because <<widget options>> automatically fetches [[Demo 4/atrium]]'s <<flink CaptionField>> for the caption. This way, "Return to the atrium." doesn't have to be copy-pasted.
+This link is using an <<wlink OptionsWidget>> widget, even though it's for only one option, and that option isn't tracked. The reason for this is because <<widget options>> automatically fetches [[Demo_4/atrium]]'s <<flink CaptionField>> for the caption. This way, "Return to the atrium." doesn't have to be copy-pasted.
 """ >>
 
-<$options filter="[[Demo 4/atrium]]" />
+<$options filter="Demo_4/atrium" />

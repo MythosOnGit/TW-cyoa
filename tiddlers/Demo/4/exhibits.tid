@@ -1,5 +1,5 @@
-tags: [[Demo 4/atrium]]
-title: Demo 4/exhibits
+tags: Demo_4/atrium
+title: Demo_4/exhibits
 cyoa.caption: Explore the exhibits.
 tmap.id: 09e077a1-83c7-4997-bef9-d2ae3bcf5fbe
 
@@ -14,7 +14,7 @@ Notice however that both "gem" and "dagger" are both flagged to only show once, 
 """ >>
 
 <$options filter="
-	[[Demo 4/dagger]]
-	[[Demo 4/gem]]
-	[[Demo 4/atrium]]
+	Demo_4/dagger
+	Demo_4/gem
+	Demo_4/atrium
 "/>

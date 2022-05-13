@@ -1,18 +1,18 @@
-cyoa.after: [[Demo 7/small]]
-cyoa.append: [[Demo 7/actions]]
-cyoa.reset: [[Demo 7/small]]
+cyoa.after: Demo_7/small
+cyoa.append: Demo_7/actions
+cyoa.reset: Demo_7/small
 cyoa.caption: Eat an "Eat Me" cookie.
 cyoa.only: visited
 list-before: 
-tags: [[Demo 7/actions]]
-title: Demo 7/cookie
+tags: Demo_7/actions
+title: Demo_7/cookie
 tmap.id: 2861b2da-2f70-46b9-955a-edd55c6dd65c
 
 You eat a cookie. With one quick "fwump", you're suddenly back to your original size. Convenient!
 
 <<annotate """
 
-This page is an example of when "only if visited" is used. It is implied by [[Demo 7/tiny]], where the cookies are introduced in the story. So when that page gets visited, this page automatically gets set too (and thus is now available).
+This page is an example of when "only if visited" is used. It is implied by [[Demo_7/tiny]], where the cookies are introduced in the story. So when that page gets visited, this page automatically gets set too (and thus is now available).
 
 Effectively, We're using the state of this page to represent when the cookies are discovered, not when they're eaten.
 """ >>

@@ -1,6 +1,6 @@
-tags: [[Demo 4/atrium]]
-title: Demo 4/exit
-cyoa.append: [[Demo 4/locked]] [[Demo 4/end]]
+tags: Demo_4/atrium
+title: Demo_4/exit
+cyoa.append: Demo_4/locked Demo_4/end
 cyoa.caption: Head to the exit.
 tmap.id: 7fbe80bf-eab3-4b6a-87f9-a1e2dd98b19c
 
@@ -13,5 +13,5 @@ In this case, it appends multiple pages, the first is only shown once, then the 
 
 <<annotate """
 
-Also, take note how this tiddler has a <<field list-after>> field with an empty-string value. This makes sure that it appears as the last option in any tag lists, such as the list of options in the <<wlink OptionsWidget>> widgets on [[Demo 4/atrium]]. This is the part of the [[Tiddlywiki way|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]] for ordering tag lists.
+Also, take note how this tiddler has a <<field list-after>> field with an empty-string value. This makes sure that it appears as the last option in any tag lists, such as the list of options in the <<wlink OptionsWidget>> widgets on [[Demo_4/atrium]]. This is the part of the [[Tiddlywiki way|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]] for ordering tag lists.
 """ >>
