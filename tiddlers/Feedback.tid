@@ -1,0 +1,15 @@
+caption: Feedback & Reporting Issues
+tags: Main
+title: Feedback
+tmap.id: 26604490-604b-4afb-b17f-76ec8194bf02
+
+<!-- Just a little obfuscations so the bots can't scrape my email. -->
+\define email(address) [ext[$address$|mailto:$address$]]
+
+If you have any questions about the documentation or how to use <<plugin>>, or if you'd just like to share your thoughts with me, you can contact me at <$macrocall $name="email" address={{{ mythos [enlist[nym hush com]join[.]] +[join[@]] }}} />.
+
+!! Reporting Issues
+
+<<plugin>> is still new. It's also capable of a lot more than what's documented here, but not all features are finalized yet.
+
+If you've encounter any bugs, or have any feature requests, please report them at the [[github project page|https://github.com/MythosOnGit/TW-cyoa]].
