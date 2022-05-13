@@ -6,5 +6,5 @@ As you suspect, the altar clicks when you take the statue. The hall rumbles, and
 
 <<annotate """
 
-This tiddler appends [[Demo 3/end]] in its <<flink AppendField>> field. Since [[Demo 3/end]] has a space in it, it's wrapped in double brackets. This is because cyoa.append accept multiple values for reasons that'll be explained in later tutorials.
+This tiddler appends [[Demo 3/end]] in its <<flink AppendField>> field. Since [[Demo 3/end]] has a space in it, it's wrapped in double brackets. This is because <<field cyoa.append>> accepts multiple values for reasons that'll be explained in later tutorials.
 """ >>

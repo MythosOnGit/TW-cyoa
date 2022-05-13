@@ -1,0 +1,19 @@
+title: Pages with Spaces
+tmap.id: 18ca884c-6c4e-4da1-96fb-10c4be0cfeaf
+
+
+All of <<plugin>>'s fields and attributes take either [[title lists|https://tiddlywiki.com/#Title%20List]] or [[filters|https://tiddlywiki.com/#Filters]]. This means they can accept multiple tiddlers. For instance, a <<field cyoa.after>> field might have a value of <<value "pageA pageB">> for pages <<page pageA>> and <<page pageB>>.
+
+However, this means that tiddlers with spaces must be treated with care.
+
+!! Wrapping titles
+
+If you have a tiddler called <<page "My page">>, you can't just put that into a field, or else it will think you're inputting pages <<page My>> and <<page page>>. Instead, you must wrap them in some form of quotation. The safest and most effective is double brackets, i.e. <<value "[[My page]]">>. If the field or attribute accepts filter values, you can also wrap your title in single quotes (`'`) or double quotes (`"`), but brackets are safer and more universal.
+
+A mixed list of tiddlers with spaces might look like: <<value "[[My page]] pageB [[Another page]]">>.
+
+!! Avoiding Spaces
+
+You can also just avoid using tiddlers with spaces in their title, and frankly, you probably should. Titles with spaces can trip you up in many places besides just cyoa fields and attributes.
+
+Perhaps use underscores instead. (i.e. <<value My_Page>>)

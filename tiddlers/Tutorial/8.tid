@@ -14,7 +14,7 @@ Instead, you can use an exclusion set. In our example, let's call this set <<pag
 
 ! How
 
-To specify that a given page should be in an exclusion set, give that page a <<field cyoa.exclude>> field that specifies a name. That, and any other pages which also have that name in their <<field cyoa.exclude>> field will all be together in an exclusion set by that name. Bear in mind that <<field cyoa.exclude>> is a list field, so any exclusion set with spaces in their name must be wrapped in brackets (e.g. `[[trade item]]`).
+To specify that a given page should be in an exclusion set, give that page a <<field cyoa.exclude>> field that specifies a name. That, and any other pages which also have that name in their <<field cyoa.exclude>> field will all be together in an exclusion set by that name. [[However, if your exclusion set names have spaces in them, you must list them a little more carefully.|Pages with Spaces]]
 
 In TiddlyMap, exclusions set are only represented if the a tiddler representing the exclusion set itself is on the graph. Salmon-colored dotted lines will connect any pages in that set to this exclusion tiddler. You can add other pages to this set by drawing edges from those pages to the exclusion tiddler and specifying an edge type of "tw-list:cyoa.exclude". If the exclusion set is not represented on a graph, you must manually add pages to the set by adding the field to the tiddler as described above.
 
