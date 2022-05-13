@@ -17,5 +17,5 @@ Compare this to [[Demo_5/greet]], the other introductory tiddler.
 
 They are equivalent. Another way of saying "Show this page only the first time," would be to say, "Show this page only //before// this page has been shown."
 
-Obviously. "Show this page only the first time." is easier to understand, which is why "Show only: first" exists. Also, in Tiddlymap, you get a nice red-orange border, instead of a weird self-referencing "before" line. However, it's useful understand this equivalency if you're ever do more advanced page constraints.
+Obviously. "Show this page only the first time." is easier to understand, which is why "Show only: first" exists. Also, in Tiddlymap, you get a nice red-orange border, instead of an unintuitive self-referencing "before" line. However, it's useful understand this equivalency if you're ever do more advanced page constraints.
 """ >>
