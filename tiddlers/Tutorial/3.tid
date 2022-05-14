@@ -28,8 +28,6 @@ Edit page <<page Left>>. In the "Add a new field" text-boxes at the bottom of th
 
 Now let's set up page <<page Right>> to append <<page Merge>>. If you're using TiddlyMap, appending is represented with solid blue edges, and you probably saw just a line appear after creating the append between <<page Left>> and <<page Merge>> above. You can actually draw these edges visually. Let's do that. Clicking on {{$:/plugins/felixhayashi/vis/img/network/connectIcon.png}} ''Add Edge'' above the tiddlymap view, and then drag a line from nodes <<page Right>> to <<page Merge>>. In the resulting "Edge type specification" popup, specify `tw-filter:cyoa.append` and click ''OK''. That's it. <<page Right>> will now append <<page Merge>> in your generated CYOA. This created the <<field cyoa.append>> field automatically.
 
-<<note "You cannot delete append edges through TiddlyMap. You must edit the tiddler and remove the title from the <<field cyoa.append>> field. This is because of a limitation concerning TiddlyMap and filter-type edges.">>
-
 !!! Longer page runs
 
 Additionally, page <<page Merge>> can append another page itself, like <<page Farther_Along>>, and thus when page <<page Left>> is visited, pages <<page Left>>, <<page Merge>>, and <<page Farther_Along>> will all appear in the page run.
