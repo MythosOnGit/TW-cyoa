@@ -1,0 +1,16 @@
+cyoa.append: Logic2/topics
+tags: Demo
+title: Logic2/start
+tmap.id: 5b076475-b308-4653-ac5a-6baf5eafcf9a
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates the use of <<field cyoa.before>> and <<field cyoa.after>> in pages, and as <<attr before>> and <<attr after>> attributes to <<widget cyoa>> widgets.
+""" >>
+
+You find yourself on a wooded path. Walking along, you eventually come upon an old wooden bridge crossing over a cragged chasm. In the middle is an old man leaning against the rail.
+
+"Hello," he says.

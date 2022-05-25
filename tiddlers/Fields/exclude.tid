@@ -1,7 +1,8 @@
-tags: Fields
 caption: cyoa.exclude
+tags: Fields
 title: ExcludeField
 tmap.id: ca652982-8119-4d72-b5b3-9a02722fbbb7
+type: text/vnd.tiddlywiki
 
 The <<field cyoa.exclude>> field specifies a [[title list|https://tiddlywiki.com/#Title%20List]] of names which specify exclusion sets. For each exclusion set, only one page in that set can be set at once. That means that if the current page is [[set|Tracking]], all pages in any exclusion sets it's a member of are unset.
 
@@ -18,9 +19,9 @@ There are some reasons to prefer <<field cyoa.reset>>.
 Some final notes:
 
 * Pages cannot be in an exclusion set together if either implies the other. (<<page A>> cannot imply <<page B>> if both <<page A>> and <<page B>> are in exclusion set <<page items>>.) This also results in a compile-time warning.
-* Exclusion sets can be named anything. They don't have to correspond to tiddlers, but it's a good idea of they do. This also allows them to be reflected in [[TiddlyMap|Plugins/TiddlyMap]]. A page can even be in an exclusion set named after itself.
+* Exclusion sets can be named anything. They don't have to correspond to tiddlers, but it's a good idea of they do. This also allows them to be reflected in TiddlyMap. A page can even be in an exclusion set named after itself.
 * Otherwise, pages can be in any number of exclusion sets, and these exclusion sets can overlap with each other in any way you can conceive.
 
 In Tiddlymap, exclusions are represented with a curved dotted salmon-orange edge, but this can be customized.
 
-See the [[tutorial|Tutorial 8]] for more details on how <<field cyoa.exclude>> functions.
+See the [[tutorial|Logic5]] for more details on how <<field cyoa.exclude>> functions.

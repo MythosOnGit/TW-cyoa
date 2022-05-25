@@ -1,0 +1,74 @@
+cyoa.caption: "I must continue on my way."
+list-after: 
+tags: Logic2/topics
+title: Logic2/end
+tmap.id: 5f6e910f-970c-436a-9b9f-705088778f48
+type: text/vnd.tiddlywiki
+
+\define return() [[Return.|Demo]]
+
+You bid the man good day and continue walking until coming upon an small friary just as dusk settles in. A friar is out front dusting the steps with a broom.
+
+<<annotate """This tiddler demonstrates an <<widget else>> chain...""" >>
+
+
+
+<$cyoa after="Logic2/trade">
+
+<<annotate """
+
+This block (block A) only shows up if [[Logic2/trade]] is visited.
+""" >>
+
+"Ah!" He notes the old coin necklace about your neck. "That's Oleg's coin, isn't it?"
+
+"It is," you reply. "He gave it to me in exchange for gems he could sell to pay for medicine."
+
+"You're most generous. Please, I insist you rest here at the friar tonight. It's late, and we always have room for good people such as yourself."
+</$cyoa>
+
+
+
+<$else before="Logic2/who Logic2/greet">
+
+<<annotate """
+
+This block (block B) is an <<widget else>> block. It only shows up if block A evaluated false ''and'' [[Logic2/who]] and [[Logic2/greet]] are not visited.
+""" >>
+
+"Excuse me," he says. "You wouldn't happen to have run across Oleg on your way, have you?"
+
+"Not that I know of."
+
+"Oh well. Come in, come in. You should stay here for the night before the wolves come out, but you'll need to stay in the cellar."
+</$else>
+
+
+
+<$else>
+
+<<annotate """
+
+This block (block C) is the second <<widget else>> block in a row. It only shows up if neither block A nor block B evaluated true. It has no other constraints. So between the three blocks, ''one'' of them will render.
+
+See the <<wlink ElseWidget>> page for more information on how these widgets work.
+""" >>
+
+"Excuse me," he says. "You wouldn't happen to have run across Oleg on your way, have you?"
+
+"I did," you reply. "I found him panning for gems. We had a pleasant talk."
+
+"It's good to hear he's safe. Now please, come in before it gets dark. A friend of Oleg's is a friend of mind. You can stay in one of our dorms."
+</$else>
+
+
+
+Congratulations. You reached safety. Your adventure is now complete.
+
+<!--	HEY READER
+	If you're looking at this and wondering what this "<<return>>" is
+	about, it's a macro wrapping the link back to the main demo page
+	so that Tiddlymap doesn't recognize the link and create a neighboring
+	edge which will clutter my "Demo 5" graph.
+-->
+<<return>>

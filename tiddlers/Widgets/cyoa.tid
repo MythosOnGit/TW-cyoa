@@ -2,8 +2,7 @@ caption: cyoa
 tags: Widgets
 title: CyoaWidget
 tmap.id: 35112453-ceaa-4aa9-ab2b-6c5b37cc2723
-
-! Introduction
+type: text/vnd.tiddlywiki
 
 The <<widget cyoa>> widget creates a customizable [[Active Node]] which can manage the logical flow of your generated cyoa novel. Its attributes allow for many different kinds of constraints or actions, as well as creating links or other types of html elements.
 

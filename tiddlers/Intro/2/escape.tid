@@ -1,0 +1,16 @@
+cyoa.caption: 
+tags: Demo
+title: Intro2/escape
+tmap.id: 49c3c0b2-2fdc-4221-8b09-b38640a202cf
+type: text/vnd.tiddlywiki
+
+You search back the way you came, but the door to the arena is sealed. It seems the arena is the only place you can go.
+
+[[Return to the arena.|Intro2/start]]
+
+<<annotate """
+
+This link "Return to the arena." takes you back to the previous page.
+
+Links between your pages can freely loop. They do not always have to go to new pages.
+""" >>

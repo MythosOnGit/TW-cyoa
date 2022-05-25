@@ -1,0 +1,3 @@
+filter: [prefix[Flow2/]] [field:tmap.id[c6b956df-de70-43f5-a464-add3c220e927]]
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Flow 2: Options Lists/filter/nodes
+type: text/vnd.tiddlywiki

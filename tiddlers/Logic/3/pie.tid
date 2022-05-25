@@ -1,0 +1,13 @@
+tags: [[Virtual Page]]
+title: Logic3/pie
+tmap.id: 1a5bcead-3e00-43a1-875c-1ab9b666a6fe
+type: text/vnd.tiddlywiki
+
+This page indicates whether the reader has a pie or not. It is never visited, only touched and reset.
+
+<<annotate """
+
+This is a [[Virtual Page]]. That means this demo project is configured to exclude this page from the build. There's no reason to include it since it's never visited, and all the manipulation of it is done from other pages.
+
+If you're looking at this in Tiddlymap, <<plugin>> shows virtual pages as dots by default, but this can be configured in the Tiddlymap "Manage node-types" menu.
+""" >>

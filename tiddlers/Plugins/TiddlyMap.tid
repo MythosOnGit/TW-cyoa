@@ -1,8 +1,8 @@
 caption: ~TiddlyMap
 tags: Plugins
-template: Templates/plugins
-title: Plugins/TiddlyMap
+title: TiddlyMap
 tmap.id: c66fe77e-ab51-49b3-bc94-e7541f283b1c
+type: text/vnd.tiddlywiki
 
 \define plugin() $:/plugins/felixhayashi/tiddlymap
 \define source() http://tiddlymap.org/

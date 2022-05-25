@@ -1,0 +1,18 @@
+cyoa.append: Logic3/troll
+cyoa.before: Logic3/pie
+cyoa.caption: Search the tossed vendor tables.
+cyoa.only: first
+cyoa.touch: Logic3/pie
+tags: Logic3/troll
+title: Logic3/search
+tmap.id: 5d399b65-48d7-47c1-8843-f541010310f9
+type: text/vnd.tiddlywiki
+
+Among the tossed vendor tables is one which was covered in all manner of pastries. It seems one pie has survived. It smells fresh and delicious.
+
+You take it. Maybe there's a bakery about with more.
+
+<<annotate """
+
+Simply by visiting this page, [[Logic3/pie]] will be touched, which represents the reader possessing a pie.
+""" >>

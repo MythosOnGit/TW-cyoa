@@ -1,8 +1,8 @@
 caption: Relink
 tags: Plugins
-template: Templates/plugins
-title: Plugins/Relink
+title: Relink
 tmap.id: f2b5cbaf-11b6-447f-a70e-1ce08d4fc512
+type: text/vnd.tiddlywiki
 
 \define plugin() $:/plugins/flibbles/relink
 \define source() https://flibbles.github.io/tw5-relink/

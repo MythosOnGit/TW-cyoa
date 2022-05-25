@@ -1,0 +1,19 @@
+tags: 
+title: Flow1/end
+tmap.id: b769a77b-b253-4d90-8d7f-418c9c9d995c
+type: text/vnd.tiddlywiki
+
+You proceed through the door and down a hall. Eventually, it steps out into sunlight. You're outside.
+
+Congratulations. You have escaped the temple having survived its trials (presumably).
+
+[[Proceed back to the lobby.|Demo]]
+
+<<annotate """
+
+Appended pages are still pages. They can be linked to directly, just as [[Flow1/start]] does to this page.
+
+Not only does appending allow you to reuse pages as parts of other pages, but it reduces duplication in your generated interactive novel too.
+
+Despite how <<page Flow1/end>> is both linked to and appended, it only appears once in your generated file, thus keeping file size down.
+""" >>

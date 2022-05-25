@@ -1,6 +1,7 @@
 tags: Concepts
 title: Tracking
 tmap.id: 97943000-8c67-43fb-9701-6e4d37a85d5b
+type: text/vnd.tiddlywiki
 
 \rules except wikilink
 
@@ -17,6 +18,8 @@ All tracked tiddlers must belong to a page group. Pages in a group will have som
 
 !! Default group (and automatic tracking)
 
-<<plugin>> will create and maintain states for any pages that require tracking. It does this by examining the all tiddlers during compile. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. If other tiddlers depend on one using "cyoa.after" fields, then that tiddler will be added. And so forth.
+<<plugin>> will create and maintain states for any pages that require tracking. It does this by examining the all tiddlers during compile. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. If other tiddlers list a given pages in a <<field cyoa.after>> fields, then that page will be tracked. And so forth.
 
-It does a fairly good job of figuring out what tiddlers need to be tracked, and which don't, but some complicated wikitext can confuse it. For instance, given: `<$tiddler tiddler="TrickyPage"><$cyoa after="[all[current]]"/></$tiddler>`, the engine won't figure out that "TrickyPage" needs to be tracked, and you'll get a warning at compile time. To remedy this, explicitly add TrickyPage to the default group using the tiddler's edit options under the {{Buttons/edit-template}} menu.
+It does a fairly good job of figuring out what tiddlers need to be tracked, and which don't, but some complicated wikitext can confuse it. For instance, given: `<$tiddler tiddler="TrickyPage"><$cyoa after="[all[current]]"/></$tiddler>`, the engine won't figure out that "TrickyPage" needs to be tracked, and you'll get a warning at compile time. To remedy this, explicitly add TrickyPage to the default group using the tiddler's edit options under the cyoa menu:
+
+: {{$:/plugins/mythos/cyoa/ui/EditTemplate/group}}

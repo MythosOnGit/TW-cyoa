@@ -1,0 +1,5 @@
+config.central-topic: 
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Intro 1: Hello Adventure
+type: text/vnd.tiddlywiki

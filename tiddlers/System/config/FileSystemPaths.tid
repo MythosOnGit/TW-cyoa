@@ -2,5 +2,8 @@ title: $:/config/FileSystemPaths
 type: text/vnd.tiddlywiki
 
 [is[draft]removeprefix[Draft of ']removesuffix[']addprefix[_drafts/]]
-[is[system]removeprefix[$:/]addprefix[_system/]]
-[all[]]
+[removesuffix[Field]lowercase[]addprefix[Fields/]]
+[removesuffix[Widget]lowercase[]addprefix[Widgets/]]
+[tag[Plugins]lowercase[]addprefix[Plugins/]]
+[tag[Tutorials]addsuffix[/index]]
+[all[]addsuffix[/]] :map[all[tiddlers]prefix<currentTiddler>count[]compare:number:gt[0]then<currentTiddler>addsuffix[index/]else<currentTiddler>removesuffix[/]search-replace::regexp[(\w+)(?:_| )?(\d+)(?::(?:\w| |\d)*)?(\/|$)],[$1/$2$3]] :map[removeprefix[$:/plugins/felixhayashi/tiddlymap/graph/views/]addprefix[Views/]else<currentTiddler>] :map[is[system]removeprefix[$:/]addprefix[System/]else<currentTiddler>]

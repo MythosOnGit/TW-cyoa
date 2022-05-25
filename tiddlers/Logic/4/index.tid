@@ -1,0 +1,36 @@
+caption: Logic 4: Implications
+description: Establishing logical relationships between pages.
+tags: Logic
+title: Logic4
+tmap.id: 6d96157a-2dd5-4077-be95-bffbec430e57
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+
+As you add more and more tracked pages to your interactive story, natural patterns may crop up, such as <<page dying>> is only ever visited if <<page hurt>> has also been visited. ''One implies the other.''
+
+You can solve this by always having <<page dying>> touch <<page hurt>> when it is visited, and in simple cases, that's fine, but it's fragile. Suppose <<page hurt>> gets reset. You need to make sure to reset <<page dying>> at the same time, or your story enters an illegal state. (It never makes sense for your protagonist to be dying if he isn't hurt.) Suppose another page touches <<page dying>>, but <<page dying>> is never visited. That touching page also needs to touch <<page hurt>>, or you get another illegal story state. Making sure that logical implications remain true becomes more difficult to maintain the more complex your story becomes, and illegal states can result in unwanted sequence breaks in your story. However, <<plugin>> has a method for defining logical relationships between pages which will always be true.
+
+! Implications
+
+Implications work as described above. If <<page dying>> implies <<page hurt>>, then if <<page dying>> is ever visited, touched, or set in any way, <<page hurt>> is will also be considered visited. Likewise, if <<page hurt>> is ever reset, <<page dying>> will be considered reset too. This relationship is automatically maintained, and other pages do not need to handle it, and changing the relationships between such pages is simple.
+
+For instance, suppose you later want to add <<page badly_hurt>> which implies <<page hurt>> and is implied by <<page dying>>. You need only update those two other pages. No other pages in your story need to be updated. (Touching <<page dying>> will set both <<page badly_hurt>> and <<page hurt>>.) This is an implication chain, and they can be as long as you want. Also, a page can imply multiple pages (thus having multiple parents).
+
+!!! How
+
+To specify that a given page should imply some other page, give that page a <<field cyoa.imply>> field that specifies that other page. <<field cyoa.imply>> is a [[list field|https://tiddlywiki.com/#Title%20List]], which means you can specify multiple other pages which the given page implies. All will be set if the given page is set. [[However, you must take special care with tiddlers that have spaces in their title.|Pages with Spaces]]
+
+In Tiddlymap, same as always. Draw an edge from one node to the other which it will imply and specify the edge type of "tw-list:cyoa.imply". It gets represented with a curved khaki line.
+
+A few limitations to be aware of:
+
+* You cannot have circular dependencies. (e.g. If <<page A>> implies <<page B>>, neither <<page B>> nor any pages <<page B>> implies can imply <<page A>>)
+* Implications can only exist between tracked pages. If a page implies others, or is implied, it's assumed to be tracked.
+* The <<field cyoa.imply>> field is a list field, not a filter field. It does not except filters.
+
+! Demo
+
+Here is an annotated example project that shows off how implications can be used: <<demo>>
+
+Next Tutorial:  <$link to="Logic5">{{Logic5!!caption}}</$link>

@@ -1,8 +1,16 @@
 title: $:/
 
-DefaultTiddlers: [[Choose Your Own Adventure]] Tutorial
-SiteTitle: TW5-cyoa
+DefaultTiddlers: [[Choose Your Own Adventure]] Tutorials
+SiteTitle: TW-cyoa
 SiteSubtitle: Choose Your Own Adventure
 palette: $:/palettes/Blanca
 
 config/RelinkOnRename: yes
+config/TimestampDisable: yes
+
+# makes it so the map tab is open to begin with
+state/tab/sidebar--595412856: $:/plugins/felixhayashi/tiddlymap/hook/editor
+
+themes/tiddlywiki/vanilla/metrics/storyright: 870px
+themes/tiddlywiki/vanilla/metrics/storywidth: 870px
+themes/tiddlywiki/vanilla/metrics/tiddlerwidth: 786px

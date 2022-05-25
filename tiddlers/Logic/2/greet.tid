@@ -1,0 +1,20 @@
+cyoa.append: Logic2/topics
+cyoa.before: Logic2/who
+cyoa.caption: "Good to meet you! I'm an adventurer."
+cyoa.only: first
+list-before: 
+tags: Logic2/topics
+title: Logic2/greet
+tmap.id: adad04bf-97f6-4693-89b3-0dab9f98ac13
+type: text/vnd.tiddlywiki
+
+"It's always a pleasure to meet a new face," he replies. "My name is Oleg Orphanson."
+
+<<annotate """
+
+This tiddler and [[Logic2/who]] both specify they must come before the other. That way, only one of them can be visited. That's because they're both introductory tiddlers, and after introductions are done, why do them again?
+""" >>
+<<annotate """
+
+Also, both this tiddler and [[Logic2/who]] have the <<field list-before>> field set to an empty string. This makes sure they're both floated to the top of [[Logic2/topics]]'s options list.
+""" >>

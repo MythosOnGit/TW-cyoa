@@ -1,7 +1,8 @@
-tags: Fields
 caption: cyoa.imply
+tags: Fields
 title: ImplyField
 tmap.id: 5f86bbe8-355f-4555-966d-95497007fdd3
+type: text/vnd.tiddlywiki
 
 The <<field cyoa.imply>> field specifies a [[title list|https://tiddlywiki.com/#Title%20List]] of other pages which the current page implies. That means that if the current page is [[set|Tracking]], all pages it implies are also set (and so are any pages that those pages imply, and so on...).
 
@@ -27,4 +28,4 @@ Two final notes:
 In Tiddlymap, implications are represented with a curved dotted olive-green edge, but this can be customized.
 
 
-See the [[tutorial on implications|Tutorial 8]] for more details on how <<field cyoa.imply>> functions.
+See the [[tutorial on implications|Logic5]] for more details on how <<field cyoa.imply>> functions.

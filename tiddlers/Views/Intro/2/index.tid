@@ -1,0 +1,5 @@
+config.central-topic: 4a134400-5092-451c-bd79-9688109db3ae
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Intro 2: Turn to Page X
+type: text/vnd.tiddlywiki

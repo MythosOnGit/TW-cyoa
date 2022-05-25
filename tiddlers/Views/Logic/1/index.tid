@@ -1,0 +1,5 @@
+config.central-topic: 4f04279d-f5cd-4127-ad30-8321d9c01f38
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 1: First and Visited
+type: text/vnd.tiddlywiki

@@ -1,0 +1,5 @@
+config.central-topic: 47a6c9d7-74a2-4951-a3ce-38d629ddf912
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 4: Implications
+type: text/vnd.tiddlywiki

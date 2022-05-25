@@ -1,0 +1,14 @@
+title: Logic1/end
+tmap.id: fcddef1c-7fdc-4015-afb8-1d43b487c514
+type: text/vnd.tiddlywiki
+
+You return to the museum exit. Apparently someone has come by and unlocked the doors, and you're now free to leave.
+
+Congratulations. You have found a way out of the museum.
+
+[[Exit.|Demo]]
+
+<<annotate """
+
+The link above is a [[hard link|Hard Links]] to <<page Demo>>, which means it will always be visible in the game, even if <<page Demo>> has contraints which [[evaluate to "false"|Evaluation]].
+""" >>

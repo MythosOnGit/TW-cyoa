@@ -1,0 +1,24 @@
+cyoa.after: Logic3/search
+cyoa.caption: Locate the bakery.
+tags: Logic3/troll
+title: Logic3/bakery
+tmap.id: 9b230877-a9f0-4aea-b3b3-7f5816c802ff
+type: text/vnd.tiddlywiki
+
+You duck inside the bakery while the troll is distracted. The smells are divine. In the kitchen you find a whole rack of cooling trays.
+
+<$cyoa before="Logic3/pie" touch="Logic3/pie">
+
+You take one. It's big, and it's all you can carry.
+</$cyoa>
+<$else>
+
+Seeing as how you already have a pie, and you can't carry another, you don't take one.
+</$else>
+
+<<annotate """
+
+These active nodes not only manage what text gets displayed, but the first block will touch [[Logic3/pie]] to indicate a pie has been added to your inventory, but ''only'' if that node evaluates true and renders (which occurs if <<page Logic3/pie>> isn't visited).
+""" >>
+
+[[Return to the town square|Logic3/troll]]

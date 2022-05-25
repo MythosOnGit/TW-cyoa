@@ -1,0 +1,5 @@
+config.central-topic: 0e14191d-a76a-4c89-8656-f2f254882a35
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Flow 1: Appending
+type: text/vnd.tiddlywiki

@@ -1,0 +1,13 @@
+cyoa.append: Logic1/locked Logic1/end
+cyoa.caption: Head to the exit.
+tags: Logic1/atrium
+title: Logic1/exit
+tmap.id: 7fbe80bf-eab3-4b6a-87f9-a1e2dd98b19c
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page has no content, but it appends other pages. That makes this a [[control page|Control Nodes]], which is a page whose entire purpose is to contain logic which controls the story flow.
+
+In this case, it appends multiple pages, the first is only shown once, then the second is shown in all other cases.
+""" >>

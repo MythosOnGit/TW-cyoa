@@ -1,0 +1,36 @@
+title: Intro2/start
+tmap.id: 4a134400-5092-451c-bd79-9688109db3ae
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+If you'd like, you can see how this demo (and all the demos) play out by clicking on the Generate CYOA button here: {{$:/plugins/mythos/cyoa/Buttons/compile}}. You can do this because this demo website is actually a Cyoa project itself. Its "story" is the compilation of the available demos.
+""" >>
+
+<<annotate """
+
+The text in these colored bubbles are annotations specific to these demos. They show up here to explain the tricks and techniques being showcased, but they won't show up in the generated cyoa story.
+
+Now, let's get to the demo...
+""" >>
+
+You enter into a decrepit arena. At the other end, a scrawny goblin about waist-height whose dressed in a grubby tunic. He's sitting on a stool reading a magazine, but upon seeing you, he stands and holds up both his hands in a fighting posture. His face looks determined, but his little hands are trembling.
+
+Behind him is a door escaping the dungeon.
+
+[[Walk past the goblin.|Intro2/pass]]
+
+[[Make friends with the goblin.|Intro2/dead]]
+
+[[Fight the goblin.|Intro2/fight]]
+
+[[Find another way out.|Intro2/escape]]
+
+<<annotate """
+
+Any link in Tiddlywiki will become a link in your generated cyoa. They'll function exactly as you'd expect. You can follow the "Enter the door" link here to see the next bit of this demo.
+
+See [[Hard Links]] for more information.
+""" >>

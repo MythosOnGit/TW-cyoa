@@ -5,7 +5,7 @@ tmap.id: f7600edb-cdda-4632-87f2-9b638229fb46
 <<plugin>> stores the entire state for your story inside the URL's query string.
 
 ```
-https://mySite/myAdventure.html?state=x4ftE3&stack=page1.page2#page5
+https://mySite/myAdventure.html?state=x4ftE3&stack=page1.page2#myPage
 ```
 : It's the part after the `?` and before the `#`.
 

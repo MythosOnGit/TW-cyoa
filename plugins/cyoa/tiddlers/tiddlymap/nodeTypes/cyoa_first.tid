@@ -1,5 +1,5 @@
 description: Nodes of this type are have a condition such that they only display the first time.
-priority: 1
+priority: 5
 scope: [cyoa.only[first]]
 style: {"color":{"border":"OrangeRed"}}
 title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa:first

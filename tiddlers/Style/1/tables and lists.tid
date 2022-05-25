@@ -1,0 +1,52 @@
+caption: Tables & Lists
+title: Style1/tables and lists
+tmap.id: bfbe2155-afc4-4ae6-843d-7ed4cf63c709
+type: text/vnd.tiddlywiki
+
+Farther in, you come upon two more signs. The first is a table:
+
+<<<
+!! Volunteers
+|! Name |! Job |! Dead? |
+|Wilburg | Feeding | X |
+|Edgar | Feeding | X |
+|Tim | Feeding | |
+|Dudley | Cleaning |  |
+<<<
+
+The other sign is a list:
+
+<<<
+!!! Workers remember!
+# Are you wearing //every// piece of required armor?
+#* (Yes, even //that// piece.)
+# Are you sure it's daytime?
+# Are you with your safety partner?
+<<<
+
+[[Continue on.|Style1/html]]
+
+
+
+
+<<annotate """
+
+Here are examples of tables and lists. Tables are done like so:
+
+```
+|! Name |! Job |! Dead? |
+|Wilburg | Feeding | X |
+```
+They're even more versatile than show here though. [[See the TiddlyWiki documentation|https://tiddlywiki.com/static/Tables%2520in%2520WikiText.html]] if you want to know more.
+
+Lists are simpler:
+
+```
+* Bullet list
+
+# Numbered list
+```
+They can be nested too. And of course [[there's more to them if you're interested|https://tiddlywiki.com/static/Lists%2520in%2520WikiText.html]].
+
+<<note [[These will all appear in your interactive novel. However, their styling css does not. That's specific to TiddlyWiki. We'll discuss later how to style your novel with CSS.]]>>
+""" >>

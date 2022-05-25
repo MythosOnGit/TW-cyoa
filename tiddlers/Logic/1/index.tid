@@ -1,0 +1,63 @@
+caption: Logic 1: First and Visited
+description: Simple declarative constraints for stateful storytelling.
+tags: Logic
+title: Logic1
+tmap.id: a5540e34-3d67-4a5c-ac5a-5a3b85f6e2ff
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+
+So far, all of the stories we've created are static. Their pages always show the same thing. Let's change that by introducing //logic//.
+
+<<plugin>> relies on declarative design rather than imperative. This means that instead of managing state, testing conditionals, and setting variables, all you do is declare simple things, like "This page only gets shown once," and the cyoa engine takes care of handling all state and testing for you.
+
+This tutorial covers the `first` mechanic, and the lesser used `visited` mechanic.
+
+! Showing a page only once
+
+As you make your stories, you'll have content which you'll only want the reader to visit once. After that, the content should not be available again. This is very easy in <<plugin>>.
+
+Let's say we have a page we only want shown once. Edit that page. Near the edit view's top, just underneath the 'tags' controls is a dropdown control like this:
+
+: {{$:/plugins/mythos/cyoa/ui/EditTemplate}}
+
+Click it. (Seriously, click this one right here.) It will reveal two options: ''Group'', and ''Show only''. Ignore ''Group'' for now. We'll discuss it later. Right now, look at ''Show only'' and how it's set to "always" by default. Let's change that to "first" and save our tiddler. Now whenever that [[page is evaluated|Evaluation]], it will be deemed "true" if it's never been shown before, and "false" if it has.
+
+But what does that mean for a page to be "true" or "false"? There are certain cyoa constructs that will filter pages based on whether they're "ready to be shown":
+
+!!! <<widget options>> widget
+
+As mentioned before, the <<wlink OptionsWidget>> widget creates [[Active Links]]. Each link in its list will only appear in your interactive story if its linked-to page evaluates "true".
+
+!!! Appending
+
+Also, as mentioned before, the <<flink AppendField>> accepted multiple pages. That's because it ''won't'' append a page which isn't "true". And if so, it tests next page in its list to see whether it should append that instead, and so on, until it finds a page to append, or it runs out of pages and appends nothing.
+
+<<field cyoa.append>> can explicitly list pages (such as <<value "PageA PageB">>, where it first tests PageA for appending, and if it's not "true", then it tests PageB), but appending can also be declarative. Since it accepts [[filters|https://tiddlywiki.com/#Filters]], you can set it to something like <<value "[tag[Outcome]]">>, and all pages with the "Outcome" will be in your tiddler's append list. (See [[this Tiddlywiki documentation page|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]] about how to control the order of tagged tiddlers.)
+
+! Showing text only once
+
+Maybe instead of controlling whether an entire page shows or doesn't show, you have a section inside the page which shows conditionally. To do that, use the <<wlink FirstWidget>> widget.
+
+```html
+You enter the dungeon.
+
+<$first>
+
+As your first time here, you're struck by how cold and dark it is.
+</$first>
+```
+
+When this page is visited the first time, the content in the <<widget first>> widget will be displayed. On later visits, it will not.
+
+! Showing pages and text only after it's been visited
+
+Along with <<widget first>>, there's a complementary widget called <<wlink VisitedWidget>>, which works as you'd expect. Text inside `<$visited>...</$visited>` will //not// show up the first time a page is visited, but on subsequent times, it will.
+
+Also, you may have noticed that the ''Show only'' option when editing tiddlers includes a "visited" option. When this is set, a page will only appear in <<widget options>> and <<field cyoa.append>> lists if it's already been visited before. It may seem odd. How can a page that's only shown when it's already been visited //ever// be shown? Admittedly, you probably won't use "visited" often, if ever, but there are some advanced tricks you can do with it which we'll discuss later.
+
+! Demo
+
+Here is an example project for you to explore. These nodes contain annotations that have further details and tips: <<demo>>
+
+Next Tutorial:  <$link to="Logic2">{{Logic2!!caption}}</$link>

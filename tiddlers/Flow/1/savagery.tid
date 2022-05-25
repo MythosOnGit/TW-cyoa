@@ -1,0 +1,18 @@
+cyoa.append: [[Flow1/final door]]
+statue: a fearsome warrior in a threatening pose
+title: Flow1/savagery
+tmap.id: 82858463-ef35-4570-8f57-fdc76955c9f0
+type: text/vnd.tiddlywiki
+
+You follow along a dark hall until coming face to face with a tiger. Edging carefully around it, you nearly get by when it lunged. It chase you down the hall until suddenly the floor gives away, and you tumble into a water pit. Crocodiles slither through the water toward you. One nearly bites down on you, but you catch it by the jaws and wrestle it away. Beyond the pool is a pedestal with a golden statue, but a kangaroo stands in the way. A short boxing match later, and you're before the treasure.
+
+The statue depicts a fearsome bear in a threatening pose. You take it with you.
+
+No sooner is it in your hands do you hear the howl of wolves behind you. You sprint ahead. Growls and panting dog your heels, but you don't dare look back until coming to a chasm. You leap, snag the ledge, scrabble up. Behind you, a pack of wolves watches you ruefully. You walk ahead.
+
+<<annotate """
+
+This tiddler appends [[Flow1/final door]]. Since that title has a space in it, [[it must be wrapped in double brackets|Pages with Spaces]]. This is because <<flink AppendField>> accepts multiple values for reasons that'll be explained in later tutorials.
+
+Most pages in these demos will not contain spaces so that this is not necessary. [[I recommend you avoid spaces as well|Pages with Spaces]].
+""" >>

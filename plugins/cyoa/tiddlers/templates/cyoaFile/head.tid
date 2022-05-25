@@ -8,5 +8,5 @@ type: text/vnd.tiddlywiki
 
 <style type="text/css">
 {{ $:/plugins/mythos/cyoa/templates/cyoa.css || $:/core/templates/wikified-tiddler }}
-{{{ [tag[$:/tags/mythos/cyoa/Stylesheet]!has[draft.of]] ||$:/core/templates/wikified-tiddler}}}
+{{{ [tag[$:/tags/cyoa/Stylesheet]!has[draft.of]] ||$:/core/templates/wikified-tiddler}}}
 </style>

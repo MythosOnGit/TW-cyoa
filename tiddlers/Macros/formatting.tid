@@ -1,6 +1,7 @@
 tags: $:/tags/Macro
-title: Macros/syntax
+title: Macros/formatting
 tmap.id: c4685ccf-c94f-483f-9f07-d03579d007ea
+type: text/vnd.tiddlywiki
 
 \define field(_) <code class="doc-field">$_$</code>
 \define flink(to) <$link to=<<__to__>>><<field {{$to$!!caption}}>></$link>
@@ -12,8 +13,15 @@ tmap.id: c4685ccf-c94f-483f-9f07-d03579d007ea
 \define attr(_) <code class="doc-attr">$_$</code>
 \define page(_) <code class="doc-tiddler">$_$</code>
 \define plugin() //TW5-cyoa//
-\define tid(_) <code class="doc-tiddler">$_$</code>
+\define tid(_)
+\rules except wikilink
+<code class="doc-tiddler">$_$</code>
+\end
+\define icon(_) <span class="doc-icon">{{$_$}}</span>
+
 \relink wlink to
 \relink flink to
+\relink page _
+\relink tid _
 
 Contains various macro wrappers so this demo can remain consistent about how it formats various terms.

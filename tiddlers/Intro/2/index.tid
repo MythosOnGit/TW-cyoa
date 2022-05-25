@@ -1,0 +1,48 @@
+caption: Intro 2: Turn to Page X
+description: Putting simple choices into your Choose-Your-Own-Adventure
+tags: Intro
+title: Intro2
+tmap.id: a0079662-b9db-4318-b8ac-432f3c247264
+type: text/vnd.tiddlywiki
+
+At the bottom of their pages, paperback CYOA novels always have at the famous, "To do X, turn to page Y," which make up the basis for their interactivity. Of course <<plugin>> can do this too. Let's add some choices to our novel.
+
+<<note """This tutorial picks up assuming you've just finished <$link to="Intro1">{{Intro1!!caption}}</$link>, and you have a project with a "Start" tiddler.""">>
+
+!! Writing your own content
+
+Let's edit the <<tid Start>> tiddler. Open it by double clicking on it in the graph if you haven't already. Then edit it by clicking the {{$:/core/images/edit-button}} button in the upper right of the <<tid Start>> tiddler pane. In the editor, go ahead and delete everything that's there, because it's time to put your own stuff in. It's time to put your own stuff in. How about the following:
+
+```
+!! My Adventure
+
+You have just begun your adventure. Before you is a crossroads. Which way do you go?
+
+[[Go left.|Left]]
+
+[[Go right.|Right]]
+```
+Now save the changes by clicking the {{$:/core/images/done-button}} button. You'll see your new <<tid Start>> page. Double-bracketed text is how you [[make links in TiddlyWiki|https://tiddlywiki.com/#Linking%20in%20WikiText]], and now we have links for "Go Left" and "Go Right" on our page which link to the pages <<page Left>> and <<page Right>>, and that is exactly how they will appear in your generated novel too.
+
+Let's click on one the "Go Left" link. This'll open a //missing tiddler// which you're now going to edit, and fill in with the text:
+
+```
+You have taken the left road.
+```
+
+Save the tiddler, and you will notice "Left" pop up on your graph with a nice arrow pointing from "Start" to "Left" representing the link connecting them. You can position those nodes however you like. Go ahead and create page <<page Right>> too. Actually, make as many new tiddlers, and links between the tiddlers, as you want. Once you're done, hit the {{$:/plugins/mythos/cyoa/images/compile}} button again to generate your improved novel.
+
+! Demo
+
+Here is an example of mini project for you to explore if you want. These pages contain annotations that have further tips and tricks. The starting point for the demo is the starred node. Double click on any nodes to open them: <<demo>>
+
+!! What's next?
+
+That's it! You're now capable of producing stories with all the same features as a paperback CYOA, only without all the tedious page turning.
+
+Of course, <<plugin>> can do a lot more, and you can learn it at your own pace, and like with any good tutorial about interactive stories should do, you get to choose your path as to what tutorial you want to take next.
+
+;<$link to=Style1>{{Style1!!caption}}</$link>
+: On this path, you'll learn about how to work with your interactive story's appearance, from text, to layout, to images.
+;<$link to=Flow1>{{Flow1!!caption}}</$link>
+: On this path, you'll learn some more advanced ways to control the flow of your story, from different ways to tie pages together, to introducing conditional logic to create a dynamic story with state.

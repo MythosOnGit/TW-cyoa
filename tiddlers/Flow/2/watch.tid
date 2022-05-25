@@ -1,0 +1,20 @@
+name: golden watch
+tags: Flow2/shop
+title: Flow2/watch
+tmap.id: 830da8f0-92b8-444a-b50a-9a1771e6eb03
+type: text/vnd.tiddlywiki
+
+One item on display is a intricate golden pocket watch of expert design. A note beneath it says that this watch can stop time simply by pullout out the thumbscrew.
+
+You pick it up and do just that. Nothing happens.
+
+Ah. Another sign says that this is just a display set out as an example, and the real watch is in a safe in the back of the shop.
+
+So this intricate golden watch is //worthless//. You put it down.
+
+<<annotate """
+
+So that this shows up in the [[Flow2/shop]] list, it tags <<page Flow2/shop>>. However, it does not have a <<field cyoa.caption>> field. Instead, it has a custom <<field name>> field, which <<page Flow2/shop>> opts to use instead.
+""" >>
+
+[[Continue perusing.|Flow2/shop]]

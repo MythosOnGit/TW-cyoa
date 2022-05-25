@@ -1,0 +1,5 @@
+title: Mobile Mode
+tmap.id: fdfd7687-d852-433f-ac7a-0aa6f671cc8c
+type: text/vnd.tiddlywiki
+
+<<plugin>> should work just fine in a mobile browser. However, TiddlyMap does not, which is fine, ~TiddlyMap is not even required at all for <<plugin>>. Mobile writers simply need to make do without it.

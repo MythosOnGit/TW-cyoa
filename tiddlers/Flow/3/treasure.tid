@@ -1,0 +1,24 @@
+statue: //(insert statue description here)//
+title: Flow3/treasure
+tmap.id: 86824288-4205-4104-9105-24875fa66302
+type: text/vnd.tiddlywiki
+
+The treasure is a small golden statue depicting {{!!statue}}. It's clear from the geometric shape of its base that it's designed to fit into something. Perhaps it's some kind of key. You're certain you need to take this with you.
+
+
+<!--	HEY READER
+	If you're wondering what this odd "$list filter" stuff is, don't
+	worry about it. It's just some sorcery I'm doing so the annotations
+	in this tiddler are different than wherever it's transcluded.
+-->
+<$list filter="[all[current]match[Demo_3/treasure]]" emptyMessage="""<<annotate "
+
+This description is transcluded from [[Flow3/treasure]] so it can be duplicated in multiple places. It demonstrates a simple case of templating through the statue's description, which will use the <<field statue>> field of the tiddler transcluding [[Flow3/treasure]].
+" >>""" >
+<<annotate """
+
+This tiddler has its contents transcluded into other tiddlers. It's not actually visited directly. For that reason, I //could// exclude it from the cyoa build by making it a [[Virtual Page]], but this would be an optional optimization to keep the generated file size down.
+
+Don't worry about virtual pages for now if you don't want to. We'll cover them in greater detail in [[Logic3/start]].
+""" >>
+</$list>

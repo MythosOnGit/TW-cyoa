@@ -1,0 +1,21 @@
+cyoa.caption: Explore the exhibits.
+tags: Logic1/atrium
+title: Logic1/exhibits
+tmap.id: 09e077a1-83c7-4997-bef9-d2ae3bcf5fbe
+type: text/vnd.tiddlywiki
+
+You're in the Incan exhibit. Giant delapidated statues rest on pedestals behind velvet ropes. Display cases contain all manner of ancient artifacts, from daggers to gems.
+
+<<annotate """
+
+This <<wlink OptionsWidget>> widget explicitly lists the pages it lists instead of relying on a tag system. For short, fixed-sized lists, or lists that require an explicit order, this can be more convenient.
+
+Notice however that both "gem" and "dagger" are flagged to only show once, so even though they're explicitly listed, they will no longer appear in this list after they've been visited. "Returning to the atrium" however, has no such constraint, so it will always appear.
+
+""" >>
+
+<$options filter="
+	Logic1/dagger
+	Logic1/gem
+	Logic1/atrium
+"/>

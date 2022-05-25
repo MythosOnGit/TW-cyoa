@@ -1,4 +1,5 @@
 title: Templates/documentation
 tmap.id: 1fad4fd5-1ec6-466b-a40d-72b0eab3b40a
+type: text/vnd.tiddlywiki
 
-<$transclude tiddler={{{ [all[current]get[template]] ~[all[current]] }}} />
+<$transclude tiddler={{{ ~[all[current]tags[]get[template]] ~[all[current]] }}} />

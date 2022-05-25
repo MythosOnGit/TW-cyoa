@@ -1,0 +1,3 @@
+filter: -[prefix[_]] -[[tw-list:tags]] -[[tw-list:list]]
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 4: Implications/filter/edges
+type: text/vnd.tiddlywiki

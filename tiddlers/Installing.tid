@@ -9,4 +9,4 @@ Installing or updating <<plugin>> in your existing project is simple, and it's d
 
 Your project will ask you to confirm the import. Say yes. After that, refresh, and cyoa will be installed (or updated).
 
-However, this gives you just the plugin without any skeleton framework to get you started. If you'd like a basic "Hello World" style starting project, [[go here|Tutorial 1]].
+However, this gives you just the plugin without any skeleton framework to get you started. If you'd like a basic "Hello World" style starting project, [[go here|Intro1]].

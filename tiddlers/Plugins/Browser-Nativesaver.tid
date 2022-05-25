@@ -1,8 +1,8 @@
 caption: HTML Native File System Saver
 tags: Plugins
-template: Templates/plugins
-title: Plugins/Browser-Nativesaver
-tmap.id: 11cb9f04-8bb0-4488-8568-b141d719fb0a 
+title: Browser-Nativesaver
+tmap.id: 11cb9f04-8bb0-4488-8568-b141d719fb0a
+type: text/vnd.tiddlywiki
 
 \define this-plugin() $:/plugins/slaymaker1907/browser-nativesaver
 \define source() https://github.com/slaymaker1907/TW5-browser-nativesaver

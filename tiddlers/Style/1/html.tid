@@ -1,0 +1,33 @@
+caption: Html
+title: Style1/html
+tmap.id: 93242f24-7bd0-422f-905b-2daeea4817c6
+type: text/vnd.tiddlywiki
+
+You finally come upon the inner layer.
+
+<div style="font-size:large;color:brown;">It's empty.</div>
+
+There's a sign:
+
+<div style="text-align:center;">
+Creature still hasn't returned. Cave out of service until then.
+<span style="font-style:italic">Please see yourself out.</span>
+</div>
+
+[[Finish adventure.|Demo]]
+
+
+
+<<annotate """
+
+Ultimately, this markup may not be sufficient for you. Fortunately, you can use html at any point that you wish.
+
+```
+<div style="text-align:center;">
+Creature still hasn't returned. Cave out of service until then.
+<span style="font-style:italic">Please see yourself out.</span>
+</div>
+
+```
+The next tutorial will cover how you can use CSS to further customize your interactive novel.
+""">>

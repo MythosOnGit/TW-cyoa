@@ -1,0 +1,14 @@
+cyoa.append: Logic2/topics
+cyoa.caption: "Why are you here?"
+cyoa.only: first
+tags: Logic2/topics
+title: Logic2/why
+tmap.id: b0be17dd-5821-4c20-ac60-7f5a7df3a5a2
+type: text/vnd.tiddlywiki
+
+"I've been panning this river for gems. If I find a good one, it'll help pay for medicine for my sick orphaned son, but it's hard work. I've been at it all day, and my old bones ache."
+
+<<annotate """
+
+This is a standard conversation tiddler. It both is tagged by and appends [[Logic2/topics]]. It only shows once. And after it's shown, [[other conversation topics|Logic2/trade]] may become available.
+""" >>

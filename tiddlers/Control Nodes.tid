@@ -1,0 +1,32 @@
+title: Control Nodes
+tmap.id: a7dd1674-4e8e-4c1f-979f-34c7a425f1ec
+type: text/vnd.tiddlywiki
+
+Control nodes are widgets which have no text content, but instead have constraints of directives that manipulate the story flow. For instance:
+
+<<example """
+
+<$cyoa after="Sneaking Disguised Equipped" touch="Successful"/>
+<$else>
+
+Unfortunately you didn't prepare enough, and your party gets caught.
+</$else>
+""" >>
+
+The first widget is a control widget. It appears in Tiddlywiki as a colored box which describes its constraints and directives, but it won't appear in your interactive story.
+
+In this case, the control node tests if several other pages are set, and if so, it silently sets <<page Successful>>. However, if any are not set, then it shows dialog of you getting caught.
+
+This is one use of control nodes in order to achieve an "any" clause (If any of those pages are not set, you get caught), but control nodes are useful for all sorts of reasons, for presetting state, inverting a set of conditions, to more.
+
+! Control Pages
+
+Control pages are the same idea. They are pages which contain no text, but they have fields which are useful for manipulating story flow.
+
+One frequent use of control pages is to create a page which acts as an entry point for several other possible pages which the control page appends:
+
+```
+title: Shop
+cyoa.append: Shop/crowded Shop/open Shop/closed
+```
+When a reader visits page <<page Shop>>, the game will evaluate the potential shop scenarios and append it. Any pages outside of shop do not need to worry about these different Shop states, they only need to link to or append <<page Shop>>.

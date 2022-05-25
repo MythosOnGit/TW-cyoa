@@ -1,0 +1,70 @@
+tags: Demo
+title: Logic3/start
+tmap.id: cc253232-a09d-409c-8327-e17e214d9f7d
+type: text/vnd.tiddlywiki
+
+\define return() [[Return.|Demo]]
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates the use of <<field touch>> and <<field reset>>, both in pages and in nodes.""" >>
+
+<$cyoa before="Logic3/troll" >
+
+After spending a night in a friar, you set out in the morning and hike until you come upon a town. It seems everyone who lives here is crowded on the road just outside. People look fearful.
+
+"There is a troll," they say. "It's wreaking havoc."
+
+Children cry. Old women pray. Men talk about how they'd do something about it, but their gear is in their house.
+
+"Please," a woman asks. "Could //somebody// do something about this?"
+
+You feel compelled to do something about this.
+
+[[Go into town and do something about this.|Logic3/troll]]
+</$cyoa>
+<$else>
+
+You return to the townsfolk.
+
+"Is the troll still there?" asks the woman from before.
+
+<<annotate """
+
+This is the first occurrence in these demos of nested active nodes. If you weren't aware already, nodes can be nested indefinitely. Inner nodes are only evaluated and possibly rendered if their containing node evaluated true.
+""" >>
+
+<$cyoa before="Logic3/victory">
+
+"It is," you say.
+
+The crowd groans in despair.
+
+"Please," the woman asks. "Can you help us?"
+
+[[Return to the town square.|Logic3/troll]]
+</$cyoa><$else>
+
+"No," you say. "I have gotten rid of the troll."
+
+The townsfolk cheer and yell. Quickly, a crowd surrounds you and lift you up. You're a hero to these people, and they carry you off into their town to rebuild, and then to reward you with free beer and food.
+
+Congratulations. You have complete a most frightful quest.
+
+<<annotate """
+
+In this case, the starting page of this adventure is also the ending page, but if you examine the <<wlink ElseWidget>> chain, you'll see it's only reachable if both <<tid "Logic3/troll">> and <<tid "Logic3/victory">> is visited.
+""" >>
+
+<!--	HEY READER
+	If you're looking at this and wondering what this "<<return>>" is
+	about, it's a macro wrapping the link back to the main demo page
+	so that Tiddlymap doesn't recognize the link and create a neighboring
+	edge which will clutter my "Demo 6" graph.
+-->
+<<return>>
+
+</$else>
+</$else>

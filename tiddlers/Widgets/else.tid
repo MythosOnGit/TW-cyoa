@@ -2,10 +2,9 @@ caption: else
 tags: Widgets
 title: ElseWidget
 tmap.id: dec6dd6e-bd14-4a14-96e3-3a2b9233ae5f
+type: text/vnd.tiddlywiki
 
 \rules except wikilink
-
-! Introduction
 
 The <<widget else>> widget only displays its contents in the generated cyoa only if [[Active Node]] which came before it evaluated false.
 

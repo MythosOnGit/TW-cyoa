@@ -1,0 +1,7 @@
+config.central-topic: 5b076475-b308-4653-ac5a-6baf5eafcf9a
+config.neighbourhood_directions: out
+config.neighbourhood_scope: 1
+config.physics_mode: false
+isview: true
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 2: Before and After
+type: text/vnd.tiddlywiki

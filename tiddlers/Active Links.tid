@@ -1,0 +1,14 @@
+title: Active Links
+tmap.id: 83bf87ea-9923-4066-b310-472261f05f86
+type: text/vnd.tiddlywiki
+
+Active links are a type of [[Active Node]] which behave as links to other pages. Just like with active nodes, they are evaluated to determine whether they should render or not.
+
+Active links are what the <<wlink OptionsWidget>> widget creates by default, and each of those links will "depend on" the page they're linking to, which means they will only render if the linked-to page would [[evaluate true|Evaluation]].
+
+Active links can also be created manually using the <<wlink CyoaWidget>> widget by implementing their <<attr to>> attribute. For instance:
+
+<<example """<$cyoa to="Demo">Go to Demo page</$cyoa>
+""" >>
+
+As with any active node, any constraints associated with that link (such as <<attr before>> or <<widget first>>) will be tested to determine whether to show the link.

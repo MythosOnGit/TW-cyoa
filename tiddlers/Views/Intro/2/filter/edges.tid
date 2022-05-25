@@ -1,0 +1,3 @@
+filter: -[prefix[_]] -[[tw-list:tags]] -[[tw-list:list]]
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Intro 2: Turn to Page X/filter/edges
+type: text/vnd.tiddlywiki

@@ -1,0 +1,27 @@
+caption: Flow 3: Transcluding
+cyoa.caption: Flow 3: Transcluding
+description: Injecting content of other tiddlers into pages.
+tags: 
+title: Flow3
+tmap.id: 8c6ca5fb-1c2d-42f3-9f49-91180149015e
+type: text/vnd.tiddlywiki
+
+Transclusion is a versatile trick native to TiddlyWiki. It did not come with <<plugin>>. In this tutorial, we'll cover it's most basic usage, the ability to inject the contents of one page into others.
+
+
+For instance, to inject the body of tiddler <<page B>> into <<page A>>, you would include `{{B}}` inside the body of <<page A>> wherever you wish <<page B>>'s content to show up.
+
+If you're unsure how Transclusion works, don't worry about it. The important concept to understand in this tutorial is Appending. That will come up again in later tutorials. Transclusion won't. It's something you'll figure out in time as you get used to TiddlyWiki.
+
+In Tiddlymap, transclusion shows up as a dark red line.
+
+<<demo>>
+
+<<annotate """
+
+For transclusion, see the [[Tiddlywiki documentation|https://tiddlywiki.com/#Transclusion]] for tricks like templating, data tiddlers, and others. All tricks that work in Tiddlywiki will translate to your generated CYOA.
+""" >>
+
+
+
+Transclusion is a actually a Tiddlywiki feature. [[Tiddlywiki's documentation covers transclusion in great detail|https://tiddlywiki.com/#Transclusion]].

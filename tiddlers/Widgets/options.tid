@@ -2,8 +2,7 @@ caption: options
 tags: Widgets
 title: OptionsWidget
 tmap.id: 5c735c95-2e22-48e1-a1a9-65518a865773
-
-! Introduction
+type: text/vnd.tiddlywiki
 
 The <<widget options>> widget is used to create a sequence of [[active links|Active Node]] for your generated cyoa, where each link only displays if its corresponding page evaluates true. The pages linked to by the <<widget options>> widget are determined by the following rules
 
@@ -17,13 +16,13 @@ For each tiddler to link to, <<widget options>> widget uses that tiddler's <<fli
 
 Whenever you use the <<widget options>> widget, you will almost always want to make sure you include a newline after the widget. For example:
 
-<<example """<$options filter="[tag[Demo]first[2]]"/>
+<<example """<$options filter="[cyoa:page[]first[2]]"/>
 
 """ >>
 
 But without the newline, like so:
 
-<<example """<$options filter="[tag[Demo]first[2]]"/>""" >>
+<<example """<$options filter="[cyoa:page[]first[2]]"/>""" >>
 
 See [[here|Block vs. Inline]] for more information about blocks and inline text.
 

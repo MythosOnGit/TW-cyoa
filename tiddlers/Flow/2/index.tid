@@ -1,0 +1,50 @@
+caption: Flow 2: Options Lists
+description: Declarative linking between pages.
+tags: Flow
+title: Flow2
+tmap.id: cdef1ab9-7e90-40d7-9348-beeac0269bbd
+type: text/vnd.tiddlywiki
+
+So far, we've been linking our pages together by typing out a link to another page along with a caption for that link. That's fine, but there is a better way, especially when you've got a long list of possible links for a given page.
+
+This is where the <<wlink OptionsWidget>> widget comes in. It allows for other pages to specify that they should be linked to by a central page without the central page actually having to explicitly specify any pages.
+
+Consider a tiddler named 'Merchant' with the following text:
+
+```html
+"Which of these items would you like to take?" asked the merchant.
+
+<$options/>
+
+
+```
+
+Other pages, such as <<page lamp>>, <<page dagger>>, or <<page tonic>> can specify that they should be in that <<widget options>> list.
+
+<<note """<$link to="Block vs. Inline">The newline after the <<widget options>> widget is important.</$link>""">>
+
+It may seem backwards to do it this way, rather than having the Merchant page explicitly link to whatever pages it connects to, but this declarative style will create much more maintainable projects (and eventually, you may come to prefer it). In this example, if you add more items, instead of altering the original Merchant file, you simply create your new item and give it the <<page Merchant>> tag.
+
+Also, all of the links in <<widget options>> lists are [[Active Links]], which means your interactive story may dynamically decide to show/hide those links depending on constraints, but more on that later.
+
+!! Adding pages to an <<widget options>> list
+
+The simplest and most common way to do this is through tags. Any pages tagged with a page with show up in that page's <<widget options>> list. In our example, you would give <<page lamp>> would have the <<value Merchant>> tag, and it would appear in that list.
+
+There are other, more explicit ways to populate options lists which give you more explicit control over ordering, but for now, this tag system is all you need to know for now.
+
+!! Specifying captions
+
+Obviously we don't want our <<widget options>> lists to be populated with a bunch of tiddler titles. So by default, <<widget options>> will use the value of each listed tiddler's <<flink CaptionField>> field (or if that's not present, its <<field title>>). There are ways to control this, including giving an <<widget options>> widget a body, which can act as a template for each listed item. There's an example of this in the corresponding demo.
+
+!! Demo
+
+<<demo>>
+
+Next Tutorial: <$link to=Logic1>{{Logic1!!caption}}</$link>
+<!--
+: Start learning about logic and constraints to create stories which maintain state depending on reader actions.
+
+; <$link to=Flow3>{{Flow3!!caption}}</$link>
+: Or continue learning about new means of linking pages together, such as using a page stack to create modular sections to your story.
+-->

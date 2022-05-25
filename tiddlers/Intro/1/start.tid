@@ -1,0 +1,20 @@
+tags: Demo
+title: Intro1/start
+tmap.id: 6612a699-2f64-4094-a956-0724e6ae5e0b
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>, which introduces how to create a project, but doesn't really do anything with that project. As a result, this demo doesn't have anything to contribute to the demo CYOA story.
+
+So here's an out of order sign instead.""" >>
+
+The door is leading into Adventure 1 appears to be jammed. There's a sign taped to the front.
+
+> Out of order.
+>
+> Please use other door. Thank you!
+
+It seems there is no adventure to do here.
+
+[[Return to the lobby.|Demo]]

@@ -1,0 +1,5 @@
+priority: 3
+scope: [all[]] :filter[tags[]tag[Tutorials]]
+style: {"shape":"box"}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/Tutorial
+type: text/vnd.tiddlywiki

@@ -1,0 +1,15 @@
+cyoa.append: Logic1/exhibits
+cyoa.caption: Take a gem.
+cyoa.only: first
+title: Logic1/gem
+tmap.id: 4e77f7e2-f866-4a58-8198-d6494b98a42a
+type: text/vnd.tiddlywiki
+
+You find an emerald-encrusted bracelet of tarnished brass. After forcing the lock, you slip it into your pocket.
+
+<<annotate """
+
+If you look at this page's node in Tiddlymap, you'll notice that it has different colors than ordinary nodes. (It's teal rather than blue.) The different background color indicates that it's a [[tracked page|Tracking]] so you can tell at a glance. The new border color indicates its "Show only" status as "first".
+
+These color configurations are intended to aid you in visualizing your project, but if they don't suit you, all these colors and settings can be customized in the "Manage node-types" settings in Tiddlymap menu.
+""" >>

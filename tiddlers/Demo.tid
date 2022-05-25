@@ -1,0 +1,33 @@
+caption: Demonstration
+title: Demo
+tmap.id: 611bb207-5883-44e9-895e-3f9b2bf276f7
+type: text/vnd.tiddlywiki
+
+\define tv-config-toolbar-class() tc-btn-invisible tc-page-controls
+
+! Demo Adventure
+
+<<annotate """
+
+This is the hub for all of <<plugin>>'s demos and patterns. You can explore them not only here in TiddlyWiki, where the tiddlers include extra annotation like this explaining various aspects of <<plugin>>, but you can also compile this tiddler and see the demos in action by clicking this compile button.
+<div style="text-align:center;">
+{{$:/plugins/mythos/cyoa/Buttons/compile}}
+</div>
+""" >>
+
+You stand at the entrance of several adventures. Each is clearly labeled as though this is more of a choose-your-own-tutorial than a choose-your-own-adventure.
+
+<$list filter="[tag[Tutorials]]">
+
+!!! {{!!title}}
+
+<$list filter="[tag<currentTiddler>] -Intro1">
+
+<$let view={{{ [prefix<currentTiddler>get[tmap.id]listed[config.central-topic]!is[draft]] }}}
+	id={{{ [<view>get[config.central-topic]] }}}
+	start={{{ [tmap.id<id>] }}}>
+<$link to=<<start>>>{{!!caption}}</$link>
+</$let>
+</$list>
+
+</$list>

@@ -1,0 +1,11 @@
+cyoa.append: Flow1/end
+title: Flow1/final door
+tmap.id: 9408f3ca-4c41-4289-8914-d1561f20d600
+type: text/vnd.tiddlywiki
+
+You finally arrive at a grand stone door. Before it is a pedestal with an inset. Just as you suspect the statue that you recovered fits right in. The door opens.
+
+<<annotate """
+
+This page is appended by [[Flow1/treachery]] and [[Flow1/savagery]]. In turn, it appends [[Flow1/end]], creating a three-page page run. Allthough all these pages are separate tiddlers here in TiddlyWiki, when the reader visits either <<page Flow1/treachery>> or <<page Flow1/savagery>>, they will see all three pages in a row as though they are a single long page.
+""" >>

@@ -1,0 +1,51 @@
+caption: Paragraphs and Linebreaks
+title: Style1/paragraphs and linebreaks
+tmap.id: c5c4548f-e9a9-4a03-9c08-c94e70bee9fc
+type: text/vnd.tiddlywiki
+
+The inside of the cave is cool and damp. There's another, older sign here.
+
+<<<
+"""
+Beware the Jabberwock, my son!
+The jaws that bite, the claws that catch!
+Beware the Jubjub bird, and shun
+The frumious Bandersnatch!
+"""
+<<<
+Behind that is another newer sign.
+
+<<<
+For those who
+are unsure what
+says, it's simple.
+
+Tough monster ahead.
+<<<
+
+
+[[Continue on|Style1/tables and lists]]
+
+<<annotate [[
+
+Generally, TiddlyWiki combines sequential lines of text into their own ''&lt;p>'' element, as seen in the lower sign.
+
+```
+For those who
+are unsure what
+says, it's simple.
+
+Tough monster ahead.
+```
+All the text in each block gets lumped together regardless of newlines. However, if you wrap blocks of text in `"""`, newlines will be treated as ''&lt;br>'', like so:
+
+```
+"""
+Beware the Jabberwock, my son!
+The jaws that bite, the claws that catch!
+Beware the Jubjub bird, and shun
+The frumious Bandersnatch!
+"""
+```
+These are called hard line-breaks, and they can give you finer control over text layout.
+]] >>

@@ -1,0 +1,17 @@
+cyoa.caption: Go home.
+list-after: 
+tags: Flow2/street
+title: Flow2/end
+tmap.id: c6b956df-de70-43f5-a464-add3c220e927
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+Did you notice that this "Go home." option showed up last in the <<widget options>> list in [[Flow2/street]] even though it's not alphabetically last? Usually, we don't bother managing the order that items show up in lists, but in this case it's nice to have the "ending" option last.
+
+To do that, we put a <<field list-after>> on this tiddler with an empty value. That's the ~TiddlyWiki way of indicating that this tiddler should appear at the end of any tag lists. [[See here to learn more about ~TiddlyWiki's declarative list ordering.|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]]
+""" >>
+
+You go home, having acquired nothing, and learned nothing of value. Your day off in the city was largely a waste of time, but at least you did complete your adventure.
+
+[[Finish demo.|Demo]]

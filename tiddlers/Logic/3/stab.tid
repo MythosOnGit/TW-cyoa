@@ -1,0 +1,18 @@
+cyoa.after: Logic1/dagger
+cyoa.append: Logic3/troll
+cyoa.before: Logic3/victory
+cyoa.caption: Stab the troll with the Incan dagger.
+cyoa.touch: Logic3/victory
+tags: Logic3/troll
+title: Logic3/stab
+tmap.id: d25c6168-3d13-47ab-9b40-02dac1d116b3
+type: text/vnd.tiddlywiki
+
+As the troll stomps down a market stall, you sneak up behind him and stab him like a street thief. The troll howls in pain, staggers about, and falls prone.
+
+The beast is no more.
+
+<<annotate """
+
+This page is the other page which touches <<tid "Logic3/victory">>, the first being <<tid "Logic3/throw">>. There are two paths to victory here, but since they touch the same flag, than the end page (<<tid "Logic3/start">>), only needs to check <<tid "Logic3/victory">>, it doesn't matter what other page was the one that touched it.
+""" >>

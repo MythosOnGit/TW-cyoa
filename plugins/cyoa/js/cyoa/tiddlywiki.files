@@ -6,7 +6,7 @@
 			"isTiddlerFile": true,
 			"fields": {
 				"module-type": "library",
-				"tags": "$:/tags/mythos/cyoa/Javascript",
+				"tags": "$:/tags/cyoa/Javascript",
 				"title": {
 					"source": "filename",
 					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/"
@@ -19,7 +19,7 @@
 			"filesRegExp": "^.*\\.tid$",
 			"isTiddlerFile": false,
 			"fields": {
-				"tags": "$:/tags/mythos/cyoa/Javascript",
+				"tags": "$:/tags/cyoa/Javascript",
 				"title": {
 					"source": "basename",
 					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/",

@@ -114,12 +114,16 @@ exports.filterNonPageTiddlers = function(list,widget,warningString) {
 */
 exports.getOptionsList = function(title,wiki) {
 	var results = [];
-	var titles = wiki.getTiddlersWithTag(title);
+	var tiddler = wiki.getTiddler(title);
+	// If this is a draft, we use the tiddler that this is a draft of for tags
+	var actualTitle = (tiddler && tiddler.isDraft() && tiddler.fields['draft.of']) || title;
+	var titles = wiki.getTiddlersWithTag(actualTitle);
 	var tagsUsed = false;
 	var pageMap = wiki.getCyoaPageMap();
 	for(var index = 0; index < titles.length; index++) {
-		var tiddler = wiki.getTiddler(titles[index]);
-		if(!tiddler.isDraft()) {
+		// Remove drafts and non-pages
+		var itemTiddler = wiki.getTiddler(titles[index]);
+		if(!itemTiddler.isDraft()) {
 			if(pageMap[titles[index]]) {
 				results.push(titles[index]);
 			}
@@ -127,7 +131,6 @@ exports.getOptionsList = function(title,wiki) {
 		}
 	}
 	if(!tagsUsed) {
-		var tiddler = wiki.getTiddler(title);
 		if(tiddler) {
 			results = tiddler.getFieldList("list").filter(function(x) {
 				return pageMap[x] && !wiki.getTiddler(x).isDraft();

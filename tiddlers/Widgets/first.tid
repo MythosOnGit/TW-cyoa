@@ -2,8 +2,7 @@ caption: first
 tags: Widgets
 title: FirstWidget
 tmap.id: 6ffbed0f-a642-4f86-b9f9-a1fc72c69ee1
-
-! Introduction
+type: text/vnd.tiddlywiki
 
 The <<widget first>> widget displays its content in the generated cyoa only if the current page is currently untouched (meaning it's never been viewed before). On subsequent visits to the same page, the content inside "first" will not be shown. If the current page is ever reset, then the content in "first" may be displayed again.
 

@@ -1,0 +1,22 @@
+cyoa.append: Logic4/actions
+cyoa.caption: Drink "Drink Me".
+cyoa.imply: Logic4/small Logic4/cookie
+cyoa.only: first
+tags: Logic4/actions
+title: Logic4/tiny
+tmap.id: 187b3d8b-eeeb-4e51-8650-498ca038e692
+type: text/vnd.tiddlywiki
+
+You take a sip of the drink labeled "Drink Me". With painful, muscle-shriveling, bone-breaking speak, your body shrink down until you're less than a foot tall.
+
+<$cyoa before="Logic4/cookie">
+
+You can no longer reach the table, but now that you can see under it just fine, you notice behind a table leg a box with little cookies, each labeled, "Eat Me".
+</$cyoa>
+
+<<annotate """
+
+This page implies [[Logic4/small]] and [[Logic4/cookie]]. Thus, when this page is set, both of those pages will automatically be set too. If either of those pages are reset, this page is also reset.
+
+''However'': If this page is set, and then reset, both <<page Logic4/small>> and <<page Logic4/cookie>> will remain set.
+""" >>

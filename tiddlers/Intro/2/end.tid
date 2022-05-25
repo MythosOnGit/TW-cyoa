@@ -1,0 +1,14 @@
+title: Intro2/end
+tmap.id: fe6468a7-052c-43b2-9fed-64cff1b42334
+type: text/vnd.tiddlywiki
+
+Congratulations. You have escaped the first dungeon having bested its final boss.
+
+[[Proceed back to the lobby.|Demo]]
+
+<<annotate """
+
+This link connects to a tiddler which isn't shown on the same graph. That's fine. The TiddlyMap graphs are just visual aids. It doesn't actually have any impact on the generated CYOA.
+
+Any page in the generated CYOA can connect to any other page.
+""" >>

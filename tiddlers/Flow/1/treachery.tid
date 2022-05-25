@@ -1,0 +1,18 @@
+cyoa.append: [[Flow1/final door]]
+statue: a paunchy office employee
+title: Flow1/treachery
+tmap.id: a4d7bf08-a664-46ad-a516-c5ef05c42009
+type: text/vnd.tiddlywiki
+
+You follow the hall into the dark until arriving at the precipice of a large chasm. The only way across is by hopping along the tops of narrow columns. You deftly jump from one to the other. Across the chasm is an altar, upon which is a statue of gold, but to reach it you have to climb along the hall's wall over the abyss. Traps inset in the wall fire poisonous darts. Gargoyle statues spew fire when you pass before them, but finally you reach the other side.
+
+The statue depicts a totem of skulls. You take it with you, but when you pick it up, some hidden mechanism clicks.
+
+The hall rumbles, and the floor begins breaking away. Sprinting onward, you barely manage to stay ahead of the encroaching drop... only for falling debris to nearly crush you. Dodging this way and that, you finally manage to escape from the collapsing hall and reach a place of relative safety. Panting, you walk onward.
+
+<<annotate """
+
+This tiddler appends [[Flow1/final door]]. Since that title has a space in it, [[it must be wrapped in double brackets|Pages with Spaces]]. This is because <<flink AppendField>> accepts multiple values for reasons that'll be explained in later tutorials.
+
+Most pages in these demos will not contain spaces so that this is not necessary. [[I recommend you avoid spaces as well|Pages with Spaces]].
+""" >>

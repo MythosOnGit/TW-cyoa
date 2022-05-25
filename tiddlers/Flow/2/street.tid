@@ -1,0 +1,15 @@
+tags: 
+title: Flow2/street
+tmap.id: c1317cca-4604-4cf6-a651-67392faeeb18
+type: text/vnd.tiddlywiki
+
+You're in the crowded downtown with stores and restaurants lining the streets. Crowds shoulder by.
+
+<$options />
+
+<<annotate """
+
+Here's a simple example of an <<widget options>> list. The four pages tagged with <<page Flow2/street>> will be listed here using each of their <<field cyoa.caption>> fields.
+
+Notice that each options is encased in an dark, bordered background, and mousing over them reveals a popup saying "Depends on ...". This concerns page logic, which we'll learn later. Right now, just know that these backgrounds will ''not'' show up in your interactive story. They're just an aid for you while working in TiddlyWiki.
+""" >>

@@ -1,0 +1,26 @@
+caption: Style 1: Wikitext Markup
+description: Learning Tiddlywiki's easy-to-use markup for simple styling.
+tags: Style
+title: Style1
+tmap.id: e1851902-f7b8-4d2f-81cf-de5536c18d30
+type: text/vnd.tiddlywiki
+
+So now you can create an interactive story where pages tie together with links. Great, but unless your story is going to be nothing more than walls of text, you'll need to learn some styling. Let's start by learning what TiddlyWiki already do.
+
+TiddlyWiki can do //a lot//. It's an entire architecture all on its own that people use for everything from blogs, to websites, to journals. Not only that, there is an ocean of other plugins which you can use to expand upon it. <<plugin>> is just one of those plugins that allows us to generate interactive stories.
+
+This means that a lot of the tools are your disposal aren't even <<plugin>> specific. TiddlyWiki has rich functionality with all sorts of useful features. Let's focus first on its wikitext.
+
+Wikitext is a markup language which allows you to format text. For instance:
+
+<<example """
+This sentence contains //emphasis//, ''bold'', and even __underline__ text.
+""" segue: "That will render as this:">>
+
+The demo for this tutorial shows many more uses of wikitext. Click on a node below to see a page using wikitext. All of these uses will translate over to your interactive story just fine. <<demo>>
+
+There's even more that TiddlyWiki can do, but it would take up too much space to cover it all in this tutorial, but the demo covered what will likely come up for you. At some point, you may want to check out [[the TiddlyWiki's section on wikitext|https://tiddlywiki.com/#WikiText]].
+
+<!--
+Next Tutorial:  <$link to="Style2">{{Style2!!caption}}</$link>
+-->

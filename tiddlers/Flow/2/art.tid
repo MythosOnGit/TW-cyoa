@@ -1,0 +1,18 @@
+cyoa.caption: Check out an art museum.
+tags: Flow2/street
+title: Flow2/art
+tmap.id: 0aa78339-fc20-488b-8ea6-fe80b41accc8
+type: text/vnd.tiddlywiki
+
+An art gallery is hosting a new exhibit today. You buy a ticket and explore inside, only to find out it's modern art.
+
+One exhibit is a string dangling from the ceiling. Another is a blank canvas which the artist sneezed upon. Another is a pile of fluffy cubes behind a velvet rope with a sign warning children not to touch the "art".
+
+By the end, you're feeling thoroughly unenlightened.
+
+[[Leave the museum.|Flow2/street]]
+
+<<annotate """
+
+This tiddler has a <<field cyoa.caption>> field with a value of <$macrocall $name=value _={{!!cyoa.caption}}/>. This is the caption that gets used when this page is listed in [[Flow2/street]].
+""" >>

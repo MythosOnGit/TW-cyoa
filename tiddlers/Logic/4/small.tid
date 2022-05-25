@@ -1,0 +1,17 @@
+cyoa.append: Logic4/actions
+cyoa.caption: Drink "Diet Drink Me".
+cyoa.only: first
+list-after: Logic4/tiny
+tags: Logic4/actions
+title: Logic4/small
+tmap.id: 0e87a541-45c5-4875-9067-bcb40cce7e2b
+type: text/vnd.tiddlywiki
+
+You take a sip of the drink labeled "Diet Drink Me". Gradually over a minute, you shrink. You hardly notice though. A while later, you realize you're about a foot shorter. Not very startling really.
+
+<<annotate """
+
+[[Logic4/cookie]] resets this page. Since [[Logic4/tiny]] (which is "Drink Me") implies this page, it stands that ''not'' this page implies ''not'' <<page Logic4/tiny>> (that's the contrapositive), so resetting this page (<<page Logic4/small>>) automatically resets <<page Logic4/tiny>> too.
+
+Effectively, it's impossible to enter the illegal state where <<page tiny>> is set, but this page is not. This is good! For simple cases like this, resetting both pages would have been fine, but for larger projects, making illegal states impossible makes your story more foolproof.
+""" >>

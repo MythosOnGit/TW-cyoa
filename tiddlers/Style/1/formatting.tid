@@ -1,0 +1,39 @@
+caption: Formatting
+tags: 
+title: Style1/formatting
+tmap.id: 46658347-b512-421e-b024-1bc66ce91ffd
+type: text/vnd.tiddlywiki
+
+You approach a cave entrance.
+There's a sign out front.
+
+<<<
+!!! Beware
+
+Within this dungeon is a //terrible// beast of ''unimaginable'' power. __Do not enter unprepared!__ If you must, make sure you have the following.
+
+* A ~~gun~~ formidable sword
+* A Mighty Healing Potion^^tm^^
+* A trustworthy friend---,,someone who can drag your corpse home.,,
+
+//You have been warned.//
+<<<
+
+[[Enter the cave|Style1/paragraphs and linebreaks]]
+
+<<annotate """
+
+Here are some examples of basic formatting:
+
+* `!!! headings` for header text (<<icon $:/core/images/heading-3>>)
+** Different numbers of `!` give you headings &lt;h1> through &lt;h5>
+* <code>&#96;backticks&#96;</code> for `code` (<<icon $:/core/images/mono-line>>)
+** Alternatively, <code>&#96;&#96;double backticks allows &#96;embedded&#96; backticks&#96;&#96;</code>
+* `''bold''` for ''bold text'' (<<icon $:/core/images/bold>>)
+* `//italic//` for //italic text// (<<icon $:/core/images/italic>>)
+* `__underscore__` for __underscored text__ (<<icon $:/core/images/underline>>)
+* `^^superscript^^` for ^^superscripted^^ text (<<icon $:/core/images/superscript>>)
+* `,,subscript,,` for ,,subscripted,, text (<<icon $:/core/images/subscript>>)
+* `~~strikethrough~~` for ~~strikethrough~~ text (<<icon $:/core/images/strikethrough>>)
+
+""" >>

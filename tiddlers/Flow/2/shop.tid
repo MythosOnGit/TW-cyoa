@@ -1,0 +1,31 @@
+cyoa.caption: Visit a shop.
+tags: Flow2/street
+title: Flow2/shop
+tmap.id: dad86f32-b88d-4e14-a922-aa5c0706ed59
+type: text/vnd.tiddlywiki
+
+You're now in a shop. It's a quaint, rustic place that does not fit the decor of the surrounding city. Behind the counter is a wrinkled old man who watches you curiously. On the shelves are all manner of strange magical objects.
+
+<<annotate """
+
+Here's an example of a more sophisticated <<widget options>> list. Instead of relying on the contents of the <<field cyoa.caption>> fields of each page listed, we create a small template to be applied for each caption.
+
+If you edit this tiddler, you'll see that the template is
+
+```
+<$link>Examine the {{!!name}}.</$link>
+```
+We'll cover transclusion and templating in more detail later, just know for now that `{{!!name}}` transcribe the <<field name>> field of each listed tiddler.
+""">>
+
+<$options>
+
+<$link>Examine the {{!!name}}.</$link>
+</$options>
+
+[[Return to the streets.|Flow2/street]]
+
+<<annotate """
+
+We have a [[hard link|Hard Links]] here right after an <<widget options>> list. You can mix them like this as much as you want, because in your interactive novel, they will be distinguishable.
+""">>

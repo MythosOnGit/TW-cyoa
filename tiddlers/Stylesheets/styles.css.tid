@@ -1,6 +1,7 @@
-title: Stylesheets/styles.css
 tags: $:/tags/Stylesheet
+title: Stylesheets/styles.css
 tmap.id: d4d63c5c-85c4-47dd-9d4a-7985016386d0
+type: text/vnd.tiddlywiki
 
 .doc-attr,
 .doc-field,
@@ -12,6 +13,11 @@ tmap.id: d4d63c5c-85c4-47dd-9d4a-7985016386d0
 	color: <<color very-muted-foreground>>;
 	font-weight: bold;
 	padding: 0;
+}
+.doc-icon svg {
+	width: 1em;
+	height: 1em;
+    vertical-align: middle;
 }
 
 a .doc-attr,

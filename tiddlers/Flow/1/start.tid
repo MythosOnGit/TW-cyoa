@@ -1,0 +1,21 @@
+tags: Demo
+title: Flow1/start
+tmap.id: 0e14191d-a76a-4c89-8656-f2f254882a35
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It showcases a simple use-case for <<flink AppendField>>. There are more advanced tricks that you can do with appending, but we'll cover them later in the ''Logic'' tutorials.
+""" >>
+
+You find yourself trapped within an Aztec-style temple. Two massive doors are before you One is labeled "The Trial of Treachery". The other is "The Trial of Savagery."
+
+"//Choose your trial,//" booms a disembodied voice.
+
+[[Choose the Path of Treachery.|Flow1/treachery]]
+
+[[Choose the Path of Savagery.|Flow1/savagery]]
+
+There's also a door marked [[Service exit|Flow1/end]].

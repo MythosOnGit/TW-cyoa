@@ -1,0 +1,19 @@
+cyoa.after: Logic4/small
+cyoa.append: Logic4/actions
+cyoa.caption: Eat an "Eat Me" cookie.
+cyoa.only: visited
+cyoa.reset: Logic4/small
+list-before: 
+tags: Logic4/actions
+title: Logic4/cookie
+tmap.id: 2861b2da-2f70-46b9-955a-edd55c6dd65c
+type: text/vnd.tiddlywiki
+
+You eat a cookie. With one quick "fwump", you're suddenly back to your original size. Convenient!
+
+<<annotate """
+
+This page is an example of when "only if visited" is used. It is implied by [[Logic4/tiny]], where the cookies are introduced in the story. So when that page gets visited, this page automatically gets set too (and thus is now available).
+
+Effectively, We're using the state of this page to represent when the cookies are discovered, not when they're eaten.
+""" >>

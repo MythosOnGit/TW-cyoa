@@ -1,0 +1,33 @@
+cyoa.caption: Return to the atrium.
+list-after: 
+title: Logic1/atrium
+tmap.id: 4f04279d-f5cd-4127-ad30-8321d9c01f38
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates the "first" and "visited" mechanic, both with pages and the <<widget first>> and <<widget visited>> nodes.
+""" >>
+
+<$first>
+
+You awake to find you're lying on cold tiles. Your head is hammering. Standing up you take stock of where you are.
+
+You're inside the atrium of a museum. No one else is here, the lights are off, and the skylights hardly glow with predawn light. You're having trouble seeing your way around.
+</$first>
+
+<<annotate """
+
+If you're visiting the page for the first time, the above text displays. All other times, the below text will display. <<plugin>> takes care of this automatically by making this page a [[tracked page|Tracking]].
+
+Try mousing over these blocks of text. You'll get a pop-up which provides information about their constraints.
+""" >>
+
+<$visited>
+
+You're back at the museum's atrium.
+</$visited>
+
+<$options/>

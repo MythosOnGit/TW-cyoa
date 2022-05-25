@@ -1,3 +1,4 @@
+description: Nodes of this type will be tracked in the interactive story in the default group.
 priority: 5
 scope: [cyoa:group[default]]
 style: {"color":{"background":"rgba(144,240,252,1)"}}

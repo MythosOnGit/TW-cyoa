@@ -1,0 +1,29 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Flow 2: Options Lists/map
+type: text/vnd.tiddlywiki
+
+{
+ "c1317cca-4604-4cf6-a651-67392faeeb18": {
+  "x": -75,
+  "y": 0
+ },
+ "0aa78339-fc20-488b-8ea6-fe80b41accc8": {
+  "x": -175,
+  "y": -50
+ },
+ "c6b956df-de70-43f5-a464-add3c220e927": {
+  "x": -175,
+  "y": 50
+ },
+ "dad86f32-b88d-4e14-a922-aa5c0706ed59": {
+  "x": 75,
+  "y": 0
+ },
+ "830da8f0-92b8-444a-b50a-9a1771e6eb03": {
+  "x": 175,
+  "y": 50
+ },
+ "0f592f03-adaf-4bd8-8eb4-4bd05b9e0995": {
+  "x": 175,
+  "y": -50
+ }
+}

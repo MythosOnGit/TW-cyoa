@@ -219,6 +219,17 @@ var templateAttr = " template='"+template+"' ";
 		expect(doc.documentElement.textContent).toBe("AC");
 	});
 
+	it("can list options from within the draft tiddler",function() {
+		var wiki = new $tw.Wiki();
+		wiki.addTiddlers([
+			{title:"A",tags:"target"},
+			{title:"B",tags:"target"},
+			{title:"target",text: "<$options/>\n"},
+			utils.draft({title:"target",text: "<$options/>\n"})]);
+		var doc = utils.renderTiddler(wiki,"Draft of 'target'");
+		expect(doc.documentElement.textContent).toBe("AB");
+	});
+
 	it("embeds weight into options",function() {
 		const wiki = new $tw.Wiki();
 		wiki.addTiddlers([

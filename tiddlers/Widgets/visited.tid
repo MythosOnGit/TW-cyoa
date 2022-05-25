@@ -2,8 +2,7 @@ caption: visited
 tags: Widgets
 title: VisitedWidget
 tmap.id: 01f81ce3-87f6-4804-a72d-574aa793d650
-
-! Introduction
+type: text/vnd.tiddlywiki
 
 The <<widget visited>> widget displays its contents in the generated cyoa only if the current page has already been touched (meaning it's been viewed before). On the first visit to the page, the contents inside "visited" will not be shown. If the current page is ever reset, then the contents in "visited" won't display the following time it's viewed.
 

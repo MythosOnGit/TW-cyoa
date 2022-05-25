@@ -58,8 +58,8 @@ function eachSource(wiki) {
 			if(!wiki.isSystemTiddler(title)) {
 				var tags = tiddler.fields.tags;
 				if(tags === undefined
-				|| (tags.indexOf("$:/tags/mythos/cyoa/Stylesheet") < 0
-				 && tags.indexOf("$:/tags/mythos/cyoa/Javascript") < 0)) {
+				|| (tags.indexOf("$:/tags/cyoa/Stylesheet") < 0
+				 && tags.indexOf("$:/tags/cyoa/Javascript") < 0)) {
 					fn(tiddler,title);
 				}
 			}

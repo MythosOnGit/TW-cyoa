@@ -1,0 +1,3 @@
+title: $:/config/SyncFilter
+
+[is[tiddler]] -[[$:/core]] -[[$:/library/sjcl.js]] -[prefix[$:/boot/]] -[prefix[$:/HistoryList]] -[[$:/isEncrypted]] -[prefix[$:/status/]] -[prefix[$:/state/]] -[prefix[$:/temp/]] -[[$:/StoryList]] -[prefix[test/]] -cyoa.js -[prefix[$:/config/Plugins/Disabled/]] -[[$:/plugins/felixhayashi/tiddlymap/misc/defaultViewHolder]]

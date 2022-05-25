@@ -1,0 +1,25 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Flow 1: Appending/map
+type: text/vnd.tiddlywiki
+
+{
+ "0e14191d-a76a-4c89-8656-f2f254882a35": {
+  "x": -155,
+  "y": 40
+ },
+ "a4d7bf08-a664-46ad-a516-c5ef05c42009": {
+  "x": -10,
+  "y": -60
+ },
+ "82858463-ef35-4570-8f57-fdc76955c9f0": {
+  "x": -10,
+  "y": 0
+ },
+ "9408f3ca-4c41-4289-8914-d1561f20d600": {
+  "x": 155,
+  "y": -30
+ },
+ "b769a77b-b253-4d90-8d7f-418c9c9d995c": {
+  "x": 155,
+  "y": 40
+ }
+}
