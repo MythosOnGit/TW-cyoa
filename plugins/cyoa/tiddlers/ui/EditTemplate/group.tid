@@ -1,4 +1,4 @@
-tags: $:/plugins/mythos/cyoa/tags/EditTemplate
+tags: $:/tags/cyoa/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/group
 
 \define prefix() $:/plugins/mythos/cyoa/groups/

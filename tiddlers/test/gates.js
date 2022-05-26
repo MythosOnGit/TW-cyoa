@@ -9,6 +9,7 @@ This focuses on logic gate tiddlers which manipulate evaluation
 \*/
 
 var utils = require("test/utils.js");
+var Cyoa = require("cyoa");
 
 describe("Snippets: Tracked filter control operands",function() {
 
@@ -36,7 +37,7 @@ function testConditionFilter(tests,options) {
 		{title: "Main",text: widgets}
 	]]);
 	for(var test in tests) {
-		var active = core.document.getElementById(test).classList.contains("cyoa-active");
+		var active = core.document.getElementById(Cyoa.utils.encodePageForID(test)).classList.contains("cyoa-active");
 		expect(active).toEqual(tests[test]);
 	}
 };

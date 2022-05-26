@@ -43,7 +43,7 @@ CyoaWidget.prototype.render = function(parent,nextSibling) {
 CyoaWidget.prototype.createDomNode = function() {
 	var tag = this.getTag();
 	var domNode = this.document.createElement(tag);
-	if(this.id) domNode.setAttribute("id",this.id);
+	if(this.id) domNode.setAttribute("id",utils.encodePageForID(this.id));
 	domNode.className = this.getClassName();
 	if(this.isLink() && tag === "a") {
 		domNode.setAttribute("href",this.getLinkText());

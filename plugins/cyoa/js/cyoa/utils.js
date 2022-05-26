@@ -1,11 +1,14 @@
 exports.getSubpages = function(pageName,document) {
 	var encodedName = exports.encodePageForID(pageName);
 	var page = document.getElementById(encodedName);
-	var strList = page.getAttribute("data-append");
-	if(!strList) {
+	if (page) {
+		var strList = page.getAttribute("data-append");
+		if(strList) {
+			return strList.split(" ").map(decodeURIComponent);
+		}
 		return [];
 	}
-	return strList.split(" ").map(decodeURIComponent);
+	return null;
 };
 
 exports.getMetaContent = function(name,doc) {
@@ -60,7 +63,17 @@ exports.encodePage = function(idStringOrArray) {
 	}
 };
 
-exports.encodePageForID = exports.encodePage;
+exports.encodePageForID = function(idStringOrArray) {
+	function encode(idString) {
+		return idString.split("%").join("%25").split(" ").join("%20")
+	};
+	if(typeof idStringOrArray === "string") {
+		return encode(idStringOrArray);
+	} else {
+		return idStringOrArray.map(encode).join(" ");
+	}
+};
+
 
 exports.decodePage = function(idString) {
 	return decodeURIComponent(idString);

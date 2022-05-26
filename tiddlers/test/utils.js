@@ -78,7 +78,7 @@ exports.activeNodes = function(core) {
 	for(var i = 0; i < actives.length; i++) {
 		var active = actives[i];
 		if(active.id && active.id !== "Main") {
-			results.push(active.id);
+			results.push(decodeURIComponent(active.id));
 		}
 	}
 	results.sort();
@@ -160,7 +160,7 @@ exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
 	core.manager.getState = () => rtn.state;
 	// Now open results so the core will load the serialized state.
 	core.openBook("Results");
-	// Lets collect those results in the only way I can fucking figure out how
+	// Lets collect those results in the only way I can figure out how
 	var elem = core.book.getPage("Results").element;
 	rtn.results = [];
 	for(var child = elem.firstElementChild; child; child = child.nextElementSibling) {

@@ -127,6 +127,13 @@ it("can clear",function() {
 		{title: "Main",text: "<$cyoa touch='A B C' reset='[cyoa:var[default]]'/>"}]);
 });
 
+it("does not print if empty",function() {
+	var serialized = testBook([],[node("A"),
+		{title: "Main",text: "<$cyoa reset='A'/>"}]);
+	// It should not be t=0, or anything=0
+	expect(serialized).toBe("");
+});
+
 it("handles cyclic graphs gracefully",function() {
 	utils.warnings(spyOn);
 	testBook([],[node("loopA","loopB"),node("loopB","loopA")]);

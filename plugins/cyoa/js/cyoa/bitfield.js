@@ -93,7 +93,11 @@ Bp.toString = function() {
 		}
 		return state;
 	};
-	return Base64.to64n(packSet(this.data.states));
+	var string = Base64.to64n(packSet(this.data.states));
+	if (string === "0") {
+		return "";
+	}
+	return string;
 };
 
 Bp.clear = function() {

@@ -20,7 +20,7 @@ title: $:/plugins/mythos/cyoa/ui/EditTemplate
   <$reveal type="match" stateTitle=<<cyoa-option-state>> text="open">
 
    <table><tbody>
-   <$list filter="[all[shadows+tiddlers]tag[$:/plugins/mythos/cyoa/tags/EditTemplate]!has[draft.of]]" variable="listItem">
+   <$list filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/EditTemplate]!has[draft.of]]" variable="listItem">
     <$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
      <$transclude tiddler=<<listItem>>/>
     </$set>

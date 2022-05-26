@@ -1,5 +1,5 @@
 caption: General
-tags: $:/plugins/mythos/cyoa/tags/Configuration
+tags: $:/tags/cyoa/Configuration
 title: $:/plugins/mythos/cyoa/configuration/general
 
 \define set-type(tiddler, type) <$action-setfield $tiddler="$tiddler$" type="text/x-tiddler-$type$" />

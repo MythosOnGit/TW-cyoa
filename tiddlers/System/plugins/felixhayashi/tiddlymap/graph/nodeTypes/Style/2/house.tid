@@ -1,0 +1,5 @@
+priority: 1
+scope: [prefix[Style2/house/]]
+style: {"color":{"background":"rgba(158,20,43,1)"}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/Style2/house
+type: text/vnd.tiddlywiki

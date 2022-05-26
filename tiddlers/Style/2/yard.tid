@@ -1,7 +1,31 @@
 title: Style2/yard
 tmap.id: fa569b2a-1655-43ae-ab30-7ef088a39fa7
+tmap.style: {"color":{"background":"rgba(11,135,5,1)"}}
 type: text/vnd.tiddlywiki
 
 ! The yard
 
-You are in the front yard of the cottage, and it is indeed styled differently. Everything around you is greenish.
+You are in the front yard of the house, and it is indeed styled differently. Everything around you is greenish, but the house is red brick. The door appears to be unlocked.
+
+[[Enter the house.|Style2/house/porridge]]
+
+<<annotate """
+
+In the generated interactive novel, this page will come out green because [[the stylesheet for this demo|Style2/stylesheet.css]] has
+
+```css
+.cyoa-body[title="Style2/yard"] {
+    background-color: forestgreen;
+};
+```
+Thus when this page (<<page Style2/yard>>) is the active page, that css is active.
+
+This CSS will ''not'' apply if this page is only visible because it's appended by another page. This must be the first page in the current page run.
+""" >>
+
+<<annotate """
+
+Also, you'll notice that in TiddlyMap, this node is green. That's because it's been manually customized. You can manually customize any node by clicking on it in the graph and clicking {{$:/plugins/felixhayashi/vis/img/network/editIcon.png}} ''Edit Node''.
+
+This has no effect on your interactive novel. It's just a useful trick you might like to organize your project.
+""" >>

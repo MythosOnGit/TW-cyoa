@@ -7,7 +7,7 @@ Tests the cyoa Book class, which runs everything.
 
 \*/
 var Cyoa = require("cyoa");
-var utils = Cyoa.utils;
+const utils = require("test/utils.js");
 var domParser = require("test/dom-parser");
 var MockWindow = require("test/cyoa/mock/window");
 var MockManager = require("test/cyoa/mock/manager");
@@ -80,10 +80,25 @@ describe("#focus_on_page",function() {
 	});
 });
 
+it("sets body title",function() {
+	var title = "Dir/&title name%";
+	var core = utils.testBook([{title: "Main"}, {title: title}]);
+	core.openBook(title);
+	var body = core.document.getElementsByTagName("body")[0];
+	expect(body.getAttribute("title")).toBe(title);
+});
+
+it("handles titles with odd characters",function() {
+	var title = "D?ir#/&title% name";
+	var core = utils.testBook([{title: "Main"}, {title: title}]);
+	core.openBook(title);
+	expect(core.topPage).toBe(title);
+});
+
 describe("#resolveNextPage",function() {
 	var href = "Misty's \"dark\" revenge/rampage/teaparty";
 	var hrefEnc = encodeURIComponent(href);
-	var hrefPageEnc = utils.encodePage(href);
+	var hrefPageEnc = Cyoa.utils.encodePage(href);
 	var badPage = "Don't go to \"the scary place\"";
 	var badPage2 = "Bad stack";
 

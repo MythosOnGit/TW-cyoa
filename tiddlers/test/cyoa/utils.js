@@ -29,7 +29,7 @@ describe("#getMetaContent",function() {
 describe("#getSubpages",function() {
 	var testString = `<div class="cyoa-content">
 	  <div class="cyoa-page" id="populated" data-append="A B C" />
-	  <div class="cyoa-page" id="complex/%26name"
+	  <div class="cyoa-page" id="complex/&%20%25name"
 	       data-append="space%20name" />
 	  <div class="cyoa-page" id="empty" data-append="" />
 	  <div class="cyoa-page" id="missing" />
@@ -45,7 +45,7 @@ describe("#getSubpages",function() {
 	});
 
 	it("can load complex lists from complex pages",function() {
-		expect(getSubpages("complex/&name")).toEqual(["space name"]);
+		expect(getSubpages("complex/& %name")).toEqual(["space name"]);
 	});
 
 	it("can load a zero amount of subpages",function() {

@@ -1,0 +1,24 @@
+tags: 
+title: Style2/house/porridge
+tmap.id: b0fcf97e-8a2a-4670-8c42-23f0b31757cb
+type: text/vnd.tiddlywiki
+
+! First Floor
+
+No one is inside the house, but it's clearly lived in. The furniture is well-dusted, and the hot porridge on the table. They all taste the same to you, which makes sense, because who would make three separate bowls of porridge?
+
+Also, it's very red in here.
+
+[[Go upstairs.|Style2/house/bed]]
+
+<<annotate """
+
+Your interactive novel will appear brick-red when this page is visited because [[the stylesheet for this demo|Style2/stylesheet.css]] has
+
+```css
+.cyoa-body[title^="Style2/house/"] {
+    background-color: brickred;
+};
+```
+Thus when any page starting with <<page Style2/house/>> is viewed (like this one), that CSS takes effect.
+""" >>

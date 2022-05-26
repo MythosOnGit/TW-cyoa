@@ -1,5 +1,5 @@
 caption: Versioning
-tags: $:/plugins/mythos/cyoa/tags/Configuration
+tags: $:/tags/cyoa/Configuration
 title: $:/plugins/mythos/cyoa/configuration/versioning
 
 See the documentation for details on how versioning works. If you use it, there are constraints you must work within.

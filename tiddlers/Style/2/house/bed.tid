@@ -1,0 +1,20 @@
+title: Style2/house/bed
+tmap.id: 6551047f-5e56-4c34-96ad-1bad0ceaff69
+type: text/vnd.tiddlywiki
+
+Upstairs there are three beds. Judging from their different sizes, a family lives here. The first bed you try is the largest, and it's just fine, because how can a bed possibly be "too large"?
+
+You lie down, confident that this is the end of your adventure, and nothing bad will come of your trespass. Congratulations on finishing your adventure.
+
+Also, it's very red in here too.
+
+[[Go to sleep.|Demo]]
+
+<<annotate """
+
+You'll notice that this page and also [[Style2/house/porridge]] have different-colored nodes in TiddlyMap. Unlike with [[Style2/yard]], this isn't manually set per page, but rather by custom node-type <<page Style2/house>>. If you'd like, you can edit existing node types or create your own by going to "<span class="tmap-unicode-icon">▢</span>&#32;Manage node-types"  in ~TiddlyMap's
+<$button>{{$:/core/images/menu-button}}</$button>
+menu.
+
+''However, be aware.'' Adding background colors or borders to sets of nodes may override <<plugin>>'s behavior to style nodes based on their page set or constraints.
+""" >>

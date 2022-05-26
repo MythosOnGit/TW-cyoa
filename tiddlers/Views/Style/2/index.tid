@@ -1,6 +1,6 @@
 config.central-topic: 8c4f5c9b-e3fd-4494-8672-12752686e5ce
 config.physics_mode: false
 id: 65d1d064-8456-4973-87ec-d6bd2d70f4ff
-isview: false
+isview: true
 title: $:/plugins/felixhayashi/tiddlymap/graph/views/Style 2: Stylesheets
 type: text/vnd.tiddlywiki

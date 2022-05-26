@@ -1,3 +1,21 @@
-[id="Style2/yard"] {
-    background-color: darkgreen;
+/**
+This is the stylesheet for this demo. As it's tagged with $:/tags/cyoa/Stylesheet, it will be copied into the interactive novel as embedded CSS rather than as a page.
+
+You may notice that it's represented in TiddlyMap as a red square. This is not automatic. I've manually configured it to look different from pages because I like to differentiate my CSS from my pages. You don't even have to have your CSS on your graph at all if you want.
+
+See Style2/yard for instructions on how to style graph nodes.
+*/
+
+/**
+This configures the interactive novel's encompassing <body> element to be forest green if the current leading page is "Style2/yard".
+*/
+.cyoa-body[title="Style2/yard"] {
+    background-color: forestgreen;
+};
+
+/**
+This style is a little different. It will apply in ALL cases where the leading title STARTS with "Style2/house/".
+*/
+.cyoa-body[title^="Style2/house/"] {
+    background-color: brickred;
 };

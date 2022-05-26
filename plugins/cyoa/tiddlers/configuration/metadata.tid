@@ -1,5 +1,5 @@
 caption: Metadata
-tags: $:/plugins/mythos/cyoa/tags/Configuration
+tags: $:/tags/cyoa/Configuration
 title: $:/plugins/mythos/cyoa/configuration/metadata
 
 These metadata key/value pairs will be written to `<meta name='X' content='Y'>` elements in the header of the compiled CYOA file. To prevent a built-in key pair from being written, leave the value blank.

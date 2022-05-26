@@ -1,5 +1,5 @@
 caption: Groups
-tags: $:/plugins/mythos/cyoa/tags/Configuration
+tags: $:/tags/cyoa/Configuration
 title: $:/plugins/mythos/cyoa/configuration/groups
 
 \define state() $:/state/cyoa/group-name

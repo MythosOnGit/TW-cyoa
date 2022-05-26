@@ -1,2 +1,2 @@
 list: $:/plugins/mythos/cyoa/configuration/general $:/plugins/mythos/cyoa/configuration/groups $:/plugins/mythos/cyoa/configuration/metadata $:/plugins/mythos/cyoa/configuration/advanced
-title: $:/plugins/mythos/cyoa/tags/Configuration
+title: $:/tags/cyoa/Configuration

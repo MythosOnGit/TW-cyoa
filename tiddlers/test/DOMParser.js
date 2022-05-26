@@ -48,7 +48,7 @@ NodeJSDOMParser.prototype.parseFromString = function(content,type) {
 	doc.dispatchEvent = function(event) {
 		this.eventListeners[event.type](event);
 	};
-	doc.body = {};
+	doc.body = doc.getElementsByTagName("body")[0];
 	if(nodeProto === undefined) {
 		nodeProto = Object.getPrototypeOf(doc.documentElement);
 		Object.defineProperty(nodeProto,"classList",{get: classList});

@@ -15,6 +15,6 @@ Have it set to plainwikified if you're transcluding wikitext which will be javas
 	name="format"
 	value=<<format>>
 	emptyValue="htmlencoded"
->`<div id="`<$view field="title" format="urlencoded" />`"`<$text text=<<moduletype>> />`>
+>`<div id="`<$text text={{{ [all[current]search-replace:g[%],[%25]search-replace:g[ ],[%20]] }}} />`"`<$text text=<<moduletype>> />`>
 <pre>`<$view field="text" format=<<format>> />`</pre>
 </div>`</$set></$vars>
