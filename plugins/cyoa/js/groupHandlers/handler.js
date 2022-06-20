@@ -321,41 +321,6 @@ Hp.commitRecord = function(newRecord) {
 		type: "application/json"});
 };
 
-/*
-Here's a hook which will update the names inside a record during a rename.
-*/
-$tw.hooks.addHook("th-renaming-tiddler",function(newTiddler,oldTiddler) {
-	var wiki = $tw.wiki;
-	var oldName = oldTiddler.fields.title;
-	var group = wiki.getTiddlerCyoaGroup(oldName);
-	if(group) {
-		// This renamed tiddler belongs to a group. We may have to  rename it.
-		var recordName = versionPrefix + group;
-		var infoArray = wiki.getTiddlerData(recordName);
-		if(infoArray) {
-			// A record exists for this group. We must go through it and find the tiddler.
-			for(var blockIndex = 0; blockIndex < infoArray.length; blockIndex++) {
-				var group = infoArray[blockIndex];
-				for(var index = 0; index < group.length; index++) {
-					var info = group[index];
-					// We found it.
-					if(info.title === oldName) {
-						info.title = newTiddler.fields.title;
-						// Record the update now
-						wiki.addTiddler({
-							title: recordName,
-							text: stringifyRecord(infoArray),
-							type: "application/json"});
-						// We're done. There should only be one entry.
-						return newTiddler;
-					}
-				}
-			}
-		}
-	}
-	return newTiddler;
-});
-
 Hp.getPageMap = function() {
 	if(this.pageMap === undefined) {
 		// Okay. Now that we've updated the record, lets pull out the pageMap
@@ -381,6 +346,50 @@ Hp.getPageMap = function() {
 		this.pageMap = pageMap;
 	}
 	return this.pageMap;
+};
+
+$tw.hooks.addHook("th-renaming-tiddler",function(newTiddler,oldTiddler) {
+	// This hook catches procedural renames of a tiddler, which never happens in the core.
+	relinkTiddler(newTiddler.fields.title,oldTiddler.fields.title);
+	return newTiddler;
+});
+$tw.hooks.addHook("th-saving-tiddler",function(newTiddler,draftTiddler) {
+	// This hook catches manual renames, which is pretty much all of them.
+	relinkTiddler(newTiddler.fields.title,draftTiddler.fields["draft.of"]);
+	return newTiddler;
+});
+
+/*
+Here's a hook which will update the names inside a record during a rename.
+*/
+function relinkTiddler(newTitle,oldTitle) {
+	var wiki = $tw.wiki;
+	var group = wiki.getTiddlerCyoaGroup(oldTitle);
+	if(group) {
+		// This renamed tiddler belongs to a group. We may have to  rename it.
+		var recordName = versionPrefix + group;
+		var infoArray = wiki.getTiddlerData(recordName);
+		if(infoArray) {
+			// A record exists for this group. We must go through it and find the tiddler.
+			for(var blockIndex = 0; blockIndex < infoArray.length; blockIndex++) {
+				var group = infoArray[blockIndex];
+				for(var index = 0; index < group.length; index++) {
+					var info = group[index];
+					// We found it.
+					if(info.title === oldTitle) {
+						info.title = newTitle;
+						// Record the update now
+						wiki.addTiddler({
+							title: recordName,
+							text: stringifyRecord(infoArray),
+							type: "application/json"});
+						// We're done. There should only be one entry.
+						return;
+					}
+				}
+			}
+		}
+	}
 };
 
 /*
