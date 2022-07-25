@@ -352,4 +352,19 @@ it("handles renaming of tiddlers after a commit",function() {
 	expect(nextSerialized).toBe(prevSerialized);
 });
 
+it('handles deletion of tiddlers after a commit',function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		bitfieldGroup("t"),
+		node("A"),
+		node("B"),
+		node("C"),
+		{title: "Main","cyoa.touch": "A C"}]);
+	wiki.commitCyoaGroups();
+	var prevSerialized = testPremadeBook(wiki,["A","C"]);
+	wiki.deleteTiddler("B");
+	var nextSerialized = testPremadeBook(wiki,["A","C"]);
+	expect(nextSerialized).toBe(prevSerialized);
+});
+
 });

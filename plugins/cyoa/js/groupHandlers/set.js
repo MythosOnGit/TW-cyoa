@@ -24,9 +24,9 @@ Sp.groupData = function() {
 		exList: this.getExclusionLists()
 	};
 	if(this.data.style === "bitfield") {
-		var count = Object.keys(this.pages).length;
-		data.count = count;
 		var versionMap = getVersionMap(this,this.pages);
+		var count = Object.keys(versionMap).length;
+		data.count = count;
 		data.up = this.convertToIds(impTree);
 		// makeBridges has side-effects on data.up.
 		data.bridges = makeBridges(versionMap,data.up);
