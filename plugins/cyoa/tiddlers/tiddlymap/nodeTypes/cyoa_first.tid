@@ -1,7 +1,7 @@
 description: Nodes of this type are have a condition such that they only display the first time.
 priority: 5
 scope: [cyoa.only[first]]
-style: {"color":{"border":"OrangeRed"}}
+style: {"color":{"border":"OrangeRed"},"borderWidth":2,"borderWidthSelected":3}
 title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa:first
 type: text/vnd.tiddlywiki
 
