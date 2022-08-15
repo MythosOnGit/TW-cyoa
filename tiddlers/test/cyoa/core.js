@@ -85,7 +85,7 @@ it("sets body title",function() {
 	var core = utils.testBook([{title: "Main"}, {title: title}]);
 	core.openBook(title);
 	var body = core.document.getElementsByTagName("body")[0];
-	expect(body.getAttribute("title")).toBe(title);
+	expect(body.getAttribute("data-title")).toBe(title);
 });
 
 it("handles titles with odd characters",function() {

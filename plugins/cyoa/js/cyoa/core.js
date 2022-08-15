@@ -62,7 +62,7 @@ Core.prototype.focus_on_page = function(page) {
 	this.openPages = [];
 
 	utils.log("Page: " + currentPage);
-	this.document.body.setAttribute("title", currentPage);
+	this.document.body.setAttribute("data-title", currentPage);
 	this.document.body.scrollTop=this.document.documentElement.scrollTop=0;
 
 	this.processExtraPages(this.book.headers);

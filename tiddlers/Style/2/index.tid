@@ -25,12 +25,12 @@ What is necessary, however, is the <<tag $:/tags/cyoa/Stylesheet>> tag. This tel
 
 CSS in a tiddler tagged with <<tag $:/tags/cyoa/Stylesheet>> will be active for your entire interactive story. That means content like <<value "ul { ... }">> will apply to all your bullet-point lists.
 
-However, you might have css which you only want applied when a particular page is viewed. Fortunately, <<plugin>> sets a <<value title>> attribute on the your interactive story's main <<elem body>> element to whatever page is currently selected. So content like <<value '.cyoa-body[title="myPage"] { ... }'>> will apply only when page <<page myPage>> is currently the main page.
+However, you might have css which you only want applied when a particular page is viewed. Fortunately, <<plugin>> sets a <<value data-title>> attribute on the your interactive story's main <<elem body>> element to whatever page is currently selected. So content like <<value '.cyoa-body[data-title="myPage"] { ... }'>> will apply only when page <<page myPage>> is currently the main page.
 
-<<note """<<value cyoa-body>> is a class that <<plugin>> applies to your page's <<elem body>> element. You could set CSS to <<value 'body[title="myPage"]'>> instead, but specifying the classes is a better practice.""" >>
+<<note """<<value cyoa-body>> is a class that <<plugin>> applies to your page's <<elem body>> element. You could set CSS to <<value 'body[data-title="myPage"]'>> instead, but specifying the classes is a better practice.""" >>
 
 !! How to apply CSS to sets of pages
 
 TiddlyWiki core has a way of applying CSS to specific tiddlers [[based on tags|https://tiddlywiki.com/static/Custom%2520styles%2520by%2520data-tags.html]]. <<plugin>> doesn't have this. (But it might someday!)
 
-What you can do is apply CSS to tiddlers based on pattern matching its ID. For instance, <<value """.cyoa-body[title^="House/"] { ... }""" >> will apply its css to all pages whose title begins with <<value House/>>. There are [[other pattern matching tricks too|https://tiddlywiki.com/static/Custom%2520styles%2520by%2520data-tags.html]], and there is an example of all these CSS tricks in this tutorial's demo: <<demo>>
+What you can do is apply CSS to tiddlers based on pattern matching its ID. For instance, <<value """.cyoa-body[data-title^="House/"] { ... }""" >> will apply its css to all pages whose title begins with <<value House/>>. There are [[other pattern matching tricks too|https://tiddlywiki.com/static/Custom%2520styles%2520by%2520data-tags.html]], and there is an example of all these CSS tricks in this tutorial's demo: <<demo>>

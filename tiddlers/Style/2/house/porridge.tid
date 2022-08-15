@@ -16,9 +16,14 @@ Also, it's very red in here.
 Your interactive novel will appear brick-red when this page is visited because [[the stylesheet for this demo|Style2/stylesheet.css]] has
 
 ```css
-.cyoa-body[title^="Style2/house/"] {
-    background-color: brickred;
-};
+.cyoa-body[data-title^="Style2/house/"] {
+    background-color: firebrick;
+    color: white;
+}
+
+.cyoa-body[data-title^="Style2/house/"] a {
+    color: lightblue;
+}
 ```
 Thus when any page starting with <<page Style2/house/>> is viewed (like this one), that CSS takes effect.
 """ >>

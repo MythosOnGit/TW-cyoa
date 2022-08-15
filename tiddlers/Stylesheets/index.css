@@ -18,7 +18,6 @@ body {
 }
 
 h1 {
-	color: black;
 	font-family: 'Droid serif', serif;
 	font-size: 36px;
 	font-weight: 400;
@@ -29,7 +28,6 @@ h1 {
 }
 
 p {
-	color: black;
 	font-family: 'Droid Sans', sans-serif;
 	font-size: 15px;
 	font-weight: 400;

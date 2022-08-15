@@ -11,12 +11,16 @@ You are in the front yard of the house, and it is indeed styled differently. Eve
 
 <<annotate """
 
-In the generated interactive novel, this page will come out green because [[the stylesheet for this demo|Style2/stylesheet.css]] has
+In the generated interactive novel, this page will come out green (with light-colored links) because [[the stylesheet for this demo|Style2/stylesheet.css]] has
 
 ```css
-.cyoa-body[title="Style2/yard"] {
+.cyoa-body[data-title="Style2/yard"] {
     background-color: forestgreen;
-};
+}
+
+.cyoa-body[data-title="Style2/yard"] a {
+    color: khaki;
+}
 ```
 Thus when this page (<<page Style2/yard>>) is the active page, that css is active.
 
