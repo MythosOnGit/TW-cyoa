@@ -145,11 +145,25 @@ it("handles styles like index64 and index10",function() {
 	expect(testPremadeBook(wiki,["X","Y"])).toBe("s=b");
 });
 
+it("can be manipulated with if, do, and done attributes", function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		utils.group("default","set",{variable: "s",style: "index10"}),
+		node("A"),node("B","A"),node("C","B"),node("D"),node("E"),node("F"),
+		{title: "Main",text: `
+			<$cyoa do="#{C} = true" />
+			<$cyoa do="#{D} = !#{E}" if="#{B} == true" />
+			<$cyoa do="#{F} = 5" if="#{B}" />
+			<$cyoa do="#{B} = false" />
+	`}]);
+	testPremadeBook(wiki,["A","D","F"]);
+});
+
 it("does not treat '0' ids as falsy",function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
 		utils.group("default","set",{variable: "s",style: "index10"}),
-		wiki.addTiddler(node("X")),
+		node("X"),
 		{title: "Main","cyoa.touch": "X"}]);
 	var state = testPremadeBook(wiki,["X"]);
 	expect(state).toBe("s=0");

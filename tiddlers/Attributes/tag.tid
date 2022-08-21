@@ -1,0 +1,9 @@
+caption: tag
+list-after: IdAttribute
+tags: Attributes
+title: TagAttribute
+tmap.id: e7a9f8a9-c77b-4f84-acb8-789a5c6937a1
+type: text/vnd.tiddlywiki
+widget: CyoaWidget
+
+Optional tag to override the default element (either <<elem a>>, <<elem div>>, or <<elem span>>).

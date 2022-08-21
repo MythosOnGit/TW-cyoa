@@ -1,4 +1,4 @@
-.cyoa-state:not(:empty) {
+.cyoa-state:not(.cyoa-control) {
     position: relative;
     /*outline-style: solid;
       outline-width: thin;
@@ -10,35 +10,72 @@
     background-color: #BBB4;
 }
 
-.cyoa-state:empty:before {
-    content: var(--cyoa-info);
-    white-space: pre;
-    display: block;
-    background-color: #CFEEEE;
-    outline-style: solid;
-    outline-width: thin;
-    outline-color: #888888;
+.cyoa-state.cyoa-error:not(.cyoa-control) {
+    background-color: #D994;
 }
 
-.cyoa-state:not(:empty):hover:before {
-    content: var(--cyoa-info);
-    white-space: pre;
-    position:absolute;
+.cyoa-info {
+    padding-left: 24px;
+    text-indent: -20px;
+    white-space: normal;
+}
+
+.cyoa-info p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* Info exclusive to the page */
+.cyoa-info.tc-subtitle {
+    padding-left: 20px;
+}
+
+/* Info exclusive to the nodes */
+.cyoa-state > .cyoa-info {
+    color: black;
+    font-weight: normal;
+    padding-right: 4px;
+    padding-top: 2px;
+}
+
+/* Sets popup on hover for state widgets with content. */
+.cyoa-state:not(.cyoa-control) > .cyoa-info {
+    display: none;
+    position: absolute;
+
     bottom: 100%;
-    right: 0;
+    right: -1px;
     background-color:#FFF8DC;
-    outline-style: solid;
-    outline-width: thin;
-    outline-color: #888888;
+    border-style: solid;
+    border-width: thin;
+    border-color: #888888;
+    border-bottom-style: none;
+    user-select: none;
+
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.cyoa-state:not(.cyoa-control):hover > .cyoa-info {
+    display: block;
+}
+
+/* Sets empty widgets to show their info instead. */
+.cyoa-state.cyoa-control > .cyoa-info {
+    display: block;
+    background-color: #CFEEEE;
+    border-style: solid;
+    border-width: thin;
+    border-color: #888888;
 }
 
 .tc-cyoa-imply-list {
-	padding-left: 20px;
+    padding-left: 20px;
 }
 
 /* This happens to be the only way to make the
  * EditTemplate group list not have italics.
  */
 a.cyoa-group-listitem {
-	font-style: normal;
+    font-style: normal;
 }

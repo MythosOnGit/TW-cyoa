@@ -14,6 +14,7 @@ their results into a string.
 "use strict";
 
 var scriptor = require("./cyoa/scriptor");
+var utils = require("./utils");
 
 var snippetHandlers = Object.create(null);
 

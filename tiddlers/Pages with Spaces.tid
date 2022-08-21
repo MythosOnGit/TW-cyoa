@@ -1,8 +1,9 @@
 title: Pages with Spaces
 tmap.id: 18ca884c-6c4e-4da1-96fb-10c4be0cfeaf
+type: text/vnd.tiddlywiki
 
 
-All of <<plugin>>'s fields and attributes take either [[title lists|https://tiddlywiki.com/#Title%20List]] or [[filters|https://tiddlywiki.com/#Filters]]. This means they can accept multiple tiddlers. For instance, a <<field cyoa.after>> field might have a value of <<value "pageA pageB">> for pages <<page pageA>> and <<page pageB>>.
+All of <<plugin>>'s fields and attributes take either [[title lists|Title List]] or [[filters|Filter]]. This means they can accept multiple tiddlers. For instance, a <<field cyoa.after>> field might have a value of <<value "pageA pageB">> for pages <<page pageA>> and <<page pageB>>.
 
 However, this means that tiddlers with spaces must be treated with care.
 

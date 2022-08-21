@@ -3,12 +3,13 @@ tags: Fields
 title: ExcludeField
 tmap.id: ca652982-8119-4d72-b5b3-9a02722fbbb7
 type: text/vnd.tiddlywiki
+value-type: Title List
 
-The <<field cyoa.exclude>> field specifies a [[title list|https://tiddlywiki.com/#Title%20List]] of names which specify exclusion sets. For each exclusion set, only one page in that set can be set at once. That means that if the current page is [[set|Tracking]], all pages in any exclusion sets it's a member of are unset.
+The <<field cyoa.exclude>> field specifies a [[title list|Title List]] of names which specify exclusion sets. For each exclusion set, only one page in that set can be set at once. That means that if the current page is [[set|Tracking]], all pages in any exclusion sets it's a member of are unset.
 
 Exclusion sets are an alternative to having a page reset another. There are several advantages to implications over using <<flink TouchField>>.
 
-* Exclusion sets are automatic. If page <<page A>> is in exclusion set <<page items>> then it is impossible for <<page A>> to be set if any other page in <<page items>> already are. The field <<field cyoa.reset>> can emulate this using a standard [[TiddlyWiki tag|https://tiddlywiki.com/#Tagging]] (i.e. cyoa.reset=<<value [tag[items]]>>), but if any pages in <<page items>> were touched by an outside page, that outside page might not remember to reset all other pages in <<page items>>.
+* Exclusion sets are automatic. If page <<page A>> is in exclusion set <<page items>> then it is impossible for <<page A>> to be set if any other page in <<page items>> already are. The field <<field cyoa.reset>> can emulate this using a standard <<link-to-tw Tagging "TiddlyWiki tag">> (i.e. cyoa.reset=<<value [tag[items]]>>), but if any pages in <<page items>> were touched by an outside page, that outside page might not remember to reset all other pages in <<page items>>.
 * Exclusion sets help <<plugin>> minimize the size of your story's [[URL query string|URL Query String]] for any page groups using bitfield serialization (which is the default).
 
 There are some reasons to prefer <<field cyoa.reset>>.  

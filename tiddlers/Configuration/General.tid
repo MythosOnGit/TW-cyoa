@@ -2,11 +2,12 @@ caption: General
 tags: Configuration
 title: Configuration/General
 tmap.id: a0d420f3-1187-4989-ae6e-6f8313a8ac47
+type: text/vnd.tiddlywiki
 
 * ''Starting Page'': This is the tiddler which will be first displayed when your interactive novel is opened. If you don't specify one, <<plugin>> will use the first of your TiddlyWiki's Default tiddlers which is included in your interactive novel.
 * ''Default Page'': This is the page your novel will take the reader to if they click on a link to a page that you haven't created yet. If you don't specify one, it uses the Starting Page.
 * ''Version'': Ignore this. It's used to manage migration between different version of your interactive novel such that readers can use old bookmarks, but it's an advanced feature, and needs finalizing.
-* ''Page Filter'': This [[filter|https://tiddlywiki.com/#Filters]] specifies what tiddlers in your project will be exported to your interactive novel. This filter receives all non-system tiddlers as input minus any tiddlers tagged with <<tag $:/tags/cyoa/Stylesheet>> or <<tag $:/tags/cyoa/Javascript>>. By default, this filter passes through all input. Draft tiddlers will be automatically excluded.
+* ''Page Filter'': This [[filter|Filter]] specifies what tiddlers in your project will be exported to your interactive novel. This filter receives all non-system tiddlers as input minus any tiddlers tagged with <<tag $:/tags/cyoa/Stylesheet>> or <<tag $:/tags/cyoa/Javascript>>. By default, this filter passes through all input. Draft tiddlers will be automatically excluded.
 * ''Filename'': This is the filename of compiled cyoa file that will be downloaded. This value is parsed as Wikitext, so transclusion, macros, and such are allowed. The extension ".html" will be automatically added.
 * ''HTML Title'': This is the title displayed in the browser tab of your interactive novel. This value is parsed as Wikitext. By default, the title of your TiddlyWiki project is used.
 * ''Header Content'': This content is always displayed before the current [[Page Run]] of your story. It's processed just like any other page, and it's processed //before your page run//. By default, it contains a noscript warning which you should keep in some capacity.

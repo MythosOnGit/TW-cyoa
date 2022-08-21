@@ -1,0 +1,28 @@
+tags: 
+title: Templates/attributes
+tmap.id: 0ede3cb2-e086-48fe-91b0-1715a1ae02e2
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<table>
+<tbody>
+<tr class="evenRow">
+<th>Attribute</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+<$list filter="[tag[Attributes]widget<currentTiddler>]" counter="row">
+<tr class={{{ [<row>remainder[2]match[0]then[evenRow]else[oddRow]] }}}>
+<td>{{!!caption}}</td>
+<td><$transclude /></td>
+<td><$list
+	variable="type"
+	filter="[{!!value-type}is[tiddler]]"
+	emptyMessage="{{!!value-type}}">
+<$link to={{!!value-type}} />
+</$list></td>
+</tr>
+</$list>
+</tbody>
+</table>

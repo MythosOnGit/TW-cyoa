@@ -1,0 +1,9 @@
+caption: if
+tags: Attributes
+title: IfAttribute
+tmap.id: 79a25462-c662-481b-9d40-feda76f92b35
+type: text/vnd.tiddlywiki
+value-type: Snippet
+widget: CyoaWidget
+
+A [[code snippet|Snippet]] which is evaluated as a constraint. The widget is rendered only if this snippet evaluates true (or truthy).

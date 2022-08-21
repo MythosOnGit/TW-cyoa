@@ -3,5 +3,5 @@ tags: $:/tags/ViewTemplate
 title: $:/plugins/mythos/cyoa/ui/ViewTemplate/only
 
 <$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
-<div class="tc-subtitle"><<cyoa-page-info>></div>
+<$set name=currentTiddler field=title tiddler={{!!title}}><div class="tc-subtitle cyoa-info"><<cyoa-page-info>></div></$set><!-- The $set of the variable is a way to force the cyoa-page-info macro to reset if the tiddler changes. Otherwise it won't refresh. It's still not perfect if something like cyoa.after uses a filter. -->
 </$reveal>

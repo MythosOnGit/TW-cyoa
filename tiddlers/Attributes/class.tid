@@ -1,0 +1,9 @@
+caption: class
+list-after: IdAttribute
+tags: Attributes
+title: ClassAttribute
+tmap.id: 17a8ea6f-c1e3-419b-a85e-d3f5227fb30f
+type: text/vnd.tiddlywiki
+widget: CyoaWidget
+
+Optional CSS classes //in addition// to the classes active nodes already have.

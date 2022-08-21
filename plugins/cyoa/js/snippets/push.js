@@ -27,7 +27,7 @@ exports["do"] = function(tiddler,widget) {
 				return snippetPush(getVar(widget),target);
 			}
 		} else {
-			return "Pushes: '" + target + "'";
+			return "Pushes: " + utils.enlink(target);
 		}
 	}
 };

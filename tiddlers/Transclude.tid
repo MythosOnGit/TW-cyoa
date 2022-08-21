@@ -1,16 +1,17 @@
-tags: Concepts
 caption: Transclude
+tags: Concepts
 title: Transclude
 tmap.id: 734f3c47-7ad8-4235-b6b3-eb6c5e8abf5d
+type: text/vnd.tiddlywiki
 
-Transclusion is a concept native to Tiddlywiki, and [[Tiddlywiki's documentation covers transclusion in great detail|https://tiddlywiki.com/#Transclusion]]. However, it functions well as a <<plugin>> tool, and alonside [[Appending]], is an effective way to reuse and structure your CYOA content.
+Transclusion is a concept native to Tiddlywiki, and <<link-to-tw Transclusion "Tiddlywiki's documentation covers transclusion in great detail" >>. However, it functions well as a <<plugin>> tool, and alonside [[Appending]], is an effective way to reuse and structure your CYOA content.
 
 All features of transclusion, from templating to accessing specific tiddler fields will function as expected in your generated CYOA. Transclusion is an advanced technique which you probably won't use often at all in your CYOA, so don't be worried if you don't understand its advanced usage.
 
 !!! Pros
 
 * Transclusion allows you to inject a tiddler's content anywhere inside another tiddler, not just at the end.
-* [[Transclusion with Templates|https://tiddlywiki.com/#Transclusion%20with%20Templates]] allows you //apply// tiddlers in transclusion while using the data of another. This allows a page to be customized in each instance it's transcluded.
+* <<link-to-tw "Transclusion with Templates" "Transclusion with Templates" >> allows you //apply// tiddlers in transclusion while using the data of another. This allows a page to be customized in each instance it's transcluded.
 * Multiple pages can be transcluded into one, either by manually transcluding them (e.g. `{{Tiddler A}} {{Tiddler B}}`) or programatically through the use of the <<widget list>> widget. Again, don't worry about these tricks if you don't understand.
 
 !!! Cons

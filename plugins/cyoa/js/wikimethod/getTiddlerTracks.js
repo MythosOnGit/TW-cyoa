@@ -16,6 +16,9 @@ This quite likely includes itself, as most tracking tiddlers will be tracking th
 var keywords = require("$:/plugins/mythos/cyoa/js/snippets/tracking.js");
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 var CyoaWidget = require("$:/plugins/mythos/cyoa/js/widgets/cyoa.js").cyoa;
+var utils = require("../utils");
+
+var ONLY_VALUES = {first:true,visited:true};
 
 exports.getTiddlerTracks = function(title) {
 	var tiddler = this.getTiddler(title);
@@ -56,14 +59,21 @@ function getWidgetTracks(wiki,title) {
 		var widget = new CyoaWidget(ptn,options);
 		widget.computeAttributes();
 		var list = [];
-		if(keywords.self.indexOf(ptn.type) >= 0) {
+		if(ONLY_VALUES[ptn.type]) {
 			list.push(title);
 		}
 
 		var only = widget.attributes.only;
-		if(keywords.self.indexOf(only) >= 0) {
+		if(ONLY_VALUES[only]) {
 			pushItem(list,title);
 		}
+		$tw.utils.each(keywords.snippets,function(keyword) {
+			if(widget.attributes[keyword]) {
+				utils.processJavascript(widget.attributes[keyword],function(title) {
+					pushItem(list,title);
+				});
+			}
+		});
 		$tw.utils.each(keywords.trackers,function(keyword) {
 			// We don't want to parse macros, because more often than not, it's <<currentTiddler>> and it's being used in a template tiddler that shouldnt be tracked.
 			var node = ptn.attributes[keyword];
@@ -85,13 +95,18 @@ function getFieldTracks(tiddler,wiki,listToAppendTo) {
 	parentWidget.setVariable("currentTiddler",tiddler.fields.title);
 	var widget = new Widget({},{parentWidget: parentWidget});
 	var list = listToAppendTo || [];
-	if(tiddler.fields[keywords.field]) {
+	if(tiddler.fields["cyoa.only"]) {
 		pushItem(list,tiddler.fields.title);
 	}
 	if(tiddler.fields["cyoa.imply"]) {
 		pushItem(list,tiddler.fields.title);
 		pushListItems(list,tiddler.fields["cyoa.imply"]);
 	}
+	forEachField(tiddler,keywords.snippets,function(keyword,field) {
+		utils.processJavascript(tiddler.fields[field],function(title) {
+			pushItem(list,title);
+		});
+	});
 	forEachField(tiddler,keywords.trackers,function(method,field) {
 		var pageStr = tiddler.fields[field];
 		var pageArray = wiki.filterTiddlers(pageStr,widget);

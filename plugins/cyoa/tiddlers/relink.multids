@@ -5,11 +5,16 @@ fields/cyoa.append: filter
 fields/cyoa.before: filter
 fields/cyoa.caption: wikitext
 fields/cyoa.depend: filter
+fields/cyoa.do: snippet
+fields/cyoa.done: snippet
 fields/cyoa.exclude: list
+fields/cyoa.if: snippet
 fields/cyoa.imply: list
+fields/cyoa.index: snippet
 fields/cyoa.push: title
 fields/cyoa.reset: filter
 fields/cyoa.touch: filter
+fields/cyoa.write: snippet
 
 attributes/$options/filter: filter
 attributes/$options/tiddler: title
@@ -18,27 +23,50 @@ attributes/$cyoa/to: title
 attributes/$cyoa/after: filter
 attributes/$cyoa/before: filter
 attributes/$cyoa/depend: filter
+attributes/$cyoa/do: snippet
+attributes/$cyoa/done: snippet
+attributes/$cyoa/if: snippet
+attributes/$cyoa/index: snippet
 attributes/$cyoa/reset: filter
 attributes/$cyoa/touch: filter
 attributes/$cyoa/push: title
+attributes/$cyoa/write: snippet
+
 attributes/$first/to: title
 attributes/$first/after: filter
 attributes/$first/before: filter
 attributes/$first/depend: filter
+attributes/$first/do: snippet
+attributes/$first/done: snippet
+attributes/$first/if: snippet
+attributes/$first/index: snippet
 attributes/$first/reset: filter
 attributes/$first/touch: filter
 attributes/$first/push: title
+attributes/$first/write: snippet
+
 attributes/$else/to: title
 attributes/$else/after: filter
 attributes/$else/before: filter
 attributes/$else/depend: filter
+attributes/$else/do: snippet
+attributes/$else/done: snippet
+attributes/$else/if: snippet
+attributes/$else/index: snippet
 attributes/$else/reset: filter
 attributes/$else/touch: filter
 attributes/$else/push: title
+attributes/$else/write: snippet
+
 attributes/$visited/to: title
 attributes/$visited/after: filter
 attributes/$visited/before: filter
 attributes/$visited/depend: filter
+attributes/$visited/do: snippet
+attributes/$visited/done: snippet
+attributes/$visited/if: snippet
+attributes/$visited/index: snippet
 attributes/$visited/reset: filter
 attributes/$visited/touch: filter
 attributes/$visited/push: title
+attributes/$visited/write: snippet

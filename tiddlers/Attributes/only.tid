@@ -1,0 +1,9 @@
+caption: only
+tags: Attributes
+title: OnlyAttribute
+tmap.id: eec82f7a-aa08-4784-86c4-653c7c12e2f5
+type: text/vnd.tiddlywiki
+value-type: <<value first>>, <<value visited>>
+widget: CyoaWidget
+
+Accepts values of "first" and "visited". All other values are ignored. "first" adds the following constraint: true only if the currentTiddler has ''not'' been visited. Equivalent to `before="[<currentTiddler>]"`. "visited" is the opposite: true only if currentTiddler ''has'' been visited already. Equivalent to `after="[<currentTiddler>]"`. The <<wlink FirstWidget>> and <<wlink VisitedWidget>> are shorthands for this.

@@ -1,0 +1,10 @@
+caption: to
+list-before: 
+tags: Attributes
+title: ToAttribute
+tmap.id: ab88cfd1-e55a-4565-96a1-b67db6f4a319
+type: text/vnd.tiddlywiki
+value-type: Title
+widget: CyoaWidget
+
+The title of a target page for this widget to link to. If present, the generated active node will be an <<elem a>> element.

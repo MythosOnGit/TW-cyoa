@@ -17,11 +17,4 @@ In Tiddlymap, transclusion shows up as a dark red line.
 
 <<demo>>
 
-<<annotate """
-
-For transclusion, see the [[Tiddlywiki documentation|https://tiddlywiki.com/#Transclusion]] for tricks like templating, data tiddlers, and others. All tricks that work in Tiddlywiki will translate to your generated CYOA.
-""" >>
-
-
-
-Transclusion is a actually a Tiddlywiki feature. [[Tiddlywiki's documentation covers transclusion in great detail|https://tiddlywiki.com/#Transclusion]].
+Transclusion is a actually a Tiddlywiki feature. <<link-to-tw Transclusion "Tiddlywiki's documentation covers transclusion in great detail">>.

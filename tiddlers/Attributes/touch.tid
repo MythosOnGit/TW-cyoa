@@ -1,0 +1,10 @@
+caption: touch
+list-after: AfterAttribute
+tags: Attributes
+title: TouchAttribute
+tmap.id: dd3f2a0a-1260-4246-abc6-c0d7a30fd68f
+type: text/vnd.tiddlywiki
+value-type: Filter
+widget: CyoaWidget
+
+A filter specifying a list of pages. Adds a closing action to touch those pages if this node renders, so those pages will be considered visited.

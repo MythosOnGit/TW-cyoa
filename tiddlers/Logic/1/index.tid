@@ -33,7 +33,7 @@ As mentioned before, the <<wlink OptionsWidget>> widget creates [[Active Links]]
 
 Also, as mentioned before, the <<flink AppendField>> accepted multiple pages. That's because it ''won't'' append a page which isn't "true". And if so, it tests next page in its list to see whether it should append that instead, and so on, until it finds a page to append, or it runs out of pages and appends nothing.
 
-<<field cyoa.append>> can explicitly list pages (such as <<value "PageA PageB">>, where it first tests PageA for appending, and if it's not "true", then it tests PageB), but appending can also be declarative. Since it accepts [[filters|https://tiddlywiki.com/#Filters]], you can set it to something like <<value "[tag[Outcome]]">>, and all pages with the "Outcome" will be in your tiddler's append list. (See [[this Tiddlywiki documentation page|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]] about how to control the order of tagged tiddlers.)
+<<field cyoa.append>> can explicitly list pages (such as <<value "PageA PageB">>, where it first tests PageA for appending, and if it's not "true", then it tests PageB), but appending can also be declarative. Since it accepts [[filters|Filter]], you can set it to something like <<value "[tag[Outcome]]">>, and all pages with the "Outcome" will be in your tiddler's append list. (See <<link-to-tw "Order of Tagged Tiddlers" "this Tiddlywiki documentation page">> about how to control the order of tagged tiddlers.)
 
 ! Showing text only once
 

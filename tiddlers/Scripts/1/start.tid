@@ -1,0 +1,25 @@
+cyoa.append: Scripts1/choice
+tags: 
+title: Scripts1/start
+tmap.id: c690fa2a-8339-4d49-b6e1-6ecfd6defa69
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates a simple use of the <<field cyoa.if>> field and the <<attr if>> attribute in order to represent some scripted constraints which can't be expressed succinctly through declarative constraints.""" >>
+
+After accruing some bad debts, you find yourself arrested and sentenced to fight for the city's entertainment until you've paid off your debt.
+
+After a sweaty night in an underground cell with several muscular men, you're brought out to a staging area where a barrel-chested pit boss yells as you.
+
+"Everyone gets //three// pieces of equipment," he barks. "Make sure you get a piece of armor. We don't want you dying in the first minute. Now get your asses moving."
+
+Everyone clambers to the rack of weapons and armor. Fortunately, or unfortunately, everyone here is many times your size, and while they squabble over the extra large equipment, you get your pick from the rack of little equipment.
+
+<<annotate """
+
+We reset all the equipment pieces before we get started in case the reader visits this demo adventure more than once.
+""" >>
+<$cyoa reset="[tag[Scripts1/choice]]" />

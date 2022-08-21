@@ -1,0 +1,13 @@
+tags: 
+title: Attributes
+tmap.id: 765cfc72-bfb3-4512-825a-88d011659cf7
+type: text/vnd.tiddlywiki
+
+This is a list of the attributes for widgets introduced by <<plugin>>. The attributes for the <<widget cyoa>> widget are also the attributes for the <<widget else>>, <<widget first>>, and <<widget visited>> widgets.
+
+<$list filter="CyoaWidget OptionsWidget">
+
+!! ${{!!caption}} widget
+
+{{||Templates/attributes}}
+</$list>

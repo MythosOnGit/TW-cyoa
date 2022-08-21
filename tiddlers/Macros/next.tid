@@ -1,8 +1,0 @@
-tags: $:/tags/Macro
-title: Macros/next
-tmap.id: 78c96e9a-f690-4dd4-9247-a078aea6fd87
-
-\define next(tag) <$list filter="[tag<__tag__>after<currentTiddler>]"><$link>Next: {{!!caption}}</$link></$list>
-\relink next tag
-
-This macro creates links to the next tiddler in a tag list using its caption. Or it emits nothing if there is no next.

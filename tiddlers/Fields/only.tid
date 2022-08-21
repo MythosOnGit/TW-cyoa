@@ -1,7 +1,9 @@
-tags: Fields
 caption: cyoa.only
+tags: Fields
 title: OnlyField
 tmap.id: 3277fd20-852e-42ed-8b2b-ff6da74ed0c5
+type: text/vnd.tiddlywiki
+value-type: <<value first>>, <<value visited>>
 
 The 'cyoa.only' field is a ''hidden field''. You should not interact with it directly.
 

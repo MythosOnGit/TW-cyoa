@@ -1,0 +1,10 @@
+caption: after
+list-after: BeforeAttribute
+tags: Attributes
+title: AfterAttribute
+tmap.id: b8f069aa-eb99-4758-91d8-c15a629fa287
+type: text/vnd.tiddlywiki
+value-type: Filter
+widget: CyoaWidget
+
+A filter specifying a list of pages. Adds the following constraint: true only if //all// of the listed pages have been visited.

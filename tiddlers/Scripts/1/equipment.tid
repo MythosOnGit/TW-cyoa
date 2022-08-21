@@ -1,0 +1,11 @@
+tags: Hidden
+title: Scripts1/equipment
+tmap.id: 224f122e-eafd-4706-ac5d-41e81d490be5
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This simple page just represents possessing an equipment piece. After it's selected (visited), it sends the reader back for another choice, or it goes to the end if two equipment pieces have been selected.
+
+Look to [[Scripts1/choice]] for an example of a <<field cyoa.if>> field on a page, and [[Scripts1/end]] for examples of <<attr if>> attributes on active nodes.
+""" >>

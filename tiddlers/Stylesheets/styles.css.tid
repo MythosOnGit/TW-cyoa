@@ -27,3 +27,10 @@ a .doc-var,
 a .doc-widget {
 	color: <<color tiddler-link-foreground>>;
 }
+.doc-snippet {
+	background-color: inherit;
+	border: none;
+	color: <<color message-foreground>>;
+	font-weight: bold;
+	padding: 0;
+}

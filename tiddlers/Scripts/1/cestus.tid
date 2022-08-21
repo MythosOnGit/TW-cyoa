@@ -1,0 +1,11 @@
+cyoa.append: Scripts1/choice Scripts1/end
+cyoa.caption: Take the cestus.
+cyoa.only: first
+tags: Scripts1/choice
+title: Scripts1/cestus
+tmap.id: a7ec6ab7-294e-45a1-ad82-03dc6f859700
+type: text/vnd.tiddlywiki
+
+It's a metal glove with hard leather pads to protect your knuckles. You'll have to get up close to use this, but if you can actually land a punch, it'll hurt.
+
+{{Scripts1/equipment}}

@@ -18,7 +18,7 @@ and they readily accept you. The tournament soon begins. The Blue Starlets and t
 
 <<annotate """
 
-The following are just the various outcomes. Red always wins, unless the player brought the dagger from [[Demo_4]].
+The following are just the various outcomes. Red always wins, unless the player brought the dagger from [[Logic1]].
 """>>
 
 <$cyoa after="Logic5/red">

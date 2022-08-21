@@ -95,7 +95,6 @@ it("can touch, reset, after, and before through tiddler",function() {
 	expect(core.state.serialize()).toBe("test=B.D.F.H");
 });
 
-
 it("can use if, do, and done",function() {
 	var core = utils.testBook([
 		utils.group("default","set",{variable: "test"}),
@@ -119,12 +118,16 @@ it("can use if, do, and done",function() {
 
 it("handles write",function() {
 	var core = utils.testBook([
-		{title: "Main", text: `
-			<$cyoa id=A write="'test' + 'content'"/>
+		utils.group("default","set",{variable: "test"}),
+		{title: "A"},
+		{title: "B"},
+		{title: "Main",text: `
+			<$cyoa touch="A"/>
+			<$cyoa id=A write="'test ' + #{A} + #{B}"/>
 			<$cyoa id=B write="""'Outer <em id="C">Extra inner</em>'"""/>
 	`}]);
 	var doc = core.document;
-	expect(doc.getElementById("A").innerHTML).toBe("testcontent");
+	expect(doc.getElementById("A").innerHTML).toBe("test truefalse");
 	expect(doc.getElementById("B").innerHTML).toBe("Outer <em id=\"C\">Extra inner</em>");
 	expect(doc.getElementById("C").innerHTML).toBe("Extra inner");
 });
@@ -158,9 +161,15 @@ it("can index subwidgets",function() {
 	var core = utils.testBook([
 		utils.group("default","set",{variable: "test"}),
 		{title: "A"},
-		{title: "Main",formula: "1+1",text: `
+		{title: "B"},
+		{title: "C"},
+		{title: "D"},
+		{title: "Main",formula: "#{A}+#{B}+#{C}+#{D}",text: `
+			<$cyoa touch="A B" />
 			<$cyoa index={{!!formula}}>
-				<$cyoa id="0" after="A" />
+				<$cyoa id="y" after="C" />
+				<$cyoa id="x" after="C" />
+				<$cyoa id="0" after="C" />
 				<$cyoa id="1" />
 				<$cyoa id="2" />
 				<$cyoa id="3" />
@@ -180,6 +189,15 @@ it("handles index weights",function() {
 		{title: "Y"},
 		{title: "Z"}]);
 	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
+});
+
+it("can handle not-quite-placeholders",function() {
+	var core = utils.testBook([
+		{title: "Main",text: `
+			<$cyoa if='!!"#"' id="A"/>
+			<$cyoa if='!!"#{"' id="B"/>
+		`}]);
+	expect(utils.activeNodes(core)).toEqual(["A","B"]);
 });
 
 it("can perform onclick with or without destination",function() {
@@ -301,33 +319,63 @@ it("can have custom style even given css info variable",function() {
 	// Test with info and style
 	text = render("<$first style='color: red'>Content</$first>");
 	expect(text).toContain("color: red");
-	expect(text).toContain("--cyoa-info");
-	expect(text).toContain("'First");
+	expect(text).toContain("cyoa-info");
+	expect(text).toContain("First");
 
 	// Test with no info, only style
 	text = render("<$cyoa style='color: red'>Content</$cyoa>");
 	expect(text).toContain("color: red");
-	expect(text).not.toContain("--cyoa-info");
+	expect(text).not.toContain("cyoa-info");
 
 	// Test with info,  style, but no content
 	text = render("<$first style='color: red'>  \n\t  </$first>");
 	expect(text).toContain("color: red");
-	expect(text).toContain("--cyoa-info");
-	expect(text).toContain("'First");
+	expect(text).toContain("cyoa-info");
+	expect(text).toContain("First");
 
 	// Test that varioius types of constraints get pretty messages
 });
 
 it("displays nice messages for various constraints and actions",function() {
 	var wiki = new $tw.Wiki();
-	wiki.addTiddler({title: "Main",text: "<$tiddler tiddler=Main>\n\n<$cyoa only=first push=push depend=depend before=before after=after touch=touch reset=reset/>\n\n</$tiddler>"});
+	wiki.addTiddler({title: "Main",text: "<$tiddler tiddler=Main>\n\n<$cyoa only=first push=xpush depend=xdepend before=xbefore after=xafter touch=xtouch reset=xreset/>\n\n</$tiddler>"});
 	var text = wiki.renderTiddler("text/html","Main");
 	expect(text).toContain("First");
-	expect(text).toContain("Pushes: 'push'");
-	expect(text).toContain("Before: 'before'");
-	expect(text).toContain("After: 'after'");
-	expect(text).toContain("Touches: 'touch'");
-	expect(text).toContain("Resets: 'reset'");
+	expect(text).toContain("xpush</a>");
+	expect(text).toContain("xbefore</a>");
+	expect(text).toContain("xafter</a>");
+	expect(text).toContain("xtouch</a>");
+	expect(text).toContain("xreset</a>");
+});
+
+it("correctly identifies control nodes for proper info display",function() {
+	function isControl(core,id) {
+		return core.document.getElementById(id).classList.contains("cyoa-control");
+	};
+	var wiki = new $tw.Wiki();
+	wiki.addTiddler();
+	var core = utils.testBook([{title: "Main",text: `\\define cyoa-render() no
+		<$cyoa id=A />
+		<$else id=B />
+		<$cyoa id=C></$cyoa>
+		<$cyoa id=D><a href=#other>value</a></$cyoa>
+		<$cyoa id=E>text content</$cyoa>
+		<$cyoa id=F><$list filter=""></$list></$cyoa>
+		<$cyoa id=G>
+
+</$cyoa><$cyoa id=H>
+
+Block text
+</$cyoa>
+		`}]);
+	expect(isControl(core,"A")).toBe(true);
+	expect(isControl(core,"B")).toBe(true);
+	expect(isControl(core,"C")).toBe(true);
+	expect(isControl(core,"D")).toBe(false);
+	expect(isControl(core,"E")).toBe(false);
+	expect(isControl(core,"F")).toBe(true);
+	expect(isControl(core,"G")).toBe(true);
+	expect(isControl(core,"H")).toBe(false);
 });
 
 it("handles errors being thrown by snippet modules",function() {
@@ -336,11 +384,11 @@ it("handles errors being thrown by snippet modules",function() {
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers(tiddlers);
 	var text = wiki.renderTiddler("text/html","Main");
-	expect(text).toContain(">error msg</div>");
+	expect(text).toContain("error msg");
 	//Throws error in Cyoa
 	utils.warnings(spyOn);
 	var core = utils.testBook(tiddlers);
-	expect(utils.warnings()).toHaveBeenCalledWith("Error in tiddler 'Main': error msg");
+	expect(utils.warnings()).toHaveBeenCalledWith("Page 'Main': Error: error msg");
 });
 
 it("executes nested onclick dos and dones in correct order",function() {

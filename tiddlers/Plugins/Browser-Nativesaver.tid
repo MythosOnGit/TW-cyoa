@@ -7,7 +7,7 @@ type: text/vnd.tiddlywiki
 \define this-plugin() $:/plugins/slaymaker1907/browser-nativesaver
 \define source() https://github.com/slaymaker1907/TW5-browser-nativesaver
 
-The <<plugin>> starter project packages the "HTML Native File System Saver" plugin to provide an easy way for people new to TiddlyWiki to save their projects. This plugin is entirely optional, and in fact, once you get accustom to ~TiddlyWiki, you may likely want to select another saving method [[from the many available|https://tiddlywiki.com/#GettingStarted]].
+The <<plugin>> starter project packages the "HTML Native File System Saver" plugin to provide an easy way for people new to TiddlyWiki to save their projects. This plugin is entirely optional, and in fact, once you get accustom to ~TiddlyWiki, you may likely want to select another saving method <<link-to-tw GettingStarted "from the many available">>.
 
 !! This plugin requires Chrome
 

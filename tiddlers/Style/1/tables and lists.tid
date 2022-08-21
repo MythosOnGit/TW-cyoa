@@ -37,7 +37,7 @@ Here are examples of tables and lists. Tables are done like so:
 |! Name |! Job |! Dead? |
 |Wilburg | Feeding | X |
 ```
-They're even more versatile than show here though. [[See the TiddlyWiki documentation|https://tiddlywiki.com/static/Tables%2520in%2520WikiText.html]] if you want to know more.
+They're even more versatile than show here though. <<link-to-tw "Tables in WikiText" "See the TiddlyWiki documentation" >> if you want to know more.
 
 Lists are simpler:
 
@@ -46,7 +46,7 @@ Lists are simpler:
 
 # Numbered list
 ```
-They can be nested too. And of course [[there's more to them if you're interested|https://tiddlywiki.com/static/Lists%2520in%2520WikiText.html]].
+They can be nested too. And of course <<link-to-tw "Lists in WikiText" "there's more to them if you're interested">>.
 
 <<note [[These will all appear in your interactive novel. However, their styling css does not. That's specific to TiddlyWiki. We'll discuss later how to style your novel with CSS.]]>>
 """ >>

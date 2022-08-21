@@ -61,33 +61,30 @@ it("can handle strange characters",function() {
 });
 
 it("can test against numbers",function() {
-	var state = testBook(["A","eq-3","gte-3","lte-3"],[node("A"),
+	var state = testBook(["A","eq-3","gte-3"],[node("A"),
 			node("gte-4"),node("gte-3"),
-			node("lte-2"),node("lte-3"),
 			node("eq-7"),node("eq-3"),
-		{title: "Main","cyoa.touch": "=A =A =A","cyoa.append": "Main2"},
-		{title: "Main2",text: `
-			<$cyoa after="A +[cyoa:gte[4]]" touch="gte-4" />
-			<$cyoa after="A +[cyoa:gte[3]]" touch="gte-3" />
-			<$cyoa after="A +[cyoa:lte[2]]" touch="lte-2" />
-			<$cyoa after="A +[cyoa:lte[3]]" touch="lte-3" />
-			<$cyoa after="A +[cyoa:eq[7]]" touch="eq-7" />
-			<$cyoa after="A +[cyoa:eq[3]]" touch="eq-3" />
+		{title: "Main",text: `
+			<$cyoa touch="=A =A =A" />
+			<$cyoa if="#{A} >= 4" touch="gte-4" />
+			<$cyoa if="#{A} >= 3" touch="gte-3" />
+			<$cyoa if="#{A} == 7" touch="eq-7" />
+			<$cyoa if="#{A} == 3" touch="eq-3" />
 		`}]);
 });
 
 it("unset values are treated as zero",function() {
 	var state = testBook(["B"],[node("A"),node("B"),
 		{title: "Main","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.after": "A +[cyoa:lt[3]]","cyoa.touch": "B"}]);
+		{title: "Main2","cyoa.if": "#{A} < 3","cyoa.touch": "B"}]);
 });
 
 it("can modify values directly",function() {
 	// Extra "C" here so I can make sure undefined remains undefined
-	var state = testBook(["A","B"],[node("A"),node("B"),node("C"),
+	var state = testBook(["A","B"],[node("A"),node("B"),
 		utils.group("default","intmap",{variable: "m"}),
-		{title: "Main","cyoa.do": "m.A += 3","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.after": "A +[cyoa:gt[2]]","cyoa.touch": "B"}]);
+		{title: "Main","cyoa.do": "#{A} += 3","cyoa.append": "Main2"},
+		{title: "Main2","cyoa.if": "#{A} > 2","cyoa.touch": "B"}]);
 	expect(state).toBe("m=A.3.B.1");
 });
 

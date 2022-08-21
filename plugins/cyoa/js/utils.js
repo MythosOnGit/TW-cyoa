@@ -12,6 +12,7 @@ var cyoaUtils = require("./cyoa/utils");
 exports.decodePage = cyoaUtils.decodePage;
 exports.encodePage = cyoaUtils.encodePage;
 exports.encodePageForID = cyoaUtils.encodePageForID;
+var prefix = "$:/plugins/mythos/cyoa/groups/";
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
@@ -65,6 +66,17 @@ exports.enquote = function(x,quote) {
 			return '"' + x.replace(/"/g,'\\"') + '"';
 		default:
 			return "'" + x.replace(/'/g,"\\'") + "'";
+	}
+};
+
+exports.enlink = function(title) {
+	if(title.indexOf("'") < 0) {
+		return "<$link to='" + title + "'/>";
+	} else if(title.indexOf('"""') < 0 && title[title.length-1] !== '"') {
+		return '<$link to="""' + title + '"""/>';
+	} else {
+		// We need to get really sophisticated for this title
+		return "<$link to={{{[[" + title.split("]").join(']] ="]" =[[') + "]] +[join[]]}}}/>";
 	}
 };
 
@@ -138,4 +150,70 @@ exports.getOptionsList = function(title,wiki) {
 		}
 	}
 	return results;
+};
+
+exports.processJavascript = function(script, method) {
+	var index = 0;
+	if(!script) {
+		return;
+	}
+	while((index = script.indexOf("#",index)) >= 0) {
+		index++;
+		if (script[index] == "{") {
+			var start = index + 1;
+			var nesting = 1;
+			var end = start;
+			// Skip to the end of the curly braces
+			while(nesting > 0) {
+				if(end >= script.length) {
+					// We hit a premature end. Quit out.
+					return;
+				}
+				switch(script[end]) {
+					case "{":
+						nesting++;
+						break;
+					case "}":
+						nesting--;
+						break;
+				}
+				end++;
+			}
+			method(script.substring(start,end-1),index-1,end);
+			index = end;
+		}
+	}
+};
+
+exports.getGroupScript = function(page,keyword,wiki) {
+	var groupModules = getCyoaGroupModules(wiki);
+	var group;
+	if(page.startsWith(prefix)) {
+		group = page.substr(prefix.length);
+	} else {
+		group = wiki.getTiddlerCyoaGroup(page);
+	}
+	var module = groupModules[group];
+	if(module && module[keyword]) {
+		if(page.startsWith("$:/plugins/mythos/cyoa/groups/")) {
+			keyword = keyword + "All";
+		}
+		return module[keyword](page);
+	} else {
+		if(!wiki.tiddlerExists(page)) {
+			throw keyword+" page '"+page+"' does not exist";
+		}
+		return "";
+	}
+};
+
+function getCyoaGroupModules(wiki) {
+	return wiki.getGlobalCache("cyoa-group-modules",function() {
+		var map = Object.create(null);
+		$tw.utils.each(wiki.getCyoaGroups(),function(t,group) {
+			// assemble set object here
+			map[group] = wiki.getCyoaGroupHandler(group);
+		});
+		return map;
+	});
 };

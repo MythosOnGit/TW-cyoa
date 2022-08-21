@@ -9,6 +9,7 @@ type: text/vnd.tiddlywiki
 \define wlink(to) <$link to=<<__to__>>><<widget {{$to$!!caption}}>></$link>
 \define elem(_) "$_$"
 \define value(_) `$_$`
+\define snippet(_) <code class="doc-snippet">$_$</code>
 \define var(_) <code class="doc-var">$_$</code>
 \define attr(_) <code class="doc-attr">$_$</code>
 \define page(_) <code class="doc-tiddler">$_$</code>

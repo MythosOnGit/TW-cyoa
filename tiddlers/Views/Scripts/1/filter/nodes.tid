@@ -1,0 +1,3 @@
+filter: [prefix[Scripts1/]!tag[Hidden]]
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Scripts 1: Snippets/filter/nodes
+type: text/vnd.tiddlywiki

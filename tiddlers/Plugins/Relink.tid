@@ -7,4 +7,4 @@ type: text/vnd.tiddlywiki
 \define plugin() $:/plugins/flibbles/relink
 \define source() https://flibbles.github.io/tw5-relink/
 
-Relink is a plugin which aids in updating all links and references to a tiddler when its renamed. It's not necessary for <<plugin>>, but it's really helpful, and <<plugin>> is configured to fully integrate with it automatically.
+Relink is a plugin which aids in updating all links and references to a tiddler when its renamed. It's not necessary for interactive story writing, but it's really helpful, and <<plugin>> is configured to fully integrate with it automatically.

@@ -26,7 +26,6 @@ exports.traverseTiddlerWidgets = function(title,cacheName,treeNodeMethod) {
 	// We'll cache the links so they only get computed if the tiddler changes
 	return this.getCacheForTiddler(title,cacheName,function() {
 		// Parse the tiddler
-		var parser = self.parseTiddler(title);
 		// Count up the results
 		var results = [];
 		var checkParseTree = function(parseTree) {
@@ -39,8 +38,17 @@ exports.traverseTiddlerWidgets = function(title,cacheName,treeNodeMethod) {
 				}
 			}
 		};
+		var parser = self.parseTiddler(title);
 		if(parser) {
 			checkParseTree(parser.tree);
+		}
+		// Now we need to search through a cyoa.caption field if it's there
+		var tiddler = self.getTiddler(title);
+		if(tiddler && tiddler.fields["cyoa.caption"]) {
+			var captionParser = self.parseText("text/vnd.tiddlywiki",tiddler.fields["cyoa.caption"]);
+			if (captionParser) {
+				checkParseTree(captionParser.tree);
+			}
 		}
 		return results;
 	});

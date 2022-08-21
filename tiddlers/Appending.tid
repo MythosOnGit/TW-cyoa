@@ -1,9 +1,10 @@
-tags: Concepts
 caption: Appending
+tags: Concepts
 title: Appending
 tmap.id: d3bf2b20-5bb8-4ff2-bfd0-83a17a6387cd
+type: text/vnd.tiddlywiki
 
-Appending is a means of specifying pages that should be displayed after the current page. This is done through the <<flink AppendField>> field, which accepts a [[filter argument|https://tiddlywiki.com/#Filters]]. The filter argument can result in multiple tiddlers, but only one of the tiddlers will be appended. This is determined by sequentially [[evaluating|Evaluation]] each page listed, and the first one to evaluate true is appended.
+Appending is a means of specifying pages that should be displayed after the current page. This is done through the <<flink AppendField>> field, which accepts a [[filter argument|Filter]]. The filter argument can result in multiple tiddlers, but only one of the tiddlers will be appended. This is determined by sequentially [[evaluating|Evaluation]] each page listed, and the first one to evaluate true is appended.
 
 If that appended page has it's own list of pages listed in its <<field cyoa.append>> field, then one of those pages may be appended after that one, and so on, creating a [[Page Run]].
 

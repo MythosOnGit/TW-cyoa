@@ -1,0 +1,6 @@
+tags: [[Value Types]]
+title: Title
+tmap.id: e8ff5768-ae9c-4fe4-ba7d-14224c29346b
+type: text/vnd.tiddlywiki
+
+Title fields and attributes are the simplest kind. Their value is a single tiddler title. It requires no special syntax, even if the title has spaces in it, unlike [[filters|Filter]] and [[title lists|Title List]].

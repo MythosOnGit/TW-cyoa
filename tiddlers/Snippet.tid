@@ -1,0 +1,43 @@
+tags: [[Value Types]]
+title: Snippet
+tmap.id: 197cb220-77b6-41b3-acd0-38d6cd6afbd6
+type: text/vnd.tiddlywiki
+
+Snippets are tiny bites of code used to create logical expressions that return a value, or to change page state.
+
+!Placeholders
+
+Snippets use placeholders to represent page states as variables in their formula. The format is `#{myPage}` where <<page myPage>> is a tracked page. The value of the variable depends on what kind of group the page is in, but by default, it will be a boolean value, where it's value is <<value false>> if the page is not touched or visited, or <<value true>> if it has been touched or visited.
+
+If an untracked page appears in a snippet as a placeholder, <<plugin>> will add it to the [[default tracking group|Tracking]].
+
+!Operators
+
+Snippets are built on top of javascript, so any operators that function in javascript will also work in snippets. Below is a brief introduction to them.
+
+For these examples, let's assume <<page set>> and <<page alsoSet>> have been... well... set. <<page unset>> has //not// been set. 
+
+!!!Comparison Operators
+
+Comparison operators compare two values or variables and evaluate to <<value true>> or <<value false>>. These are useful for conditional snippets like <<field cyoa.if>>.
+
+|Operator |Description| Example |Evaluates to |h
+|== |equal to |<<snippet "#{set} == true">> | true |
+|<$text text="!="/> |not equal to |<<snippet "#{set} != true">> | false |
+|> |greater than |<<snippet "#{set} + #{alsoSet} > 2">> | false |
+|< |less than |<<snippet "#{set} + #{alsoSet} < 2">> | false |
+|>= |greater than or equal |<<snippet "#{set} + #{alsoSet} >= 2">> | true |
+|<= |less than or equal |<<snippet "#{set} + #{alsoSet} <= 2">> | true |
+
+It's important to note the difference between <<snippet ==>> and <<snippet =>>. <<snippet ==>> is a comparison operator you'd use in a conditional snippet, whereas <<snippet =>> is an assignment operator which assigns the left side to the right. You'd use these in action snippets.
+
+!!!Logical Operators
+
+Logical operators compare values or variables as a group.
+
+|Operator |Description| Example |Evaluates to |h
+|&& |and |<<snippet "#{set} && #{unset}">> | false |
+|<$text text=||/> |or |<<snippet "#{set || #{unset}">> | true |
+|<$text text=!/> |not |<<snippet "!#{unset}">> | true |
+
+Snippets are capable of a lot more. Any kind of logical operators you use in javascript can be used here, as well as any methods, although snippets are always limited to a single line. [[See this site|https://www.w3schools.com/js/default.asp]] if you'd like to learn more about javascript, but it's not necessary to make use of snippets.

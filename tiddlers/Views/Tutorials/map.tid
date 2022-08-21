@@ -14,13 +14,13 @@ type: text/vnd.tiddlywiki
   "x": -100,
   "y": 160
  },
- "c1c5771f-597a-451b-b13f-ba1e1d20d63e": {
-  "x": 100,
-  "y": 160
- },
  "0e54db19-ad75-4e0f-a3bd-bf5da58b330e": {
   "x": -100,
   "y": 240
+ },
+ "c1c5771f-597a-451b-b13f-ba1e1d20d63e": {
+  "x": 100,
+  "y": 160
  },
  "cdef1ab9-7e90-40d7-9348-beeac0269bbd": {
   "x": 100,
@@ -28,10 +28,6 @@ type: text/vnd.tiddlywiki
  },
  "a5540e34-3d67-4a5c-ac5a-5a3b85f6e2ff": {
   "x": 0,
-  "y": 320
- },
- "8c6ca5fb-1c2d-42f3-9f49-91180149015e": {
-  "x": 200,
   "y": 320
  },
  "eeaacf35-c8bd-4a6f-8426-113926b8a144": {
@@ -49,5 +45,9 @@ type: text/vnd.tiddlywiki
  "2c92efa3-81c2-4e27-8ea4-8503b7b8dbe4": {
   "x": 0,
   "y": 640
+ },
+ "d5ba860a-7556-4a4a-a605-0190ccaca3bc": {
+  "x": 200,
+  "y": 560
  }
 }

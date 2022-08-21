@@ -1,0 +1,9 @@
+tags: Reference
+template: Templates/Value Types
+title: Value Types
+tmap.id: c587e916-8579-41f8-b5c2-fdf9478b8149
+type: text/vnd.tiddlywiki
+
+<<plugin>> introduces numerous fields and attributes which are used to help construct your interactive story. They're composed of several different types of values depending on the field or attribute. Here is a list of the types.
+
+<<list-links "[tag<currentTiddler>]">>

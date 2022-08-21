@@ -11,7 +11,7 @@ The treasure is a small golden statue depicting {{!!statue}}. It's clear from th
 	worry about it. It's just some sorcery I'm doing so the annotations
 	in this tiddler are different than wherever it's transcluded.
 -->
-<$list filter="[all[current]match[Demo_3/treasure]]" emptyMessage="""<<annotate "
+<$list filter="[all[current]match[Flow3/treasure]]" emptyMessage="""<<annotate "
 
 This description is transcluded from [[Flow3/treasure]] so it can be duplicated in multiple places. It demonstrates a simple case of templating through the statue's description, which will use the <<field statue>> field of the tiddler transcluding [[Flow3/treasure]].
 " >>""" >

@@ -1,0 +1,11 @@
+cyoa.append: Scripts1/choice Scripts1/end
+cyoa.caption: Take the kilt armor.
+cyoa.only: first
+tags: Scripts1/choice
+title: Scripts1/kilt
+tmap.id: 5c618800-8899-4748-b8e6-b28d47646653
+type: text/vnd.tiddlywiki
+
+You try on a kilt made of studded leather strips. It provides absolutely no protection for your upper body, but you just can't beat a classic look like this.
+
+{{Scripts1/equipment}}

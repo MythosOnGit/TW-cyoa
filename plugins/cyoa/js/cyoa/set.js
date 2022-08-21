@@ -62,6 +62,20 @@ Sp.has = function(item) {
 	return false;
 };
 
+function Flag(set,index) {
+	this.set = set;
+	this.index = index;
+};
+
+Object.defineProperty(Flag.prototype,"val",{
+	get: function() { return this.set.has(this.index); },
+	set: function(value) { return (value ? this.set.add(this.index): this.set.remove(this.index)); }
+});
+
+Sp.flag = function(index) {
+	return new Flag(this,index);
+};
+
 Sp.add = function() {
 	var upTree = this.data.up;
 	for(var index = 0; index < arguments.length; index++) {

@@ -1,0 +1,48 @@
+caption: Scripts 1: Snippets
+demo.equipment: <<annotate """  This simple page just represents possessing an equipment piece. After it's selected (visited), it sends the reader back for another choice, or it goes to the end if two equipment pieces have been selected.  Look to [[Scripts1/choice]] for an example of a <<field cyoa.if>> field on a page, and [[Scripts1/end]] for examples of <<attr if>> attributes on active nodes. """ >>
+description: Simple scripting snippets for more elaborate constraints.
+tags: Scripts
+title: Scripts1
+tmap.id: d5ba860a-7556-4a4a-a605-0190ccaca3bc
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+
+Declarative logic can get you far. It's simple and robust, and whenever possible, you should always use the logical tricks <<plugin>> provides to solve your problems. But as your story becomes more complicated, eventually you'll need to create some logic that can't be represented with simple declarations like <<attr before>>, <<attr after>>, <<attr touch>>, and <<attr reset>>. In those cases, you'll need expressions.
+
+Expressions are simple snippets of script that can be used to test or modify the [[state of tracked pages|Tracking]]. We do this through placeholder like <<snippet """#{my_page}""">>, which acts as a variable representing the state of the page <<page my_page>>. If <<page my_page>> is set, then the placeholder variable would be <<value true>>. If it's not set, the variable is <<value false>>.
+
+! Conditional Snippets (''if'')
+
+Pages can have the field <<field cyoa.if>> whose value is evaluated as a constraint. Here are some examples.
+
+; <<snippet """#{has_armor} || #{has_helmet}""" >>
+: This script evaluates true only if either the page <<page has_armor>> has been visited, or <<page has_helmet>> has been visited, thus ensuring that the protagonist has at least //some// armor. This <<snippet ||>> notation is particularly useful, because until now, we've required every constraint added to our pages and nodes to be true for them to evaluate true. <<snippet ||>> introduces the ability to the concept of ''or'', or rather "only this //or// that must be true".
+;<<snippet """#{you/male} == !#{trader/male}""" >>
+:This script evaluates true only if one of pages <<page you/female>> and <<page trader/female>> are true. This might be a constraint on a page which is only available if romantic attraction is possible. Take note of the double "=". That's a way of //testing// equality, whereas a single "=" //sets// values as we'll see below. The "!" inverts the value of any variable it's before, so <<value true>> becomes <<value false>> and vice versa. The expression could also be written as <<snippet """#{you/male} != #{trader/male}""" >>.
+; <<snippet """(#{items/biscuits} + #{items/jerky} + #{items/fruit}) >= 2""" >>
+: This script tests that two of the three items are true. This might be used in a story where you must check to make sure you have sufficient food. Note that even though the <<snippet "#{page}">> notation returns true or false, they are equivalent to 1 and 0, and can be added together and compared as such.
+
+This is just scratching the surface of what snippets can do. [[There's more documentation regarding them here|Snippet]].
+
+!!! <<widget cyoa>> widget
+
+Just as pages have the <<field cyoa.if>> field, [[some active nodes|Active Node]] like the <<wlink CyoaWidget>> widgets have a corresponding <<attr if>> attribute which behaves as you'd expect. The attribute's value is a script, and that script is evaluated as a constraint to determine whether that node's contents should be executed.
+
+!!! TiddlyMap
+
+In Tiddlymap, ''if'' constraints are not represented. This is because they represent logic which can't be represented with something as simple as a line connecting two nodes together.
+
+In general, ''if'' conditions are not as easily maintainable or representable within stories as declarative constraints like ''after'' and ''before'' are. Declarative constraints should always be preferred when feasible, but sometimes you have to do something more elaborate. 
+
+! Demo
+
+Here is an example project for you to explore. These nodes contain annotations that have further details and tips: <<demo>>
+
+<!--
+
+! Action Snippets (''do'' and ''done'')
+
+Pages can have the field <<field cyoa.do>> whose value is a script which is executed when the page is viewed. Unlike <<field cyoa.if>>, this script is not tested as a constraint, rather this script is used to set variable values. Here are some examples.
+
+-->

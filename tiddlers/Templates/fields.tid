@@ -1,0 +1,13 @@
+tags: 
+title: Templates/fields
+tmap.id: 5f20cfcb-a2b4-43ae-b56c-e2d524c51977
+type: text/vnd.tiddlywiki
+
+! <$text text={{!!caption}} />
+
+//<div class="tc-muted"><$list
+	variable="type"
+	filter="[{!!value-type}is[tiddler]]"
+	emptyMessage="Values: {{!!value-type}}">Type: <$link to={{!!value-type}} /></$list></div>//
+
+<$transclude/>

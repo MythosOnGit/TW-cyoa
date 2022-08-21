@@ -1,0 +1,8 @@
+caption: else
+tags: Attributes
+title: ElseAttribute
+tmap.id: 254ad96e-c3f9-48c2-b047-819435fc9dd3
+type: text/vnd.tiddlywiki
+widget: CyoaWidget
+
+A valueless attribute that adds the following constraint: true only if the previous active node evaluated to false. The <<wlink ElseWidget>> widget is a shorthand for this, and its page contains more details on how the "else" mechanic works.

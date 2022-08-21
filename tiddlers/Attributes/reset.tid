@@ -1,0 +1,10 @@
+caption: reset
+list-after: TouchAttribute
+tags: Attributes
+title: ResetAttribute
+tmap.id: 37468873-fbdd-40ef-be0c-1e1fd1b57122
+type: text/vnd.tiddlywiki
+value-type: Filter
+widget: CyoaWidget
+
+A filter specifying a list of pages. Adds a closing action to reset those pages if this node renders, so those pages will be considered ''not'' visited.

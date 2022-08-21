@@ -110,6 +110,20 @@ Bp.has = function(index) {
 	return this.array[index];
 }
 
+function Flag(set,index) {
+	this.set = set;
+	this.index = index;
+};
+
+Object.defineProperty(Flag.prototype,"val",{
+	get: function() { return this.set.has(this.index); },
+	set: function(value) { return (value ? this.set.add(this.index): this.set.remove(this.index)); }
+});
+
+Bp.flag = function(index) {
+	return new Flag(this,index);
+};
+
 Bp.add = function(index) {
 	var parents = this.data.up[index];
 	this.array[index] = true;

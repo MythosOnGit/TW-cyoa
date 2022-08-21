@@ -1,0 +1,9 @@
+caption: id
+list-after: 
+tags: Attributes
+title: IdAttribute
+tmap.id: 70e50366-460c-42b2-a4a5-340fd25da41d
+type: text/vnd.tiddlywiki
+widget: CyoaWidget
+
+Optional CSS id of the generated active node. It should be unique from all existing pages.

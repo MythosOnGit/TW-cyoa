@@ -1,0 +1,9 @@
+caption: tiddler
+tags: Attributes
+title: TiddlerAttribute
+tmap.id: 1079dc30-569d-4332-b2fd-0023cd9de2d9
+type: text/vnd.tiddlywiki
+value-type: Title
+widget: OptionsWidget
+
+The title of the tiddler given to list options for if no filter is given. (Defaults to the current tiddler.)

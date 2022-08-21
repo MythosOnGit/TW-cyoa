@@ -4,9 +4,7 @@ type: text/vnd.tiddlywiki
 
 Control nodes are widgets which have no text content, but instead have constraints of directives that manipulate the story flow. For instance:
 
-<<example """
-
-<$cyoa after="Sneaking Disguised Equipped" touch="Successful"/>
+<<example """<$cyoa after="Sneaking Disguised Equipped" touch="Successful"/>
 <$else>
 
 Unfortunately you didn't prepare enough, and your party gets caught.

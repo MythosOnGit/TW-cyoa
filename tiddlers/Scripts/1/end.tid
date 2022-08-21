@@ -1,0 +1,56 @@
+tags: 
+title: Scripts1/end
+tmap.id: ee5d5109-7202-4b4e-a5b0-bbb5a30299eb
+type: text/vnd.tiddlywiki
+
+With your two pieces of equipment, you get back in line.
+
+<<annotate """
+
+Here are three examples of conditional snippets as applied to <<widget cyoa>> nodes. Mouse over them to see the scripts described in the info popups.
+""" >>
+
+<$cyoa
+	if="#{Scripts1/cestus} || #{Scripts1/gladius}"
+	after="Scripts1/kilt">
+
+<<annotate """
+
+This block mixes the declarative constraint <<attr after>> with a conditional <<attr if>> snippet. This is just fine. Both constraints must be met, which in this case means <<page Scripts1/kilt>> must be set, and also either <<page Scripts1/cestus>> ''or'' <<page Scripts1/gladius>> must be set.
+""" >>
+
+The pit boss looks you over and nods approvingly. "You might be small, but you know how to pick a good set of equipment. You might not die right away."
+</$cyoa>
+
+<$else if="#{Scripts1/cestus} != #{Scripts1/gladius}" >
+
+<<annotate """
+
+The condition on this block is <<snippet "#{Scripts1/cestus} != #{Scripts1/gladius}">>, which means they cannot equal each other. (One must be true and the other false, thus you selected ''one'' weapon.)
+""" >>
+
+The pit boss glances you over. "Good pick. That weapon will keep you safe. Count on it."
+</$else>
+
+
+<$else if="!#{Scripts1/plate} && !#{Scripts1/kilt}">
+
+<<annotate """
+
+In this case, <<snippet "!#{Scripts1/plate} && !#{Scripts1/kilt}">>. Note the <<snippet !>> before each placeholder. This means  ''not'' <<page Scripts1/plate>> and ''not'' <<page Scripts1/kilt>>.
+
+This script could actually be written as a declarative <<attr before>> attribute with the value <<value "Scripts1/plate Scripts1/kilt">>, which would be simpler to understand. It's done using a script here just for demonstration. 
+""" >>
+
+The pit boss points you out to everyone. "Look. This brave one thinks they can win this fight with just the tunic they were dragged in with."
+
+Everyone laughs.
+
+"You're going to die first, worm." The pit boss shoves you toward the front of the line.
+</$else>
+
+Together, you're all herded up the ramp to the colosseum arena. The doors open. Everyone charges out, except it's raining quite a downpour. No one is in the stadium.
+
+The pit boss sends you all home, after you return your equipment. Congratulations, you survived your day at the colosseum.
+
+[[Exit.|Demo]]

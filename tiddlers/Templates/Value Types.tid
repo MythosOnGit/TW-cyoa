@@ -1,0 +1,12 @@
+tags: 
+title: Templates/Value Types
+tmap.id: 79eff033-2412-4db7-bbb5-d0014a3283fe
+type: text/vnd.tiddlywiki
+
+! {{!!title}}
+
+<$transclude />
+
+!! Fields and Attributes using Lists
+
+<<list-links "[value-type<currentTiddler>]" >>

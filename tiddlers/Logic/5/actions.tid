@@ -6,7 +6,7 @@ type: text/vnd.tiddlywiki
 
 Here we provide a list to each "colored tent" option.
 
-We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Demo_8/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<page "Logic5/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
+We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Logic5/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<page "Logic5/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
 """ >>
 
 <$options filter="[[Logic5/tent]listed[cyoa.exclude]]"/>

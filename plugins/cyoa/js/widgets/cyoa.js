@@ -37,7 +37,30 @@ CyoaWidget.prototype.render = function(parent,nextSibling) {
 	var domNode = this.createDomNode();
 	parent.insertBefore(domNode,nextSibling);
 	this.renderChildren(domNode,null);
+	var infoNode = this.createInfoNode();
+	if(!this.compiling() && domNode.childNodes.length == 0) {
+		// Make this a dedicated info node
+		domNode.className += " cyoa-control";
+	}
+	if(infoNode) {
+		domNode.insertBefore(infoNode,domNode.firstChild);
+	}
 	this.domNodes.push(domNode);
+};
+
+CyoaWidget.prototype.createInfoNode = function() {
+	// Make the useful info if we're not compiling
+	var infoContainer;
+	if(this.info) {
+		var infoContainer = this.document.createElement("span"),
+			infoParser = this.wiki.parseText("text/vnd.tiddlywiki",this.info,{
+				parseAsInline: true}),
+			infoNode = this.wiki.makeWidget(infoParser,{document: this.document,parentWidget: this});
+		infoNode.render(infoContainer,null);
+		infoContainer.setAttribute("class","cyoa-info");
+		return infoContainer;
+	}
+	return null;
 };
 
 CyoaWidget.prototype.createDomNode = function() {
@@ -48,19 +71,8 @@ CyoaWidget.prototype.createDomNode = function() {
 	if(this.isLink() && tag === "a") {
 		domNode.setAttribute("href",this.getLinkText());
 	}
-	var info = "";
-	if(!this.hasVariable("cyoa-render","yes")) {
-		// If we're just displaying in the project, and not rendering
-		info = this.compileInfo();
-		if(info.length > 0) {
-			info = info.map(function(bit) {return bit.replace(/'/g,"\\'");});
-			// \\a is a special kind of linebreak in css style strings.
-			info = "--cyoa-info: '" + info.join("\\a ")  + "';";
-		}
-	}
-	if(this.style || info) {
-		info += this.style || "";
-		domNode.setAttribute("style",info);
+	if(this.style) {
+		domNode.setAttribute("style",this.style);
 	}
 	for(var i in this.customAttributes) {
 		domNode.setAttribute(i,this.customAttributes[i]);
@@ -89,17 +101,28 @@ CyoaWidget.prototype.compileInfo = function() {
 			array.push.apply(array,str.split(";"));
 		}
 	}
-	if(this.else) array.push("Else");
+	if(this.errors.length > 0) {
+		array.push("<span class=tc-error>Errors: " + this.errors.join("; ") + "</span>");
+	}
+	if(this.else) array.push("''Else''");
 	add(this.if);
 	if(this.depends.length > 0) {
-		array.push("Depends on " + this.depends.join("' or '") + "");
+		array.push("Depends on " + this.depends.map(utils.enlink).join(" or "));
 	}
 	if(this.index) {
-		array.push("Index: " + this.index);
+		array.push(this.index);
 	}
 	add(this.do);
 	add(this.done);
-	return array;
+	if(array.length > 0) {
+		return "<p>"+array.join("</p><p>")+"</p>";
+	} else {
+		return null;
+	}
+};
+
+CyoaWidget.prototype.compiling = function() {
+	return this.getVariable("cyoa-render") === "yes";
 };
 
 CyoaWidget.prototype.getClassName = function() {
@@ -109,6 +132,7 @@ CyoaWidget.prototype.getClassName = function() {
 	if(this["return"]) { classes.push("cyoa-return"); }
 	if(this["replace"]) { classes.push("cyoa-replace"); }
 	if(this["onclick"]) { classes.push("cyoa-onclick"); }
+	if(this.errors.length > 0 && !this.compiling()) { classes.push("cyoa-error"); }
 	if(this.isLink()) {
 		classes.push("tc-tiddlylink");
 		if(this.isShadow) {
@@ -207,29 +231,32 @@ CyoaWidget.prototype.execute = function() {
 	this["class"] =  this.getAttribute("class");
 	this.id =        this.getAttribute("id");
 	this.style =     this.getAttribute("style");
-	try {
-		const ATTRS = ["if","do","done","set","write","index"];
-		$tw.utils.each(ATTRS,(attribute) => {
+	this.errors =    [];
+	const ATTRS = ["if","do","done","set","write","index"];
+	$tw.utils.each(ATTRS,(attribute) => {
+		try {
 			this[attribute] = snippets.getWidgetString(attribute,tiddler,this);
-		});
 
-		if(this.onclick || this.to) {
-			this.isMissing = !this.wiki.tiddlerExists(this.defaultTo);
-			this.isShadow = this.wiki.isShadowTiddler(this.defaultTo);
+		} catch (e) {
+			if(this.compiling()) {
+				// We're compiling, so we'll log a warning message and proceed as best we can.
+				utils.warnForTiddler(tiddler,e,{wiki: this.wiki});
+			} else {
+				// We're in Tiddlywiki, so we'll replace the contents with a warning message so the user finds this fault quickly.
+				this.errors.push(e);
+			}
 		}
-	} catch (e) {
-		if(this.hasVariable("cyoa-render","yes")) {
-			// We're compiling, so we'll log a warning message and proceed as best we can.
-			var ct = this.getVariable("currentTiddler");
-			var message = "Error in tiddler '"+ct+"': "+e.message;
-			utils.warn(message);
-		} else {
-			// We're in Tiddlywiki, so we'll replace the contents with a warning message so the user finds this fault quickly.
-			this.makeChildWidgets(this.makeErrorChild(e.message));
-			return;
-		}
+	});
+	if(this.onclick || this.to) {
+		this.isMissing = !this.wiki.tiddlerExists(this.defaultTo);
+		this.isShadow = this.wiki.isShadowTiddler(this.defaultTo);
 	}
 
+	if(!this.compiling()
+	&& this.wiki.getTiddlerText("$:/config/mythos/cyoa/widget-info","yes") === "yes") {
+		// If we're just displaying in the project, and not rendering
+		this.info = this.compileInfo();
+	}
 	if(!this.hasChildren() && this.isLink()) {
 		// Make up some children for this widget
 		this.makeChildWidgets(this.makeContentTemplate(this.defaultTo));

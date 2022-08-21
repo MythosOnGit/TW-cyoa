@@ -1,6 +1,7 @@
 tags: Reference
 title: Widgets
 tmap.id: 761561ae-4b9a-4c94-8c8e-574a7278c6ad
+type: text/vnd.tiddlywiki
 
 <<plugin>> defines numerous widgets used to create content for your generated story.
 

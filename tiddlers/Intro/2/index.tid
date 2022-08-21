@@ -22,7 +22,7 @@ You have just begun your adventure. Before you is a crossroads. Which way do you
 
 [[Go right.|Right]]
 ```
-Now save the changes by clicking the {{$:/core/images/done-button}} button. You'll see your new <<tid Start>> page. Double-bracketed text is how you [[make links in TiddlyWiki|https://tiddlywiki.com/#Linking%20in%20WikiText]], and now we have links for "Go Left" and "Go Right" on our page which link to the pages <<page Left>> and <<page Right>>, and that is exactly how they will appear in your generated novel too.
+Now save the changes by clicking the {{$:/core/images/done-button}} button. You'll see your new <<tid Start>> page. Double-bracketed text is how you <<link-to-tw "Linking in WikiText" "make links in TiddlyWiki" >>, and now we have links for "Go Left" and "Go Right" on our page which link to the pages <<page Left>> and <<page Right>>, and that is exactly how they will appear in your generated novel too.
 
 Let's click on one the "Go Left" link. This'll open a //missing tiddler// which you're now going to edit, and fill in with the text:
 

@@ -7,7 +7,7 @@ type: text/vnd.tiddlywiki
 The <<widget options>> widget is used to create a sequence of [[active links|Active Node]] for your generated cyoa, where each link only displays if its corresponding page evaluates true. The pages linked to by the <<widget options>> widget are determined by the following rules
 
 # If the <<widget options>> widget has a "filter" attribute, that filter is executed to determine the list, exactly the same way the list filter works.
-# If there is no "filter" attribute, the <<widget options>> widget uses the list of all tiddlers tagged with the given tiddler, sorted following [[Tiddlywiki's ordering of tagged tiddlers|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]].
+# If there is no "filter" attribute, the <<widget options>> widget uses the list of all tiddlers tagged with the given tiddler, sorted following <<link-to-tw "Order of Tagged Tiddlers" "Tiddlywiki's ordering of tagged tiddlers">>.
 # If no tiddlers have the given tiddler as a tag, the <<widget options>> widget uses the contents of the given tiddler's "list" field.
 
 For each tiddler to link to, <<widget options>> widget uses that tiddler's <<flink CaptionField>> field, or its title if it doesn't have that field.
@@ -28,6 +28,4 @@ See [[here|Block vs. Inline]] for more information about blocks and inline text.
 
 ! Attributes
 
-|!Attribute |!Description |
-|filter |[[Filter argument|https://tiddlywiki.com/#Filters]] for which tiddlers to create conditional links for |
-|tiddler |The title of the tiddler given to list options for (defaults to the current tiddler) |
+<$transclude tiddler="Templates/attributes" mode=inline />

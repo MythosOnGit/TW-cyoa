@@ -31,6 +31,6 @@ However, you might have css which you only want applied when a particular page i
 
 !! How to apply CSS to sets of pages
 
-TiddlyWiki core has a way of applying CSS to specific tiddlers [[based on tags|https://tiddlywiki.com/static/Custom%2520styles%2520by%2520data-tags.html]]. <<plugin>> doesn't have this. (But it might someday!)
+TiddlyWiki core has a way of applying CSS to specific tiddlers <<link-to-tw "Custom styles by data-tags" "based on tags">>. <<plugin>> doesn't have this. (But it might someday!)
 
-What you can do is apply CSS to tiddlers based on pattern matching its ID. For instance, <<value """.cyoa-body[data-title^="House/"] { ... }""" >> will apply its css to all pages whose title begins with <<value House/>>. There are [[other pattern matching tricks too|https://tiddlywiki.com/static/Custom%2520styles%2520by%2520data-tags.html]], and there is an example of all these CSS tricks in this tutorial's demo: <<demo>>
+What you can do is apply CSS to tiddlers based on pattern matching its ID. For instance, <<value """.cyoa-body[data-title^="House/"] { ... }""" >> will apply its css to all pages whose title begins with <<value House/>>. There are <<link-to-tw "Custom styles by data-tags" "other pattern matching tricks too">>, and there is an example of all these CSS tricks in this tutorial's demo: <<demo>>

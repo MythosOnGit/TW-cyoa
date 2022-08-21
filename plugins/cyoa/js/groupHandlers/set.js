@@ -53,6 +53,10 @@ Sp.after = function(title) {
 	return this.variable + ".has(" + this.strIdFor(title) + ")";
 };
 
+Sp.do = function(title) {
+	return this.variable + ".flag(" + this.strIdFor(title) + ").val";
+};
+
 function getVersionMap(setHandler,pages) {
 	var versionMap = Object.create(null);
 	var pageMap = setHandler.getPageMap();

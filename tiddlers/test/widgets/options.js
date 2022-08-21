@@ -42,6 +42,7 @@ var templateAttr = " template='"+template+"' ";
 	function testNoTemplate(text,expectedTag,expectedAText) {
 		var wiki = defaultWiki();
 		wiki.addTiddler({title: "Main",text: text});
+		wiki.addTiddler({title:"$:/config/mythos/cyoa/widget-info",text:"no"});
 		var node = utils.renderTiddler(wiki,"Main");
 		var states = node.getElementsByClassName("cyoa-state");
 		var encoded1 = cyoaUtils.encodePageForID("options/A");
@@ -171,6 +172,7 @@ var templateAttr = " template='"+template+"' ";
 	it("uses title as text when cyoa.caption missing",function(){
 		const wiki = new $tw.Wiki();
 		wiki.addTiddler({title: "no/tags"});
+		wiki.addTiddler({title:"$:/config/mythos/cyoa/widget-info",text:"no"});
 		var doc = utils.renderText(wiki,"<$options filter='no/tags' />");
 		var list = doc.getElementsByTagName("a");
 		expect(list.length).toBe(1);
@@ -188,6 +190,7 @@ var templateAttr = " template='"+template+"' ";
 			utils.draft({title:"C",text:"",tags:"target"}),
 			{title:"D",text:"",tags:"target"},
 			{title:"E",text:"",tags:"target exclude"},
+			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"$:/config/mythos/cyoa/page-filter",text:"[all[]] -[tag[exclude]]"},
 			{title:"target",text: "<$options>\n",list: "D"}]);
 		var doc = utils.renderTiddler(wiki,"target");
@@ -203,6 +206,7 @@ var templateAttr = " template='"+template+"' ";
 			{title:"D",text:"",tags:"exclude"},
 			// Ignore drafts
 			utils.draft({title: "E",tags: "target"}),
+			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"$:/config/mythos/cyoa/page-filter",text:"[all[]] -[tag[exclude]]"},
 			{title:"target",text: "<$options>\n",list: "A B C D"}]);
 		var doc = utils.renderTiddler(wiki,"target");
@@ -214,6 +218,7 @@ var templateAttr = " template='"+template+"' ";
 		wiki.addTiddlers([
 			{title:"A"},{title:"B"},{title:"C"},
 			{title:"target",text: "<$options tiddler=list />",list: "B"},
+			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"list",list: "A C"}]);
 		var doc = utils.renderTiddler(wiki,"target");
 		expect(doc.documentElement.textContent).toBe("AC");
@@ -225,6 +230,7 @@ var templateAttr = " template='"+template+"' ";
 			{title:"A",tags:"target"},
 			{title:"B",tags:"target"},
 			{title:"target",text: "<$options/>\n"},
+			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			utils.draft({title:"target",text: "<$options/>\n"})]);
 		var doc = utils.renderTiddler(wiki,"Draft of 'target'");
 		expect(doc.documentElement.textContent).toBe("AB");

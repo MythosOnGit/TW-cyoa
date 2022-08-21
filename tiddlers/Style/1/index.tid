@@ -19,6 +19,6 @@ This sentence contains //emphasis//, ''bold'', and even __underline__ text.
 
 The demo for this tutorial shows many more uses of wikitext. Click on a node below to see a page using wikitext. All of these uses will translate over to your interactive story just fine. <<demo>>
 
-There's even more that TiddlyWiki can do, but it would take up too much space to cover it all in this tutorial, but the demo covered what will likely come up for you. At some point, you may want to check out [[the TiddlyWiki's section on wikitext|https://tiddlywiki.com/#WikiText]].
+There's even more that TiddlyWiki can do, but it would take up too much space to cover it all in this tutorial, but the demo covered what will likely come up for you. At some point, you may want to check out <<link-to-tw WikiText "the TiddlyWiki's section on wikitext">>.
 
 Next Tutorial:  <$link to="Style2">{{Style2!!caption}}</$link>

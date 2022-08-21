@@ -1,0 +1,11 @@
+cyoa.append: Scripts1/choice Scripts1/end
+cyoa.caption: Take the gladius.
+cyoa.only: first
+tags: Scripts1/choice
+title: Scripts1/gladius
+tmap.id: 80c419f0-147a-4504-a9f7-d23ea7edc1d6
+type: text/vnd.tiddlywiki
+
+It's a staple weapon of all colosseum battles. The rusted iron blade has nicks up and down it's length. Just makes it serrated.
+
+{{Scripts1/equipment}}

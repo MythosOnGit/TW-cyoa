@@ -1,0 +1,19 @@
+tags: [[Value Types]]
+title: Title List
+tmap.id: 8dd98c84-0507-48ca-b9fa-9a5cd2e0e07e
+type: text/vnd.tiddlywiki
+
+Lists are a simple list of tiddler titles separated with spaces. For example:
+
+```
+Page/dragons Page/werewolves Page/kittens
+```
+If any of your tiddlers include a space in them, then they must be wrapped in double brackets, like so:
+
+```
+[[Page/Cat Sith]] Page/Cyclops [[Page/Questing Beast]]
+```
+
+Also, all lists are just simple filters, so any field that also takes a [[Filter|filter]] can also take a list.
+
+Lists are native to TiddlyWiki, and <<link-to-tw "Title List" "their documentation">> goes into further detail.

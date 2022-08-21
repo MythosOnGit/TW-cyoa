@@ -1,0 +1,6 @@
+tags: [[Value Types]]
+title: Wikitext
+tmap.id: 31ff9b27-31b3-4e36-89a4-67cdf6470435
+type: text/vnd.tiddlywiki
+
+Wikitext values a single line strings of text which will be rendered exactly as wikitext in the body of a tiddler would. That means syntax like `//italics// and ''bold''`, along with everything else, will be rendered as expected.

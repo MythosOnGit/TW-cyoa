@@ -6,7 +6,7 @@ type: text/vnd.tiddlywiki
 
 This tiddler is the heart of a rudimentary Conversation Pattern. Numerous other pages are tagged with this tiddler, and most also append it. All tagging tiddlers are also "first only". This creates a tight loop where short, pages loop back on the same <<widget options>> list, which will gradually deplete, and may change as different options are visited.
 
-The last option, [[Logic2/end]], breaks the loop by not appending this tiddler. It's ensured to be the last option, because it has the <<field list-after>> field. [[See here for more about tag ordering.|https://tiddlywiki.com/#Order%20of%20Tagged%20Tiddlers]]
+The last option, [[Logic2/end]], breaks the loop by not appending this tiddler. It's ensured to be the last option, because it has the <<field list-after>> field. <<link-to-tw "Order of Tagged Tiddlers" "See here for more about tag ordering.">>
 """ >>
 
 <$options/>

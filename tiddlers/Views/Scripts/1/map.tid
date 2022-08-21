@@ -1,0 +1,33 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Scripts 1: Snippets/map
+type: text/vnd.tiddlywiki
+
+{
+ "c690fa2a-8339-4d49-b6e1-6ecfd6defa69": {
+  "x": -250,
+  "y": 0
+ },
+ "03336812-69bc-4907-bee8-935b4a36139f": {
+  "x": -100,
+  "y": 0
+ },
+ "a7ec6ab7-294e-45a1-ad82-03dc6f859700": {
+  "x": 75,
+  "y": -75
+ },
+ "80c419f0-147a-4504-a9f7-d23ea7edc1d6": {
+  "x": 75,
+  "y": -25
+ },
+ "5c618800-8899-4748-b8e6-b28d47646653": {
+  "x": 75,
+  "y": 25
+ },
+ "310dcda3-35b1-49b8-8315-d4deed844459": {
+  "x": 75,
+  "y": 75
+ },
+ "ee5d5109-7202-4b4e-a5b0-bbb5a30299eb": {
+  "x": 250,
+  "y": 0
+ }
+}

@@ -1,0 +1,16 @@
+cyoa.if: #{Scripts1/cestus} + #{Scripts1/gladius} + #{Scripts1/kilt} + #{Scripts1/plate} < 2
+tags: 
+title: Scripts1/choice
+tmap.id: 03336812-69bc-4907-bee8-935b4a36139f
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page has an example of a <<field cyoa.if>> field. It sums together the state of all four equipment pieces, and ensure that that sum is less than two. If not, this page evaluates false, and all the pages that append this one will instead append [[Scripts1/end]].
+
+For each equipment piece, if it is set, its value will equal <<value true>> (which is equivalent to <<value 1>>). If it is unset (or not visited), its value will equal <<value false>> (or <<value 0>>).
+
+Effectively, what this conditional snippet does is ensure that this page is only visited if the reader has yet to select two piece of equipment. This is difficult logic to create using only declarative constraints like <<field cyoa.before>> and <<field cyoa.after>>, hence the use of <<field cyoa.if>>.
+""" >>
+
+<$options />

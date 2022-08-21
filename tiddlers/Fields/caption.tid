@@ -3,6 +3,7 @@ tags: Fields
 title: CaptionField
 tmap.id: 5af07c13-8e77-4218-8e55-f51fcc529dcd
 type: text/vnd.tiddlywiki
+value-type: Wikitext
 
 The <<field cyoa.caption>> field of a tiddler is the caption used by widgets such as <<wlink OptionsWidget>> and <<wlink CyoaWidget>> as a caption when creating a link.
 
@@ -13,3 +14,13 @@ The tiddler [[Logic1/atrium]] has a <<field cyoa.caption>> set to <$macrocall $n
 Then options widget acts like the following:
 
 <<example """<$options filter="Logic1/atrium" />""">>
+
+! Wikitext
+
+Since <<field cyoa.caption>> is a [[wikitext field|Wikitext]], that means any markup you put in the value will render as expected. For example, <<value "Pick up the //correct// grail">> will have italics as expected.
+
+Actually, you can even use widgets inside the caption field, including the the <<widget cyoa>> widget and all of its variations. When you do, the <<var currentTiddler>> is set to tiddler which contains the caption.
+
+This makes it easy to have a variable caption depending on the state of target page. For example, you could have a caption of
+
+<<example """<$first>Explore the haunted house</$first><$else>Return to the haunted house</$else>""" segue: "which would give you a caption like this:">>

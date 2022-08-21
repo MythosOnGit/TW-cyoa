@@ -3,5 +3,6 @@ tags: Fields
 title: AppendField
 tmap.id: a79177ce-9b3b-4bdb-83cb-5a8706d1d7aa
 type: text/vnd.tiddlywiki
+value-type: Filter
 
 {{Appending}}

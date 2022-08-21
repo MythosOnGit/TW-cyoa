@@ -42,4 +42,9 @@ Since these pages aren't actually ever viewed, they can be [[virtual pages|Virtu
 
 Here is an annotated example project that shows off how ''touch'' and ''reset'' can be used: <<demo>>
 
-Next Tutorial:  <$link to="Logic4">{{Logic4!!caption}}</$link>
+!! Next Tutorial
+
+;<$link to=Logic4>{{Logic4!!caption}}</$link>
+: You can continue to learn new tricks about declarative constraints, such as how to ensure certain relationships between pages using Implications and Exclusions. These can create elegant logic to control the flow of your interactive story.
+;<$link to=Scripts1>{{Scripts1!!caption}}</$link>
+: Or if declarative constraints are still too limited, you can begin learning about <<plugin>>'s simple scripting. It starts very simply with one-line snippets as constraints which do not require programming experience to write.

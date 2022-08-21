@@ -1,0 +1,11 @@
+cyoa.append: Scripts1/choice Scripts1/end
+cyoa.caption: Take the breasplate.
+cyoa.only: first
+tags: Scripts1/choice
+title: Scripts1/plate
+tmap.id: 310dcda3-35b1-49b8-8315-d4deed844459
+type: text/vnd.tiddlywiki
+
+You try on a breastplate made of tarnished brass. It actually has room for breasts, and you realize that it was sized for a woman, but it fits you well enough, even if it is heavy.
+
+{{Scripts1/equipment}}

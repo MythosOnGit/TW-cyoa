@@ -38,9 +38,7 @@ exports.run = function(title) {
 		var cyoaWidget = widget.children[0];
 		cyoaWidget.computeAttributes();
 		cyoaWidget.execute();
-		return cyoaWidget.compileInfo().map(function(str) {
-			return str.replace(/^\w+:/,"''$&''");
-		}).join("<br>");
+		return cyoaWidget.info || '';
 	}
 	return '';
 };

@@ -103,6 +103,22 @@ Hp.visited = function(title) {
 	return this.after(title);
 };
 
+Hp.index = function(title) {
+	return this.after(title);
+};
+
+Hp.write = function(title) {
+	return this.after(title);
+};
+
+Hp.do = function(title) {
+	return this.after(title);
+};
+
+Hp.if = function(title) {
+	return this.after(title);
+};
+
 Hp.idFor = function(title) {
 	var info = this.getPageMap()[title];
 	return info && info.id;

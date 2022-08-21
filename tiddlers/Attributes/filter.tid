@@ -1,0 +1,9 @@
+caption: filter
+tags: Attributes
+title: FilterAttribute
+tmap.id: f67b8890-d68d-4a76-bce5-6126f1c869cd
+type: text/vnd.tiddlywiki
+value-type: Filter
+widget: OptionsWidget
+
+[[Filter argument|Filter]] for which tiddlers to create conditional links for. If this is not present, the widget uses the current tiddler's list field, or tiddlers tagging the current tiddler.

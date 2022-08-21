@@ -1,0 +1,38 @@
+tags: [[Value Types]]
+title: Filter
+tmap.id: a3171713-df86-45aa-bcf8-c658de98cd4d
+type: text/vnd.tiddlywiki
+
+Filters are versatile way of selecting precise sets of tiddlers. They can be as simple as a [[Title List|Title List]], or they can involve multiple operations strung together in elaborate ways to filter through all your existing tiddlers to get exactly the set you want.
+
+They are a native TiddlyWiki concept, and <<link-to-tw Filters "their documentation goes into far greater depth" >>. Here, we will show a few simple tricks which will serve you just fine for writing your interactive story.
+
+!! Examples
+```
+Item/potion Item/shield [[Item/short sword]]
+```
+This filter is just listing items, and it's no different than a [[title list|Lists]]. And just like title lists, titles with spaces in them need to be wrapped in double brackets.
+
+---
+```
+[tag[Magic]] Skills/alchemy
+```
+This filter uses the ''tag'' operator to return all tiddlers with the tag <<tid Magic>>, and then also the tiddler <<tid Skills/alchemy>>.
+
+---
+```
+[tag[Magic]!tag[Necromancy]]
+```
+This returns all tiddlers tagged with <<tid Magic>>, but not if they're tagged with <<tid Necromancy>>. Note the `!` before the second tag operator. It negates the ''tag'' operator to filter for tiddlers //without// the <<tid Necromancy>> tag.
+
+---
+```
+[prefix[Item/]] -Item/potion
+```
+This uses the ''prefix'' operator to select all tiddlers whose titles begin with <<tid Item/>>. But then it removes <<tid Item/potion>> from that list. Note the `-` before <<tid Item/potion>> which indicates it's to be removed from the title stream.
+
+!! More
+
+These examples barely scratch the surface of what filters are capable of. We've covered two simple operators, but there are <<link-to-tw "Filter Operators" "over a hundred">> all with thorough documentation.
+
+Don't feel pressured to learn them now. The few operators introduced here will serve you well enough for a long time. Once you're more comfortable with TiddlyWiki, maybe then delve into filters more.

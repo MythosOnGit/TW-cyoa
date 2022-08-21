@@ -201,6 +201,11 @@ it("picks up field values",function() {
 		"cyoa.only": "first"});
 });
 
+it("picks up captions",function() {
+	testTracks(["A",title],"text",{
+		"cyoa.caption": "<$first after=A>x</$first>"});
+});
+
 it("handles lists-items",function() {
 	testTracks(["A","B","C space","D","E"],"text",{
 		"cyoa.after": "A B",
@@ -223,12 +228,22 @@ it("widget using filtered tracks",function() {
 	testTracks(["A B","C"],"<$cyoa after='[[A B]] C' />");
 });
 
+it("picks up titles in snippets",function() {
+	testTracks(["A","C{{5}D}"],"<$cyoa if='#{A} == #{C{{5}D}} + #{A}'/>");
+	testTracks(["A","C{5}{6}D"],"text",{"cyoa.if":"#{A}==#{C{5}{6}D}+#{A}'/>"});
+	testTracks(["A","C{{5}D}"],"<$cyoa do='#{A} = #{C{{5}D}} + #{A}'/>");
+	testTracks(["A","C{5}{6}D"],"text",{"cyoa.do":"#{A}=#{C{5}{6}D}+#{A}'/>"});
+	testTracks(["A","C{{5}D}"],"<$cyoa done='#{A} = #{C{{5}D}} + #{A}'/>");
+	testTracks(["A","C{5}{6}D"],"text",{"cyoa.done":"#{A}=#{C{5}{6}D}+#{A}'/>"});
+});
+
 it("doesn't return duplicates",function() {
 	var text = "<$visited after='A'/><$first before='A'/>";
 	testTracks(["A",title],text,{
 		"cyoa.after": "A",
 		"cyoa.before": "A",
 		"cyoa.touch": "A",
+		"cyoa.if": "#{A}",
 		"cyoa.only": "first"});
 });
 

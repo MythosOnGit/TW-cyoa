@@ -1,0 +1,9 @@
+caption: before
+tags: Attributes
+title: BeforeAttribute
+tmap.id: a290ae6d-ef94-4f18-9464-0aec4f7af1d2
+type: text/vnd.tiddlywiki
+value-type: Filter
+widget: CyoaWidget
+
+A filter specifying a list of pages. Adds the following constraint: true only if //all// of the listed pages have ''not'' been visited.
