@@ -12,7 +12,7 @@ Here's an example of a more sophisticated <<widget options>> list. Instead of re
 
 If you edit this tiddler, you'll see that the template is
 
-```
+```html
 <$link>Examine the {{!!name}}.</$link>
 ```
 We'll cover transclusion and templating in more detail later, just know for now that `{{!!name}}` transcribe the <<field name>> field of each listed tiddler.

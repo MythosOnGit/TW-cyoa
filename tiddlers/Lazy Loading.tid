@@ -1,0 +1,22 @@
+tags: 
+title: Lazy Loading
+tmap.id: 01b29e62-1745-4ef1-b8f7-407b24d6e8c5
+type: text/vnd.tiddlywiki
+
+By default, your readers' browsers will load //all// images as soon as it's finished loading the story itself. If you have a story which has several images scattered throughout your tale, this may consume a lot of bandwidth, and make loading your story slow.
+
+In that case, consider lazy loading:
+
+```html
+<$image source="images/example.svg" loading="lazy" />
+```
+With <<attr loading>> set to <<value lazy>>, this image will only be fetched by the readers' browser when they visit the page containing that widget.
+
+;Benefit
+: You and your readers will save on bandwidth. Since not all image-containing pages may be visited on their playthrough, they won't have to load all images.
+;Drawback
+: When users visit a page with an image that hasn't been loaded yet, it may take a moment for the image to appear. Also, not all browsers support lazy loading, so this technique might not always work.
+
+
+
+If your images are embedded into your story file, lazy loading is unnecessary.

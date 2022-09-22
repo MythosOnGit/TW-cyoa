@@ -366,12 +366,16 @@ Hp.getPageMap = function() {
 
 $tw.hooks.addHook("th-renaming-tiddler",function(newTiddler,oldTiddler) {
 	// This hook catches procedural renames of a tiddler, which never happens in the core.
-	relinkTiddler(newTiddler.fields.title,oldTiddler.fields.title);
+	if (oldTiddler && newTiddler) {
+		relinkTiddler(newTiddler.fields.title,oldTiddler.fields.title);
+	}
 	return newTiddler;
 });
 $tw.hooks.addHook("th-saving-tiddler",function(newTiddler,draftTiddler) {
 	// This hook catches manual renames, which is pretty much all of them.
-	relinkTiddler(newTiddler.fields.title,draftTiddler.fields["draft.of"]);
+	if (draftTiddler && newTiddler) {
+		relinkTiddler(newTiddler.fields.title,draftTiddler.fields["draft.of"]);
+	}
 	return newTiddler;
 });
 

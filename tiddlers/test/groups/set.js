@@ -328,6 +328,10 @@ it("warns and refuses when a page would have a different id",function() {
 		{title: "Main","cyoa.touch":"B C"}]);
 	wiki.commitCyoaGroups();
 	var oldState = testPremadeBook(wiki,["B","C"]);
+	// We do this to force Relink to instantiate all of its modules bofore
+	// we swap out $tw.wiki with a dummy. We have to swap out $tw.wiki because
+	// the th-renaming-tiddler hook only works with $tw.wiki (issue #6536)
+	$tw.wiki.renameTiddler("non-existent","also-non-existent");
 	var mainWiki = $tw.wiki;
 	try {
 		$tw.wiki = wiki;

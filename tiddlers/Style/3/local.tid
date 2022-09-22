@@ -1,0 +1,43 @@
+title: Style3/local
+tmap.id: f620a4da-0a84-4f24-ba95-873b3bd2431c
+type: text/vnd.tiddlywiki
+
+@@.style3-text-center
+!!! [["The Concert"|https://www.gardnermuseum.org/experience/collection/10966]]
+"""
+by Johannes Vermeer.
+''Please do not steal!''
+"""
+@@
+
+<<annotate """
+
+This image is loaded locally, meaning it's stored alongside the <<plugin>> demo file on the same server, and it's loaded using a local path (<<value "./Concert.jpg">>).
+
+If you have many images in your interactive story, this is the method I'd recommend you'd use.
+
+The downside to this is your interactive story is no longer a "single file" but rather a directory of files (the story file, and the accompanying images), and they must remain together if your story is to work.
+""" >>
+
+<$image
+	source="./Concert.jpg"
+	class="style3-center"
+	alt="This art was stolen..." />
+
+This piece is most famous for being missing.
+
+<<annotate """
+
+If you view this page in the interactive story that this demo compiles, you'll probably notice that this image doesn't load. That's because your browser donwloaded the compiled results into your "Downloads" folder, where you're viewing it from. However, the story looks for the path <<value "./Concert.jpg">> which means it's looking for that file in the same directory it's currently in.
+
+In order for the image to load, you also need to download
+<a
+	href="./Concert.jpg"
+	class="tc-tiddlylink-external"
+	download="Concert.jpg"
+	target="_blank"
+>Concert.jpg</a>
+into your downloads folder so that the generated interactive story can find it locally.
+""" >>
+
+[[Return.|Style3/start]]

@@ -1,5 +1,6 @@
 /*\
 title: cyoa.js
+tags: Discard
 type: application/javascript
 module-type: library
 

@@ -340,6 +340,10 @@ it("handles renaming of tiddlers after a commit",function() {
 	wiki.commitCyoaGroups();
 	var prevSerialized = testPremadeBook(wiki,["A","C","E"]);
 	var mainWiki = $tw.wiki;
+	// We do this to force Relink to instantiate all of its modules bofore
+	// we swap out $tw.wiki with a dummy. We have to swap out $tw.wiki because
+	// the th-renaming-tiddler hook only works with $tw.wiki (issue #6536)
+	$tw.wiki.renameTiddler("non-existent","also-non-existent");
 	try {
 		$tw.wiki = wiki;
 		wiki.renameTiddler("C","X");

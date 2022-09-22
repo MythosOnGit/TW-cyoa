@@ -1,0 +1,55 @@
+caption: Style 3: Images
+description: Adding photos and illustrations to your story.
+tags: Style
+title: Style3
+tmap.id: b60ffd2f-d096-4a7b-b2ab-efac53ef2327
+type: text/vnd.tiddlywiki
+
+So far, we've learned how to create a text-based interactive story with unique styling, but you may want to create an interactive story that has pictures. In this tutorial, we show how to include images from other sources, whether they be somewhere on the internet, alongside your interactive story, or embedded within the story itself.
+
+!! Images from the Internet
+
+Let's say we want an image on another site to accompany a particular page. We use the <<widget image>> widget.
+
+```html
+<$image source="https://mythosongit.github.io/TW-cyoa/image.svg" />
+```
+
+And that's it. You can also control its width, height, hover tooltip, and alternate text. The <<link-to-tw ImageWidget "TiddlyWiki documentation">> has information on that.
+
+!! Local Images
+
+Importing images from other sites works, but it's not a great practice. It's better to host all the images your story will display on the same server from which you're hosting your story html file. That way, your story doesn't break if someone //else's// server comes down, or changes its URL.
+
+Let's say your interactive story is an HTML file called `index.html`, and it's in a directory of whatever server space from which you're hosting. From that directory, you have an `images` folder that contains all the pictures you want to link. Your directory structure looks like this:
+
+```
+├── images/
+│   └── example.png
+└── index.html
+```
+In that case, your <<widget image>> widget looks like this:
+
+```html
+<$image source="images/example.png" />
+```
+
+!! Embedded Images
+
+<<plugin>> advertises itself as using a "single file pattern", meaning your entire story along with the engine that runs it is contained within a single file that your readers could download, run offline, email around, or archive if they want. However, Images break that pattern. Now your story depends on multiple files to run correctly.
+
+However, <<plugin>> allows you to embed images into the standalone file if you want. Think carefully before deciding to do this, as it may bloat the size of your html file, but if you have a small number of images, and they're small, embedding them maintains the ease and simplicity of a single-file story. Embedding is simple.
+
+# Drag an image you want to embed onto your TiddlyWiki project page (the actual browser window).
+# Press confirm on the [[$:/Import]] tiddler that comes up.
+
+That's it. Your image is now a part of your project as a tiddler.
+
+Now you need to link to it from specific pages. Let's say your image was called `Example.jpg`, much like [[this tiddler right here|Style3/fox.jpg]]. (and thus the corresponding tiddler is called <<tid Example.jpg>>). Then your <<widget image>> widget will be this:
+
+```html
+<$image source="Example.png" />
+```
+It's the same <<attr source>> attribute as before, only now it's pointing to an existing image tiddler. That's all it takes.
+
+Here's a demonstration of all three image techniques: <<demo>>

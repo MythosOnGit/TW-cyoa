@@ -1,0 +1,42 @@
+title: Style3/embedded
+tmap.edges: {"57b79e55-d936-4bee-956d-f06de8d9b3a2":{"to":"7b07ed76-b319-4b95-b9c6-10076e3219ea","type":"embeds"}}
+tmap.id: eb3db025-a387-4cfb-a208-1f113459ef79
+type: text/vnd.tiddlywiki
+
+@@.style3-text-center
+!!! [["Indian Fox"|https://archive.org/details/dogsjackalswolve00mivarich]]
+by John Gerrard Keulemans.
+@@
+
+<<annotate """
+
+This image is embedded into this ~TiddlyWiki demo as another tiddler that you can visit [[right here|Style3/fox.jpg]]. This image will also be embedded in the interactive story <<plugin>> generates for you.
+
+That means this image will always be with your story, even if it's downloaded, emailed around, or archived. It's convenient, but be wary of embedding too many images. It will bloat your generated story's file size.
+""" >>
+
+<$image
+	class="style3-center"
+	source="Style3/fox.jpg" />
+
+The plaque states that this picture is small because the curator takes it with him wherever he goes, and he can only carry so much.
+
+<<annotate """
+
+You'll see that the embedded fox image has it's own image as its icon on the map, and that this tiddler links to it with an edge labeled <<value embeds>>.
+
+Neither of these things are automatic. It's simply something I set up to clarify the demo, but you can get the same effects yourself.
+
+# To have a tiddler use its own image as a map icon (or any image), set its <<field icon>> field to itself (in this case, <<tid Style3/fox.jpg>>).
+# To create a custom edge between two nodes, click {{$:/plugins/felixhayashi/vis/img/network/connectIcon.png}} ''Add Edge'' on the map, and draw an edge between the two. In the resulting popup, specify whatever edge name you'd like to create.
+
+You can later customize how this edge appears in
+<$button class="" message="tmap:tm-manage-edge-types">
+<span class="tmap-unicode-icon">◭</span> Manage edge-types</$button> under the ~TiddlyMap menu. (It looks like this: 
+<$button
+      class="tmap-unicode-button"
+      tooltip="Open the Menu"
+>{{$:/core/images/menu-button}}</$button>)
+""" >>
+
+[[Return.|Style3/start]]

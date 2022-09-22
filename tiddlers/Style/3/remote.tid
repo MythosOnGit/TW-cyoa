@@ -1,0 +1,39 @@
+title: Style3/remote
+tmap.id: e3edd0fc-ca2b-4caa-948e-5c6e1ecae780
+type: text/vnd.tiddlywiki
+
+@@.style3-text-center
+!!! [["The Fish"|https://tiddlywiki.com/poster/]]
+
+by Duarte Farrajota Ramos
+@@
+
+<<annotate """
+
+This image comes from the ~TiddlyWiki poster competition, and it's hosted on the <<link-to-tw caption:tiddlywiki.com>> website, not on the <<plugin>> website, nor is it embedded.
+
+The upside to linking to this image on their website is that we don't have to worry about hosting the image ourselves.
+
+The downside is that if tiddlywiki ever removes the image from their own servers, it will fail to load in this interactive story too. 
+""">>
+
+<$image
+	class="style3-center"
+	source="https://tiddlywiki.com/poster/images/TiddlyWiki_TiddlerPoster_en_S.png"
+	loading="lazy"/>
+
+Apparently this art was the winner of some sort of competition.
+
+<<annotate """
+
+If you edit this tiddler, you'll see that the <<widget image>> widget is called like so:
+
+```html
+<$image
+	source="..."
+	loading="lazy"/>
+```
+The <<attr loading>> attribute means this image will only be loaded when the page containing this image is visited, instead of being loaded when your story is first opened. I recommend this, especially if your interactive story has many images. [[Read more about Lazy Loading here.|Lazy Loading]]
+""" >>
+
+[[Return.|Style3/start]]

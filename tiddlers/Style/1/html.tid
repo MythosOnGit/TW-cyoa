@@ -22,7 +22,7 @@ Creature still hasn't returned. Cave out of service until then.
 
 Ultimately, this markup may not be sufficient for you. Fortunately, you can use html at any point that you wish.
 
-```
+```html
 <div style="text-align:center;">
 Creature still hasn't returned. Cave out of service until then.
 <span style="font-style:italic">Please see yourself out.</span>

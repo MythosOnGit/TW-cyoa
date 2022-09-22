@@ -1,0 +1,31 @@
+.doc-attr,
+.doc-field,
+.doc-tiddler,
+.doc-var,
+.doc-widget {
+	background-color: <<color background>>;
+	border: none;
+	color: <<color very-muted-foreground>>;
+	font-weight: bold;
+	padding: 0;
+}
+.doc-icon svg {
+	width: 1em;
+	height: 1em;
+    vertical-align: middle;
+}
+
+a .doc-attr,
+a .doc-field,
+a .doc-tiddler,
+a .doc-var,
+a .doc-widget {
+	color: <<color tiddler-link-foreground>>;
+}
+.doc-snippet {
+	background-color: inherit;
+	border: none;
+	color: <<color message-foreground>>;
+	font-weight: bold;
+	padding: 0;
+}

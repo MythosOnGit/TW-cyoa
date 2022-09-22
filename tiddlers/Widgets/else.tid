@@ -65,8 +65,7 @@ In this case, if node "C" evaluates true, then the <<widget else>> widget "D" wi
 
 Other HTML elements and text content have no bearing on the evaluation of <<widget else>> widgets. For example:
 
-<<example """
-<div>
+<<example """<div>
 	<$cyoa id="X" after="TiddlerX">Contents of X.</$cyoa>
 </div>
 
