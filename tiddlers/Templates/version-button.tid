@@ -1,0 +1,6 @@
+tags: 
+title: Templates/version-button
+tmap.id: 8a6ad5ea-892c-4815-8e8b-465cd6a51b7e
+type: text/vnd.tiddlywiki
+
+<$text text={{{ [<currentTab>removeprefix[Version ]addprefix[v]] }}} />

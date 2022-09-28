@@ -1,0 +1,11 @@
+created: 20221007033631072
+tags: Versions
+title: Version 1.2.0
+tmap.id: dd46aab4-936d-42db-8a7e-c014d8c7ff99
+type: text/vnd.tiddlywiki
+
+!!!Features
+
+* Overhaul of the versioning system. It more robustly handles the addition and removal of implications among pre-existing pages, as well as issuing warnings when appropriate.
+
+<<note "If you were using the <<plugin>> versioning system, then you'll need to clear your version history for this release. This release is effectively backward incompatible. Hopefully it will be the last one like that.">>

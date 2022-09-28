@@ -19,7 +19,7 @@ ValueHandler.prototype = Object.create(Handler.prototype);
 
 
 ValueHandler.prototype.groupData = function() {
-	return this.convertToIds(this.getImplicationTree());
+	return this.generateUpTree();
 };
 
 ValueHandler.prototype.touch = function(title) {

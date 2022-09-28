@@ -21,9 +21,8 @@ var Ip = IntMapHandler.prototype = Object.create(Handler.prototype);
 
 Ip.groupData = function() {
 	var ids = [];
-	var pageMap = this.getPageMap();
-	for(var title in pageMap) {
-		ids.push(this.pageMap[title].id);
+	for(var index = 0; index < this.entries.length; index++) {
+		ids.push(this.idForIndex(index));
 	}
 	return ids;
 };

@@ -1,0 +1,12 @@
+caption: Release Notes
+tags: Reference
+title: Versions
+tmap.id: 45e3af17-e499-4b15-9696-5fdb62486281
+type: text/vnd.tiddlywiki
+
+<$macrocall $name="tabs"
+	tabsList="[tag[Versions]!sort[created]]"
+	default={{{ [tag[Versions]!sort[created]] }}}
+	class="tc-vertical"
+	template="ReleaseTemplate"
+	buttonTemplate="Templates/version-button" />

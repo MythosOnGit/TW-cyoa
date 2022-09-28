@@ -169,18 +169,6 @@ it("does not treat '0' ids as falsy",function() {
 	expect(state).toBe("s=0");
 });
 
-it("isolates version blocks",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([node("A"),node("C"),node("D"),node("E"),
-		utils.group("default","set",{variable: "s",style: "index64"}),
-		{title: "Main","cyoa.touch":"E B"}]);
-	wiki.commitCyoaGroups();
-	// Node B comes in after the first stuff has been commited.
-	wiki.addTiddler(node("B","A"));
-	var state = testPremadeBook(wiki,["A","B","E"]);
-	expect(state).toBe("s=3.4");
-});
-
 it("handles broken implications",function() {
 	utils.warnings(spyOn);
 	var state = testBook(["B","C"],[node("A"),node("B","Z"),node("C","B"),
@@ -280,13 +268,13 @@ it("handles exclusion of implied items",function() {
 
 it("handles exclusion of items implying each other",function() {
 	var tiddlers = [
-		node("A",null,{"cyoa.exclude":"X"}),node("B","A"),node("C","B",{"cyoa.exclude":"X"}),
+		node("A",null,{"cyoa.exclude":"X"}),node("M"),node("B","A M"),node("C","B",{"cyoa.exclude":"X"}),
 		node("D",null,{"cyoa.exclude":"X"}),
 		utils.group("default","set",{variable: "s",style: "index10"})];
 	utils.warnings(spyOn);
-	testBook(["A","B","C"],tiddlers,[{title: "Main","cyoa.touch": "C"}]);
+	testBook(["A","B","C","M"],tiddlers,[{title: "Main","cyoa.touch": "C"}]);
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'C': Implies page 'A' which is in the same exclusion group 'X'");
-	testBook(["D"],tiddlers,[{title: "Main","cyoa.touch": "C D"}]);
+	testBook(["D","M"],tiddlers,[{title: "Main","cyoa.touch": "C D"}]);
 });
 
 it("handles exclusion of items implying irrelevant tiddlers",function() {
@@ -319,61 +307,6 @@ it("keeps clean serial string in implication chain with excludes",function() {
 		utils.group("default","set",{variable:"s",style:"string"})];
 	var state = testBook(["B","root"],tiddlers,[{title: "Main","cyoa.touch": "A B"}]);
 	expect(state).toBe("B");
-});
-
-it("warns and refuses when a page would have a different id",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([node("A"),node("B"),node("C"),
-		utils.group("default","set",{variable: "s",style: "string",filter: "[addsuffix[z]]"}),
-		{title: "Main","cyoa.touch":"B C"}]);
-	wiki.commitCyoaGroups();
-	var oldState = testPremadeBook(wiki,["B","C"]);
-	// We do this to force Relink to instantiate all of its modules bofore
-	// we swap out $tw.wiki with a dummy. We have to swap out $tw.wiki because
-	// the th-renaming-tiddler hook only works with $tw.wiki (issue #6536)
-	$tw.wiki.renameTiddler("non-existent","also-non-existent");
-	var mainWiki = $tw.wiki;
-	try {
-		$tw.wiki = wiki;
-		wiki.renameTiddler("B","X");
-		wiki.addTiddler({title: "Main","cyoa.touch": "X C"});
-		utils.warnings(spyOn);
-		// We need to commit manually, since the save would otherwise be delayed until the next tick.
-		wiki.commitCyoaGroups();
-		var newState = testPremadeBook(wiki,["C","X"]);
-		// We will issue a warning and retain the old id.
-		expect(utils.warnings()).toHaveBeenCalledWith("Page 'X': Tiddler would now use id 'Xz' instead of 'Bz', which would be a backward-incompatible change. CYOA will retain the use of 'Bz' until the version history is next cleared.");
-		expect(newState).toBe(oldState);
-		utils.warnings().calls.reset();
-		wiki.commitCyoaGroups();
-		newState = testPremadeBook(wiki,["C","X"]);
-		// It warns, but it only warns once.
-		expect(utils.warnings()).not.toHaveBeenCalled();
-		expect(newState).toBe(oldState);
-	} finally {
-		$tw.wiki = mainWiki;
-	}
-});
-
-it("can clear the version history and repack",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		node("A"),node("C"),
-		utils.group("default","set",{variable: "s",style: "index10"}),
-		{title: "Main","cyoa.touch": "C"}]);
-	wiki.commitCyoaGroups();
-	var oldState = testPremadeBook(wiki,["C"]);
-	// Now add a new page which would ordinarily offset "C"
-	wiki.addTiddler(node("B"));
-	wiki.commitCyoaGroups();
-	var newState = testPremadeBook(wiki,["C"]);
-	// This is already expected.
-	expect(newState).toBe(oldState);
-	// But after we clear the groups, all the pages should be repacked.
-	wiki.clearCyoaGroups();
-	var changedState = testPremadeBook(wiki,["C"]);
-	// Now it should be different
-	expect(changedState).not.toBe(newState);
 });
 
 });

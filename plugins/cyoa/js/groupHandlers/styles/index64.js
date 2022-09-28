@@ -10,6 +10,6 @@ var base64 = require("$:/plugins/mythos/cyoa/js/cyoa/base64.js");
 
 exports.name = "index64";
 
-exports.getIdFor = function(groupHandler,page,index) {
+exports.getIdFor = function(entry,index) {
 	return base64.to64(index);
 };

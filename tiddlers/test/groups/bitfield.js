@@ -8,7 +8,6 @@ Tests the bitfield tracked types.
 \*/
 
 const utils = require("test/utils.js");
-const BitField = utils.stateClasses.bitfield;
 
 describe("bitfield",function() {
 
@@ -20,8 +19,10 @@ function testBook(expected /*. tiddlerArrays */) {
 	return rtn.state;
 };
 
-function testPremadeBook(wiki,expected) {
-	var rtn = utils.testBookDefaultVar([],undefined,{wiki: wiki});
+function testPremadeBook(wiki,expected,options) {
+	options = Object.create(options || null);
+	options.wiki = wiki;
+	var rtn = utils.testBookDefaultVar([],undefined,options);
 	expect(rtn.results).toEqual(expected);
 	return rtn.state;
 };
@@ -35,24 +36,6 @@ function node(name,parent,attributes) {
 function bitfieldGroup(variable,group) {
 	return utils.group(group || "default","set",{variable: variable || "s",style: "bitfield"});
 };
-
-it("separates nodes in different version blocks",function() {
-	var tiddlers = [
-		node("A"),node("B","A"),node("C","B"),
-		node("X"),node("Y") // Y might pull D into the V1 block
-	];
-	var extras = [ node("D","C"),node("Y","D")];
-	var serialized = testBook(["X"],tiddlers,extras,{title: "Main","cyoa.touch": "X"});
-	// Mostly, I don't care about the serialized form, but I must make sure versioned nodes don't get lumped in with lower version trees.
-	// If this is 8, it means X is in the 4th position, but the tree before it should only take up 2 bits.
-	expect(serialized).toBe("t=4");
-
-	// Make sure touches propogate through version blocks
-	testBook(["A","B","C","D","Y"],tiddlers,extras,{title: "Main","cyoa.touch": "Y"});
-
-	// Make sure resets propogate through version blocks too
-	testBook(["A","X"],tiddlers,extras,{title: "Main",text:"<$cyoa touch='[all[]regexp[^.$]]' reset=B/>"});
-});
 
 it("bridges with multiple connections work",function() {
 	var tiddlers = [
@@ -146,14 +129,16 @@ it("handles cyclic graphs gracefully",function() {
 
 it("creating tree with irrelevant tiddlers is ignored",function() {
 	utils.warnings(spyOn);
-	testBook(["C","D"],[
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		bitfieldGroup("t"),
 		bitfieldGroup("other","other"),
 		node("A",undefined,{"cyoa.group": "other"}),
 		node("B","A",{"cyoa.group": "other"}),
 		node("C","B"),
 		node("D","nothing"),
-		{title: "Main","cyoa.touch": "C D"}
-	]);
+		{title: "Main","cyoa.touch": "C D"}]);
+	testPremadeBook(wiki,["C","D"]);
 	expect(utils.warnings().calls.allArgs()).toEqual([
 		["Page 'C': Implies page 'B' which is not in the same group"],
 		["Page 'D': Implies page 'nothing' which is not in the same group"]]);
@@ -276,23 +261,22 @@ it("handles exclusion within the same tree",function() {
 		{title: "Main3","cyoa.before": "B","cyoa.after": "A","cyoa.touch": "worksTheOther"}]);
 });
 
-it("handles back-compat with exclusion across different versions",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		bitfieldGroup("t"),
-		node("A1"),
-		node("A3"),
-		node("B1","A1 A3",{"cyoa.exclude": "X"}),
-		node("B3","A3",{"cyoa.exclude": "X"}),
-		{title: "Main","cyoa.touch": "B1 B3"}]);
-	wiki.commitCyoaGroups();
-	var prevSerialized = testPremadeBook(wiki,["A1","A3","B3"]);
-	wiki.addTiddler(node("B2","A1",{"cyoa.exclude": "X"}));
-	var newSerialized = testPremadeBook(wiki,["A1","A3","B3"]);
-	// The addition of a new versioned tiddler shouldn"t change things
-	expect(newSerialized).toBe(prevSerialized);
-	wiki.addTiddler({title: "Main","cyoa.touch": "B1 B3 B2"});
-	testPremadeBook(wiki,["A1","A3","B2"]);
+it("separates nodes in different version blocks",function() {
+	var tiddlers = [
+		node("A"),node("B","A"),node("C","B"),
+		node("X"),node("Y") // Y might pull D into the V1 block
+	];
+	var extras = [ node("D","C"),node("Y","D")];
+	var serialized = testBook(["X"],tiddlers,extras,{title: "Main","cyoa.touch": "X"});
+	// Mostly, I don't care about the serialized form, but I must make sure versioned nodes don't get lumped in with lower version trees.
+	// If this is 8, it means X is in the 4th position, but the tree before it should only take up 2 bits.
+	expect(serialized).toBe("t=4");
+
+	// Make sure touches propogate through version blocks
+	testBook(["A","B","C","D","Y"],tiddlers,extras,{title: "Main","cyoa.touch": "Y"});
+
+	// Make sure resets propogate through version blocks too
+	testBook(["A","X"],tiddlers,extras,{title: "Main",text:"<$cyoa touch='[all[]regexp[^.$]]' reset=B/>"});
 });
 
 it("handles tricky exclusion across different versions",function() {
@@ -316,59 +300,18 @@ it("handles implication trees with huge numbers of states",function() {
 	}
 	var tree = children.map((title) => node(title,"X"));
 	tree.unshift(node("X"));
+	tree.unshift(bitfieldGroup("t"));
 	tree.push(node("Z","Y01 Y02"));
-	testBook(["X","Y00","Y59"],tree.concat(
-		{title: "Main","cyoa.touch": "Y59 Y00"}));
+	var wiki = new $tw.Wiki();
+	wiki.addTiddlers(tree.concat({title: "Main","cyoa.touch": "Y59 Y00"}));
+	testPremadeBook(wiki,["X","Y00","Y59"]);
+	// Now change things around and try again
 	children[0] = "X"; // replace Y00 with X
 	children.pop();//remove Y59
 	children.push("Z");
-	testBook(children,tree.concat(
-		{title: "Main",text: "<$cyoa touch='[prefix[Y]] Z' reset='Y00 Y59'/>"}));
-});
-
-it("handles renaming of tiddlers after a commit",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		bitfieldGroup("t"),
-		node("A"),
-		node("B","A"),
-		node("C","A"),
-		node("D","A"),
-		node("E"),
-		{title: "Unrelated"},
-		{title: "Main","cyoa.touch": "C E"}]);
-	wiki.commitCyoaGroups();
-	var prevSerialized = testPremadeBook(wiki,["A","C","E"]);
-	var mainWiki = $tw.wiki;
-	// We do this to force Relink to instantiate all of its modules bofore
-	// we swap out $tw.wiki with a dummy. We have to swap out $tw.wiki because
-	// the th-renaming-tiddler hook only works with $tw.wiki (issue #6536)
-	$tw.wiki.renameTiddler("non-existent","also-non-existent");
-	try {
-		$tw.wiki = wiki;
-		wiki.renameTiddler("C","X");
-		wiki.renameTiddler("Unrelated","Still unrelated");
-	} finally {
-		$tw.wiki = mainWiki;
-	}
-	wiki.addTiddler({title: "Main","cyoa.touch": "X E"});
-	var nextSerialized = testPremadeBook(wiki,["A","E","X"]);
-	expect(nextSerialized).toBe(prevSerialized);
-});
-
-it('handles deletion of tiddlers after a commit',function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		bitfieldGroup("t"),
-		node("A"),
-		node("B"),
-		node("C"),
-		{title: "Main","cyoa.touch": "A C"}]);
-	wiki.commitCyoaGroups();
-	var prevSerialized = testPremadeBook(wiki,["A","C"]);
-	wiki.deleteTiddler("B");
-	var nextSerialized = testPremadeBook(wiki,["A","C"]);
-	expect(nextSerialized).toBe(prevSerialized);
+	wiki = new $tw.Wiki();
+	wiki.addTiddlers(tree.concat({title: "Main",text: "<$cyoa touch='[prefix[Y]] Z' reset='Y00 Y59'/>"}));
+	testPremadeBook(wiki,children);
 });
 
 });

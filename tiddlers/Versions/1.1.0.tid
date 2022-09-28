@@ -1,0 +1,14 @@
+create: 20220820231354000
+created: 20220820230954000
+tags: Versions
+title: Version 1.1.0
+tmap.id: 14944f30-5ab3-4b78-a84d-cf77cdfee603
+type: text/vnd.tiddlywiki
+
+!!!Features
+* Added support for placeholder snippet constraints (i.e. <<snippet "#{myPage} || #{otherPage}">>)
+* Vastly improved the popup information when mousing over active nodes in tiddlers.
+* Better node and page error handling.
+
+!!!Documentation
+* Added new demo to showcase the new constraint snippets

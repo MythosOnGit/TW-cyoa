@@ -1,0 +1,8 @@
+created: 20220424225203000
+modified: 20221007033631072
+tags: Versions
+title: Version 1.0.0
+tmap.id: 74217c99-6de4-459a-8c6d-a7cd8ec5dda5
+type: text/vnd.tiddlywiki
+
+Inaugural release. <<plugin>> is capable of many things, but only the few features that are documented have a finalized API. More polish and documentation will follow.

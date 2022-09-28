@@ -9,7 +9,6 @@ var Base64 = require("./base64");
 var utils = require("./utils");
 
 var BitField = function(string,groupData) {
-	var self = this;
 	if(groupData) {
 		this.data = groupData;
 		if(!groupData.down) {
@@ -18,8 +17,22 @@ var BitField = function(string,groupData) {
 			groupData.exMap = utils.generateExclusiveMap(groupData.exList);
 		}
 	}
+	this.parse(string);
+};
+
+exports.bitfield = BitField;
+
+var Bp = BitField.prototype;
+
+Bp.data = {
+	exMap: Object.create(null),
+	bridges: Object.create(null)
+};
+
+Bp.parse = function(string) {
+	var self = this;
 	// Now to unpack the input string recursively
-	this.array = new Array(groupData.count);
+	this.array = new Array(this.data.count);
 	function unpackSet(setArray,state) {
 		for(var index = 0; index < setArray.length; index++) {
 			var range;
@@ -34,7 +47,7 @@ var BitField = function(string,groupData) {
 					self.remove(pivot);
 					unpackSet(set[3],subsetState); // the OFF subsets
 				} else {
-					self.add(pivot);
+					self.add(pivot,true);
 					// Subtract those on states
 					subsetState -= possibleOffStates;
 					unpackSet(set[4],subsetState); // the ON subsets
@@ -47,16 +60,8 @@ var BitField = function(string,groupData) {
 			state /= range;
 		}
 	};
-	unpackSet(groupData.states,Base64.parse64n(string));
-};
-
-exports.bitfield = BitField;
-
-var Bp = BitField.prototype;
-
-Bp.data = {
-	exMap: Object.create(null),
-	bridges: Object.create(null)
+	unpackSet(this.data.states,Base64.parse64n(string));
+	crossAllBridges(this,this.data.bridges);
 };
 
 Bp.toString = function() {
@@ -124,7 +129,7 @@ Bp.flag = function(index) {
 	return new Flag(this,index);
 };
 
-Bp.add = function(index) {
+Bp.add = function(index,noBridges) {
 	var parents = this.data.up[index];
 	this.array[index] = true;
 	var exclusions = this.data.exMap[index];
@@ -135,16 +140,18 @@ Bp.add = function(index) {
 			}
 		}
 	}
-	var bridges = this.data.bridges[index];
-	if(bridges) {
-		for(var counter = 0; counter < bridges.length; counter++) {
-			this.add(bridges[counter]);
+	if(!noBridges) {
+		var bridges = this.data.bridges[index];
+		if(bridges) {
+			for(var counter = 0; counter < bridges.length; counter++) {
+				this.add(bridges[counter],noBridges);
+			}
 		}
 	}
 	if(parents) {
 		for(var counter = 0; counter < parents.length; counter++) {
 			if(this.array[parents[counter]] !== true) {
-				this.add(parents[counter]);
+				this.add(parents[counter],noBridges);
 			}
 		}
 	}
@@ -258,3 +265,17 @@ function propogate(array,index,direction,exclusionMap,down) {
 		}
 	}
 };
+
+/*
+This touches all bridges after the unpacking. It can't be done during unpacking, because that would interfere with how tree segment sizes are calculated.
+*/
+function crossAllBridges(self,bridges) {
+	for(var index = 0; index < self.array.length; index++) {
+		if(bridges[index] && self.array[index]) {
+			var set = bridges[index];
+			for(var bridgeIndex = 0; bridgeIndex < set.length; bridgeIndex++) {
+				self.add(set[bridgeIndex]);
+			}
+		}
+	}
+}

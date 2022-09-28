@@ -6,6 +6,7 @@ type: text/vnd.tiddlywiki
 [tag[Widgets]removesuffix[Widget]lowercase[]addprefix[Widgets/]]
 [tag[Attributes]removesuffix[Attribute]lowercase[]addprefix[Attributes/]]
 [tag[Plugins]lowercase[]addprefix[Plugins/]]
+[tag[Versions]removeprefix[Version ]addprefix[Versions/]]
 [tag[Tutorials]addsuffix[/index]]
 [tag[Reference]!match[Tutorials]addsuffix[/index]]
 [match[Attributes]addsuffix[/index]]

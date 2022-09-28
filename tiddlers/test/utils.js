@@ -156,7 +156,7 @@ exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
 	group = group || "default";
 	var core = exports.testBook([{title: "Results",text: "<$list filter='[cyoa.group["+group+"]]'>\n\n<$cyoa after='[all[current]]' >\n\n<$text text=<<currentTiddler>> />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
 	var rtn = {};
-	rtn.state = core.state.serialize();
+	rtn.state = (options && options.state) || core.state.serialize();
 	core.manager.getState = () => rtn.state;
 	// Now open results so the core will load the serialized state.
 	core.openBook("Results");

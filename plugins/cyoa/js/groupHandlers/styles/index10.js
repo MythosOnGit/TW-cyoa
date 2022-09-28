@@ -8,6 +8,6 @@ module-type: cyoagrouphandlerstyle
 
 exports.name = "index10";
 
-exports.getIdFor = function(groupHandler,page,index) {
+exports.getIdFor = function(entry,index) {
 	return index;
 };

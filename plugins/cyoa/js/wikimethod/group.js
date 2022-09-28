@@ -40,11 +40,9 @@ exports.getCyoaGroupHandlers = function() {
 	return Object.keys(groupModules);
 };
 
-exports.getCyoaGroupHandler = function(group,options) {
+exports.getCyoaGroupHandler = function(group) {
 	var groupTiddler = this.getCyoaGroups()[group];
 	var wiki = this;
-	var options = Object.create(options || null);
-	options.wiki = wiki;
 	return this.getGlobalCache("cyoa-group-" + group,function() {
 		var data = wiki.getTiddlerData(groupTiddler,{});
 		if(data) {
@@ -58,7 +56,7 @@ exports.getCyoaGroupHandler = function(group,options) {
 			}
 			data.title = group;
 			var tiddlers = wiki.getTiddlersInCyoaGroup(group);
-			return new Module(group,data,tiddlers,options);
+			return new Module(wiki,group,data,tiddlers);
 		}
 		return undefined;
 	});
@@ -73,15 +71,12 @@ exports.commitCyoaGroups = function(dryRun) {
 	var changed = false;
 	for(var group in groups) {
 		var handler = this.getCyoaGroupHandler(group);
-		var recordData = handler.getRecord();
-		if(recordData.changed) {
-			changed = true;
-			if(!dryRun) {
-				handler.commitRecord(recordData.record);
-			} else {
-				// Since we're not changing anything, we might as well break.
-				break;
-			}
+		changed = changed || handler.changed;
+		if(!dryRun) {
+			handler.commit(this)
+		} else if(changed) {
+			// Since we're not changing anything, we might as well break.
+			break;
 		}
 	}
 	return changed;

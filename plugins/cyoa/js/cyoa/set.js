@@ -108,17 +108,6 @@ function purgeUptreeItems(set,item) {
 Sp.remove = function() {
 	for(var index=0; index<arguments.length; index++) {
 		var item = arguments[index];
-		var deleted = deleteNodeAndChildren(this,item);
-		var up = this.data.up[item];
-		if(deleted && up) {
-			Sp.add.apply(this,up);
-		}
-	}
-};
-
-Sp.remove = function() {
-	for(var index=0; index<arguments.length; index++) {
-		var item = arguments[index];
 		var children = this.data.down[item];
 		if(children) {
 			Sp.remove.apply(this,children);
