@@ -58,19 +58,22 @@ function PageListIterator(book,list,state) {
 	this.book = book;
 	this.state = state;
 	this.index = 0;
+	this.isTrue = true;
 };
 
-PageListIterator.prototype.next = function() {
-	while (this.index < this.list.length) {
-		var title = this.list[this.index];
-		this.index++;
-		var page = this.book.getPage(title);
-		if(!page) {
-			var msg = "append page '"+title+"' does not exist.";
-			utils.error(new Error(msg));
-		} else {
-			if(page.test(this.state)) {
-				return page;
+PageListIterator.prototype.next = function(skipRest) {
+	if(!skipRest) {
+		while (this.index < this.list.length) {
+			var title = this.list[this.index];
+			this.index++;
+			var page = this.book.getPage(title);
+			if(!page) {
+				var msg = "append page '"+title+"' does not exist.";
+				utils.error(new Error(msg));
+			} else {
+				if(page.test(this.state)) {
+					return page;
+				}
 			}
 		}
 	}

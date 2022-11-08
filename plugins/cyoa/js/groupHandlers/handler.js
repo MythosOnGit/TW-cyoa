@@ -123,6 +123,10 @@ Hp.index = function(title) {
 	return this.after(title);
 };
 
+Hp.weight = function(title) {
+	return this.after(title);
+};
+
 Hp.write = function(title) {
 	return this.after(title);
 };

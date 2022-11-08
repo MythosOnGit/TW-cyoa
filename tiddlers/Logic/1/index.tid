@@ -17,11 +17,11 @@ This tutorial covers the `first` mechanic, and the lesser used `visited` mechani
 
 As you make your stories, you'll have content which you'll only want the reader to visit once. After that, the content should not be available again. This is very easy in <<plugin>>.
 
-Let's say we have a page we only want shown once. Edit that page. Near the edit view's top, just underneath the 'tags' controls is a dropdown control like this:
+Let's say we have a page we only want shown once. Edit that page. Near the edit view's top, just underneath the 'tags' controls is the <<plugin>> edit panel, like this:
 
-: {{$:/plugins/mythos/cyoa/ui/EditTemplate}}
+> {{||$:/plugins/mythos/cyoa/ui/EditTemplate}}
 
-Click it. (Seriously, click this one right here.) It will reveal two options: ''Group'', and ''Show only''. Ignore ''Group'' for now. We'll discuss it later. Right now, look at ''Show only'' and how it's set to "always" by default. Let's change that to "first" and save our tiddler. Now whenever that [[page is evaluated|Evaluation]], it will be deemed "true" if it's never been shown before, and "false" if it has.
+It shows a lot, but for now we'll only discuss ''Show only''. It's set to <<value always>> by default. Let's change that to <<value first>> and save our tiddler. Now whenever that [[page is evaluated|Evaluation]], it will be deemed "true" if it's never been shown before, and "false" if it has.
 
 But what does that mean for a page to be "true" or "false"? There are certain cyoa constructs that will filter pages based on whether they're "ready to be shown":
 
@@ -33,7 +33,7 @@ As mentioned before, the <<wlink OptionsWidget>> widget creates [[Active Links]]
 
 Also, as mentioned before, the <<flink AppendField>> accepted multiple pages. That's because it ''won't'' append a page which isn't "true". And if so, it tests next page in its list to see whether it should append that instead, and so on, until it finds a page to append, or it runs out of pages and appends nothing.
 
-<<field cyoa.append>> can explicitly list pages (such as <<value "PageA PageB">>, where it first tests PageA for appending, and if it's not "true", then it tests PageB), but appending can also be declarative. Since it accepts [[filters|Filter]], you can set it to something like <<value "[tag[Outcome]]">>, and all pages with the "Outcome" will be in your tiddler's append list. (See <<link-to-tw "Order of Tagged Tiddlers" "this Tiddlywiki documentation page">> about how to control the order of tagged tiddlers.)
+<<field cyoa.append>> can explicitly list pages (such as <<value "PageA PageB">>, where it first tests PageA for appending, and if it's not "true", then it tests PageB), but appending can also be declarative. Since it accepts [[filters|Filter]], you can set it to something like <<value "[tag[Outcome]]">>, and all pages with the <<tag Outcome>> tag will be in your tiddler's append list. (See <<link-to-tw "Order of Tagged Tiddlers" "this Tiddlywiki documentation page">> about how to control the order of tagged tiddlers.)
 
 ! Showing text only once
 

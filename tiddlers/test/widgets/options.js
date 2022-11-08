@@ -245,7 +245,7 @@ var templateAttr = " template='"+template+"' ";
 		const doc = utils.renderTiddler(wiki,"target");
 		var options = doc.getElementsByClassName("cyoa-state");
 		expect(options[0].getAttribute("data-depend")).toBe("A");
-		expect(options[0].getAttribute("data-weight")).toBe("13");
+		expect(options[0].getAttribute("data-weight")).toContain("13");
 		expect(options[1].getAttribute("data-depend")).toBe("B");
 		expect(options[1].getAttribute("data-weight")).toBeFalsy();
 	});

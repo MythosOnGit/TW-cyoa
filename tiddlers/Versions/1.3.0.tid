@@ -1,0 +1,12 @@
+created: 20230605024630775
+tags: Versions
+title: Version 1.3.0
+tmap.id: 44f2c3ee-a809-4a6b-b151-676e48591861
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+!!!Features
+
+* Created a more user friendly way to create constraints on tiddlers. This might not be its final form, and maybe it belongs at the bottom of the bottom of the EditTemplate, but this should help speed people up for now.
+* Now recommending the install and use of [[TiddlyDesktop]] instead of HTML Native File System Saver, which isn't terribly well supported, and restricts users to Chrome. TiddlyDesktop should have the advantage of creating an environment that Twine or other project managed schemes.
+* Numerous bug fixes and speed improvements.

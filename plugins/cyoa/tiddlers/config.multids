@@ -5,3 +5,4 @@ meta/format-detection: telephone=no
 meta/generator: TiddlyWiki: Cyoa plugin
 filename: cyoa
 title: {{$:/core/wiki/title}}
+pills: append [[before after]] [[touch reset]] [[imply exclude]] if

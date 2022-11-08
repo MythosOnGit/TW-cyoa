@@ -19,10 +19,6 @@ function getter(name,method) {
 
 getter("id",function() { return utils.decodePage(this.element.id); } );
 getter("dependList",function() { return this.getPageList("data-depend"); } );
-getter("weight",function() {
-	var weight = parseInt(this.element.getAttribute("data-weight") || 1);
-	return weight < 0? 0: weight;
-} );
 getter("hotkey",function() { return this.element.getAttribute("data-hotkey"); } );
 getter("isElse",function() { return this.element.classList.contains("cyoa-else"); } );
 getter("isLink",function() { return this.element.classList.contains("tc-tiddlylink"); } );
@@ -89,7 +85,7 @@ returns: A list of link elements which should be keyed up to number keys.
 Node.prototype.execute = function(state) {
 	if(this.isStateful) {
 		this.active = true;
-		var options = {arguments: Object.assign({value: this.evalSnippet("set")},state)};
+		var options = {arguments: state};
 		if(!this.isOnclick) {
 			this.evalSnippet("do",options);
 		}
@@ -110,13 +106,17 @@ Node.prototype.executeChildren = function(state) {
 	var iterator = new TreeIterator(this.book,this.element,state);
 	var child;
 	if(index !== undefined) {
-		var selected = this.selectFromList(index,iterator);
+		var selected = this.selectFromList(index,iterator,state);
 		if(selected) {
 			selected.execute(state);
 		}
 	} else {
 		while (child = iterator.next()) {
-			child.execute(state);
+			if(iterator.isTrue) {
+				child.execute(state);
+			} else {
+				child.active = false;
+			}
 		}
 	}
 };
@@ -143,41 +143,55 @@ Node.prototype.executeOnclick = function(state) {
 /*
 Selects an item from iterator given the index. Index can be an integer, string, or [int, string] pair
 */
-Node.prototype.selectFromList = function(index,iterator) {
+Node.prototype.selectFromList = function(index,iterator,state) {
 	var whiteList = [],
 		item,
 		weightedLength = 0;
-	index = index || 0;
+	var index = index || 0;
+	var indexNumber, skipRest = false;
 	switch (typeof index) {
+	case "function":
+		// We set the number to somethign that guarantees we evaluate all nodes.
+		indexNumber = Number.MAX_SAFE_INTEGER;
+		break;
 	case "string":
-		index = Math.abs(hash.hash(index));
-		// no break;
+		indexNumber = Math.abs(hash.hash(index));
+		break;
+	default: // numbers and booleans
 	case "number":
 		if(index < 0) {
 			throw new Error("index cannot be less than zero ("+index+")");
 		}
-		while (item = iterator.next()) {
-			weightedLength += item.weight;
-			if(weightedLength > index) {
-				return item;
+		indexNumber = index;
+	}
+	while(item = iterator.next(skipRest)) {
+		if(iterator.isTrue) {
+			weightedLength += item.getWeight(state);
+			if(weightedLength > indexNumber) {
+				// This is the one. We don't have to bother evaluating any more
+				skipRest = true;
 			}
 			whiteList.push(item);
+		} else {
+			item.active = false;
 		}
-		break;
-	default: //function
-		while (item = iterator.next()) {
-			weightedLength += item.weight;
-			whiteList.push(item);
-		}
-		index = index(weightedLength);
 	}
-	index = index % weightedLength;
+	if(typeof index === "function") {
+		indexNumber = index(weightedLength);
+	}
+	indexNumber = indexNumber % weightedLength;
 	var weightedIndex = 0;
 	for(var wlIndex = 0; wlIndex < whiteList.length; wlIndex++) {
-		weightedIndex += whiteList[wlIndex].weight;
-		if(weightedIndex > index) {
-			return whiteList[wlIndex];
+		weightedIndex += whiteList[wlIndex].getWeight(state);
+		if(weightedIndex > indexNumber) {
+			var selected = whiteList[wlIndex];
+			// First disable all remaining whitelisted nodes
+			while(++wlIndex < whiteList.length) {
+				whiteList[wlIndex].active = false;
+			}
+			return selected;
 		}
+		whiteList[wlIndex].active = false;
 	}
 	// This return is reached only if iterator was empty.
 	return null;
@@ -248,27 +262,40 @@ Node.prototype.getPageList = function(attribute) {
 	return [];
 };
 
+Node.prototype.getWeight = function(state) {
+	var weight = this.evalSnippet('weight',{default: 1, arguments: state});
+	return weight < 0? 0: weight;
+};
+
+function isStateful(element) {
+	return element.classList.contains("cyoa-state");
+};
+
 function TreeIterator(book,element,state) {
 	this.root = element;
 	this.ptr = element.firstElementChild;
 	this.book = book;
 	this.state = state;
 	this.skipElse = false;
+	this.isTrue = undefined;
 };
 
-TreeIterator.prototype.next = function() {
+// We want the ability to skip tests and just return them as is
+TreeIterator.prototype.next = function(skipTest) {
 	while (this.ptr !== null) {
-		var node = new Node(this.book,this.ptr);
-		if(node.isStateful) {
+		if(isStateful(this.ptr)) {
+			var node = new Node(this.book,this.ptr);
 			this.ptr = this.nextSibling(this.ptr);
-			if(!this.skipElse || !node.isElse) {
+			this.isTrue = false;
+			if(!skipTest && (!this.skipElse || !node.isElse)) {
 				if(node.test(this.state)) {
 					this.skipElse = true;
-					return node;
+					this.isTrue = true;
 				} else {
 					this.skipElse = false;
 				}
 			}
+			return node;
 		} else {
 			this.ptr = this.ptr.firstElementChild || this.nextSibling(this.ptr);
 		}

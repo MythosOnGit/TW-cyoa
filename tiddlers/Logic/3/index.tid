@@ -16,7 +16,7 @@ Unlike all the previous tricks you've learned (''before'', ''after'', ''first'',
 
 !!! How
 
-Specifying that a page should touch another page is done exactly the same way as <<field cyoa.before>> and <<field cyoa.after>>: Give the tiddler a <<field cyoa.touch>> field with a filter argument specifying what pages to touch when this page is viewed.
+Specifying that a page should touch another page is done exactly the same way as <<field cyoa.before>> and <<field cyoa.after>>: Click the "touch" in the <<pill "touch reset">> pill, and give the resulting edit-field a filter argument specifying what pages to touch when this page is viewed.
 
 In Tiddlymap, same thing. Draw an edge from one node to another and specify an edge type of "tw-filter:cyoa.touch". It gets represented with a dotted dark-brown edge.
 

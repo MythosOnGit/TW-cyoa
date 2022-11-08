@@ -235,6 +235,19 @@ it("picks up titles in snippets",function() {
 	testTracks(["A","C{5}{6}D"],"text",{"cyoa.do":"#{A}=#{C{5}{6}D}+#{A}'/>"});
 	testTracks(["A","C{{5}D}"],"<$cyoa done='#{A} = #{C{{5}D}} + #{A}'/>");
 	testTracks(["A","C{5}{6}D"],"text",{"cyoa.done":"#{A}=#{C{5}{6}D}+#{A}'/>"});
+	// Spaces are trimmed
+	testTracks(["A","C"],"<$cyoa if='#{   A   } == #{   C   }'/>");
+});
+
+it("picks up titles in snippet filter placeholder",function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		{title: "simple",text: "<$cyoa if='#a{ \"A\" } == 5'/>"},
+		{title: "currentTid", val: "B", text: "<$cyoa if='#a{ [all[current]get[val]] } == 5'/>"},
+		{title: "field", val: "C","cyoa.if": "#a{ [all[current]get[val]] } == 5"}]);
+	expect(wiki.getTiddlerTracks("simple")).toEqual(["A"]);
+	expect(wiki.getTiddlerTracks("currentTid")).toEqual(["B"]);
+	expect(wiki.getTiddlerTracks("field")).toEqual(["C"]);
 });
 
 it("doesn't return duplicates",function() {

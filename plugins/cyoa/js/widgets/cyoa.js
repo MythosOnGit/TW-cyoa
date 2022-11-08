@@ -80,7 +80,6 @@ CyoaWidget.prototype.createDomNode = function() {
 	if(this["if"]) domNode.setAttribute("data-if",this["if"]);
 	if(this["do"]) domNode.setAttribute("data-do",this["do"]);
 	if(this["done"]) domNode.setAttribute("data-done",this["done"]);
-	if(this.set) domNode.setAttribute("data-set",this.set);
 	if(this.index) domNode.setAttribute("data-index",this.index);
 	if(this.weight) domNode.setAttribute("data-weight",this.weight);
 	if(this.hotkey) domNode.setAttribute("data-hotkey",this.hotkey);
@@ -104,6 +103,9 @@ CyoaWidget.prototype.compileInfo = function() {
 	if(this.errors.length > 0) {
 		array.push("<span class=tc-error>Errors: " + this.errors.join("; ") + "</span>");
 	}
+	if(this.caption) {
+		add("''Caption:'' " + this.caption);
+	}
 	if(this.else) array.push("''Else''");
 	add(this.if);
 	if(this.depends.length > 0) {
@@ -112,8 +114,14 @@ CyoaWidget.prototype.compileInfo = function() {
 	if(this.index) {
 		array.push(this.index);
 	}
+	if(this.weight) {
+		array.push(this.weight);
+	}
 	add(this.do);
 	add(this.done);
+	if(this.write) {
+		array.push(this.write);
+	}
 	if(array.length > 0) {
 		return "<p>"+array.join("</p><p>")+"</p>";
 	} else {
@@ -226,13 +234,13 @@ CyoaWidget.prototype.execute = function() {
 	this["onclick"] =this.getAttribute("onclick");
 	this["replace"] =this.getAttribute("replace");
 	this.stateTag =  this.getAttribute("tag");
-	this.weight =    this.getAttribute("weight");
 	this.hotkey =    this.getAttribute("hotkey");
+	this.caption =   this.getAttribute("caption");
 	this["class"] =  this.getAttribute("class");
 	this.id =        this.getAttribute("id");
 	this.style =     this.getAttribute("style");
 	this.errors =    [];
-	const ATTRS = ["if","do","done","set","write","index"];
+	const ATTRS = ["if","do","done","write","index","weight"];
 	$tw.utils.each(ATTRS,(attribute) => {
 		try {
 			this[attribute] = snippets.getWidgetString(attribute,tiddler,this);

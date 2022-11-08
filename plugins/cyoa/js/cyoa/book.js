@@ -85,14 +85,3 @@ Bp.getNode = function(nodeTitle) {
 
 function onClickedLink() {
 };
-
-Bp.closeAll = function() {
-	var actives = this.document.getElementsByClassName("cyoa-active");
-	// We convert the HTMLCollection to a list before iterating through it
-	// because the HTMLCOllection is live, and would update after EVERY
-	// classList modification.
-	var array = Array.prototype.slice.call(actives,0)
-	for(var index = 0; index < array.length; index++) {
-		array[index].classList.toggle("cyoa-active",false);
-	}
-};

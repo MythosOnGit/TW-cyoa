@@ -29,14 +29,19 @@ it("filters out tiddlers in the default group set",function() {
 		{title: "d","cyoa.after": "f"},
 		{title: "e","cyoa.only": "first"},
 		{title: "f"},
-		utils.draft({title: "g","cyoa.only": "first"})
+		utils.draft({title: "g","cyoa.only": "first"}),
+		// "never" pages aren't tracked.
+		{title: "h","cyoa.only": "never"},
+		{title: "ex1","cyoa.exclude": "exgroup"},
+		{title: "ex2","cyoa.exclude": "exgroup"},
+		{title: "exgroup"}
 	]);
-	test(wiki,"[cyoa:group[]]",["a","c","e","f"]);
-	test(wiki,"[!cyoa:group[]]",[defTitle,"b","d","Draft of 'g'"]);
-	test(wiki,"[cyoa:group[default]]",["a","c","e","f"]);
-	test(wiki,"[!cyoa:group[default]]",[defTitle,"b","d","Draft of 'g'"]);
+	test(wiki,"[cyoa:group[]]",["a","c","e","ex1","ex2","f"]);
+	test(wiki,"[!cyoa:group[]]",[defTitle,"b","d","Draft of 'g'","exgroup","h"]);
+	test(wiki,"[cyoa:group[default]]",["a","c","e","ex1","ex2","f"]);
+	test(wiki,"[!cyoa:group[default]]",[defTitle,"b","d","Draft of 'g'","exgroup","h"]);
 	test(wiki,"[cyoa:group[noexist]]",[]);
-	test(wiki,"[!cyoa:group[noexist]]",[defTitle,"a","b","c","d","Draft of 'g'","e","f"]);
+	test(wiki,"[!cyoa:group[noexist]]",[defTitle,"a","b","c","d","Draft of 'g'","e","ex1","ex2","exgroup","f","h"]);
 });
 
 it("filters out tiddlers in custom groups",function() {

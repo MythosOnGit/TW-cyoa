@@ -1,0 +1,7 @@
+description: Nodes of this type have a condition such that they never display unless explicitly specified.
+priority: 5
+scope: [cyoa.only[never]]
+style: {"color":{"border":"rgba(72,61,139,1)"},"borderWidth":4,"borderWidthSelected":3}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa:never
+type: text/vnd.tiddlywiki
+

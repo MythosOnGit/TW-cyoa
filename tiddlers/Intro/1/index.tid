@@ -15,7 +15,9 @@ Click the following button:
 
 {{Buttons/download-empty}}
 
-This will download a project which will be entirely self-contained within a single file. This includes a few starter tiddlers, as well as [[several plugins|Plugins]] which make working with <<plugin>> easier. However, this starter project does require a Chrome-based browser in order to take advantage of all its plugins. ([[Here's why.|Browser-Nativesaver]])
+This will download a project which will be entirely self-contained within a single file. This includes a few starter tiddlers, as well as [[several plugins|Plugins]] which make working with <<plugin>> easier.
+
+<<note """You don't need anything else to play with this demo, or even to make your own interactive story. But you may eventually want to consider installing [[TiddlyDesktop|https://tiddlywiki.com/static/TiddlyDesktop.html]] on your computer as well, as it makes saving and backing up your project much simpler than doing so strictly through your browser. //You don't have to bother with this now//, but if you decide to, [[instructions are found here|TiddlyDesktop]].""">>
 
 !! Setting up your project
 

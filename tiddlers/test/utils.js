@@ -9,6 +9,7 @@ Test utilities for the cyoa tiddlywiki testing framework.
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
 var Widget = require("$:/core/modules/widgets/widget").widget;
+var MockWindow = require("test/cyoa/mock/window");
 const domParser = require("test/dom-parser");
 const Cyoa = require("cyoa");
 const State = Cyoa.State;
@@ -115,7 +116,8 @@ exports.testBook = function(tiddlerArrays,options) {
 	wiki.addTiddlers([
 		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/page"),
 		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/cyoaFile/pages"),
-		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/html-tiddler-inline")]);
+		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/html-tiddler-inline"),
+		{title: "$:/config/mythos/cyoa/start", text: "Main"}]);
 	// Then load in tiddlers specific to this particular test
 	for(var i = 0; i < tiddlerArrays.length; i++) {
 		var tiddlers = tiddlerArrays[i];
@@ -148,7 +150,7 @@ exports.testBook = function(tiddlerArrays,options) {
 	var stackData = wiki.getTiddlerData(groupPrefix + "stack");
 	core.cyoa.stackVariable = (stackData && stackData.variable) || "stack";
 	// Open first the main page to touch stuff
-	core.openBook("Main");
+	core.openPage("Main");
 	return core;
 };
 
@@ -159,7 +161,7 @@ exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
 	rtn.state = (options && options.state) || core.state.serialize();
 	core.manager.getState = () => rtn.state;
 	// Now open results so the core will load the serialized state.
-	core.openBook("Results");
+	core.openPage("Results");
 	// Lets collect those results in the only way I can figure out how
 	var elem = core.book.getPage("Results").element;
 	rtn.results = [];
@@ -214,3 +216,28 @@ exports.renderTiddlerToDom = function(title,options) {
 	widgetNode.render(container,null);
 	return container;
 };
+
+function getWindow(document) {
+	if($tw.browser) {
+		return window;
+	} else {
+		return new MockWindow(document);
+	}
+};
+
+exports.keydown = function(core,key,keycode,code,attributes) {
+	var w = getWindow(core.document);
+	var init = Object.assign({view: w,bubbles: true,cancelable: true,key: key,keycode: keycode,code: code},attributes);
+	// The most hackiest of hacks. This is because we use our own custom window, which maybe we don't have to do anymore given the new jsdom version
+	var event = new w.KeyboardEvent("keydown",init);
+	core.document.dispatchEvent(event);
+	return event;
+};
+
+exports.click = function(core,elemId) {
+	var elem = core.document.getElementById(elemId);
+	var w = getWindow(core.document);
+	var fakeEvent = new w.KeyboardEvent("click",{});
+	core.clicked_link(new Cyoa.Link(core.book,elem),fakeEvent);
+};
+

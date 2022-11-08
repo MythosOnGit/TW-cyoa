@@ -8,7 +8,8 @@ var hash = require("./hash");
 
 exports.shuffle = function(index,seed) {
 	return function(deckSize) {
-		seed = seed.toString() + Math.floor(index / deckSize).toString();
+		var deckNumber = Math.floor(index / deckSize).toString();
+		seed = deckNumber + seed.toString() + deckNumber;
 		var array = [];
 		for(var number = 0; number < deckSize; number++) {
 			array.push(number);

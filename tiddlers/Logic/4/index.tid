@@ -19,7 +19,7 @@ For instance, suppose you later want to add <<page badly_hurt>> which implies <<
 
 !!! How
 
-To specify that a given page should imply some other page, give that page a <<field cyoa.imply>> field that specifies that other page. <<field cyoa.imply>> is a [[list field|Title List]], which means you can specify multiple other pages which the given page implies. All will be set if the given page is set. [[However, you must take special care with tiddlers that have spaces in their title.|Pages with Spaces]]
+To specify that a given page should imply some target page, edit that page and click the "imply" in the <<pill [[imply exclude]]>> pill. In the resulting edit-field, specify the target page. <<field cyoa.imply>> is a [[list field|Title List]], which means you can specify multiple other pages which the given page implies. All will be set if the given page is set. [[However, you must take special care with tiddlers that have spaces in their title.|Pages with Spaces]]
 
 In Tiddlymap, same as always. Draw an edge from one node to the other which it will imply and specify the edge type of "tw-list:cyoa.imply". It gets represented with a curved khaki line.
 

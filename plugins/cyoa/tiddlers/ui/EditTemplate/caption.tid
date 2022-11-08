@@ -1,0 +1,9 @@
+caption: Caption
+class: caption
+tags: $:/tags/cyoa/EditTemplate
+title: $:/plugins/mythos/cyoa/ui/EditTemplate/caption
+
+<$edit-text
+  field="cyoa.caption"
+  class="cyoa-edit-caption"
+  inputActions="""<$list variable=_ filter="[<actionValue>is[blank]]"><$action-deletefield $field="cyoa.caption" /></$list>""" />

@@ -1,0 +1,8 @@
+title: $:/config/DefaultColourMappings/cyoa-
+
+pill-background: <<colour tiddler-controls-foreground>>
+pill-background-selected: <<colour tiddler-controls-foreground-selected>>
+pill-border: <<colour button-border>>
+
+edit-fields-odd: <<colour tiddler-editor-fields-odd>>
+edit-fields-even: <<colour tiddler-editor-fields-even>>

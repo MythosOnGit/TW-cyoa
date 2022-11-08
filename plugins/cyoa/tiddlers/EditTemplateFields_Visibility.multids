@@ -1,4 +1,13 @@
 title: $:/config/EditTemplateFields/Visibility/
 
+cyoa.caption: hide
 cyoa.group: hide
 cyoa.only: hide
+cyoa.append: hide
+cyoa.before: hide
+cyoa.after: hide
+cyoa.touch: hide
+cyoa.reset: hide
+cyoa.imply: hide
+cyoa.exclude: hide
+cyoa.if: hide

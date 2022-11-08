@@ -152,37 +152,70 @@ exports.getOptionsList = function(title,wiki) {
 	return results;
 };
 
+var filterPlaceholders = $tw.modules.getModulesByTypeAsHashmap("cyoafilterplaceholder","prefix");
+// This RegExp will locate "#{" "#a{" and "#A{", but not "#z{", because "z" is not a defined snippet placeholder prefix
+var filterPlaceholderRegexp = new RegExp("#(" + Object.keys(filterPlaceholders).map($tw.utils.escapeRegExp).join("|") + "){", "g");
+
+exports.getFilterPlaceholder = function(prefix) {
+	return filterPlaceholders[prefix];
+};
+
+exports.pack = function(scripts) {
+	if(typeof scripts === "string") {
+		scripts = [scripts];
+	}
+	var reducedScripts = [];
+	for (var index = 0; index < scripts.length; index++) {
+		if(scripts[index]) {
+			var cleaned = scripts[index].trim().replace(/;+$/, "");
+			if(cleaned) {
+				reducedScripts.push(cleaned);
+			}
+		}
+	}
+	if(reducedScripts.length == 0) { return null; }
+	return cyoaUtils.stringifyList(reducedScripts,";");
+};
+
 exports.processJavascript = function(script, method) {
-	var index = 0;
+	var match;
 	if(!script) {
 		return;
 	}
-	while((index = script.indexOf("#",index)) >= 0) {
-		index++;
-		if (script[index] == "{") {
-			var start = index + 1;
-			var nesting = 1;
-			var end = start;
-			// Skip to the end of the curly braces
-			while(nesting > 0) {
-				if(end >= script.length) {
-					// We hit a premature end. Quit out.
-					return;
-				}
-				switch(script[end]) {
-					case "{":
-						nesting++;
-						break;
-					case "}":
-						nesting--;
-						break;
-				}
-				end++;
-			}
-			method(script.substring(start,end-1),index-1,end);
-			index = end;
+	filterPlaceholderRegexp.lastIndex = 0;
+	while(match = filterPlaceholderRegexp.exec(script)) {
+		var ptr = match.index + match[0].length;
+		var placeholder = extractPlaceholder(script,ptr);
+		if (placeholder === undefined) {
+			// We hit a premature end. Quit out.
+			return
 		}
+		ptr += placeholder.length+1;
+		method(placeholder,filterPlaceholders[match[1]],match.index,ptr);
+		index = ptr;
 	}
+};
+
+function extractPlaceholder(script,ptr) {
+	var nesting = 1;
+	var end = ptr;
+	// Skip to the end of the curly braces
+	while(nesting > 0) {
+		if(end >= script.length) {
+			// We hit a premature end. Quit out.
+			return;
+		}
+		switch(script[end]) {
+			case "{":
+				nesting++;
+				break;
+			case "}":
+				nesting--;
+				break;
+		}
+		end++;
+	}
+	return script.substring(ptr,end-1);
 };
 
 exports.getGroupScript = function(page,keyword,wiki) {

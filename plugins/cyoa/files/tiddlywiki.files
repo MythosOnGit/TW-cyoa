@@ -4,7 +4,7 @@
       "file": "cyoa.css",
       "fields": {
         "title": "$:/plugins/mythos/cyoa/cyoa.css",
-        "type": "text/css",
+        "type": "text/vnd.tiddlywiki",
         "tags": [ "$:/tags/Stylesheet" ]
       }
     },

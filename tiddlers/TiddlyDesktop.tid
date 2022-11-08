@@ -1,0 +1,19 @@
+tags: 
+title: TiddlyDesktop
+tmap.id: c047472b-06b1-467b-a49a-052e298c8c3c
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+
+TiddlyWiki is entirely self-contained within one html file, which makes working with it simple, and operable through any modern browser without any extra installation. However, modifying this file strictly through your browser is cumbersome. It involves saving your project by clicking the <span class=tc-page-controls>{{$:/core/ui/Buttons/save-wiki}}</span> button. Instead of modifying your existing TiddlyWiki file, this downloads a new file with your changes. Not great.
+
+There are many methods of saving changes outlined <<link-to-tw GettingStarted "here on the TiddlyWiki website">>, but if you're unsure which one to take, I strongly recommend using <<link-to-tw TiddlyDesktop>>.
+
+!! Installing TiddlyDesktop
+
+# Download and install the latest version of TiddlyDeskTop for your operating system from [[here|https://github.com/TiddlyWiki/TiddlyDesktop/releases/latest]].
+# Open TiddlyDesktop.
+# Drag the "Ready-to-go Project" downloaded from [[Intro1]] onto TiddlyDesktop and open it.
+# Done.
+
+TiddlyDesktop takes care of saving, tracking, and backing up your <<plugin>> project. In particular, backing up is very important.

@@ -73,6 +73,80 @@
     padding-left: 20px;
 }
 
+table.cyoa-edit {
+	width: 100%;
+}
+
+table.cyoa-edit, .cyoa-edit tr, .cyoa-edit td {
+	padding: 4px;
+	border: none;
+}
+
+.cyoa-edit-prompt {
+	width: 10%;
+	min-width: 70pt;
+	text-align: right;
+}
+
+.cyoa-edit-only {
+	padding-right: 9pt;
+}
+
+.cyoa-edit-only input {
+	margin-right: 3pt;
+}
+
+.cyoa-edit-field input, .cyoa-edit-caption {
+	width: 100%;
+}
+
+.cyoa-edit-row {
+	background-color: <<color cyoa-edit-fields-odd>>;
+}
+
+.cyoa-edit-field-caption, .cyoa-edit-field-group, .cyoa-edit-field-only {
+	background-color: inherit;
+}
+
+.cyoa-field-pills {
+	margin-top: 8pt;
+}
+
+.cyoa-field-pill {
+	margin-left: 3pt;
+	margin-right: 3pt;
+}
+
+.cyoa-field-pill button {
+	font-size: 8pt;
+	border-width: 1pt;
+	border-left-width: 0px;
+	padding-top: 2pt;
+	padding-bottom: 2pt;
+	padding-left: 5pt;
+	padding-right: 5pt;
+	min-width: 35pt;
+	border-radius: 0px;
+	background: <<colour cyoa-pill-background>>;
+	border-color: <<colour cyoa-pill-border>>;
+}
+
+.cyoa-field-button-remove {
+	<<box-shadow "inset 0 2px 8px rgba(0, 0, 0, 0.75)">>
+	background: <<colour cyoa-pill-background-selected>>;
+}
+
+.cyoa-field-pill button:first-child {
+	border-top-left-radius: 8pt;
+	border-bottom-left-radius: 8pt;
+	border-left-width: 1pt;
+}
+
+.cyoa-field-pill button:last-child {
+	border-top-right-radius: 8pt;
+	border-bottom-right-radius: 8pt;
+}
+
 /* This happens to be the only way to make the
  * EditTemplate group list not have italics.
  */

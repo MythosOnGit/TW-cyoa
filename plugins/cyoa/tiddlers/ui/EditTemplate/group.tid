@@ -1,30 +1,27 @@
+caption: Group
+class: group
 tags: $:/tags/cyoa/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/group
 
 \define prefix() $:/plugins/mythos/cyoa/groups/
 
-<tr>
- <td><em class="tc-edit tc-cyoa-edit-group">Group:</em></td>
- <td>
- <span class="tc-cyoa-group-selector">
-  <$fieldmangler>
-   <$edit-text field="cyoa.group" tag="input" default="" placeholder=default focusPopup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-edit-groupeditor tc-popup-handle"/>
-   <$button popup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-btn-invisible tc-btn-dropdown" tooltip="Show group list" aria-label="group list">{{$:/core/images/down-arrow}}</$button>
-   <$button message="tm-remove-field" param="cyoa.group" class="tc-btn-invisible tc-btn-icon" tooltip="Reset group" aria-label="reset group">{{$:/core/images/delete-button}}</$button>
-  </$fieldmangler>
- </span>
+<span class="tc-cyoa-group-selector">
+ <$fieldmangler>
+  <$edit-text field="cyoa.group" tag="input" default="" placeholder=default focusPopup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-edit-groupeditor tc-popup-handle"/>
+  <$button popup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-btn-invisible tc-btn-dropdown" tooltip="Show group list" aria-label="group list">{{$:/core/images/down-arrow}}</$button>
+  <$button message="tm-remove-field" param="cyoa.group" class="tc-btn-invisible tc-btn-icon" tooltip="Reset group" aria-label="reset group">{{$:/core/images/delete-button}}</$button>
+ </$fieldmangler>
+</span>
 
- <span class="tc-block-dropdown-wrapper">
-  <$set name="tv-show-missing-links" value="yes">
-   <$reveal state=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> type="nomatch" text="" default="">
-    <div class="tc-block-dropdown tc-edit-group-dropdown">
-     <$linkcatcher to="!!cyoa.group">
-      <$list filter="[all[shadows+tiddlers]prefix<prefix>!has:index[magic]removeprefix<prefix>]"><$link class="cyoa-group-listitem"><$text text=<<currentTiddler>> /></$link>
-      </$list>
-     </$linkcatcher>
-    </div>
-   </$reveal>
-  </$set>
- </span>
- </td>
-</tr>
+<span class="tc-block-dropdown-wrapper">
+ <$set name="tv-show-missing-links" value="yes">
+  <$reveal state=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> type="nomatch" text="" default="">
+   <div class="tc-block-dropdown tc-edit-group-dropdown">
+    <$linkcatcher to="!!cyoa.group">
+     <$list filter="[all[shadows+tiddlers]prefix<prefix>!has:index[magic]removeprefix<prefix>]"><$link class="cyoa-group-listitem"><$text text=<<currentTiddler>> /></$link>
+     </$list>
+    </$linkcatcher>
+   </div>
+  </$reveal>
+ </$set>
+</span>

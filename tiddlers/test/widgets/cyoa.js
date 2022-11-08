@@ -11,34 +11,9 @@ file doesn't care about the minutia like the other file does.
 \*/
 
 const utils = require("test/utils.js");
-var MockWindow = require("test/cyoa/mock/window");
 var Cyoa = require("cyoa");
 
 describe("widget: $cyoa",function() {
-
-function getWindow(document) {
-	if($tw.browser) {
-		return window;
-	} else {
-		return new MockWindow(document);
-	}
-};
-
-function click(core,elemId) {
-	var elem = core.document.getElementById(elemId);
-	var w = getWindow(core.document);
-	var fakeEvent = new w.KeyboardEvent("click",{});
-	core.clicked_link(new Cyoa.Link(core.book,elem),fakeEvent);
-};
-
-function keydown(core,key,keycode,code,attributes) {
-	var w = getWindow(core.document);
-	var init = Object.assign({view: w,bubbles: true,cancelable: true,key: key,keycode: keycode,code: code},attributes);
-	// The most hackiest of hacks. This is because we use our own custom window, which maybe we don't have to do anymore given the new jsdom version
-	var event = new w.KeyboardEvent("keydown",init);
-	core.document.dispatchEvent(event);
-	return event;
-};
 
 function nodeIsActive(core,id) {
 	return core.document.getElementById(id).classList.contains("cyoa-active");
@@ -78,6 +53,7 @@ it("can touch, reset, after, and before through tiddler",function() {
 		utils.group("default","set",{variable: "test"}),
 		{title: "A"},{title: "B"},{title: "C"},{title: "D"},
 		{title: "E"},{title: "F"},{title: "G"},{title: "H"},
+		{title: "I"},{title: "J"},
 		{title: "Main","cyoa.append": "W1 W2"},
 		// test before and after
 		{title: "W1","cyoa.before": "Main","cyoa.touch": "A"},
@@ -89,10 +65,13 @@ it("can touch, reset, after, and before through tiddler",function() {
 		{title: "Y2","cyoa.only": "first","cyoa.touch": "F Z2","cyoa.append": "Z1 Z2"},
 		// Test visited
 		{title: "Z1","cyoa.only": "visited","cyoa.touch": "G"},
-		{title: "Z2","cyoa.only": "visited","cyoa.touch": "H","cyoa.append": "cleanup"},
+		{title: "Z2","cyoa.only": "visited","cyoa.touch": "H U2","cyoa.append": "U1 U2 cleanup"},
+		// Test never
+		{title: "U1","cyoa.only": "never","cyoa.touch": "I"},
+		{title: "U2","cyoa.only": "never","cyoa.touch": "J"},
 		// we cleanup because we want a predictable order of our test results.
 		{title: "cleanup","cyoa.reset": "Y1 Y2 Z2"}]);
-	expect(core.state.serialize()).toBe("test=B.D.F.H");
+	expect(core.state.serialize()).toBe("test=B.D.F.H.U2");
 });
 
 it("can use if, do, and done",function() {
@@ -114,6 +93,16 @@ it("can use if, do, and done",function() {
 		{title: "Main3","cyoa.if": "test.v === 80","cyoa.touch": "F"},
 	]);
 	expect(core.state.serialize()).toBe("test=A.D.F");
+});
+
+it("handles multiple conditions on if",function() {
+	// If multiple afters exist, we must make sure we test all of them, not just the last one, which can happen if the underlying conditionals are separated by ";" instead of "&&".
+	var core = utils.testBook([
+		utils.group("default","set",{variable: "test"}),
+		{title: "A"},{title: "B"},{title: "C"},
+		{title: "Main", text: `<$cyoa touch=B/><$cyoa after="A B" touch=C/>`}
+	]);
+	expect(core.state.serialize()).toBe("test=B");
 });
 
 it("handles write",function() {
@@ -191,13 +180,19 @@ it("handles index weights",function() {
 	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
 });
 
-it("can handle not-quite-placeholders",function() {
+it("handles snippet weights",function() {
 	var core = utils.testBook([
-		{title: "Main",text: `
-			<$cyoa if='!!"#"' id="A"/>
-			<$cyoa if='!!"#{"' id="B"/>
-		`}]);
-	expect(utils.activeNodes(core)).toEqual(["A","B"]);
+		utils.group("default","set",{variable: "test"}),
+		{title: "A"},
+		{title: "B"},
+		{title: "C"},
+		{title: "Main",text:`<$cyoa touch="A C"/>
+			<$cyoa index=52>
+				<$cyoa id=X weight="#{A}+#{B}+#{C}+50"/>
+				<$cyoa id=Y />
+				<$cyoa id=Z />
+			</$cyoa>`}]);
+		expect(utils.activeNodes(core)).toEqual(["Y"]);
 });
 
 it("can perform onclick with or without destination",function() {
@@ -211,10 +206,10 @@ it("can perform onclick with or without destination",function() {
 		{title: "Main3",text: "<$cyoa id=linkGo onclick to=other touch=C />"},
 		{title: "other",text: "<$cyoa touch=D />"}]]);
 	expect(core.state.serialize()).toBe("test=A");
-	click(core,"linkStay");
+	utils.click(core,"linkStay");
 	expect(core.manager.getPage()).toBe("Main");
 	expect(core.state.serialize()).toBe("test=A.B");
-	click(core,"linkGo");
+	utils.click(core,"linkGo");
 	expect(core.manager.getPage()).toBe("other");
 	expect(core.state.serialize()).toBe("test=A.B.C.D");
 });
@@ -230,9 +225,9 @@ it("executes onclick with replace flag properly",function() {
 		{title: "second",text: "<$cyoa touch=C /><$cyoa id=link2 onclick replace touch=D to=third />"},
 		{title: "third",text: "<$cyoa touch=E />"}]]);
 	expect(core.state.serialize()).toBe("test=A");
-	click(core,"link1");
+	utils.click(core,"link1");
 	expect(core.state.serialize()).toBe("test=A.B.C");
-	click(core,"link2");
+	utils.click(core,"link2");
 	expect(core.state.serialize()).toBe("test=A.B.D.E");
 });
 
@@ -242,7 +237,7 @@ it("can dynamically set the 'to' destination",function() {
 		{title: "confirmed","cyoa.group": "test"},
 		{title:"Main",text:`<$cyoa id=link to=bad do='this.to="good page"' />`},
 		{title: "bad"},{title: "good page","cyoa.touch": "confirmed"}]]);
-	click(core,"link");
+	utils.click(core,"link");
 	expect(core.manager.getPage()).toBe("good page");
 	expect(core.state.serialize()).toBe("test=confirmed");
 });
@@ -338,14 +333,18 @@ it("can have custom style even given css info variable",function() {
 
 it("displays nice messages for various constraints and actions",function() {
 	var wiki = new $tw.Wiki();
-	wiki.addTiddler({title: "Main",text: "<$tiddler tiddler=Main>\n\n<$cyoa only=first push=xpush depend=xdepend before=xbefore after=xafter touch=xtouch reset=xreset/>\n\n</$tiddler>"});
+	wiki.addTiddler({title: "Main",text: "<$tiddler tiddler=Main>\n\n<$cyoa caption=\"//xcaption//\" only=first push=xpush depend=xdepend before=xbefore after=xafter touch=xtouch reset=xreset write='#{xwrite}' index='#{xindex}' weight='#{xweight}'/>\n\n</$tiddler>"});
 	var text = wiki.renderTiddler("text/html","Main");
 	expect(text).toContain("First");
+	expect(text).toContain("xcaption</em>");
 	expect(text).toContain("xpush</a>");
 	expect(text).toContain("xbefore</a>");
 	expect(text).toContain("xafter</a>");
 	expect(text).toContain("xtouch</a>");
 	expect(text).toContain("xreset</a>");
+	expect(text).toContain("xwrite</a>");
+	expect(text).toContain("xindex</a>");
+	expect(text).toContain("xweight</a>");
 });
 
 it("correctly identifies control nodes for proper info display",function() {
@@ -407,7 +406,7 @@ it("executes nested onclick dos and dones in correct order",function() {
 		`},
 		{title: "other"}]]);
 	expect(core.state.serialize()).toBe("test=a");
-	click(core,"link");
+	utils.click(core,"link");
 	expect(core.state.serialize()).toBe("test=abcdxyz");
 });
 
@@ -439,13 +438,13 @@ it("can return to pushed pages",function() {
 		{title: "Main3",text: "<$cyoa id=link3 to=menu />"},
 		{title: "defpage"},
 		{title: "menu",text: "<$cyoa id=link2 to=defPage return>Return</$cyoa>"}]]);
-	click(core,"link1");
+	utils.click(core,"link1");
 	expect(core.manager.getPage()).toBe("menu");
-	click(core,"link2");
+	utils.click(core,"link2");
 	expect(core.manager.getPage()).toBe("Main");
 	// Click 3 doesn't push a page, so the stack should be empty.
-	click(core,"link3");
-	click(core,"link2");
+	utils.click(core,"link3");
+	utils.click(core,"link2");
 	expect(core.manager.getPage()).toBe("defPage");
 });
 
@@ -462,20 +461,20 @@ it("can take auto-assigned number hotkeys",function() {
 		{title: "Main3",text: `[[bad]] [[bad]]`}
 	]]);
 	// Main tests that inactive links don't claim a number, and that basic pretty links do.
-	var event = keydown(core,"2",50,"Digit2");
+	var event = utils.keydown(core,"2",50,"Digit2");
 	expect(core.manager.getPage()).toBe("Main2");
 	expect(event.defaultPrevented).toBe(true);
 	// The next tests confirms that numbering spans through appends
-	var event = keydown(core,"4",52,"Digit4");
+	var event = utils.keydown(core,"4",52,"Digit4");
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
 	// The next test confirms that out-of-range numbers aren't captured
-	var event = keydown(core,"3",51,"Digit3");
+	var event = utils.keydown(core,"3",51,"Digit3");
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(false);
 	// The next confirms that modifier keys on autonumbers doesn't work
 	$tw.utils.each(["ctrlKey","shiftKey","altKey","metaKey"],function(a) {
-		var event = keydown(core,"1",49,"Digit1",{[a]: true});
+		var event = utils.keydown(core,"1",49,"Digit1",{[a]: true});
 		expect(event.defaultPrevented).toBe(false);
 		expect(core.manager.getPage()).toBe("Main3");
 	});
@@ -489,15 +488,15 @@ it("can take custom hotkeys",function() {
 		{title: "$:/cyoaFooter",text: "<$cyoa to=Main4 hotkey=i />"},
 		{title: "Main4"}
 	]]);
-	var event = keydown(core,"c",67,"KeyC");
+	var event = utils.keydown(core,"c",67,"KeyC");
 	expect(core.manager.getPage()).toBe("Main2");
 	expect(event.defaultPrevented).toBe(true);
 	// multiple hotkeys can be assigned to one node
-	var event = keydown(core,"ArrowUp",38,"ArrowUp");
+	var event = utils.keydown(core,"ArrowUp",38,"ArrowUp");
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
 	// hotkeys are accessable from the footer
-	var event = keydown(core,"i",73,"KeyI");
+	var event = utils.keydown(core,"i",73,"KeyI");
 	expect(core.manager.getPage()).toBe("Main4");
 	expect(event.defaultPrevented).toBe(true);
 });
@@ -507,7 +506,7 @@ it("can handle hotkeys with identical keys and code",function() {
 		{title: "Main",text: "<$cyoa to=Main2 hotkey=ArrowUp />"},
 		{title: "Main2",text: "<$cyoa to=Main3 hotkey=ArrowUp />"},
 		{title: "Main3"}]]);
-	var event = keydown(core,"ArrowUp",38,"ArrowUp");
+	var event = utils.keydown(core,"ArrowUp",38,"ArrowUp");
 	expect(core.manager.getPage()).toBe("Main2");
 });
 
@@ -521,19 +520,19 @@ it("can take alt and ctrl hotkeys",function() {
 		{title: "Main5"}
 	]]);
 	// ctrl-alt doesn't trigger ctrl
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
 	expect(core.openPages).toEqual(["Main"]);
 	expect(event.defaultPrevented).toBe(false);
 	// works with ctrl
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true});
 	expect(core.manager.getPage()).toBe("Main2");
 	expect(event.defaultPrevented).toBe(true);
 	// It also works with alt
-	var event = keydown(core,"c",67,"KeyC",{altKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{altKey: true});
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
 	// It also works with both
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
 	expect(core.manager.getPage()).toBe("Main4");
 	expect(event.defaultPrevented).toBe(true);
 });
@@ -544,11 +543,11 @@ it("can take meta keys in any order",function() {
 		{title: "Main2",text: "<$cyoa to=Main3 hotkey='ctrl-alt-c' />"},
 		{title: "Main3"},
 	]]);
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
 	expect(core.manager.getPage()).toBe("Main2");
 	expect(event.defaultPrevented).toBe(true);
 	// and in the other order
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true,altKey: true});
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
 });
@@ -562,11 +561,11 @@ it("can use key codes and key values",function() {
 		{title: "Main2",text: "<$cyoa to=Main3 hotkey='ctrl-KeyD' />"},
 		{title: "Main3"},
 	]]);
-	var event = keydown(core,"c",67,"KeyC",{ctrlKey: true});
+	var event = utils.keydown(core,"c",67,"KeyC",{ctrlKey: true});
 	expect(core.manager.getPage()).toBe("Main2");
 	expect(event.defaultPrevented).toBe(true);
 	// and in the other order
-	var event = keydown(core,"d",68,"KeyD",{ctrlKey: true});
+	var event = utils.keydown(core,"d",68,"KeyD",{ctrlKey: true});
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
 });

@@ -8,8 +8,9 @@ function Core(document,state,manager) {
 	this.topPage = undefined;
 	this.manager = manager;
 	this.state = state;
+	this.openPages = [this.book.getStartPage().title];
 	var self = this;
-	this.manager.onpageturn = function() {self.focus_on_page();};
+	this.manager.onpageturn = function() {self.openPage();};
 	this.book.onlinkclick = function(link,event) {self.clicked_link(link,event);};
 	this.document.addEventListener("keydown",function(e) {
 		var keyArray = [];
@@ -41,17 +42,10 @@ function Core(document,state,manager) {
 
 module.exports = Core;
 
-Core.prototype.openBook = function(page) {
-	// Close the start page, since it's open by default
-	this.book.closeAll();
-	this.focus_on_page(page);
-};
-
-Core.prototype.focus_on_page = function(page) {
+Core.prototype.openPage = function(page) {
 	var self = this;
 	utils.clearErrors(this.document);
 	this.unpack_state();
-	this.book.closeAll();
 	this.loadedLinks = [undefined];
 
 	var currentPage = page || this.manager.getPage();
@@ -59,7 +53,7 @@ Core.prototype.focus_on_page = function(page) {
 		currentPage = this.book.getStartPage().title;
 	}
 	this.topPage = currentPage;
-	this.openPages = [];
+	var newPages = [];
 
 	utils.log("Page: " + currentPage);
 	this.document.body.setAttribute("data-title", currentPage);
@@ -69,18 +63,22 @@ Core.prototype.focus_on_page = function(page) {
 
 	var page = this.book.getPageOrDefault(currentPage);
 	while (page) {
-		if(page.active) {
-			var msg = "'"+page.title+"' is already loaded";
-			utils.error(new Error(msg));
-		}
 		page.execute(this.cyoa.vars);
 		page.eachActiveLink(function(node) {
 			self.registerHotkeys(node,node.hotkey || self.loadedLinks.length);
 		});
-		this.openPages.push(page.title);
+		newPages.push(page.title);
 		page = page.selectAppend(this.cyoa.vars,this.cyoa.stackVariable);
 	}
 	this.processExtraPages(this.book.footers);
+	// Close pages that aren't still open
+	for(var i = 0; i < this.openPages.length; i++) {
+		var title = this.openPages[i];
+		if(newPages.indexOf(title) < 0) {
+			this.book.getPage(title).active = false;
+		}
+	}
+	this.openPages = newPages;
 };
 
 Core.prototype.processExtraPages = function(pages) {
@@ -92,6 +90,8 @@ Core.prototype.processExtraPages = function(pages) {
 			page.eachActiveLink(function(node) {
 				self.registerHotkeys(node,node.hotkey);
 			});
+		} else {
+			page.active = false;
 		}
 	}
 };

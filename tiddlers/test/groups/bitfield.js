@@ -119,11 +119,11 @@ it("does not print if empty",function() {
 
 it("handles cyclic graphs gracefully",function() {
 	utils.warnings(spyOn);
-	testBook([],[node("loopA","loopB"),node("loopB","loopA")]);
+	testBook([],[{title: "Main"},node("loopA","loopB"),node("loopB","loopA")]);
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'loopB': Detected cyclic dependency in 'cyoa.imply' chain");
 	utils.warnings().calls.reset();
 
-	testBook([],[node("Z","X"),node("X","X"),node("Y","X")]);
+	testBook([],[{title: "Main"},node("Z","X"),node("X","X"),node("Y","X")]);
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'X': Detected cyclic dependency in 'cyoa.imply' chain");
 });
 

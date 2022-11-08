@@ -31,7 +31,16 @@ it("ignores drafts",function() {
 	]);
 	test(wiki,["title"]);
 	test(wiki,["S_title"],"S");
+});
 
+it("treats only correctly",function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		defaultGroupTiddler,
+		{title: "A", "cyoa.only": "first"},
+		{title: "B", "cyoa.only": "visited"},
+		{title: "C", "cyoa.only": "never"}]);
+	test(wiki,["A","B"]);
 });
 
 it("warns if tiddler specifies unidentified page set",function() {

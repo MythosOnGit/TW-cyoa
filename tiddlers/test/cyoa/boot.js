@@ -66,7 +66,7 @@ describe("#boot",function() {
 		exports.State = function(){};
 		exports.declare = function(){};
 		exports.UriManager = function(){};
-		exports.Core.prototype.openBook = function() {
+		exports.Core.prototype.openPage = function() {
 			$tw.test.bookOpened = true;
 		};
 		</pre>

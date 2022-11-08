@@ -1,5 +1,5 @@
 description: Indicates that if the pointing tiddler (A) is in the exclusion set (B). It cannot be "visited" with any other tiddlers in that set.
 show-label: false
-style: {"color":{"color":"LightSalmon","hover":"DarkSalmon"},"dashes":true}
+style: {"color":{"color":"#FFA07A","hover":"#E9967A"},"dashes":true}
 title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-list:cyoa.exclude
 type: text/vnd.tiddlywiki

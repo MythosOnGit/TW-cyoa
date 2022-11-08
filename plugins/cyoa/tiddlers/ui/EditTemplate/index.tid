@@ -2,30 +2,39 @@ list-before: $:/core/ui/EditTemplate/body
 tags: $:/tags/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate
 
+\whitespace trim
+
 <$list filter="[all[current]!prefix[Draft of '$:/]]">
 
- <$qualify name="cyoa-option-state" title={{{ [[$:/state/mythos/cyoa/edit/]addsuffix<currentTiddler>] }}}>
-  <$reveal type="nomatch" stateTitle=<<cyoa-option-state>> text="open">
-   <$button setTitle=<<cyoa-option-state>> setTo="open" class="tc-btn-invisible tc-popup-keep">
-    {{$:/core/images/right-arrow}}
-    Cyoa
-   </$button>
-  </$reveal>
-  <$reveal type="match" stateTitle=<<cyoa-option-state>> text="open">
-   <$button setTitle=<<cyoa-option-state>> setTo="close" class="tc-btn-invisible tc-popup-keep">
-    {{$:/core/images/down-arrow}}
-    Cyoa
-   </$button>
-  </$reveal>
-  <$reveal type="match" stateTitle=<<cyoa-option-state>> text="open">
+<div class="cyoa-field-pills">
 
-   <table><tbody>
-   <$list filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/EditTemplate]!has[draft.of]]" variable="listItem">
-    <$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
-     <$transclude tiddler=<<listItem>>/>
-    </$set>
-   </$list>
-   </tbody></table>
-  </$reveal>
- </$qualify>
+<$list variable="fields" filter={{$:/config/mythos/cyoa/pills}} template="$:/plugins/mythos/cyoa/ui/EditTemplate/pill" />
+
+</div>
+
+<table class="cyoa-edit">
+ <tbody>
+  <$list filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/EditTemplate]!has[draft.of]]" variable="listItem">
+   <$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
+    <tr class={{{ "cyoa-edit-row" [<listItem>get[class]addprefix[cyoa-edit-field-]] +[join[ ]] }}}>
+     <td class="cyoa-edit-prompt"><em class="tc-edit tc-cyoa-edit-group"><$view tiddler=<<listItem>> field="caption" />:</em></td>
+     <td class="cyoa-edit-value"><$transclude tiddler=<<listItem>>/></td>
+    </tr>
+   </$set>
+  </$list>
+  <$list
+    variable=currentField
+    filter="[enlist{$:/config/mythos/cyoa/pills}split[ ]addprefix[cyoa.]] :filter[<..currentTiddler>has:field<currentTiddler>]" >
+   <$vars
+     prompt={{{ [<currentField>removeprefix[cyoa.]titlecase[]] }}} >
+    <tr class={{{ cyoa-edit-row [<currentField>removeprefix[cyoa.]addprefix[cyoa-edit-field-]] +[join[ ]] }}} >
+     <td class="cyoa-edit-prompt"><em class="tc-edit tc-cyoa-edit-group"><<prompt>>:</em></td>
+     <td class="cyoa-edit-value cyoa-edit-field" align=right>
+      <$edit-text field=<<currentField>> />
+     </td>
+    </tr>
+   </$vars>
+  </$list>
+ </tbody>
+</table>
 </$list>

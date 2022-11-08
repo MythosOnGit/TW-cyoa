@@ -14,7 +14,7 @@ Expressions are simple snippets of script that can be used to test or modify the
 
 ! Conditional Snippets (''if'')
 
-Pages can have the field <<field cyoa.if>> whose value is evaluated as a constraint. Here are some examples.
+By clicking on the <<pill if>> pill, an <<field cyoa.if>> field will appear whose value is evaluated as a constraint. Here are some examples.
 
 ; <<snippet """#{has_armor} || #{has_helmet}""" >>
 : This script evaluates true only if either the page <<page has_armor>> has been visited, or <<page has_helmet>> has been visited, thus ensuring that the protagonist has at least //some// armor. This <<snippet ||>> notation is particularly useful, because until now, we've required every constraint added to our pages and nodes to be true for them to evaluate true. <<snippet ||>> introduces the ability to the concept of ''or'', or rather "only this //or// that must be true".
@@ -31,7 +31,7 @@ Just as pages have the <<field cyoa.if>> field, [[some active nodes|Active Node]
 
 !!! TiddlyMap
 
-In Tiddlymap, ''if'' constraints are not represented. This is because they represent logic which can't be represented with something as simple as a line connecting two nodes together.
+In Tiddlymap, ''if'' constraints are not represented. This is because they are logical scripts that can't be represented with something as simple as a line connecting two nodes together.
 
 In general, ''if'' conditions are not as easily maintainable or representable within stories as declarative constraints like ''after'' and ''before'' are. Declarative constraints should always be preferred when feasible, but sometimes you have to do something more elaborate. 
 

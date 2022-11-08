@@ -1,6 +1,6 @@
 description: This tiddler 'touches' the pointed-to tiddler.
 label: touches
 show-label: false
-style: {"color":{"color":"SaddleBrown","highlight":"SaddleBrown","hover":"SaddleBrown"},"dashes":true,"smooth":{"enabled":true}}
+style: {"color":{"color":"#8B4513","highlight":"#8B4513","hover":"#8B4513"},"dashes":true,"smooth":{"enabled":true}}
 title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.touch
 type: text/vnd.tiddlywiki

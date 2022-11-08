@@ -8,6 +8,7 @@ Tests the cyoa script manager
 \*/
 
 var scriptor = require("cyoa").scriptor;
+var utils = require("$:/plugins/mythos/cyoa/js/utils");
 
 var reflection = Object.create(null);
 
@@ -38,7 +39,7 @@ describe("scriptor",function() {
 
 describe("#eval",function() {
 	function test(scripts,state) {
-		var pack = scriptor.pack(scripts);
+		var pack = utils.pack(scripts);
 		return scriptor.eval(pack,state)
 	}
 
@@ -48,13 +49,13 @@ describe("#eval",function() {
 	});
 
 	it("ignores blank falsy strings",function() {
-		expect(scriptor.pack(["key",""])).toEqual("key");
-		expect(scriptor.pack(["key",null])).toEqual("key");
-		expect(scriptor.pack(["key",undefined])).toEqual("key");
+		expect(utils.pack(["key",""])).toEqual("key");
+		expect(utils.pack(["key",null])).toEqual("key");
+		expect(utils.pack(["key",undefined])).toEqual("key");
 
-		expect(scriptor.pack([""])).toBeNull();
-		expect(scriptor.pack([null])).toBeNull();
-		expect(scriptor.pack([undefined])).toBeNull();
+		expect(utils.pack([""])).toBeNull();
+		expect(utils.pack([null])).toBeNull();
+		expect(utils.pack([undefined])).toBeNull();
 	});
 
 	it("doesn't let scripts mess up the state",function() {
@@ -64,7 +65,7 @@ describe("#eval",function() {
 	it("handles all eval variations for single scripts",function() {
 		expect(test(["Math.max(4,5)"],{})).toEqual([5]);
 		expect(test(["Math.max(4,5);"],{})).toEqual([5]);
-		expect(test(["{ 4 + 5 }"],{})).toEqual([9]);
+		expect(test(["var a=5,b=0; while(a>0) { b+=a--; }; b"],{})).toEqual([15]);
 		expect(test(["var a=2,b=3; a+b"],{})).toEqual([5]);
 		expect(test(["(function(b){return b+2;})(4)"],{})).toEqual([6]);
 	});
@@ -72,7 +73,7 @@ describe("#eval",function() {
 	it("handles all eval variations for multiple scripts",function() {
 		expect(test(["3","Math.max(4,5)"],{})).toEqual([3,5]);
 		expect(test(["3","Math.max(4,5);"],{})).toEqual([3,5]);
-		expect(test(["3","{ 4 + 5 }"],{})).toEqual([3,9]);
+		expect(test(["3","var a=5,b=0; while(a>0) { b+=a--; }; b"],{})).toEqual([3,15]);
 		expect(test(["var a=5; a+6","var a=2,b=3; a+b"],{})).toEqual([11,5]);
 		expect(test(["3","(function(b){return b+2;})(4)"],{})).toEqual([3,6]);
 	});
@@ -98,7 +99,7 @@ describe("#eval",function() {
 		// If scriptor did a simple "eval", then it might be possible to access some of the variables in the scope above eval, and changing them might cause undefined behavior.
 		var args = reflection.getArguments(scriptor.eval);
 		var scripts = args.map(function(arg) {
-			return arg+" = undefined";
+			return "typeof("+arg+")!=='undefined' ? "+arg+" = undefined: 5";
 		});
 		expect(() => test(scripts)).not.toThrow();
 		expect(() =>test(scripts.reverse())).not.toThrow();
@@ -110,7 +111,7 @@ describe("#eval",function() {
 		var expected = [];
 		var scripts = vars.map(function(arg,index) {
 			expected.push(index);
-			return arg+" = undefined; "+index;
+			return "typeof("+arg+")!=='undefined' ? "+arg+" = undefined: 5; "+index;
 		});
 		expect(test(scripts)).toEqual(expected);
 		expect(test(scripts.reverse())).toEqual(expected.reverse());
@@ -119,7 +120,7 @@ describe("#eval",function() {
 
 describe("#evalAll",function() {
 	function test(scripts,state) {
-		return scriptor.evalAll(scriptor.pack(scripts),state)
+		return scriptor.evalAll(utils.pack(scripts),state)
 	}
 
 	it("works with many scripts",function() {

@@ -28,31 +28,34 @@ exports.getIdFor = function(entry,index) {
 };
 
 exports.touch = function(groupHandler,info,index) {
-	var id = this.filter([info.title])[0] || "";
 	var changed = false;
-	if(!info.id) {
-		if(!id && id !== 0) {
-			// If the id was null, undefined, or emptystring, bad.
-			this.empty.push(info.title);
-		} else if(this.idMap[id]) {
-			// This id already existed in versioned data. We have a collision
-			if(!this.collisions[id]) {
-				this.collisions[id] = [this.idMap[id]];
+	// If there is no info.title, that probably means this tiddler was removed from the group, and we can ignore it.
+	if(info.title) {
+		var id = this.filter([info.title])[0] || "";
+		if(!info.id) {
+			if(!id && id !== 0) {
+				// If the id was null, undefined, or emptystring, bad.
+				this.empty.push(info.title);
+			} else if(this.idMap[id]) {
+				// This id already existed in versioned data. We have a collision
+				if(!this.collisions[id]) {
+					this.collisions[id] = [this.idMap[id]];
+				}
+				this.collisions[id].push(info.title);
+			} else {
+				this.idMap[id] = info.title;
+				info.id = id;
+				changed = true;
 			}
-			this.collisions[id].push(info.title);
-		} else {
-			this.idMap[id] = info.title;
-			info.id = id;
+		} else if(info.id !== id && info.nextId !== id) {
+			utils.warnForTiddler(info.title,"Tiddler would now use id '"+id+"' instead of '"+info.id+"', which would be a backward-incompatible change. CYOA will retain the use of '"+info.id+"' until the version history is next cleared.",{wiki: this.wiki});
+			info.nextId = id;
 			changed = true;
 		}
-	} else if(info.id !== id && info.nextId !== id) {
-		utils.warnForTiddler(info.title,"Tiddler would now use id '"+id+"' instead of '"+info.id+"', which would be a backward-incompatible change. CYOA will retain the use of '"+info.id+"' until the version history is next cleared.",{wiki: this.wiki});
-		info.nextId = id;
-		changed = true;
-	}
-	if(index == groupHandler.length-1) {
-		// We're on the last entry. We can now issue any warnings concerning bad IDs.
-		this.issueWarnings();
+		if(index == groupHandler.length-1) {
+			// We're on the last entry. We can now issue any warnings concerning bad IDs.
+			this.issueWarnings();
+		}
 	}
 	return changed;
 };

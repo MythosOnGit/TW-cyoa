@@ -1,7 +1,7 @@
 description: Tiddler appends the other when rendered in cyoa.
 label: appends
 show-label: false
-style: {"color":{"color":"darkblue","highlight":"blue","hover":"darkblue"},"smooth":{"enabled":false},"dashes":false}
+style: {"color":{"color":"rgba(0,0,139,1)","highlight":"rgba(0,0,255,1)","hover":"rgba(0,0,139,1)"},"smooth":{"enabled":false},"dashes":false}
 title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.append
 type: text/vnd.tiddlywiki
 

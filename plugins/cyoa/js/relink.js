@@ -8,57 +8,63 @@ This module allows relink to recognize and relink cyoa snippets.
 \*/
 
 var utils = require("./utils");
+var relinkUtils = require("$:/plugins/flibbles/relink/js/utils.js");
 
 exports.name = "snippet";
-var CONTEXT = 5;
 
-exports.report = function(value,callback,options) {
-	utils.processJavascript(value,function(title,start,end) {
-		// This block gives context to the snippet, but having tried it, it looks a little cluttered. I'll keep this around for now anyway.
-		/*
-		var blurb = "";
-		var tail = end + CONTEXT;
-		var head = start - CONTEXT;
-		if(tail > value.length) {
-			head -= tail - value.length;
+exports.report = function(script,callback,options) {
+	utils.processJavascript(script,function(placeholder,module,start,end) {
+		var relinker = getRelinker(module);
+		var front = "#" + module.prefix + "{";
+		var back = "}";
+		if(script.length + start - end <= 10) {
+			front = script.substr(0,start) + front;
+			back = back + script.substr(end);
 		}
-		// Let's get a little surrounding context
-		if(head <= 0) {
-			tail -= head;
-			head = 0;
-		} else {
-			blurb = "..."
-		}
-		blurb += value.substring(head,start) + "#{}" + value.substring(end,tail);
-		if(tail < value.length) {
-			blurb += "...";
-		}
-		*/
-		callback(title,"#{}");
+		relinker.report(placeholder,function(title,blurb) {
+			callback(title,front + (blurb || "") + back);
+		},options);
 	});
 };
 
-exports.relink = function(value,fromTitle,toTitle,options) {
+exports.relink = function(script,fromTitle,toTitle,options) {
 	var index = 0;
 	var result = "";
 	var entry;
-	utils.processJavascript(value,function(title,start,end) {
-		if(title === fromTitle) {
-			entry = entry || {};
-			if(!canBeSnippetItem(toTitle)) {
-				entry.impossible = true;
-			} else {
-				result += value.substring(index,start+2);
-				result += toTitle;
-				index = end-1;
+	var impossible = false;
+	utils.processJavascript(script,function(title,module,start,end) {
+		var relinker = getRelinker(module);
+		var entry = relinker.relink(title,fromTitle,toTitle,options);
+		if(entry) {
+			if(entry.output) {
+				if(!canBeSnippetItem(entry.output)) {
+					impossible = true;
+				} else {
+					result += script.substring(index,start+module.prefix.length+2);
+					result += entry.output;
+					index = end-1;
+				}
+			}
+			if(entry.impossible) {
+				impossible = true;
 			}
 		}
 	});
-	if (result) {
-		result += value.substring(index);
-		entry.output = result;
+	if(result || impossible) {
+		entry = {};
+		if(result) {
+			result += script.substring(index);
+			entry.output = result;
+		}
+		if(impossible) {
+			entry.impossible = true;
+		}
 	}
 	return entry;
+};
+
+function getRelinker(module) {
+	return relinkUtils.getType(module.type);
 };
 
 function canBeSnippetItem(value) {

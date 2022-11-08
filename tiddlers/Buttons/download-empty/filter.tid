@@ -12,12 +12,11 @@ type: text/plain
 -[[$:/boot/bootprefix.js]]
 
 [[$:/plugins/felixhayashi/tiddlymap]]
-[[$:/plugins/felixhayashi/vis]]
 [[$:/plugins/felixhayashi/hotzone]]
 [[$:/plugins/felixhayashi/topstoryview]]
+[[$:/plugins/flibbles/vis-network]]
 [[$:/plugins/flibbles/relink]]
 [[$:/plugins/mythos/cyoa]]
-[[$:/plugins/slaymaker1907/browser-nativesaver]]
 
 [prefix[$:/plugins/felixhayashi/tiddlymap/graph/views/Default]]
 [prefix[$:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/]]

@@ -3,18 +3,9 @@ The scriptor module is responsible for all script evalation. This includes
 packing and unpacking scripts, and executing them safely.
 \*/
 
-var utils = require("./utils");
+'use strict'
 
-exports.pack = function(scripts) {
-	if(typeof scripts === "string") {
-		scripts = [scripts];
-	}
-	var reducedScripts = scripts.filter(function(script) {
-		return script;
-	});
-	if(reducedScripts.length == 0) { return null; }
-	return utils.stringifyList(reducedScripts,";");
-};
+var utils = require("./utils");
 
 exports.unpack = function(pack) {
 	return utils.parseStringList(pack,";");

@@ -1,6 +1,6 @@
 description: This tiddler comes only 'before' the pointed-to tiddler.
 label: only if not visited
 show-label: false
-style: {"color":{"color":"OrangeRed","highlight":"OrangeRed","hover":"OrangeRed"},"dashes":true,"smooth":{"enabled":false}}
+style: {"color":{"color":"rgba(255,69,0,1)","highlight":"rgba(255,69,0,1)","hover":"rgba(255,69,0,1)"},"dashes":true,"smooth":{"enabled":false}}
 title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-filter:cyoa.before
 type: text/vnd.tiddlywiki

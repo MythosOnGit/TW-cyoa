@@ -42,9 +42,7 @@ function pushItem(list,item) {
 function pushListItems(list,listItems) {
 	var items = $tw.utils.parseStringArray(listItems);
 	if(items) {
-		for(var index = 0; index < items.length; index++) {
-			pushItem(list,items[index]);
-		}
+		$tw.utils.pushTop(list,items);
 	}
 };
 
@@ -69,8 +67,8 @@ function getWidgetTracks(wiki,title) {
 		}
 		$tw.utils.each(keywords.snippets,function(keyword) {
 			if(widget.attributes[keyword]) {
-				utils.processJavascript(widget.attributes[keyword],function(title) {
-					pushItem(list,title);
+				utils.processJavascript(widget.attributes[keyword],function(placeholder,module) {
+					$tw.utils.pushTop(list,module.getTitles(placeholder,widget,{wiki:wiki}));
 				});
 			}
 		});
@@ -95,16 +93,20 @@ function getFieldTracks(tiddler,wiki,listToAppendTo) {
 	parentWidget.setVariable("currentTiddler",tiddler.fields.title);
 	var widget = new Widget({},{parentWidget: parentWidget});
 	var list = listToAppendTo || [];
-	if(tiddler.fields["cyoa.only"]) {
+	if(ONLY_VALUES[tiddler.fields["cyoa.only"]]) {
 		pushItem(list,tiddler.fields.title);
 	}
 	if(tiddler.fields["cyoa.imply"]) {
 		pushItem(list,tiddler.fields.title);
 		pushListItems(list,tiddler.fields["cyoa.imply"]);
 	}
+	if(tiddler.fields["cyoa.exclude"]) {
+		// If this is in an exclusion group, it must be tracked.
+		pushItem(list,tiddler.fields.title);
+	}
 	forEachField(tiddler,keywords.snippets,function(keyword,field) {
-		utils.processJavascript(tiddler.fields[field],function(title) {
-			pushItem(list,title);
+		utils.processJavascript(tiddler.fields[field],function(placeholder,module) {
+			$tw.utils.pushTop(list,module.getTitles(placeholder,widget,{wiki:wiki}));
 		});
 	});
 	forEachField(tiddler,keywords.trackers,function(method,field) {

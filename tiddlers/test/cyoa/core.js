@@ -48,10 +48,45 @@ function sendKeyboardEvent(document,keyboardEventInit) {
 
 describe("Book",function() {
 
+it("deactivates nodes and pages once they're closed", function() {
+	var core = utils.testBook([
+		utils.group("default","set",{variable: "test"}),
+		{title: "flag"},
+		{title: "Main", "cyoa.append": "Main2"},
+		{title: "Main2", "cyoa.append": "Main3"},
+		{title: "Main3", text: `
+			<$cyoa to=Main3 id=nA before=flag />
+			<$cyoa id=nB after=flag />
+			<!-- indexes use their own system. We make sure all false indices shut off -->
+			<$cyoa index="#{flag}"><$cyoa id=tA before=flag/><$cyoa id=tB/></$cyoa>
+			<!-- We also shut off true nodes that come earlier -->
+			<$cyoa index="#{flag}"><$cyoa id=iA/><$cyoa id=iB/></$cyoa>
+			<!-- We also shut off true nodes that come later -->
+			<$cyoa index="1-#{flag}"><$cyoa id=rA/><$cyoa id=rB/></$cyoa>
+		`, "cyoa.append": "pA pB"},
+		{title: "pA", "cyoa.before": "flag", "cyoa.touch": "flag"},
+		{title: "pB", "cyoa.after": "flag"}]);
+	expect(utils.activeNodes(core)).toEqual(["Main2","Main3","iA","nA","pA","rB","tA"]);
+	utils.click(core,"nA");
+	expect(utils.activeNodes(core)).toEqual(["Main3","iB","nB","pB","rA","tB"]);
+	// We didn't check the start page yet. Make sure it turned off.
+});
+
+it("deactivates the start page after it closes", function() {
+	var core = utils.testBook([
+		{title: "$:/config/mythos/cyoa/start", text: "Start"},
+		{title: "Start"},
+		{title: "Main"}]);
+	expect(core.document.getElementById("Start").classList.contains("cyoa-active")).toBe(false);
+	// Let's just confirm that Start actually is a start page.
+	core.openPage();
+	expect(core.document.getElementById("Start").classList.contains("cyoa-active")).toBe(true);
+});
+
 /*
 This test requires the $cyoa.document property to exist. Otherwise, I'll just fill up my code with document arguments.
 */
-describe("#focus_on_page",function() {
+describe("#openPage",function() {
 	var sample_html = `<div class="cyoa-header">
 	  <a id="Hl" class="tc-tiddlylink" href="nowhere">link text</a>
 	</div>
@@ -75,7 +110,7 @@ describe("#focus_on_page",function() {
 
 	it("finds the start page",function() {
 		var core = newCore(sample_html);
-		core.focus_on_page();
+		core.openPage();
 		expect(core.topPage).toBe("A");
 	});
 });
@@ -83,7 +118,7 @@ describe("#focus_on_page",function() {
 it("sets body title",function() {
 	var title = "Dir/&title name%";
 	var core = utils.testBook([{title: "Main"}, {title: title}]);
-	core.openBook(title);
+	core.openPage(title);
 	var body = core.document.getElementsByTagName("body")[0];
 	expect(body.getAttribute("data-title")).toBe(title);
 });
@@ -91,7 +126,7 @@ it("sets body title",function() {
 it("handles titles with odd characters",function() {
 	var title = "D?ir#/&title% name";
 	var core = utils.testBook([{title: "Main"}, {title: title}]);
-	core.openBook(title);
+	core.openPage(title);
 	expect(core.topPage).toBe(title);
 });
 

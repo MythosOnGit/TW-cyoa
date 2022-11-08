@@ -169,7 +169,7 @@ boot.boot = function(window) {
 	cyoa.core.cyoa = cyoa; // getting a little wierd here
 	cyoa.book = cyoa.core.book;
 	boot.executeModules(modules);
-	cyoa.core.openBook();
+	cyoa.core.openPage();
 };
 
 if(inBrowser) {

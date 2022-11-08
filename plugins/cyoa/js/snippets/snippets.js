@@ -28,20 +28,39 @@ function replaceWildcards(script,keyword,msg,widget,wiki) {
 		if(!widget.hasVariable("cyoa-render","yes")) {
 			output.push("''",msg,"'': ");
 		}
-		utils.processJavascript(script,function(title,start,end) {
-			output.push(escapeText(script.substring(ptr,start),widget));
-			if(!wiki.tiddlerExists(title)) {
-				throw msg + " snippet page '" + title + "' does not exist";
-			} else if(widget.hasVariable("cyoa-render","yes")) {
-				output.push(utils.getGroupScript(title,keyword,wiki));
+		function processTitle(title) {
+			if(!widget.hasVariable("cyoa-render","yes")) {
+				return utils.enlink(title);
+			} if(!wiki.tiddlerExists(title)) {
+				var error = msg + " snippet page '" + title + "' does not exist";
+				utils.warnForTiddler(widget.getVariable("currentTiddler"),error,{wiki:wiki});
+				return "false";
 			} else {
-				output.push(utils.enlink(title));
+				return utils.getGroupScript(title,keyword,wiki);
+			}
+		};
+		utils.processJavascript(script,function(placeholder,module,start,end) {
+			output.push(escapeText(script.substring(ptr,start),widget));
+			if (module.type === "filter") {
+				var titles = wiki.filterTiddlers(placeholder,widget);
+				var outputs = titles.map(processTitle).filter((x) => x !== 'false');
+				if(widget.hasVariable("cyoa-render","yes")) {
+					output.push(module.script(outputs));
+				} else {
+					output.push(module.display(outputs));
+				}
+			} else {
+				output.push(processTitle(placeholder.trim()));
 			}
 			ptr = end;
 		});
 		// Push the rest of the string
 		output.push(escapeText(script.substring(ptr),widget));
 		script = output.join("");
+		//Now we replace macros
+		script = script.replace(/#<([^>]+)>/g, function(match, variable) {
+			return widget.getVariable(variable);
+		});
 	}
 	return script;
 };
@@ -82,4 +101,8 @@ exports["write"] = function(tiddler,widget,options) {
 
 exports["index"] = function(tiddler,widget,options) {
 	return replaceWildcards(widget.getAttribute("index"),"index","Index",widget,options.wiki);
+};
+
+exports["weight"] = function(tiddler,widget,options) {
+	return replaceWildcards(widget.getAttribute("weight"),"weight","Weight",widget,options.wiki);
 };

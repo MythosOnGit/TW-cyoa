@@ -18,6 +18,8 @@ function bitfieldGroup(variable,group) {
 const bitfield = { name:"bitfield", group:bitfieldGroup("b") };
 const index64 = { name:"index64", group:utils.group("default","set",{variable: "s",style: "index64"}) };
 const index10 = { name:"index10", group:utils.group("default","set",{variable: "t",style: "index10"}) };
+// The removeprefix here crashes if it's given undefined, making it good for testing
+const string = { name:"string", group:utils.group("default","set",{variable: "t",filter: "[removeprefix[A]addprefix[_]] ~[addprefix[__]]"}) };
 
 function as(/* suites, ... */) {
 	var self = this;
@@ -197,10 +199,12 @@ it("warns when existing imply is unlinked",async function() {
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","C"));
 });
 
-it("warns when existing imply is removed from group",async function() {
+// We test as a string group here because some titles will get set to undefined in the record, which a string handler might struggle with.
+as(bitfield,string).
+it("warns when existing imply is removed from group",async function(group) {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		group,
 		autoVersioning(),
 		node("A1"),node("A2"),node("A","A1 A2"),node("B"),node("C","A B"),node("D","C"),
 		// Bumper nodes to ensure bitfield fits correctly

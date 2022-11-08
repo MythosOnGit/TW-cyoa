@@ -1,5 +1,5 @@
 description: Indicates that if the pointing tiddler (A) is visited, then so is the pointed-to tiddler (B). Likewise, if B is not visited, A is not either.
 show-label: false
-style: {"color":{"color":"Khaki","hover":"DarkKhaki"},"dashes":true}
+style: {"color":{"color":"#F0E68C","hover":"#BDB76B"},"dashes":true}
 title: $:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/tw-list:cyoa.imply
 type: text/vnd.tiddlywiki

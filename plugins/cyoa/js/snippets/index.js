@@ -13,8 +13,8 @@ their results into a string.
 /*global $tw: false */
 "use strict";
 
-var scriptor = require("./cyoa/scriptor");
 var utils = require("./utils");
+var cyoaUtils = require("./cyoa/utils");
 
 var snippetHandlers = Object.create(null);
 
@@ -30,11 +30,11 @@ $tw.modules.forEachModuleOfType("cyoasnippets",function(title,module) {
 
 exports.getWidgetString = function(attribute,tiddler,widget) {
 	var strs = collectList(snippetHandlers[attribute],tiddler,widget);
-	return scriptor.pack(strs);
+	return utils.pack(strs);
 };
 
 /*
-This returns a list of the appends. It still needs to be processed into a string before it can be put into data-append. That makes this inconsistent with the getPage*String methods above which use scriptor.pack and give an html-ready string. Maybe I'll change this later.
+This returns a list of the appends. It still needs to be processed into a string before it can be put into data-append. That makes this inconsistent with the getPage*String methods above which use pack and give an html-ready string. Maybe I'll change this later.
 */
 exports.getPageAppendList = function(tiddler,widget,options) {
 	return collectList(snippetHandlers.append,tiddler,widget,options);

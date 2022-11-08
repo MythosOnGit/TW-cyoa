@@ -1,4 +1,5 @@
 caption: Flow 2: Options Lists
+cyoa.caption: This field here will be used as the text for the caption field.
 description: Declarative linking between pages.
 tags: Flow
 title: Flow2
@@ -29,13 +30,17 @@ Also, all of the links in <<widget options>> lists are [[Active Links]], which m
 
 !! Adding pages to an <<widget options>> list
 
-The simplest and most common way to do this is through tags. Any pages tagged with a page with show up in that page's <<widget options>> list. In our example, you would give <<page lamp>> would have the <<value Merchant>> tag, and it would appear in that list.
+The simplest and most common way to do this is through tags. Any pages tagged with a page with show up in that page's <<widget options>> list. In our example, you would give <<page lamp>> the <<value Merchant>> tag, and it would appear in that list.
 
 There are other, more explicit ways to populate options lists which give you more explicit control over ordering, but for now, this tag system is all you need to know for now.
 
 !! Specifying captions
 
-Obviously we don't want our <<widget options>> lists to be populated with a bunch of tiddler titles. So by default, <<widget options>> will use the value of each listed tiddler's <<flink CaptionField>> field (or if that's not present, its <<field title>>). There are ways to control this, including giving an <<widget options>> widget a body, which can act as a template for each listed item. There's an example of this in the corresponding demo.
+Obviously we don't want our <<widget options>> lists to be populated with a bunch of tiddler titles. So by default, <<widget options>> will use the value of each listed tiddler's <<flink CaptionField>>, which is can be set by editing a tiddler and modifying the <<field cyoa.caption>> field in the <<plugin>> edit panel, which looks like this:
+
+> {{||$:/plugins/mythos/cyoa/ui/EditTemplate}}
+
+If that field is not field out, <<widget options>> uses the <<field title>>. There are ways to control this, including giving an <<widget options>> widget a body, which can act as a template for each listed item. There's an example of this in the corresponding demo.
 
 !! Demo
 

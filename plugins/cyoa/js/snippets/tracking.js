@@ -12,14 +12,13 @@ Sets up conditions for a page and widget that has any of the tracking keywords, 
 "use strict";
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils.js")
-var gates = require("$:/plugins/mythos/cyoa/js/snippets/tracking/gates");
 
 /*
 KEYWORDS
 */
 exports.other = ["before","after"];
 exports.touch = ["touch","reset"];
-exports.snippets = ["if","do","done","index","write"];
+exports.snippets = ["if","do","done","index","weight","write"];
 exports.trackers = exports.other.concat(exports.touch);
 
 var prettyStrings = {
@@ -36,7 +35,7 @@ exports["if"] = function(tiddler,widget,options) {
 	var array = [];
 	$tw.utils.each(widget.attributes,function(value,attr) {
 		if(exports.other.indexOf(attr) >= 0) {
-			array.push(filterAttributes(tiddler,widget,value,attr,"all",options));
+			array.push.apply(array,filterAttributes(tiddler,widget,value,attr,options));
 		}
 	});
 	return array;
@@ -53,7 +52,7 @@ exports["done"] = function(tiddler,widget,options) {
 	}
 	$tw.utils.each(widget.attributes,function(value,attr) {
 		if(exports.touch.indexOf(attr) >= 0) {
-			array.push(filterAttributes(tiddler,widget,value,attr,"exec",options));
+			array.push.apply(array,filterAttributes(tiddler,widget,value,attr,options));
 		}
 	});
 	return array;
@@ -62,12 +61,12 @@ exports["done"] = function(tiddler,widget,options) {
 /*
 WIDGET TRACKING
 */
-function filterAttributes(tiddler,widget,value,attributeName,defaultScriptState,options) {
+function filterAttributes(tiddler,widget,value,attributeName,options) {
 	var pages = options.wiki.filterTiddlers(value,widget);
 	if(widget.hasVariable("cyoa-render","yes")) {
-		return addScripts(tiddler,attributeName,pages,defaultScriptState,options);
+		return addScripts(tiddler,attributeName,pages,options);
 	} else {
-		return niceMessage(pages,attributeName);
+		return [niceMessage(pages,attributeName)];
 	};
 };
 
@@ -82,8 +81,10 @@ function niceMessage(pages,attribute) {
 	return string;
 };
 
-function addScripts(tiddler,keyword,pages,defaultGate,options) {
-	return gates.compile(pages,keyword,defaultGate,function(page,keyword) {
-		return utils.getGroupScript(page,keyword,options.wiki);
-	});
+function addScripts(tiddler,keyword,pages,options) {
+	var scripts = [];
+	for(var i = 0; i < pages.length; i++) {
+		scripts.push(utils.getGroupScript(pages[i],keyword,options.wiki));
+	}
+	return scripts;
 };

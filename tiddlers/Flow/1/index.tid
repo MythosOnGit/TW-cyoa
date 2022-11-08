@@ -19,7 +19,11 @@ In your generated CYOA novel, you'll want pages both <<page Left>> and <<page Ri
 
 !!! Manually
 
-Edit page <<page Left>>. In the "Add a new field" text-boxes at the bottom of the Edit pane, specify a field name of <<field cyoa.append>> and a field value of <<value Merge>>. Then click "add". After you save the tiddler, you should see your <<tid Merge>> tiddler listed at the bottom of the page <<page Left>>'s view.
+Edit page <<page Left>>. Below the title, you'll see the <<plugin>> edit panel which has a row of pills along the top. The panel looks like this:
+
+> {{||$:/plugins/mythos/cyoa/ui/EditTemplate}}
+
+Click on the <<pill append>> pill, and in the resulting <<field append>> field, write in <<value Merge>>. After you save your tiddler, you should see your <<tid Merge>> tiddler listed at the bottom of page <<page Left>>'s view.
 
 [[Be careful using tiddlers with spaces in their title!|Pages with Spaces]]
 
