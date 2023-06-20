@@ -3,13 +3,18 @@ class: group
 tags: $:/tags/cyoa/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/group
 
-\define prefix() $:/plugins/mythos/cyoa/groups/
-
+\whitespace trim
 <span class="tc-cyoa-group-selector">
  <$fieldmangler>
-  <$edit-text field="cyoa.group" tag="input" default="" placeholder=default focusPopup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-edit-groupeditor tc-popup-handle"/>
-  <$button popup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> class="tc-btn-invisible tc-btn-dropdown" tooltip="Show group list" aria-label="group list">{{$:/core/images/down-arrow}}</$button>
-  <$button message="tm-remove-field" param="cyoa.group" class="tc-btn-invisible tc-btn-icon" tooltip="Reset group" aria-label="reset group">{{$:/core/images/delete-button}}</$button>
+  <$button class="tc-btn-invisible tc-btn-dropdown" popup=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> tooltip="Show group list" aria-label="group list">
+   <input type="text" placeholder="default" value={{{ [{!!cyoa.group}get[caption]] ~[{!!cyoa.group}] }}} readonly class="tc-edit-groupeditor tc-popup-handle" />
+   &#32;
+   {{$:/core/images/down-arrow}}
+  </$button>
+  &#32;
+  <$button message="tm-remove-field" param="cyoa.group" class="tc-btn-invisible tc-btn-icon" tooltip="Reset group" aria-label="reset group">
+   {{$:/core/images/delete-button}}
+  </$button>
  </$fieldmangler>
 </span>
 
@@ -18,7 +23,7 @@ title: $:/plugins/mythos/cyoa/ui/EditTemplate/group
   <$reveal state=<<qualify "$:/state/popup/mythos/cyoa/group-dropdown">> type="nomatch" text="" default="">
    <div class="tc-block-dropdown tc-edit-group-dropdown">
     <$linkcatcher to="!!cyoa.group">
-     <$list filter="[all[shadows+tiddlers]prefix<prefix>!has:index[magic]removeprefix<prefix>]"><$link class="cyoa-group-listitem"><$text text=<<currentTiddler>> /></$link>
+     <$list filter="[[$:/tags/cyoa/Type]tagging[]]"><$link class="cyoa-group-listitem"><$transclude field="caption"><$view field="title"/></$transclude></$link>
      </$list>
     </$linkcatcher>
    </div>

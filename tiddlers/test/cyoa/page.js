@@ -89,21 +89,25 @@ function quoteattr(str) {
 	});
 
 	it("doesn't evaluate more pages than needed",function() {
-		var doc = createDoc([
-			{id: "Main",append: "A B"},
-			{id: "A",if: "1==1"},
-			{id: "B",if: "$tw.sideEffect=true; 1==1"}]);
-		$tw.sideEffect = false;
-		flip(doc,"Main","A",{index: 0});
-		expect($tw.sideEffect).toBe(false);
+		var main = {title: "Main","cyoa.append": "A B", "cyoa.index": "0"};
+		var tiddlers = [
+			utils.defaultGroup("set", {"cyoa.key": "group"}),
+			main,
+			{title: "A","cyoa.if": "1==1", "cyoa.append": "test"},
+			{title: "B","cyoa.if": "group.sideEffect=true", "cyoa.append": "test"},
+			{title: "test", "cyoa.append": "affected"},
+			{title: "affected", "cyoa.if": "group.sideEffect==true"}];
 
-		$tw.sideEffect = false;
-		flip(doc,"Main","B",{index: 1});
-		expect($tw.sideEffect).toBe(true);
+		var core = utils.testBook(tiddlers);
+		expect(core.openPages).toEqual(["Main", "A", "test"]);
 
-		$tw.sideEffect = false;
-		flip(doc,"Main","A",{index: 2});
-		expect($tw.sideEffect).toBe(true);
+		main["cyoa.index"] = "1";
+		core = utils.testBook(tiddlers);
+		expect(core.openPages).toEqual(["Main", "B", "test", "affected"]);
+
+		main["cyoa.index"] = "2";
+		core = utils.testBook(tiddlers);
+		expect(core.openPages).toEqual(["Main", "A", "test", "affected"]);
 	});
 
 	it("hashes string indexes (and abs them)",function() {

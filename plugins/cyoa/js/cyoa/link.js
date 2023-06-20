@@ -2,6 +2,8 @@
 Represents a cyoa link, which is a type of node.
 \*/
 
+"use strict";
+
 var Node = require("./node");
 var utils = require("./utils");
 

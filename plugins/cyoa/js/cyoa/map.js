@@ -5,6 +5,8 @@ An object for storing a set of pages.
 
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 
 function Map(mapString,setData) {

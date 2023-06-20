@@ -13,7 +13,7 @@ var utils = require("test/utils.js");
 
 it("renders first and visited long and shorthand",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "Main","cyoa.touch": "Notouched Pretouched Never","cyoa.append": "Pretouched",text: `
 			<$cyoa id=A only=first />
 			<$cyoa id=B only=visited />

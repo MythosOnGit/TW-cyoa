@@ -13,28 +13,33 @@ describe("Counters",function() {
 
 function testBook(expected /*,tiddlerArrays... */) {
 	var arrays = Array.prototype.slice.call(arguments,1);
-	arrays.push([utils.group("default","intmap",{variable: "m",style: "string"})]);
+	arrays.push([utils.defaultGroup("intmap",{"cyoa.style": "string"})]);
 	var rtn = utils.testBookDefaultVar(arrays);
 	expect(rtn.results).toEqual(expected);
 	return rtn.state;
 };
 
 function node(name,attributes) {
-	var n = Object.assign({title: name,"cyoa.group": "default"},attributes);
+	var n = Object.assign({title: name},attributes);
 	return n;
 };
+
+function valueOf(state) {
+	return state.substr(state.indexOf("=")+1);
+};
+
 
 it("increments",function() {
 	var state = testBook(["A","B"],[node("A"),node("B"),node("C"),
 		{title: "Main","cyoa.touch": "A B =B"}]);
-	expect(state).toBe("m=A.1.B.2");
+	expect(valueOf(state)).toBe("A.1.B.2");
 });
 
 it("can reset",function() {
 	var state = testBook(["B"],[node("A"),node("B"),node("C"),
 		{title: "Main","cyoa.touch": "A B","cyoa.append": "Main2"},
 		{title: "Main2","cyoa.reset": "A"}]);
-	expect(state).toBe("m=B.1");
+	expect(valueOf(state)).toBe("B.1");
 });
 
 it("can test before",function() {
@@ -82,22 +87,22 @@ it("unset values are treated as zero",function() {
 it("can modify values directly",function() {
 	// Extra "C" here so I can make sure undefined remains undefined
 	var state = testBook(["A","B"],[node("A"),node("B"),
-		utils.group("default","intmap",{variable: "m"}),
+		utils.defaultGroup("intmap"),
 		{title: "Main","cyoa.do": "#{A} += 3","cyoa.append": "Main2"},
 		{title: "Main2","cyoa.if": "#{A} > 2","cyoa.touch": "B"}]);
-	expect(state).toBe("m=A.3.B.1");
+	expect(valueOf(state)).toBe("A.3.B.1");
 });
 
 it("can be used for indexes",function() {
 	// append indexing
 	testBook(["A","goal"],[node("A"),node("goal"),node("badtouch"),
-		{title: "Main","cyoa.touch": "A =A","cyoa.append": "X Y Main2","cyoa.index": "m.A"},
+		{title: "Main","cyoa.touch": "A =A","cyoa.append": "X Y Main2","cyoa.index": "#{A}"},
 		{title: "X","cyoa.touch": "badtouch"},{title: "Y"},
 		{title: "Main2","cyoa.touch": "goal"}]);
 	// widget indexing
 	testBook(["A","goal"],[node("A"),node("goal"),node("badtouch"),
 		{title: "Main","cyoa.touch": "A =A","cyoa.append": "Main2"},
-		{title: "Main2",text: `<$cyoa index="m.A">
+		{title: "Main2",text: `<$cyoa index="#{A}">
 			<$cyoa touch="badtouch" />
 			<$cyoa touch="badtouch" />
 			<$cyoa touch="goal" />

@@ -12,14 +12,14 @@ type: text/vnd.tiddlywiki
 \define snippet(_) <code class="doc-snippet">$_$</code>
 \define var(_) <code class="doc-var">$_$</code>
 \define attr(_) <code class="doc-attr">$_$</code>
-\define page(_) <code class="doc-tiddler">$_$</code>
+\define page(_) <$let tv-wikilinks="no"><code class="doc-tiddler">$_$</code></$let>
 \define plugin() //TW5-cyoa//
 \define pill(_) <$vars fields=<<_____>>>{{||$:/plugins/mythos/cyoa/ui/EditTemplate/pill}}</$vars>
 \define tid(_)
 \rules except wikilink
 <code class="doc-tiddler">$_$</code>
 \end
-\define icon(_) <span class="doc-icon">{{$_$}}</span>
+\define icon(_) <span class="doc-icon"><$transclude tiddler=<<_____>> /></span>
 
 \relink wlink to
 \relink flink to

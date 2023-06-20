@@ -11,15 +11,9 @@ Handles a map of integers which increment when touched.
 /*global $tw: false */
 "use strict";
 
-var Handler = require("$:/plugins/mythos/cyoa/js/groupHandlers/handler.js");
+exports.name = "intmap";
 
-function IntMapHandler() {
-	Handler.apply(this,arguments);
-};
-
-var Ip = IntMapHandler.prototype = Object.create(Handler.prototype);
-
-Ip.groupData = function() {
+exports.groupData = function() {
 	var ids = [];
 	for(var index = 0; index < this.entries.length; index++) {
 		ids.push(this.idForIndex(index));
@@ -27,16 +21,14 @@ Ip.groupData = function() {
 	return ids;
 };
 
-Ip.touch = function(title) {
+exports.touch = function(title) {
 	return this.strIndexerFor(title) + "+=1";
 };
 
-Ip.reset = function(title) {
+exports.reset = function(title) {
 	return this.strIndexerFor(title) + "=0";
 };
 
-Ip.after = function(title) {
+exports.after = function(title) {
 	return this.strIndexerFor(title);
 };
-
-exports.intmap = IntMapHandler;

@@ -1,3 +1,0 @@
-title: $:/plugins/mythos/cyoa/templates/groups/button
-
-{{{[<currentTab>removeprefix[$:/plugins/mythos/cyoa/groups/]]}}}

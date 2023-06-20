@@ -32,12 +32,12 @@ it("prioritizes pushed pages",function() {
 
 it("works with other variables",function() {
 	var tiddlers = [
-		utils.group("stack","stack",{style: "string",magic: "yes",variable: "other"}),
-		node("A"),node("B",{"cyoa.if": "false"}),node("C"),
+		{title: "$:/config/mythos/cyoa/stack", text: "other"},
+		node("A"),node("B",{"cyoa.if": "false", "cyoa.push": "D"}),node("C"),node("D"),
 		{title: "Main","cyoa.push": "B","cyoa.append": "A B C"}];
 	var core = utils.testBook([tiddlers]);
 	expect(core.openPages).toEqual(["Main","B"]);
-	expect(core.cyoa.vars.other.toString()).toBe("");
+	expect(core.cyoa.vars.other.toString()).toBe("D");
 });
 
 it("takes top of stack only",function() {

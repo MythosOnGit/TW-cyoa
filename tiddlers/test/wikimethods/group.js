@@ -43,17 +43,18 @@ it("treats only correctly",function() {
 	test(wiki,["A","B"]);
 });
 
-it("warns if tiddler specifies unidentified page set",function() {
+it("allows nonexistent page set during wikimethod",function() {
+	// We don't want to issue warnings until we're compiling. So this is silent.
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
 		defaultGroupTiddler,
 		utils.group("setA"),
 		{title: "A","cyoa.group": "setA"},
-		{title: "B","cyoa.group": "wut"},
+		{title: "B","cyoa.group": "setB"},
 	]);
 	utils.warnings(spyOn);
 	test(wiki,["A"],"setA");
-	expect(utils.warnings()).toHaveBeenCalledWith("Page set 'wut' specified in tiddler 'B' does not exist.");
+	test(wiki,["B"],"setB");
 });
 
 it("handles transclusion in widget",function() {

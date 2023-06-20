@@ -8,7 +8,9 @@ Active links are what the <<wlink OptionsWidget>> widget creates by default, and
 
 Active links can also be created manually using the <<wlink CyoaWidget>> widget by implementing their <<attr to>> attribute. For instance:
 
-<<example """<$cyoa to="Demo">Go to Demo page</$cyoa>
+<<example """<$cyoa to="Demo" before="Demo">Go to Demo page, but only if it hasn't been visited.</$cyoa>
 """ >>
 
 As with any active node, any constraints associated with that link (such as <<attr before>> or <<widget first>>) will be tested to determine whether to show the link.
+
+The alternative to active links are [[Hard Links]], which always render, regardless of what they're pointing to.

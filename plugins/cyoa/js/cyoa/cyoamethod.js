@@ -4,6 +4,8 @@ cyoa.module-type: cyoamethod
 Returns a function for shuffling. Used in index selection.
 \*/
 
+"use strict";
+
 var hash = require("./hash");
 
 exports.shuffle = function(index,seed) {

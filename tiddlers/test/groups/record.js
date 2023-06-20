@@ -11,16 +11,6 @@ const utils = require("test/utils.js");
 
 const implyWarning = (from,to) => `Page '${from}': Tiddler no longer implies '${to}', which would be a backward-incompatible change. CYOA will retain the implication until the version history is next cleared.`;
 
-function bitfieldGroup(variable,group) {
-	return utils.group(group || "default","set",{variable: variable || "s",style: "bitfield"});
-};
-
-const bitfield = { name:"bitfield", group:bitfieldGroup("b") };
-const index64 = { name:"index64", group:utils.group("default","set",{variable: "s",style: "index64"}) };
-const index10 = { name:"index10", group:utils.group("default","set",{variable: "t",style: "index10"}) };
-// The removeprefix here crashes if it's given undefined, making it good for testing
-const string = { name:"string", group:utils.group("default","set",{variable: "t",filter: "[removeprefix[A]addprefix[_]] ~[addprefix[__]]"}) };
-
 function as(/* suites, ... */) {
 	var self = this;
 	return {
@@ -44,7 +34,7 @@ describe("Record",function() {
 async function test(wiki,expected,options) {
 	options = Object.create(options || null);
 	options.wiki = wiki;
-	var rtn = utils.testBookDefaultVar([],undefined,options);
+	var rtn = utils.testBookDefaultVar([],"grp",options);
 	expect(rtn.results).toEqual(expected);
 	// We don't act again until after the pipeline has cleared.
 	return new Promise(function(resolve,reject) {
@@ -54,8 +44,18 @@ async function test(wiki,expected,options) {
 	});
 };
 
+function bitfieldGroup() {
+	return utils.group("grp","set",{"cyoa.style": "bitfield"});
+};
+
+const bitfield = { name:"bitfield", group:bitfieldGroup() };
+const index64 = { name:"index64", group:utils.group("grp","set",{"cyoa.style": "index64"}) };
+const index10 = { name:"index10", group:utils.group("grp","set",{"cyoa.style": "index10"}) };
+// The removeprefix here crashes if it's given undefined, making it good for testing
+const string = { name:"string", group:utils.group("grp","set",{"cyoa.style": "string", filter: "[removeprefix[A]addprefix[_]] ~[addprefix[__]]"}) };
+
 function node(name,parent,attributes) {
-	var n = Object.assign({title: name,"cyoa.group": "default"},attributes);
+	var n = Object.assign({title: name,"cyoa.group": "grp"},attributes);
 	if(parent) { n["cyoa.imply"] = parent; }
 	return n;
 };
@@ -81,7 +81,7 @@ function renameTiddler(wiki,from,to) {
 it("handles renaming of tiddlers after a commit",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"),
 		node("B","A"),node("C","A"),node("D","A"),
@@ -115,7 +115,7 @@ it("handles implied nodes introduced in later versions", async function(group) {
 it("handles implications introduced in later versions",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A1"),node("A2"),node("A3"),node("B2","A2"),node("C2","B2"),
 		node("X","A1 A3"),
@@ -130,7 +130,7 @@ it("handles implications introduced in later versions",async function() {
 		node("O","N"),node("N","M"),
 		// Don't touch anything this time. Load from existing state;
 		{title: "Main"}]);
-	var newSerialized = await test(wiki,["A1","A2","A3","B2","Z1","X"],
+	var newSerialized = await test(wiki,["A1","A2","A3","B2","X","Z1"],
 		{state: prevSerialized});
 	expect(newSerialized).toBe(prevSerialized);
 });
@@ -140,7 +140,7 @@ it("handles implications introduced in later versions",async function() {
 it('handles deletion of tiddlers after a commit',async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"), node("B"), node("C"), node("D"),
 		{title: "Main","cyoa.touch": "A B C"}]);
@@ -153,7 +153,7 @@ it('handles deletion of tiddlers after a commit',async function() {
 it("allows implied pages to be removed",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A1"),node("A2","A1"),
 		// Bumper nodes to ensure edge of bitfield isn't corrupt
@@ -164,13 +164,13 @@ it("allows implied pages to be removed",async function() {
 	wiki.addTiddlers([
 		node("A2"),
 		{title: "Main"}]);
-	await test(wiki,["Z1","A2"],{state: serialized});
+	await test(wiki,["A2","Z1"],{state: serialized});
 });
 
 it("allows removed implied pages to be routed around",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"),node("B","A"),node("C","B"),node("D","C"),
 		{title: "Main","cyoa.touch": "D"}]);
@@ -186,7 +186,7 @@ it("allows removed implied pages to be routed around",async function() {
 it("warns when existing imply is unlinked",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"),node("B"),node("C","A B"),node("D","C"),
 		// Bumper nodes to ensure bitfield fits correctly
@@ -195,7 +195,7 @@ it("warns when existing imply is unlinked",async function() {
 	var serialized = await test(wiki,["A","B","C","D","X2"]);
 	wiki.addTiddlers([node("D"),{title:"Main"}]);
 	utils.warnings(spyOn);
-	await test(wiki,["A","B","C","X2","D"],{state: serialized});
+	await test(wiki,["A","B","C","D","X2"],{state: serialized});
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","C"));
 });
 
@@ -213,7 +213,7 @@ it("warns when existing imply is removed from group",async function(group) {
 	var serialized = await test(wiki,["A","A1","A2","B","C","D","X2"]);
 	wiki.addTiddlers([node("D"),{title:"A"},{title:"C"},{title:"Main"}]);
 	utils.warnings(spyOn);
-	await test(wiki,["A1","A2","B","X2","D"],{state: serialized});
+	await test(wiki,["A1","A2","B","D","X2"],{state: serialized});
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","A1"));
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","A2"));
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","B"));
@@ -223,7 +223,7 @@ it("warns when existing imply is removed from group",async function(group) {
 it("doesn't warn about severed implications multiple times", async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"),node("B"),node("X","A B"),
 		{title: "Main","cyoa.touch": "X"}]);
@@ -248,7 +248,7 @@ it("doesn't warn about severed implications multiple times", async function() {
 it("warns when existing imply is deleted from tiddlywiki",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A"),node("B"),node("C","A B"),node("D","C"),
 		// Bumper nodes to ensure bitfield fits correctly
@@ -258,7 +258,7 @@ it("warns when existing imply is deleted from tiddlywiki",async function() {
 	wiki.addTiddlers([node("D"),{title:"Main"}]);
 	wiki.deleteTiddler("C");
 	utils.warnings(spyOn);
-	await test(wiki,["A","B","X2","D"],{state: serialized});
+	await test(wiki,["A","B","D","X2"],{state: serialized});
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","A"));
 	expect(utils.warnings()).toHaveBeenCalledWith(implyWarning("D","B"));
 	expect(utils.warnings()).toHaveBeenCalledTimes(2);
@@ -269,7 +269,7 @@ it("warns when existing imply is deleted from tiddlywiki",async function() {
 it("handles exclusion across different versions",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
+		bitfieldGroup(),
 		autoVersioning(),
 		node("A1"),
 		node("A3"),
@@ -310,7 +310,7 @@ it("can clear the version history and repack",async function(group) {
 it("warns and refuses when a page would have a different id",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([node("A"),node("B"),node("C"),
-		utils.group("default","set",{variable: "s",style: "string",filter: "[addsuffix[z]]"}),
+		utils.group("grp","set",{"cyoa.style": "string",filter: "[addsuffix[z]]"}),
 		autoVersioning(),
 		{title: "Main","cyoa.touch":"B C"}]);
 	var oldState = await test(wiki,["B","C"]);

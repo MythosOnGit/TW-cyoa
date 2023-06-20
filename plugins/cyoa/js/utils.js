@@ -7,12 +7,13 @@ Utils for the Tiddlywiki side of cyoa.
 
 \*/
 
+"use strict";
+
 var cyoaUtils = require("./cyoa/utils");
 
 exports.decodePage = cyoaUtils.decodePage;
 exports.encodePage = cyoaUtils.encodePage;
 exports.encodePageForID = cyoaUtils.encodePageForID;
-var prefix = "$:/plugins/mythos/cyoa/groups/";
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
@@ -103,7 +104,7 @@ exports.printf = function(format /*,arguments */) {
 exports.createDummyWidget = function(currentTiddler,options) {
 	var parentWidget = new Widget({},options);
 	parentWidget.setVariable("currentTiddler",currentTiddler);
-	var pOptions = Object.assign({parentWidget: parentWidget},options);
+	var pOptions = Object.assign({},options,{parentWidget: parentWidget});
 	return new Widget({},pOptions);
 };
 
@@ -192,7 +193,7 @@ exports.processJavascript = function(script, method) {
 		}
 		ptr += placeholder.length+1;
 		method(placeholder,filterPlaceholders[match[1]],match.index,ptr);
-		index = ptr;
+		//index = ptr;
 	}
 };
 
@@ -219,34 +220,20 @@ function extractPlaceholder(script,ptr) {
 };
 
 exports.getGroupScript = function(page,keyword,wiki) {
-	var groupModules = getCyoaGroupModules(wiki);
 	var group;
-	if(page.startsWith(prefix)) {
-		group = page.substr(prefix.length);
+	if(!wiki.tiddlerExists(page)) {
+		throw keyword+" page '"+page+"' does not exist";
+	}
+	if(wiki.getTiddler(page).hasTag("$:/tags/cyoa/Type")) {
+		group = page;
+		keyword = keyword + "All";
 	} else {
 		group = wiki.getTiddlerCyoaGroup(page);
 	}
-	var module = groupModules[group];
-	if(module && module[keyword]) {
-		if(page.startsWith("$:/plugins/mythos/cyoa/groups/")) {
-			keyword = keyword + "All";
-		}
+	var module = wiki.getCyoaGroupHandler(group);
+	if(module) {
 		return module[keyword](page);
 	} else {
-		if(!wiki.tiddlerExists(page)) {
-			throw keyword+" page '"+page+"' does not exist";
-		}
 		return "";
 	}
-};
-
-function getCyoaGroupModules(wiki) {
-	return wiki.getGlobalCache("cyoa-group-modules",function() {
-		var map = Object.create(null);
-		$tw.utils.each(wiki.getCyoaGroups(),function(t,group) {
-			// assemble set object here
-			map[group] = wiki.getCyoaGroupHandler(group);
-		});
-		return map;
-	});
 };

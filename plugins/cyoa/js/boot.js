@@ -1,3 +1,5 @@
+"use strict";
+
 var _boot = (function(cyoa,inBrowser) {
 
 cyoa = cyoa || Object.create(null);

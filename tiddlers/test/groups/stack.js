@@ -16,7 +16,7 @@ function testPremadeBook(wiki,expected) {
 };
 
 function node(name,parent,attributes) {
-	var n = Object.assign({title: name,"cyoa.group": "default"},attributes);
+	var n = Object.assign({title: name},attributes);
 	if(parent) { n["cyoa.imply"] = parent; }
 	return n;
 };
@@ -26,7 +26,7 @@ describe("Cyoa Stack",function() {
 it("pushes and pops well enough",function() {
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.group("default","stack",{variable: "s",style: "string"}),
+		utils.defaultGroup("stack",{"cyoa.style": "string"}),
 		node("t A"),node("t\"B"),node("t'C"),
 		{title: "Main",text: `
 			<$cyoa touch="""[[t A]] [[t"B]]"""/>

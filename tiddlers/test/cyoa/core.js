@@ -50,7 +50,7 @@ describe("Book",function() {
 
 it("deactivates nodes and pages once they're closed", function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "flag"},
 		{title: "Main", "cyoa.append": "Main2"},
 		{title: "Main2", "cyoa.append": "Main3"},

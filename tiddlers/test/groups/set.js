@@ -13,11 +13,11 @@ describe("Cyoa Set",function() {
 
 function testBook(expected /*,tiddlerArrays... */) {
 	var tiddlerArrays = Array.prototype.slice.call(arguments,1);
-	tiddlerArrays.unshift([utils.group("default","set",{variable: "s",style: "string"})]);
+	tiddlerArrays.unshift([utils.defaultGroup("set",{"cyoa.style": "string"})]);
 	var rtn = utils.testBookDefaultVar(tiddlerArrays);
 	expect(rtn.results).toEqual(expected);
 	// Remove the "s=" and split by period
-	return rtn.state.substr(2).split(".").sort().join(".");
+	return valueOf(rtn.state).split(".").sort().join(".");
 };
 
 function testPremadeBook(wiki,expected) {
@@ -27,15 +27,19 @@ function testPremadeBook(wiki,expected) {
 };
 
 function node(name,parent,attributes) {
-	var n = Object.assign({title: name,"cyoa.group": "default"},attributes);
+	var n = Object.assign({title: name},attributes);
 	if(parent) { n["cyoa.imply"] = parent; }
 	return n;
+};
+
+function valueOf(state) {
+	return state.substr(state.indexOf("=")+1);
 };
 
 it("manages long implication chains",function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.group("default","set",{variable: "s",style: "string"}),
+		utils.defaultGroup("set",{"cyoa.style": "string"}),
 		node("A"),node("B","A"),node("C","B"),
 		node("D","C"),node("E","D"),
 		{title: "Main","cyoa.touch": "D C"}]);
@@ -85,16 +89,19 @@ it("manages forked chains",function() {
 });
 
 it("can clear",function() {
-	var state = testBook([],[node("A"),node("B","A"),
+	var state = testBook([],[
+		utils.group("def","set",{"cyoa.style": "string"}),
+		{title: "A", "cyoa.group": "def"},
+		{title: "B", "cyoa.group": "def", "cyoa.imply": "A"},
 		{title: "Main","cyoa.touch": "B","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.reset": "[cyoa:var[default]]"}]);
+		{title: "Main2","cyoa.reset": "def"}]);
 	expect(state).toBe("");
 });
 
 it("handles default string style with strange names",function() {
 	var weird = "sp ce ap\'s qu\"te";
 	var rtn = utils.testBookDefaultVar([[
-		utils.group("def","set",{style: "string"}),
+		utils.group("def","set",{"cyoa.style": "string"}),
 		{title: weird,"cyoa.group": "def"},
 		{title: weird+"B","cyoa.group": "def"},
 		{title: "Main","cyoa.touch": "[prefix[sp]]","cyoa.append": "Main2"},
@@ -105,17 +112,17 @@ it("handles default string style with strange names",function() {
 
 it("handles string style with filter",function() {
 	var rtn = utils.testBookDefaultVar([[
-		utils.group("default","set",{variable: "s",style: "string",filter: "[removeprefix[page/]]"}),
+		utils.defaultGroup("set",{"cyoa.style": "string",filter: "[removeprefix[page/]]"}),
 		node("page/Apples"),node("page/Dogs"),
 		{title: "Main","cyoa.touch": "[prefix[page]]"}]]);
 	expect(rtn.results).toEqual(["page/Apples","page/Dogs"]);
-	expect(rtn.state).toBe("s=Apples.Dogs");
+	expect(valueOf(rtn.state)).toBe("Apples.Dogs");
 });
 
 it("handles string filter collisions",function() {
 	utils.warnings(spyOn);
 	var rtn = utils.testBookDefaultVar([[
-		utils.group("default","set",{variable: "s",style: "string",filter: "[splitbefore[-]]"}),
+		utils.defaultGroup("set",{"cyoa.style": "string",filter: "[splitbefore[-]]"}),
 		node("page-A"),node("page-B"),node("page-C"),
 		{title: "Main","cyoa.touch": "[prefix[page]]"}]]);
 	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: In default group, the following tiddlers all resolved to variable 'page-': page-A, page-B, page-C");
@@ -124,31 +131,31 @@ it("handles string filter collisions",function() {
 it("handles string filter empty strings",function() {
 	utils.warnings(spyOn);
 	utils.testBookDefaultVar([[
-		utils.group("default","set",{variable: "s",style: "string",filter: "[prefix[page/]]"}),
-		node("page/A"),node("page/B"),node("dukes"),node("hazards"),
-		{title: "Main","cyoa.touch": "[prefix[page]]"}]]);
-	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: In default group, the following tiddlers all resolved to an empty variable: dukes, hazards");
+		utils.defaultGroup("set",{"cyoa.style": "string",filter: "[prefix[page/]]"}),
+		node("page/A"),node("page/B"),node("bad/A"),node("bad/B"),
+		{title: "Main","cyoa.touch": "[prefix[page]] [prefix[bad]]"}]]);
+	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: In default group, the following tiddlers all resolved to an empty variable: bad/A, bad/B");
 });
 
 it("handles styles like index64 and index10",function() {
-	var tiddlers = Array.prototype.map.call("ABCDEFGHIJ",(a) => node(a));
-	tiddlers.push(node("X"),node("Y","X"),{title: "Main","cyoa.touch":"Y"});
+	var tiddlers = Array.prototype.map.call("ABCDEFGHIJX",(a) => node("a"+a,null,{"cyoa.only":"first"}));
+	tiddlers.push(node("aY","aX"),{title: "Main","cyoa.touch":"aY"});
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers(tiddlers);
-	wiki.addTiddler(utils.group("default","set",{variable: "s",style: "index10"}));
-	expect(testPremadeBook(wiki,["X","Y"])).toBe("s=11");
+	wiki.addTiddler(utils.defaultGroup("set",{"cyoa.style": "index10"}));
+	expect(valueOf(testPremadeBook(wiki,["aX","aY"]))).toBe("11");
 
 	// And it works for index64 too
 	wiki = new $tw.Wiki();
 	wiki.addTiddlers(tiddlers);
-	wiki.addTiddler(utils.group("default","set",{variable: "s",style: "index64"}));
-	expect(testPremadeBook(wiki,["X","Y"])).toBe("s=b");
+	wiki.addTiddler(utils.defaultGroup("set",{"cyoa.style": "index64"}));
+	expect(valueOf(testPremadeBook(wiki,["aX","aY"]))).toBe("b");
 });
 
 it("can be manipulated with if, do, and done attributes", function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.group("default","set",{variable: "s",style: "index10"}),
+		utils.defaultGroup("set",{"cyoa.style": "index10"}),
 		node("A"),node("B","A"),node("C","B"),node("D"),node("E"),node("F"),
 		{title: "Main",text: `
 			<$cyoa do="#{C} = true" />
@@ -162,11 +169,11 @@ it("can be manipulated with if, do, and done attributes", function() {
 it("does not treat '0' ids as falsy",function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.group("default","set",{variable: "s",style: "index10"}),
+		utils.defaultGroup("set",{"cyoa.style": "index10"}),
 		node("X"),
 		{title: "Main","cyoa.touch": "X"}]);
 	var state = testPremadeBook(wiki,["X"]);
-	expect(state).toBe("s=0");
+	expect(valueOf(state)).toBe("0");
 });
 
 it("handles broken implications",function() {
@@ -250,12 +257,12 @@ it("handles exclusion groups",function() {
 	// string
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers(tiddlers);
-	wiki.addTiddler(utils.group("default","set",{variable: "s",style: "string"}));
+	wiki.addTiddler(utils.defaultGroup("set",{"cyoa.style": "string"}));
 	testPremadeBook(wiki,["B","D"]);
 	// base10
 	wiki = new $tw.Wiki();
 	wiki.addTiddlers(tiddlers);
-	wiki.addTiddler(utils.group("default","set",{variable: "s",style: "index10"}));
+	wiki.addTiddler(utils.defaultGroup("set",{"cyoa.style": "index10"}));
 	testPremadeBook(wiki,["B","D"]);
 });
 
@@ -270,7 +277,7 @@ it("handles exclusion of items implying each other",function() {
 	var tiddlers = [
 		node("A",null,{"cyoa.exclude":"X"}),node("M"),node("B","A M"),node("C","B",{"cyoa.exclude":"X"}),
 		node("D",null,{"cyoa.exclude":"X"}),
-		utils.group("default","set",{variable: "s",style: "index10"})];
+		utils.defaultGroup("set",{"cyoa.style": "index10"})];
 	utils.warnings(spyOn);
 	testBook(["A","B","C","M"],tiddlers,[{title: "Main","cyoa.touch": "C"}]);
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'C': Implies page 'A' which is in the same exclusion group 'X'");
@@ -304,7 +311,7 @@ it("keeps clean serial string in implication chain with excludes",function() {
 		node("A","root",{"cyoa.exclude":"X"}),
 		node("B","root",{"cyoa.exclude":"X"}),
 		node("root"),
-		utils.group("default","set",{variable:"s",style:"string"})];
+		utils.defaultGroup("set",{"cyoa.style":"string"})];
 	var state = testBook(["B","root"],tiddlers,[{title: "Main","cyoa.touch": "A B"}]);
 	expect(state).toBe("B");
 });

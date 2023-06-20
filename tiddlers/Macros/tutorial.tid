@@ -3,6 +3,8 @@ title: Macros/tutorial
 tmap.id: 25705596-163d-4819-bc75-8a8cb3ccab6f
 type: text/vnd.tiddlywiki
 
-\define tutorial() <$vars currentTiddler={{{ [all[current]splitbefore[/]removesuffix[/]] }}}><$link><$view field="caption">{{!!title}}</$view></$link></$vars>
+\define tutorial(tiddler) <$vars currentTiddler={{{ [<__tiddler__>!is[blank]] ~[all[current]splitbefore[/]removesuffix[/]] }}}><$link><$view field="caption">{{!!title}}</$view></$link></$vars>
+
+\relink tutorial tiddler
 
 If a demo page invokes `<<tutorial>>`, it will link to the tutorial page corresponding to that demo.

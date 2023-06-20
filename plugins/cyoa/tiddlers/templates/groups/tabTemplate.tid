@@ -1,0 +1,10 @@
+title: $:/plugins/mythos/cyoa/templates/groups/tabTemplate
+
+<$tiddler tiddler=<<currentTab>> >
+
+! <$link><$transclude field=caption><$view field=title /></$transclude></$link>
+
+<$list filter="[all[current]tag[$:/tags/cyoa/Type]]" emptyMessage="""<$transclude mode="block"/>""">
+
+{{||$:/plugins/mythos/cyoa/templates/groups/editor}}
+</$list>

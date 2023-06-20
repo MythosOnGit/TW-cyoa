@@ -10,8 +10,8 @@ type: text/vnd.tiddlywiki
 
 TiddlyMap allows for visualization of your interactive novel by showing links and interactions between your pages. This can be immensely helpful for larger projects. However, it's entirely optional.
 
-It requires the following additional plugins to be installed, but the TiddlyMap website will walk you through that.
+It requires the following additional plugins to be installed, but the TiddlyMap github page will walk you through that.
 
-* TW5-Vis.js
+* TW5-Vis-network.js
 * TW5-Hotzone
 * TW5-TopStoryView

@@ -1,6 +1,6 @@
 description: Nodes of this type will be tracked in the interactive story in the default group.
 priority: 5
-scope: [cyoa:group[default]]
+scope: [cyoa:group[$:/plugins/mythos/cyoa/groups/default]]
 style: {"color":{"background":"rgba(144,240,252,1)"}}
 title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa_group:default
 type: text/vnd.tiddlywiki

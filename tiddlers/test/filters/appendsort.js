@@ -44,9 +44,9 @@ function testRules(list,rules) {
 	}
 };
 
-function filter(wiki,list) {
+function filter(wiki,list,widget) {
 	const listStr = $tw.utils.stringifyList(list);
-	return wiki.filterTiddlers(listStr + " +[appendsort[]]");
+	return wiki.filterTiddlers(listStr + " +[appendsort[]]",widget);
 };
 
 function test(list,rules,rulesForTesting) {
@@ -61,6 +61,19 @@ function test(list,rules,rulesForTesting) {
 	testRules(results,rulesForTesting);
 	return results;
 };
+
+it("ensures cyoa-render is enabled",function() {
+	// AAA should get placed after Main, even though it only comes up in the cyoa.append if cyoa-render is active
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		{title: "a", "cyoa.append": "c"},
+		{title: "b", "cyoa.append": "[<cyoa-render>!match[]then[a]]"},
+		{title: "c"}]);
+	var widget = utils.createWidget();
+	widget.setVariable("cyoa-render","yes");
+	const results = filter(wiki,["a","b","c"],widget);
+	testRules(results,{"b":["a"]});
+});
 
 it("works with no dependencies",function() {
 	test(["a","b","c"],{});

@@ -86,24 +86,17 @@ exports.activeNodes = function(core) {
 	return results;
 };
 
-const groupPrefix = "$:/plugins/mythos/cyoa/groups/";
-
-exports.defaultGroup = function() {
-	return exports.group("default","set",{variable: "track",style: "bitfield"});
+exports.defaultGroup = function(handler,fields) {
+	handler = handler || "set";
+	fields = Object.assign({caption:"default","cyoa.style": "bitfield"},fields);
+	return exports.group("$:/plugins/mythos/cyoa/groups/default",handler,fields);
 };
 
-exports.group = function(slug,handler,variables) {
-	const tiddler = {title: groupPrefix + slug,type: "application/x-tiddler-dictionary"};
+exports.group = function(title,handler,fields) {
+	const tiddler = Object.assign({title: title,type: "application/x-tiddler-dictionary",tags: "$:/tags/cyoa/Type"},fields);
 	const indices = [];
 	if(handler !== undefined) {
-		indices.push("handler: " + handler);
-	}
-	if(variables !== undefined) {
-		for(var key in variables) {
-			if(variables[key] !== undefined) {
-				indices.push(key + ": " + variables[key]);
-			}
-		}
+		tiddler["cyoa.handler"] = handler;
 	}
 	tiddler.text = indices.join("\n");
 	return tiddler;
@@ -129,34 +122,31 @@ exports.testBook = function(tiddlerArrays,options) {
 		}
 	}
 
-	// Prep the state holder somewhere global and accessable
-	var vars = Object.create(null);
 	// Create the actual book.
 	var html = wiki.renderText("text/plain","text/vnd.tiddlywiki","\\define cyoa-render() yes\n\\rules only filteredtranscludeinline transcludeinline\n<div class='cyoa-content'>{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline}}</div><div class='cyoa-footer'>{{$:/cyoaFooter|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline }}</div>");
 	var doc = domParser.parseBodyAndHead(html);
 	var state = new State();
-	var groupData = wiki.getCyoaGroupData();
-	var groups = wiki.getCyoaGroups();
+	// Generate the declarations for state
+	var cyoa = Object.create(null);
+	cyoa.stateClasses = exports.stateClasses;
+	getGroupScript(wiki)(cyoa,function(){state.declare.apply(state,arguments)});
 	// Declare any groups that exist in this tiddler
-	for(var groupName in groups) {
-		var group = groupData[groupName];
-		var data = wiki.getTiddlerData(groupPrefix + groupName);
-		state.declare(vars,data.variable || groupName,exports.stateClasses[data.handler],{data: groupData[groupName]});
-	}
 	var core = new Core(doc,state,new MockManager());
-	core.cyoa = Object.create(null);
-	core.cyoa.vars = vars;
-	// Time to assign the stack variable
-	var stackData = wiki.getTiddlerData(groupPrefix + "stack");
-	core.cyoa.stackVariable = (stackData && stackData.variable) || "stack";
+	core.cyoa = cyoa;
 	// Open first the main page to touch stuff
 	core.openPage("Main");
 	return core;
 };
 
+function getGroupScript(wiki) {
+	var template = $tw.wiki.getTiddlerText("$:/plugins/mythos/cyoa/js/cyoa/groups.js");
+	var javascript = wiki.renderText("text/plain","text/vnd.tiddlywiki",template);
+	return eval("(function(cyoa,declare){"+javascript+"})");
+};
+
 exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
-	group = group || "default";
-	var core = exports.testBook([{title: "Results",text: "<$list filter='[cyoa.group["+group+"]]'>\n\n<$cyoa after='[all[current]]' >\n\n<$text text=<<currentTiddler>> />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
+	group = group || "$:/plugins/mythos/cyoa/groups/default";
+	var core = exports.testBook([{title: "Results",text: "<$list filter='[cyoa:group["+group+"]]'>\n\n<$cyoa after='[all[current]]' >\n\n<$text text=<<currentTiddler>> />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
 	var rtn = {};
 	rtn.state = (options && options.state) || core.state.serialize();
 	core.manager.getState = () => rtn.state;

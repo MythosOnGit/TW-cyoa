@@ -63,11 +63,11 @@ exports.touch = function(groupHandler,info,index) {
 exports.issueWarnings = function() {
 	// If we had collsions, we need to warn about them.
 	for(var collision in this.collisions) {
-		utils.warn("GroupHandler warning: In "+this.data.title+" group, the following tiddlers all resolved to variable '"+collision+"': " + this.collisions[collision].join(", "));
+		utils.warn("GroupHandler warning: In "+(this.data.caption || this.data.title)+" group, the following tiddlers all resolved to variable '"+collision+"': " + this.collisions[collision].join(", "));
 	}
 	// Issue warning for null tiddler if it wasn't covered in the
 	// collision warnings.
 	if(this.empty.length > 0) {
-		utils.warn("GroupHandler warning: In "+this.data.title+" group, the following tiddlers all resolved to an empty variable: "+this.empty.join(", "));
+		utils.warn("GroupHandler warning: In "+(this.data.caption || this.data.title)+" group, the following tiddlers all resolved to an empty variable: "+this.empty.join(", "));
 	}
 };

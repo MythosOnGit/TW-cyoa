@@ -11,7 +11,6 @@ file doesn't care about the minutia like the other file does.
 \*/
 
 const utils = require("test/utils.js");
-var Cyoa = require("cyoa");
 
 describe("widget: $cyoa",function() {
 
@@ -19,9 +18,14 @@ function nodeIsActive(core,id) {
 	return core.document.getElementById(id).classList.contains("cyoa-active");
 };
 
+function valueOf(state) {
+	return state.substr(state.indexOf("=")+1);
+};
+
+
 it("can handle filters for tracking attributes",function() {
 	var core = utils.testBook([[
-		utils.group("default","set",{variable: "state"}),
+		utils.defaultGroup(),
 		{title: "Main",text: `<$cyoa touch="A B" />
 			<$cyoa id="X" after="A B">A and B</$cyoa>
 			<$cyoa id="Y" after="A B C">all three</$cyoa>`},
@@ -32,7 +36,7 @@ it("can handle filters for tracking attributes",function() {
 
 it("can touch, reset, after, and before through cyoa widget",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup(),
 		{title: "X"},{title: "Y"},
 		{title: "Main",field: "X",text: `
 			// Touch A, but also make sure filter's have currentTiddler set
@@ -50,7 +54,7 @@ it("can touch, reset, after, and before through cyoa widget",function() {
 
 it("can touch, reset, after, and before through tiddler",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{"cyoa.style": "string"}),
 		{title: "A"},{title: "B"},{title: "C"},{title: "D"},
 		{title: "E"},{title: "F"},{title: "G"},{title: "H"},
 		{title: "I"},{title: "J"},
@@ -71,13 +75,15 @@ it("can touch, reset, after, and before through tiddler",function() {
 		{title: "U2","cyoa.only": "never","cyoa.touch": "J"},
 		// we cleanup because we want a predictable order of our test results.
 		{title: "cleanup","cyoa.reset": "Y1 Y2 Z2"}]);
-	expect(core.state.serialize()).toBe("test=B.D.F.H.U2");
+	expect(valueOf(core.state.serialize())).toBe("B.D.F.H.U2");
 });
 
 it("can use if, do, and done",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{"cyoa.style": "string","cyoa.key":"test"}),
 		{title: "A"},{title: "B"},{title: "C"},{title: "D"},{title: "E"},{title: "F"},
+		// We'll use this as a variable to manipulate
+		{title: "v"},
 		{title: "Main",
 		 "cyoa.do": "test.v = 1",
 		 "cyoa.done": "test.v *= 10",
@@ -92,22 +98,22 @@ it("can use if, do, and done",function() {
 		{title: "Main2","cyoa.if": "test.v === 100","cyoa.touch": "E"},
 		{title: "Main3","cyoa.if": "test.v === 80","cyoa.touch": "F"},
 	]);
-	expect(core.state.serialize()).toBe("test=A.D.F");
+	expect(valueOf(core.state.serialize())).toBe("A.D.F");
 });
 
 it("handles multiple conditions on if",function() {
 	// If multiple afters exist, we must make sure we test all of them, not just the last one, which can happen if the underlying conditionals are separated by ";" instead of "&&".
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{"cyoa.style": "string"}),
 		{title: "A"},{title: "B"},{title: "C"},
 		{title: "Main", text: `<$cyoa touch=B/><$cyoa after="A B" touch=C/>`}
 	]);
-	expect(core.state.serialize()).toBe("test=B");
+	expect(valueOf(core.state.serialize())).toBe("B");
 });
 
 it("handles write",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup(),
 		{title: "A"},
 		{title: "B"},
 		{title: "Main",text: `
@@ -148,7 +154,7 @@ it("handles appends",function() {
 
 it("can index subwidgets",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup(),
 		{title: "A"},
 		{title: "B"},
 		{title: "C"},
@@ -180,9 +186,42 @@ it("handles index weights",function() {
 	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
 });
 
+it("does not use page indexes for inner nodes",function() {
+	var core = utils.testBook([
+		{title: "Main","cyoa.index": 1, text: "<$cyoa id=A/><$cyoa id=B/>"}]);
+	expect(utils.activeNodes(core)).toEqual(["A","B"]);
+});
+
+it("handles index weights modulo",function() {
+	var core = utils.testBook([
+		{title: "Main",text: `<$cyoa index=13>
+			<$cyoa id=A weight=3/>
+			<$cyoa id=B/>
+			<$cyoa id=C/>
+		</$cyoa>`,"cyoa.append": "X Y Z","cyoa.index": "13"},
+		{title: "X","cyoa.weight": "3"},
+		{title: "Y"},
+		{title: "Z"}]);
+	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
+});
+
+it("handles index with no options",function() {
+	var core = utils.testBook([
+		{title: "Main",text: `<$cyoa id=A index=3>
+			<$cyoa id=B if=false />
+		</$cyoa>`,"cyoa.append": "C","cyoa.index": "3"},
+		{title: "C","cyoa.if": "false"}]);
+	expect(utils.activeNodes(core)).toEqual(["A"]);
+	// None to begin with
+	core = utils.testBook([
+		{title: "Main",text: `<$cyoa id=A index=3>
+		</$cyoa>`,"cyoa.append": "","cyoa.index": "3"}]);
+	expect(utils.activeNodes(core)).toEqual(["A"]);
+});
+
 it("handles snippet weights",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup(),
 		{title: "A"},
 		{title: "B"},
 		{title: "C"},
@@ -217,18 +256,18 @@ it("can perform onclick with or without destination",function() {
 it("executes onclick with replace flag properly",function() {
 	// First, without the replace flag
 	var core = utils.testBook([[
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{"cyoa.style": "string"}),
 		{title: "A"},{title: "B"},
 		{title: "C"},{title: "D"},
 		{title: "E"},
 		{title: "Main",text: "<$cyoa touch=A /><$cyoa id=link1 onclick touch=B to=second />"},
 		{title: "second",text: "<$cyoa touch=C /><$cyoa id=link2 onclick replace touch=D to=third />"},
 		{title: "third",text: "<$cyoa touch=E />"}]]);
-	expect(core.state.serialize()).toBe("test=A");
+	expect(valueOf(core.state.serialize())).toBe("A");
 	utils.click(core,"link1");
-	expect(core.state.serialize()).toBe("test=A.B.C");
+	expect(valueOf(core.state.serialize())).toBe("A.B.C");
 	utils.click(core,"link2");
-	expect(core.state.serialize()).toBe("test=A.B.D.E");
+	expect(valueOf(core.state.serialize())).toBe("A.B.D.E");
 });
 
 it("can dynamically set the 'to' destination",function() {
@@ -412,7 +451,7 @@ it("executes nested onclick dos and dones in correct order",function() {
 
 it("executes touch and reset in specified order",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{"cyoa.style": "string"}),
 		{title: "A1"},
 			{title: "B1","cyoa.imply": "A1"},
 			{title: "C1","cyoa.imply": "B1"},
@@ -426,7 +465,7 @@ it("executes touch and reset in specified order",function() {
 			<$cyoa touch="D1" reset="B1" />
 			<$cyoa reset="B2" touch="D2" />`}]);
 	// the touch and reset are swapped on those last two, which should result in different outcomes.
-	expect(core.state.serialize()).toBe("test=A1.D2");
+	expect(valueOf(core.state.serialize())).toBe("A1.D2");
 });
 
 it("can return to pushed pages",function() {

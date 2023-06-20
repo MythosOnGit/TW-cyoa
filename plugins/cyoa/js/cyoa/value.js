@@ -5,6 +5,8 @@ An object for storing a single value state variable.
 
 \*/
 
+"use strict";
+
 exports.value = function(valueString,setData) {
 	if(valueString) {
 		this.value = valueString;

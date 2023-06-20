@@ -1,13 +1,11 @@
 var types=cyoa.stateClasses,
 	data=<$text text=<<cyoa-data>> />;
-cyoa.stackVariable="<$transclude tiddler="$:/plugins/mythos/cyoa/groups/stack" index="variable">stack</$transclude>";
+cyoa.stackVariable="<$transclude tiddler="$:/config/mythos/cyoa/stack">stack</$transclude>";
 cyoa.vars = Object.create(null);
 <$list
-	variable="group"
-	filter="[cyoa:groups[]]"
-><$tiddler
-	tiddler={{{ [<group>addprefix[$:/plugins/mythos/cyoa/groups/]] }}}
-><$vars
-	variable={{{ [all[current]getindex[variable]] ~[<group>] }}}
->declare(cyoa.vars,"<<variable>>",types.{{##handler}},{data: data.<<group>>});
-</$vars></$tiddler></$list>
+	filter="[[$:/tags/cyoa/Type]tagging[]]"
+><$let
+	variable={{{ [all[current]cyoa:variable[cyoa.key]] }}}
+>declare(cyoa.vars,"<<variable>>",types.{{!!cyoa.handler}},{data: data.<<variable>>});
+</$let></$list>
+declare(cyoa.vars,cyoa.stackVariable,types.stack);

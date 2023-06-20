@@ -3,9 +3,9 @@ tags: $:/tags/ViewTemplate
 title: $:/plugins/mythos/cyoa/ui/ViewTemplate/group
 
 <$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
-<$list variable="group" filter="[all[current]cyoa:getgroup[]]">
+<$list filter="[all[current]cyoa:getgroup[]]">
 <div class="tc-subtitle">
-''Group:'' <<group>>
+''Group:'' <$list filter="[all[current]!match[$:/plugins/mythos/cyoa/groups/default]]" emptyMessage="<$view field=caption/>"><$link><$view field="caption"><$view field="title" /></$view></$link></$list>
 </div>
 </$list>
 

@@ -11,6 +11,7 @@ var Book = require("cyoa").Book;
 var Node = require("cyoa").Node;
 var Page = require("cyoa").Page;
 var domParser = require("test/dom-parser");
+const utils = require("test/utils.js");
 
 describe("Node",function() {
 
@@ -35,12 +36,21 @@ function processElement(html) {
 	return doc;
 }
 
-function activeLinks() {
-	return $tw.test.links.map(function(e) {return parseInt(e.id);})
+function activeLinks(core) {
+	if(core === undefined) {
+		return $tw.test.links.map(function(e) {return parseInt(e.id);})
+	} else {
+		// Ignore 0 because that hotkey isn't used
+		return core.loadedLinks.slice(1).map((e) => e.element.id);
+	}
 };
 
-function touchedStates() {
-	return $tw.test.arr;
+function touchedStates(core) {
+	if(core === undefined) {
+		return $tw.test.arr;
+	} else {
+		return Array.prototype.filter.call(core.book.document.getElementsByClassName("cyoa-active"), (elem) => elem.id && elem.id !== "Main").map((elem) => elem.id);
+	}
 };
 
 function page(innerHTMLOrAttributes,innerHTML) {
@@ -87,8 +97,8 @@ function node(id,attributes,innerHTML) {
 	return str;
 };
 
-function link(id) {
-	return `<a id="${id}" href="link" class="tc-tiddlylink">text</a>`;
+function link(id, text) {
+	return `<a id="${id}" href="link" class="tc-tiddlylink">${text}</a>`;
 };
 
 /*
@@ -159,28 +169,28 @@ it("in depth first order",function() {
 });
 
 it("builds active links in order despite mixed elements",function() {
-	processElement(page(() => `
-	  ${link(1)}
-	  ${alink(2)}
-	  ${link(3)}
-	  ${alink(4)}
-	  ${link(5)}`));
-	expect(activeLinks()).toEqual([1,2,3,4,5]);
-	expect($tw.test.arr).toEqual([2,4]);
+	var core = utils.testBook([[
+		{title: "Main", text: `
+			${link(1)}
+			<$cyoa id=2 to=Target cyoa.if="true"/>
+			${link(3)}
+			<$cyoa id=4 to=Target cyoa.if="true"/>
+			${link(5)}`}, {title: "Target"}]]);
+	expect(activeLinks(core)).toEqual(['1','2','3','4','5']);
 });
 
 it("active links ordered despite mixed elements in index",function() {
-	processElement(page(() => `
-	  <div class="cyoa-state" data-index="1">
-	  ${link(1)}
-	  ${alink(-2)}
-	  ${link(3)}
-	  ${alink(4)}
-	  ${link(5)}
-	  ${alink(-6)}
-	  </div>`));
-	expect(activeLinks()).toEqual([1,3,4,5]);
-	expect($tw.test.arr).toEqual([4]);
+	var core = utils.testBook([[
+		{title: "Main", text: `
+			<$cyoa index=1>
+				${link(1)}
+				<$cyoa id=2 to=Target if="true"/>
+				${link(3)}
+				<$cyoa id=4 to=Target if="true"/>
+				${link(5)}
+				<$cyoa id=6 to=Target if="true"/>
+			</$cyoa>`}, {title: "Target"}]]);
+	expect(activeLinks(core)).toEqual(['1','3','4','5']);
 });
 
 it("can depend on other pages",function() {
@@ -198,129 +208,64 @@ it("can depend on other pages",function() {
 	expect(activeLinks()).toEqual([2]);
 });
 
-it("indexes can handle no options",function() {
-	// None are truthy
-	processElement(page(() => state(0,{index: "5"},() =>
-		state(1,{if: false}))));
-	expect(touchedStates()). toEqual([0]);
-	// None to begin with
-	processElement(page(() => state(0,{index: "5"})));
-	expect(touchedStates()). toEqual([0]);
-});
-
-it("indexes support formulas",function() {
-	processElement(page(
-	  state(-1,{index: "1+1"},alink(0) + alink(1) + alink(2) )
-	));
-	expect(activeLinks()).toEqual([2]);
-	expect(touchedStates()).toEqual([-1,2]);
-});
-
 it("low indexes don't compute later nodes unnecessarily",function() {
-	processElement(page(() => state(-1,{index: 15,do: "$tw.test.sum = 0"},
-	  state(1,{weight: 10,if: "$tw.test.sum += 1"}) +
-	  state(2,{weight: 10,if: "($tw.test.sum += 2) && false"}) +
-	  state(3,{weight: 10,if: "$tw.test.sum += 4"}) +
-	  state(4,{weight: 10,if: "$tw.test.sum += 8"}) // This last one isn't touched
-	)));
-	expect(touchedStates()).toEqual([3]);
-	expect($tw.test.sum).toEqual(7);
-});
-
-it("doesn't use page indexes for cyoa widgets",function() {
-	processElement(page({index: "1"},state(0) + state(1)));
-	expect(touchedStates()).toEqual([0,1]);
+	var core = utils.testBook([[
+		utils.defaultGroup("set",{"cyoa.key":"test"}),
+		{title: "Main",text: `
+		<$cyoa index=15 do="test.sum = 0">
+			<$cyoa id=1 weight=10 if="test.sum += 1" />
+			<$cyoa id=2 weight=10 if="(test.sum += 2) && false" />
+			<$cyoa id=3 weight=10 if="test.sum += 4" />
+			<$cyoa id='not touched' weight=10 if="test.sum += 8" />
+		</$cyoa>
+		<$cyoa id=check if="test.sum === 7" />
+	`}]]);
+	expect(touchedStates(core)).toEqual(['3','check']);
 });
 
 it("active links with nested indexing",function() {
-	processElement(page(() => `
-	<div class="cyoa-state" data-index="29">
-	  ${link(1)}
-	  ${state(-2,{},() =>
-	  	link(-3))}
-	  ${link(4)}
-	  <em>`+state(5,{},() => `
-	  	${link(6)}
-	  	<strong>${state(7,{tag: "a"})}</strong>
-	  	${state(8,{},() =>
-	  		link(9))}
-	  `)+`</em>
-	  ${link(10)}
-	  ${state(-11,{tag: "a",weight: "5"})}
-	</div>`));
-	expect(activeLinks()).toEqual([1,4,6,7,9,10]);
-	expect($tw.test.arr).toEqual([5,7,8]);
-});
-
-it("works with index weights",function() {
-	processElement(page(() =>
-		`${state(0,{index: 5},() => `
-		  ${state(1)}
-		  ${state(2,{weight: 4})}
-		  ${state(3)}`)}`
-		+ // first index
-		`${state(10,{index: 0},() => `
-		  ${state(11)}
-		  ${state(12,{weight: 4})}
-		  ${state(13)}`)}`
-		+ // skip middle index
-		`${state(20,{index: 3},() => `
-		  ${state(21,{weight: 3})}
-		  ${state(22,{if: false,weight: 4})}
-		  ${state(23)}`)}`
-	));
-	expect(touchedStates()).toEqual([0,3,10,11,20,23]);
+	var core = utils.testBook([[
+		{title: "Main",text: `
+		<$cyoa index=29>
+			${link(1)}
+			<$cyoa id=-2>${link(-3)}</$cyoa>
+			${link(4)}
+			<em><$cyoa id=5>
+				${link(6)}
+				<strong><$cyoa to=Other id=7/></strong>
+				<$cyoa id=8>${link(9)}</$cyoa>
+			</$cyoa></em>
+			${link(10)}
+			<$cyoa id=-11 to=Other weight=5 />
+		</$cyoa>`}]]);
+	expect(activeLinks(core)).toEqual(['1','4','6','7','9','10']);
+	expect(touchedStates(core)).toEqual(['5','7','8']);
 });
 
 it("works with bad weights",function() {
-	processElement(page(() =>
-		state(0,{index: 0},() =>
-			state(1,{weight: 0}))));
-	expect(touchedStates()).toEqual([0]);
-	processElement(page(() =>
-		state(0,{index: 0},() =>
-			state(1,{weight: -5}) +
-			state(2))));
-	expect(touchedStates()).toEqual([0,2]);
-	processElement(page(() =>
-		state(0,{index: 0},() =>
-			state(1) +
-			state(2,{weight: -5}))));
-	expect(touchedStates()).toEqual([0,1]);
-});
-
-it("indexing modulos to correct amount",function() {
-	processElement(page(() =>
-		`${state(-1,{index: 7},() => `
-		  ${state(0)}
-		  ${state(1)}
-		  ${state(2,{if: false})}
-		  ${state(3)}`)}`
-		));
-	expect(touchedStates()).toEqual([-1,1]);
-
-	// with weights
-	processElement(page(() => `
-		${state(-1,{index: 501},() => `
-		  ${state(0,{},() => `
-		    state(4,{weight: 3})`)}
-		  <em>${state(1,{},() => `
-		    <strong>${state(5)}</strong>
-		    ${state(6,{if: false,weight: 3})}`)}</em>
-		  ${state(2,{if: false,weight: 3})}
-		  ${state(3,{weight: 98})}`)}
-		`));
-	expect(touchedStates()).toEqual([-1,1,5]);
+	var core;
+	core = utils.testBook([[
+		{title: "Main",text: "<$cyoa id=0 index=0><$cyoa id=1 weight=0 /></$cyoa>"}]]);
+	expect(touchedStates(core)).toEqual(['0']);
+	core = utils.testBook([[
+		{title: "Main", text: "<$cyoa id=0 index=0><$cyoa id=1 weight=-5 /><$cyoa id=2 /></$cyoa>"}]]);
+	expect(touchedStates(core)).toEqual(['0','2']);
+	core = utils.testBook([[
+		{title: "Main", text: "<$cyoa id=0 index=0><$cyoa id=1 /><$cyoa id=2 weight=-5 /></$cyoa>"}]]);
+	expect(touchedStates(core)).toEqual(['0','1']);
 });
 
 it("mundane links with inner state execute properly",function() {
 	// Using <svg> element on the outside, because if you put <a> elements one within the other, the DOM assumes you meant to close the first
-	processElement(page(() => `
-		<svg class="tc-tiddlylink" id="0">
-		  ${alink(1)} ${state(2)} <em id="em">text</em>
-		</svg>`));
-	expect(touchedStates()).toEqual([1,2]);
-	expect(activeLinks()).toEqual([0,1]);
+	var core = utils.testBook([[
+		{title: "Main", text: `
+			<$cyoa tag=svg to=Target id=0>
+				<$cyoa id=1 to=Target/>
+				<$cyoa id=2 />
+				''text''
+			</$cyoa>`}]]);
+	expect(touchedStates(core)).toEqual(['0', '1', '2']);
+	expect(activeLinks(core)).toEqual(['0','1']);
 });
 
 }); //Node

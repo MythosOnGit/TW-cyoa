@@ -1,3 +1,5 @@
+"use strict";
+
 /*
 Those last two characters can be: -._~
 */

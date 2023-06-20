@@ -1,30 +1,21 @@
 title: $:/plugins/mythos/cyoa/templates/groups/editor
 
-\define prefix() $:/plugins/mythos/cyoa/groups/
+<em>Group Handler:</em> <$select field="cyoa.handler"><$list filter="[[cyoagrouphandler]modules[]moduleproperty[name]sort[title]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select>
 
-<$tiddler tiddler=<<currentTab>> >
-
-<$set name="currentGroup" filter="[<currentTiddler>removeprefix<prefix>]">
-
-! <$link><$text text=<<currentGroup>> /></$link>
-
-<em>Group Handler:</em> <$list variable="dummy" filter="[{##magic}!match[yes]]" emptyMessage={{##handler}}><$select index="handler"><$list filter="[cyoa:grouphandlers[]sort[title]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select></$list>
-
-<$reveal state="##handler" type="nomatch" text=''>
+<$reveal state="!!cyoa.handler" type="nomatch" text=''>
 
 <table><tbody>
 <tr>
 	<td align="left">Variable:</td>
 	<td align="left"><$edit-text
-		index="variable"
-		default=""
-		placeholder=<<currentGroup>>
+		field="cyoa.key"
+		placeholder={{{ [all[current]cyoa:variable[]] }}}
 		tag="input" /></td></tr>
-<$list variable="dummy" filter="[{##magic}!match[yes]]"><tr>
+<tr>
 	<td align="left">Type:</td>
-	<td align="left"><$select index="style" default="string" >
+	<td align="left"><$select field="cyoa.style" default="string" >
 		<$let
-			handler={{##handler}}>
+			handler={{!!cyoa.handler}}>
 			<$list
 				filter="[[cyoagrouphandlerstyle]modules[]] :filter[all[current]moduleproperty[only]else<handler>match<handler>]"
 				variable="module">
@@ -34,37 +25,25 @@ title: $:/plugins/mythos/cyoa/templates/groups/editor
 					<option value=<<style>>><$text text=<<description>> /></option></$let></$list></$let></$select></td></tr>
 <$reveal
 	tag="tr"
-	state="##style"
+	state="!!cyoa.style"
 	type="match"
 	text="string"
 	default="string">
 	<td align="left">Filter:</td>
 	<td align="left"><$edit-text
-		index="filter"
+		field="filter"
 		tag="input"
-		placeholder="[get[title]]"/></td></$reveal></$list>
+		placeholder="[get[title]]"/></td></$reveal>
 </tbody></table></$reveal>
 
-{{##description}}
-
-<$list variable="dummy" filter="[{##magic}!match[yes]]">
+{{!!text}}
 
 !! Pages
 
-<$list
-	variable="anyExclusives"
-	filter="[cyoa:group<currentGroup>tags[]tag[$:/tags/cyoa/Exclusive]first[]]">
-
-</$list>
-
-//<small>Count: <$count filter="[all[shadows+tiddlers]cyoa:group<currentGroup>]" /></small>//
+//<small>Count: <$count filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>]" /></small>//
 
 <ul class="tc-cyoa-imply-list">
-<$list filter="[all[shadows+tiddlers]cyoa:group<currentGroup>!has[cyoa.imply]sort[title]]">
+<$list filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>!has[cyoa.imply]sort[title]]">
 <li>{{||$:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node}}</li>
 </$list>
 </ul>
-
-</$list>
-</$set>
-</$tiddler>

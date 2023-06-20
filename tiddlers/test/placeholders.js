@@ -22,7 +22,7 @@ it("can handle not-quite-placeholders",function() {
 
 it("handles spaces around simple placeholders",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "variable"},
 		{title: "Main",text: `
 			<$cyoa touch=variable />
@@ -68,15 +68,15 @@ it("handles missing pages in simple placeholders",function() {
 	expect(text).toContain(">missing<");
 	expect(text).toContain("tc-tiddlylink-missing");
 
-	spyOn(console,"warn");
+	utils.warnings(spyOn);
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "Main",text: `
 			<$cyoa if='#{missing} == false' id="A"/>
 			<$cyoa if='#{missing} == true' id="B"/>
 		`}]);
 	expect(utils.activeNodes(core)).toEqual(["A"]);
-	expect(console.warn).toHaveBeenCalledWith("Page 'Main': If snippet page 'missing' does not exist");
+	expect(utils.warnings()).toHaveBeenCalledWith("Page 'Main': If snippet page 'missing' does not exist");
 });
 
 it("handles missing pages in filter placeholders",function() {
@@ -90,9 +90,9 @@ it("handles missing pages in filter placeholders",function() {
 	expect(text).toContain(">missing<");
 	expect(text).toContain("tc-tiddlylink-missing");
 
-	spyOn(console,"warn");
+	utils.warnings(spyOn);
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "T"}, {title: "F"},
 		{title: "Main",text: `
 			<$cyoa touch=T />
@@ -100,12 +100,12 @@ it("handles missing pages in filter placeholders",function() {
 			<$cyoa if='#A{missing F}' id="B"/>
 		`}]);
 	expect(utils.activeNodes(core)).toEqual(["A"]);
-	expect(console.warn).toHaveBeenCalledWith("Page 'Main': If snippet page 'missing' does not exist");
+	expect(utils.warnings()).toHaveBeenCalledWith("Page 'Main': If snippet page 'missing' does not exist");
 });
 
 it("can do 'all' filters",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "T"}, {title: "TT"}, {title: "F"},
 		{title: "Main",field:"T",text: `
 			<$cyoa touch="T TT" />
@@ -126,7 +126,7 @@ it("can do 'all' filters",function() {
 
 it("can do 'any' filters",function() {
 	var core = utils.testBook([
-		utils.group("default","set",{variable: "test"}),
+		utils.defaultGroup("set",{variable: "test"}),
 		{title: "T"}, {title: "FF"}, {title: "F"},
 		{title: "Main",getT:"T",getF: "F", text: `
 			<$cyoa touch="T" />
@@ -147,7 +147,7 @@ it("can do 'any' filters",function() {
 
 it("can do 'sum' filters",function() {
 	var core = utils.testBook([
-		utils.group("default","intmap",{variable: "test"}),
+		utils.defaultGroup("intmap",{variable: "test"}),
 		{title: "t0"}, {title: "t1"}, {title: "t4"},
 		{title: "Main", field:"t4", text: `
 			<$cyoa touch=t1 do="#{t4} = 4" />

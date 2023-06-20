@@ -8,6 +8,7 @@ fields/cyoa.depend: filter
 fields/cyoa.do: snippet
 fields/cyoa.done: snippet
 fields/cyoa.exclude: list
+fields/cyoa.group: title
 fields/cyoa.if: snippet
 fields/cyoa.imply: list
 fields/cyoa.index: snippet

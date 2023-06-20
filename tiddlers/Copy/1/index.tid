@@ -1,0 +1,46 @@
+caption: Copy 1: Transclusion
+description: Injecting content from other tiddlers into pages.
+tags: Copy
+title: Copy1
+tmap.id: 20207884-1360-435c-9b2e-6c026071da21
+type: text/vnd.tiddlywiki
+
+Appending is an effective tool native to <<plugin>> which allows us to reuse content in our story by placing content sequentially. It's highly effective, and highly recommended, but there is another means of reusing content which can be equally as powerful: transclusion. This is the technique of injecting the contents of one tiddler into other tiddlers. Take this example:
+
+```html
+
+This is the first paragraph of our page.
+
+{{OtherTiddler}}
+
+This is the last paragraph of our page.
+```
+
+The text contents of the page <<page OtherTiddler>> will appear in place of that wikitext syntax <<value {{OtherTiddler}}>>. The result Your result might be:
+
+```html
+
+This is the first paragraph of our page.
+
+This is the contents of OtherTiddler.
+
+This is the last paragraph of our page.
+```
+
+That is the fundamental basic of how transclusion works. In TiddlyMap, transclusion relationships are represented with a dark red line.
+
+!! Transcluding fields
+
+All tiddlers have fields. At a minimum, they have a <<field title>> field and usually a <<field text>> field, which correspond to the title and body of the tiddler, but a tiddler can have many more. <<plugin>> itself introduces several fields of its own to describe page behavior, but you can add your own fields to a tiddler by editing a tiddler and filling out the "Add a new field" form at the tiddler's bottom. If you were to edit this Tutorial tiddler, you'd see this:
+
+> {{||$:/core/ui/EditTemplate/fields}}
+
+...because it has a <<field caption>> and <<field description>> associated with it.
+
+Whatever fields your tiddlers have, you can transclude them too. To transclude a <<field caption>> field, you'd use <<value "{{OtherTiddler##caption}}">>. Any field can be transcluded, including <<field title>> and <<field text>>, although specifying <<field text>> explicitly is unncessary since that what is transcluded by default (i.e. <<value "{{OtherTiddler##text}}">> == <<value "{{OtherTiddler}}">>)
+
+!! Vs. Appending
+
+Transclusion a technique <<link-to-tw Transclusion "native to TiddlyWiki core">>, and was not introduced with <<plugin>>, but that doesn't mean it isn't incredibly useful in building your interactive story. It has advantages and disadvantages over appending which are enumerated [[here on the Transclude concept page|Transclude]].
+
+The following demo also showcases examples of when you might use transclusion, and how: <<demo>>

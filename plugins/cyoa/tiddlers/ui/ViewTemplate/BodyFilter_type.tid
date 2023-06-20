@@ -1,0 +1,4 @@
+list-before: $:/config/ViewTemplateBodyFilters/default
+title: $:/config/mythos/cyoa/ViewTemplateBodyFilters/type
+tags: $:/tags/ViewTemplateBodyFilter
+text: [tag[$:/tags/cyoa/Type]then[$:/plugins/mythos/cyoa/templates/groups/editor]]

@@ -2,6 +2,8 @@
 Represents a cyoa page.
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 var Node = require("./node");
 

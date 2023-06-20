@@ -6,9 +6,7 @@ module-type: cyoa.filteroperator
 This gets information regarding cyoa groups. Whether incoming tiddlers are in one, or what groups there are, etc...
 
 cyoa:group[] -> Passes all input whose group equals the parameter
-cyoa:groups[] -> Ignores input. Returns all groups
 cyoa:getgroup[] -> Returns dominantly-appended list of input tiddlers' groups
-cyoa:grouphandlers[] -> Ignores input. Returns all group handlers
 \*/
 
 (function(){
@@ -43,8 +41,14 @@ exports["var"] = function(source,operator,options) {
 	return tiddler ? [tiddler.fields.title] : [];
 };
 
-exports.groups = function(source,operator,options) {
-	return Object.keys(options.wiki.getCyoaGroups());
+// Internal only: Used to determine the variable a group uses.
+exports.variable = function(source,operator,options) {
+	var results = [];
+	var field = (operator && operator.operand);
+	source(function(tiddler,title) {
+		results.push(options.wiki.getCyoaGroupVariable(title, field));
+	});
+	return results;
 };
 
 exports.getgroup = function(source,operator,options) {
@@ -56,10 +60,6 @@ exports.getgroup = function(source,operator,options) {
 		}
 	});
 	return results;
-};
-
-exports.grouphandlers = function(source,operator,options) {
-	return options.wiki.getCyoaGroupHandlers();
 };
 
 })();

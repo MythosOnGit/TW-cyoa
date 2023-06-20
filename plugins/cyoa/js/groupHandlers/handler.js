@@ -24,9 +24,16 @@ var styleClasses = $tw.modules.createClassesFromModules("cyoagrouphandlerstyle",
 /*
 group: string of group name
 */
-function Handler(wiki,group,data,pages) {
+function Handler() {
+};
+
+module.exports = Handler;
+
+var Hp = Handler.prototype = Object.create(Record.prototype);
+
+Hp.init = function(wiki,group,data,pages) {
 	this.data = data || Object.create(null);
-	this.variable = data.variable || group;
+	this.variable = wiki.getCyoaGroupVariable(group,"cyoa.key");
 	var styleClass = styleClasses[this.data.style || "string"];
 	if(!styleClass) {
 		utils.warn("Grouphandler warning: In "+this.data.title+", style '"+this.data.style+"' not recognized.");
@@ -42,10 +49,6 @@ function Handler(wiki,group,data,pages) {
 		$tw.utils.nextTick(() => this.commit(wiki));
 	}
 };
-
-module.exports = Handler;
-
-var Hp = Handler.prototype = Object.create(Record.prototype);
 
 /*
 Should be overridden

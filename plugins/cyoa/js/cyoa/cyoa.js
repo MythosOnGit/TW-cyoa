@@ -1,3 +1,5 @@
+"use strict";
+
 exports.UriManager = require("./uriManager");
 exports.State = require("./state");
 exports.Core = require("./core");

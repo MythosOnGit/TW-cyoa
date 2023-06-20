@@ -5,6 +5,8 @@ An object for storing a set of pages.
 
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 var Bitfield = require("./bitfield").bitfield;
 

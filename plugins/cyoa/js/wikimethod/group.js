@@ -8,11 +8,11 @@ Wikimethods regarding getting page sets, and getting all pages in a set.
 \*/
 
 const utils = require("$:/plugins/mythos/cyoa/js/utils");
-const pageSetPrefix = "$:/plugins/mythos/cyoa/groups/";
 const pageSetField = "cyoa.group";
-const defaultPageSet = "default";
+const defaultPageSet = "$:/plugins/mythos/cyoa/groups/default";
 
-const groupModules = $tw.modules.applyMethods("cyoagrouphandler");
+var Handler = require("$:/plugins/mythos/cyoa/js/groupHandlers/handler.js");
+const groupModules = $tw.modules.createClassesFromModules("cyoagrouphandler",null,Handler);
 
 exports.getCyoaDefaultGroup = function() { return defaultPageSet; };
 
@@ -23,42 +23,41 @@ exports.getCyoaGroups = function() {
 	const self = this;
 	return this.getGlobalCache("cyoa-groups",function() {
 		const groups = Object.create(null),
-			checkIfSet = function(tiddler,title) {
-				if(title.startsWith(pageSetPrefix)) {
-					groups[title.substr(pageSetPrefix.length)] = tiddler;
-				}
-			};
-		self.eachShadowPlusTiddlers(checkIfSet);
+			array = self.getTagMap()["$:/tags/cyoa/Type"];
+		// The default Group currently has that tag too, so it doesn't have to be added explicitly
+		if(array) {
+			for(var index = 0; index < array.length; index++) {
+				var title = array[index];
+				groups[title] = self.getTiddler(title);
+			}
+		}
 		return groups;
 	});
 };
 
-/*
-Returns an array of group handlers by their handle. This list is independent of the groups. It represents the modules.
-*/
-exports.getCyoaGroupHandlers = function() {
-	return Object.keys(groupModules);
-};
-
 exports.getCyoaGroupHandler = function(group) {
-	var groupTiddler = this.getCyoaGroups()[group];
 	var wiki = this;
 	return this.getGlobalCache("cyoa-group-" + group,function() {
-		var data = wiki.getTiddlerData(groupTiddler,{});
-		if(data) {
-			var Module = groupModules[data.handler];
-			if(Module === undefined) {
-				var message = (data.handler)?
-					("Group Handler '"+data.handler+"' for group '"+group+"' does not exist."):
-					("Group '"+group+"' does not specify a group handler.");
-				utils.warn("GroupHandler warning: "+message);
-				return undefined;
-			}
-			data.title = group;
-			var tiddlers = wiki.getTiddlersInCyoaGroup(group);
-			return new Module(wiki,group,data,tiddlers);
+		if(group === undefined) {
+			return undefined;
 		}
-		return undefined;
+		var groupTiddler = wiki.getTiddler(group);
+		var handler = groupTiddler.fields["cyoa.handler"];
+		var Module = groupModules[handler];
+		if(Module === undefined) {
+			var message = (handler)?
+				("Group Handler '"+handler+"' for group '"+group+"' does not exist."):
+				("Group '"+group+"' does not specify a group handler.");
+			utils.warn("GroupHandler warning: "+message);
+			return undefined;
+		}
+		var data = Object.create(groupTiddler.fields);
+		data.handler = handler;
+		data.style = groupTiddler.fields["cyoa.style"];
+		var tiddlers = wiki.getTiddlersInCyoaGroup(group);
+		var newHandler = new Module();
+		newHandler.init(wiki,group,data,tiddlers);
+		return newHandler;
 	});
 };
 
@@ -98,13 +97,27 @@ exports.clearCyoaGroups = function() {
 	}
 };
 
+exports.getCyoaGroupVariable = function(title,field) {
+	var tiddler = this.getTiddler(title);
+	var key = (field && tiddler && tiddler.fields[field]) || title.substr(title.lastIndexOf("/")+1);
+	key = key.replaceAll(/[^a-zA-Z_]/g, "");
+	try {
+		// This is not a security risk because key can only be alpha characters by now.
+		eval("var " + key + "=1");
+	} catch {
+		key = "_" + key;
+	}
+	return key;
+};
+
 exports.getCyoaGroupData = function() {
 	var groups = this.getCyoaGroups();
 	var output = Object.create(null);
 	for(var group in groups) {
 		var handler = this.getCyoaGroupHandler(group);
 		if(handler && handler.groupData) {
-			output[group] = handler.groupData();
+			var key = this.getCyoaGroupVariable(group,"cyoa.key");
+			output[key] = handler.groupData();
 		}
 	}
 	return output;
@@ -115,7 +128,25 @@ Returns group for given tiddler.
 */
 exports.getTiddlerCyoaGroup = function(title) {
 	const self = this;
-	// The reason this reverse lookups all the tiddlers instead of just looking at the "cyoa.group" field is because that won't tell us when a tiddler is in the default group, or no group, nor will it tells us for non-existent tiddlers.
+	var tiddler = this.getTiddler(title);
+	// No tiddler, no group.
+	if(!tiddler || tiddler.isDraft()) {
+		return undefined;
+	}
+	if(tiddler.fields[pageSetField]) {
+		var group = tiddler.fields[pageSetField];
+		var groupTiddler = this.getTiddler(group);
+		if(groupTiddler === undefined) {
+			utils.warn("Page set '"+group+"' specified in tiddler '"+title+"' does not exist.");
+			return undefined;
+		}
+		if(!groupTiddler.hasTag("$:/tags/cyoa/Type")) {
+			utils.warn("Page set '"+group+"' specified in tiddler '"+title+"' is not actually a group. It lacks the necessary $:/tags/cyoa/Type tag.");
+			return undefined;
+		}
+		return group;
+	}
+	// If it didn't specify a group, we must check and see if it's in the default group.
 	const tiddlerMap =  this.getGlobalCache("cyoa-grouptiddlermap",function() {
 		const groupMap = getCyoaGroupMap(self);
 		const tiddlerMap = Object.create(null);
@@ -161,19 +192,12 @@ Returns map of groups, whose values are maps of tiddler titles, who values are t
 */
 function getGroupsMap(wiki) {
 	var pageMap = wiki.getCyoaPageMap();
-	var groups = wiki.getCyoaGroups();
 	var results = Object.create(null);
 	results[defaultPageSet] = Object.create(null);
-	for(var group in groups) {
-		results[group] = Object.create(null);
-	}
 	wiki.each(function(tiddler,title) {
 		var key = tiddler.fields[pageSetField];
 		if(key && !tiddler.isDraft()) {
-			if(!results[key]) {
-				utils.warn("Page set '"+key+"' specified in tiddler '"+title+"' does not exist.");
-				key = defaultPageSet;
-			}
+			results[key] = results[key] || Object.create(null);
 			results[key][title] = tiddler;
 		}
 	});
@@ -182,7 +206,7 @@ function getGroupsMap(wiki) {
 		for(var index = 0; index < tracks.length; index++) {
 			var title = tracks[index];
 			var tiddler = wiki.getTiddler(title);
-			if(tiddler && !tiddler.isDraft() && !tiddler.fields[pageSetField] && !tiddler.fields.title.startsWith(pageSetPrefix)){
+			if(tiddler && !tiddler.isDraft() && !tiddler.hasField(pageSetField) && !tiddler.hasTag("$:/tags/cyoa/Type")){
 				results[defaultPageSet][title] = tiddler;
 			}
 		}

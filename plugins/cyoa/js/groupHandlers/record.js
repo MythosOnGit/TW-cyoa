@@ -12,8 +12,9 @@ var utils = require("$:/plugins/mythos/cyoa/js/utils.js");
 const versionPrefix = "$:/config/mythos/cyoa/records/";
 const autoVersioningTitle = "$:/config/mythos/cyoa/autoVersioning";
 
-function Record(wiki,groupName,pages) {
-	var record = wiki.getTiddlerData(versionPrefix + groupName,{});
+function Record(wiki,title,pages) {
+	this.name = wiki.getCyoaGroupVariable(title, "cyoa.key");
+	var record = wiki.getTiddlerData(versionPrefix + this.name,{});
 	this.changed = false;
 	if(Array.isArray(record)) {
 		// Old style
@@ -24,7 +25,6 @@ function Record(wiki,groupName,pages) {
 	}
 	this.wiki = wiki;
 	this.pages = pages;
-	this.name = groupName;
 };
 
 module.exports = Record;

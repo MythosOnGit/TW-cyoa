@@ -1,0 +1,21 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Copy 1: Transclusion/map
+type: text/vnd.tiddlywiki
+
+{
+ "391cc0ca-891c-4201-a9c1-1dceb5cbb6c7": {
+  "x": -125,
+  "y": 0
+ },
+ "513909aa-5809-4dd3-a5fe-ead50ad99d8f": {
+  "x": 0,
+  "y": 50
+ },
+ "11bf2d60-9e75-4e97-aaad-f73c643463cb": {
+  "x": 0,
+  "y": -50
+ },
+ "02e75780-64a7-48fa-af03-d32d9263aada": {
+  "x": 125,
+  "y": 0
+ }
+}

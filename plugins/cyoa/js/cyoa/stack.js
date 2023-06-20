@@ -5,6 +5,8 @@ An object for storing a stack of pages, where only the top one is "touched"
 
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 
 var Stack = function(stackString) {

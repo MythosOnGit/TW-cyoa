@@ -17,4 +17,4 @@ All features of transclusion, from templating to accessing specific tiddler fiel
 !!! Cons
 
 * Transcluded content is duplicated in the generated CYOA. Heavy use of the transclude widget can bloat your CYOA's file size.
-* Transcluding a page 'B' into another page 'A' is no different than copy-pasting page 'B's content. This copied content will have no association with 'B' in the generated file. Meaning it won't append any pages 'B' appends, or share any other quality of 'B's.
+* Transcluding a page 'B' into another page 'A' is no different than copy-pasting page 'B's content. This copied content will have no association with 'B' in the generated file. Meaning it won't append any pages 'B' appends, or share any constraints or actions that 'B' has.

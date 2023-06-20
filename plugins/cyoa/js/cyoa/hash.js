@@ -4,6 +4,8 @@ cyoa.module-type: cyoamethod
 Returns a function for hashing strings deterministically.
 \*/
 
+"use strict";
+
 var primes=[56369,34231,64063,14197,32911,61861,28411,263,56569,5749,41659,9649,46499,12853,45343,26513,24481];
 
 var prime = function(i) {

@@ -5,6 +5,8 @@ A space-efficient object for storing binary flags for pages.
 
 \*/
 
+"use strict";
+
 var Base64 = require("./base64");
 var utils = require("./utils");
 
@@ -229,7 +231,7 @@ function getTreeState(array,intermediateArray,node,down) {
 			var children = down[node];
 			if(children) {
 				for(var counter = 0; counter < children.length; counter++) {
-					var child = children[counter];
+					var child = children[counter],
 						maxChildStates = intermediateArray[child];
 					if(maxChildStates && maxChildStates !== true) {
 						state += getTreeState(array,intermediateArray,child,down) * possibleStates;

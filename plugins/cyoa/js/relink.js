@@ -7,6 +7,8 @@ This module allows relink to recognize and relink cyoa snippets.
 
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 var relinkUtils = require("$:/plugins/flibbles/relink/js/utils.js");
 

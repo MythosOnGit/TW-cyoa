@@ -1,7 +1,6 @@
-title: $:/plugins/mythos/cyoa/groups/stack
-type: application/x-tiddler-dictionary
+caption: stack
+title: $:/plugins/mythos/cyoa/stack
 
-handler: stack
-description: The stack is a magic group used by the `cyoa.push` mechanism. Tiddlers cannot be added to this group, because //all// tiddlers are already in this group. //Any// tiddler can be pushed to the stack with the 'cyoa.push' title field. Any tiddler on the top of the stack will be automatically picked in any append list or $options group, even if they would have tested false.
-magic: yes
-style: string
+|Variable: |<$edit-text tiddler="$:/config/mythos/cyoa/stack" default="stack" tag="input" /> |
+
+The stack is a magic group used by the `cyoa.push` mechanism. Tiddlers cannot be added to this group, because //all// tiddlers are already in this group. //Any// tiddler can be pushed to the stack with the 'cyoa.push' title field. Any tiddler on the top of the stack will be automatically picked in any append list or $options group, even if they would have tested false.

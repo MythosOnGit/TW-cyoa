@@ -63,4 +63,7 @@ With the dragon dead, you're free to ascend and rescue her.
 
 <$link to="ElseWidget"><<widget else>> widgets are a little more sophisticated than that.</$link> They accept "before" and "after" attributes too, and they can be chained together. There's an [[example of this|Logic2/end]] in the demo: <<demo>>
 
-Next Tutorial:  <$link to="Logic3">{{Logic3!!caption}}</$link>
+;<$link to=Logic3>{{Logic3!!caption}}</$link>
+: You can continue to learn new tricks about declarative constraints, such as how to trigger pages as having been visited or not through explicit declarations.
+;<$link to=Copy1>{{Copy1!!caption}}</$link>
+: Or you can learn about an alternative to Appending known as transclusion which allows you to embed page content in others and declaratively generate content from templates.

@@ -9,7 +9,6 @@ Tests the [cyoa:tracked[]] filter operator.
 
 const utils = require("test/utils.js");
 
-const setPrefix = "$:/plugins/mythos/cyoa/groups/";
 const defaultSetTiddler = utils.defaultGroup();
 const defTitle = defaultSetTiddler.title;
 
@@ -38,8 +37,8 @@ it("filters out tiddlers in the default group set",function() {
 	]);
 	test(wiki,"[cyoa:group[]]",["a","c","e","ex1","ex2","f"]);
 	test(wiki,"[!cyoa:group[]]",[defTitle,"b","d","Draft of 'g'","exgroup","h"]);
-	test(wiki,"[cyoa:group[default]]",["a","c","e","ex1","ex2","f"]);
-	test(wiki,"[!cyoa:group[default]]",[defTitle,"b","d","Draft of 'g'","exgroup","h"]);
+	test(wiki,"[cyoa:group["+defaultSetTiddler.title+"]]",["a","c","e","ex1","ex2","f"]);
+	test(wiki,"[!cyoa:group["+defaultSetTiddler.title+"]]",[defTitle,"b","d","Draft of 'g'","exgroup","h"]);
 	test(wiki,"[cyoa:group[noexist]]",[]);
 	test(wiki,"[!cyoa:group[noexist]]",[defTitle,"a","b","c","d","Draft of 'g'","e","ex1","ex2","exgroup","f","h"]);
 });
@@ -58,11 +57,11 @@ it("filters out tiddlers in custom groups",function() {
 		utils.draft({title: "s6","cyoa.group": "S"})
 	]);
 	test(wiki,"[cyoa:group[]]",["d4","s1","s3","s5"]);
-	test(wiki,"[!cyoa:group[]]",[defTitle,Sgroup.title,"Draft of 's6'","n2"]);
-	test(wiki,"[cyoa:group[default]]",["d4"]);
-	test(wiki,"[!cyoa:group[default]]",[defTitle,Sgroup.title,"Draft of 's6'","n2","s1","s3","s5"]);
+	test(wiki,"[!cyoa:group[]]",[defTitle,"Draft of 's6'","n2",Sgroup.title]);
+	test(wiki,"[cyoa:group["+defaultSetTiddler.title+"]]",["d4"]);
+	test(wiki,"[!cyoa:group["+defaultSetTiddler.title+"]]",[defTitle,"Draft of 's6'","n2",Sgroup.title,"s1","s3","s5"]);
 	test(wiki,"[cyoa:group[S]]",["s1","s3","s5"]);
-	test(wiki,"[!cyoa:group[S]]",[defTitle,Sgroup.title,"d4","Draft of 's6'","n2"]);
+	test(wiki,"[!cyoa:group[S]]",[defTitle,"d4","Draft of 's6'","n2",Sgroup.title]);
 });
 
 it("doesn't bother with sorting",function() {
@@ -108,21 +107,6 @@ it("doesn't include group tiddlers in default group ever",function() {
 
 });
 
-describe("groups filter",function() {
-
-it("fetches all groups, including default",function() {
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		defaultSetTiddler,
-		utils.group("S")
-	]);
-	expect(wiki.filterTiddlers("[cyoa:groups[]]")).toEqual(["default","S"]);
-	// I don't use this feature anymore
-	//expect(wiki.filterTiddlers("[cyoa:groups[tiddlers]]")).toEqual([setPrefix+"default",setPrefix+"S"]);
-});
-
-});
-
 describe("getgroup filter",function() {
 
 function test(input,expected,options) {
@@ -141,25 +125,10 @@ it("fetches group of given tiddlers",function() {
 		{title: "c"},
 		{title: "d","cyoa.only": "first"}
 	]);
-	test(["a"],["default"],options);
+	test(["a"],[defaultSetTiddler.title],options);
 	test(["b"],["S"],options);
 	test(["c"],[],options);
-	test(["a","b","c","d"],["S","default"],options);
-});
-
-});
-
-describe("grouphandlers filter",function() {
-
-it("fetches all group handlers",function() {
-	const wiki = new $tw.Wiki();
-	const handlers = ["stack","map","set","echo"];
-	var wikiMethod = wiki.getCyoaGroupHandlers();
-	var filter = wiki.filterTiddlers("[cyoa:grouphandlers[]]");
-	for(var i = 0; i < handlers.length; i++) {
-		expect(wikiMethod).toContain(handlers[i]);
-		expect(filter).toContain(handlers[i]);
-	}
+	test(["a","b","c","d"],["S",defaultSetTiddler.title],options);
 });
 
 });

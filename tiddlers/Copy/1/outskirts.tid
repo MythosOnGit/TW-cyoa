@@ -1,0 +1,22 @@
+tags: [[Virtual Page]]
+title: Copy1/outskirts
+tmap.id: 513909aa-5809-4dd3-a5fe-ead50ad99d8f
+type: text/vnd.tiddlywiki
+
+Here on the outskirts of town, the crowds are thin. Those that travel are coming into or out of the city. Lining the streets are ins and taverns for those coming in after a long journey.
+
+<!--	HEY READER
+	If you're wondering what this odd "$list filter" stuff is, don't
+	worry about it. It's just some sorcery I'm doing so the annotations
+	in this tiddler are different than wherever it's transcluded.
+-->
+<$list filter="[<is-transcluding>!match[yes]]">
+
+<<annotate """
+
+This page is transcluded by other pages, so it's content gets copied to those pages when your interactive story gets compiled.
+
+Since its contents get copied, and since it's never directly linked to or appended, this page itself can be [[virtual|Virtual Page]]. This concept gets more formally introduced in <<tutorial Logic3>>
+""" >>
+
+</$list>

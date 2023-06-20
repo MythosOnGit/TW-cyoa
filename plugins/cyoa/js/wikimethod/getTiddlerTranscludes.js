@@ -17,10 +17,11 @@ Return an array of tiddler titles that are directly transcluded in the specified
 */
 exports.getTiddlerTranscludes = function(title) {
 	return this.traverseTiddlerWidgets(title,"transcludes",function(ptn) {
-		if(ptn.type === "transclude" &&
-			ptn.attributes.tiddler &&
-			ptn.attributes.tiddler.type === "string") {
-				return [ptn.attributes.tiddler.value];
+		if(ptn.type === "transclude") {
+			var tiddler = ptn.attributes['$tiddler'] || ptn.attributes.tiddler;
+			if(tiddler && tiddler.type === "string") {
+				return [tiddler.value];
+			}
 		}
 	});
 };

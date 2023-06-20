@@ -1,0 +1,20 @@
+title: Copy1/end
+tmap.id: 02e75780-64a7-48fa-af03-d32d9263aada
+type: text/vnd.tiddlywiki
+
+\define is-transcluding() yes
+
+You reach the other end of the city.
+
+<<annotate """
+
+Below is the same block of code that appeared in [[Copy1/start]]. If you edit the page, you'll notice it's slightly different: <<value "{{Copy1/outskirts!!text}}">>. The <<value "!!text">> just a more explicit way to specify that we want the <<field text>> field of [[Copy1/start]] transcluded, which was already the default when we don't specify.
+
+This isn't necessary. I'm just doing it here to help clarify that <<value "{{Copy1/outskirts!!text}}">> and <<value "{{Copy1/outskirts}}">> are the same, and that you can specify //other// fields to be transcluded, which we'll do in later tutorials.
+""" >>
+
+{{Copy1/outskirts!!text}}
+
+Eventually you leave through the gate. This was a simple an repetitive trip, but you felt like you learned something from it.
+
+[[Return.|Demo]]

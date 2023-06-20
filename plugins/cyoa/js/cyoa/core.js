@@ -1,3 +1,5 @@
+"use strict";
+
 var utils = require("./utils");
 var Page = require("./page");
 var Book = require("./book");
@@ -55,14 +57,16 @@ Core.prototype.openPage = function(page) {
 	this.topPage = currentPage;
 	var newPages = [];
 
-	utils.log("Page: " + currentPage);
+	utils.log("Turning to page: " + currentPage);
 	this.document.body.setAttribute("data-title", currentPage);
 	this.document.body.scrollTop=this.document.documentElement.scrollTop=0;
 
+		utils.log("  Headers");
 	this.processExtraPages(this.book.headers);
 
 	var page = this.book.getPageOrDefault(currentPage);
 	while (page) {
+		utils.log("  Page: " + page.title);
 		page.execute(this.cyoa.vars);
 		page.eachActiveLink(function(node) {
 			self.registerHotkeys(node,node.hotkey || self.loadedLinks.length);
@@ -70,6 +74,7 @@ Core.prototype.openPage = function(page) {
 		newPages.push(page.title);
 		page = page.selectAppend(this.cyoa.vars,this.cyoa.stackVariable);
 	}
+		utils.log("  Footers");
 	this.processExtraPages(this.book.footers);
 	// Close pages that aren't still open
 	for(var i = 0; i < this.openPages.length; i++) {

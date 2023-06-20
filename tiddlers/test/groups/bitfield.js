@@ -13,7 +13,7 @@ describe("bitfield",function() {
 
 function testBook(expected /*. tiddlerArrays */) {
 	var arrays = Array.prototype.slice.call(arguments,1);
-	arrays.unshift(bitfieldGroup("t"));
+	arrays.unshift(utils.defaultGroup());
 	var rtn = utils.testBookDefaultVar(arrays);
 	expect(rtn.results).toEqual(expected);
 	return rtn.state;
@@ -28,13 +28,17 @@ function testPremadeBook(wiki,expected,options) {
 };
 
 function node(name,parent,attributes) {
-	var n = Object.assign({title: name,"cyoa.group": "default"},attributes);
+	var n = Object.assign({title: name},attributes);
 	if(parent) { n["cyoa.imply"] = parent; }
 	return n;
 };
 
-function bitfieldGroup(variable,group) {
-	return utils.group(group || "default","set",{variable: variable || "s",style: "bitfield"});
+function bitfieldGroup(title) {
+	return utils.group(title,"set",{"cyoa.style": "bitfield"});
+};
+
+function valueOf(state) {
+	return state.substr(state.indexOf("=")+1);
 };
 
 it("bridges with multiple connections work",function() {
@@ -102,12 +106,12 @@ it("compresses trees to an acceptably small bitfield",function() {
 		node("X"),
 		{title: "Main","cyoa.touch": "X"}]);
 	// If it's larger than that, then the tree isn't compressing as much as it can. It shouldn't be "w". That's 32, not 16.
-	expect(serialized).toBe("t=d");
+	expect(valueOf(serialized)).toBe("d");
 });
 
 it("can clear",function() {
 	testBook([],[node("A"),node("B","A"),node("C"),
-		{title: "Main",text: "<$cyoa touch='A B C' reset='[cyoa:var[default]]'/>"}]);
+		{title: "Main",text: "<$cyoa touch='A B C' reset='[cyoa:var[]]'/>"}]);
 });
 
 it("does not print if empty",function() {
@@ -131,8 +135,8 @@ it("creating tree with irrelevant tiddlers is ignored",function() {
 	utils.warnings(spyOn);
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup("t"),
-		bitfieldGroup("other","other"),
+		utils.defaultGroup(),
+		bitfieldGroup("other"),
 		node("A",undefined,{"cyoa.group": "other"}),
 		node("B","A",{"cyoa.group": "other"}),
 		node("C","B"),
@@ -160,7 +164,7 @@ it("compresses multiple implications well",function() {
 	var serialized = testBook(
 		["A1","A2","B1","B2","C1","C2","C3","D1","D2","D3","E","F","G","H1","H2","I","J"],
 		tiddlers.concat({title: "Main","cyoa.touch": "J"}));
-	expect(serialized.length).toBe(3,serialized + " was too long"); // t=!
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long"); // t=!
 	testBook(
 		["A1","A2","B1","B2","C1","C2","C3","D1","D2","E","F"],
 		tiddlers.concat({title: "Main",text: "<$cyoa touch=J reset=D3/>"}));
@@ -182,7 +186,7 @@ it("handles multiple implication tricky cases",function() {
 
 it("handles exclusion groups",function() {
 	var tiddlers = [
-		bitfieldGroup(),
+		utils.defaultGroup(),
 		node("root",null),
 		node("A"),node("B"),node("C"),
 		node("D","root",{"cyoa.exclude": "X"}),
@@ -206,16 +210,16 @@ it("compresses exclusions well",function() {
 	var serialized = testBook(
 		["A","B","C1","C2","C3","D1","D3","E1","E3","F1","F3"],
 		tiddlers.concat({title: "Main","cyoa.touch": "F2 F1 F3"}));
-	expect(serialized.length).toBe(3,serialized + " was too long");
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
 	var serialized = testBook(
 		["A","B","C1","C2","C3","D2","E2","F2"],
 		tiddlers.concat({title: "Main","cyoa.touch": "F1 F3 F2"}));
-	expect(serialized.length).toBe(3,serialized + " was too long");
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
 });
 
 it("handles exclusion of implied items",function() {
 	testBook(["A","B","C"],[
-		bitfieldGroup(),
+		utils.defaultGroup(),
 		node("A",null,{"cyoa.exclude": "X"}),node("B","A"),node("C","B"),
 			node("A1","A"),node("A2","A1"),node("A3","A2"),
 		node("D",null,{"cyoa.exclude": "X"}),node("F","D"),
@@ -231,7 +235,7 @@ it("handles exclusives in separate trees",function() {
 	}
 	tiddlers.push({title: "Main","cyoa.touch": "[prefix[A]]"});
 	var serialized = testBook(["A19"],tiddlers);
-	expect(serialized.length).toBe(3,serialized + " was too long");
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
 });
 
 it("handles mixed exclusions interleaved together",function() {
@@ -244,14 +248,14 @@ it("handles mixed exclusions interleaved together",function() {
 		node("A5",undefined,{"cyoa.exclude": "X"}),
 		node("A6"),node("A7"),node("A8")];
 	var serialized = testBook(["A1","A2","A3","A6","A7","A8"],tiddlers.concat({title: "Main","cyoa.touch": "[prefix[A]] A3"}));
-	expect(serialized.length).toBe(3,serialized + " was too long");
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
 	var serialized = testBook(["A4","A5","A6","A7","A8"],tiddlers.concat({title: "Main","cyoa.touch": "[prefix[A]]"}));
-	expect(serialized.length).toBe(3,serialized + " was too long");
+	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
 });
 
 it("handles exclusion within the same tree",function() {
 	testBook(["A","root","worksOneWay","worksTheOther"],[
-		bitfieldGroup(),
+		utils.defaultGroup(),
 		node("root",null),
 		node("A","root",{"cyoa.exclude": "X"}),
 		node("B","root",{"cyoa.exclude": "X"}),
@@ -264,13 +268,14 @@ it("handles exclusion within the same tree",function() {
 it("separates nodes in different version blocks",function() {
 	var tiddlers = [
 		node("A"),node("B","A"),node("C","B"),
-		node("X"),node("Y") // Y might pull D into the V1 block
+		node("X",null,{"cyoa.only":"first"}),
+		node("Y",null,{"cyoa.only":"first"}) // Y might pull D into the V1 block
 	];
 	var extras = [ node("D","C"),node("Y","D")];
 	var serialized = testBook(["X"],tiddlers,extras,{title: "Main","cyoa.touch": "X"});
 	// Mostly, I don't care about the serialized form, but I must make sure versioned nodes don't get lumped in with lower version trees.
 	// If this is 8, it means X is in the 4th position, but the tree before it should only take up 2 bits.
-	expect(serialized).toBe("t=4");
+	expect(valueOf(serialized)).toBe("4");
 
 	// Make sure touches propogate through version blocks
 	testBook(["A","B","C","D","Y"],tiddlers,extras,{title: "Main","cyoa.touch": "Y"});
@@ -300,7 +305,7 @@ it("handles implication trees with huge numbers of states",function() {
 	}
 	var tree = children.map((title) => node(title,"X"));
 	tree.unshift(node("X"));
-	tree.unshift(bitfieldGroup("t"));
+	tree.unshift(utils.defaultGroup());
 	tree.push(node("Z","Y01 Y02"));
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers(tree.concat({title: "Main","cyoa.touch": "Y59 Y00"}));

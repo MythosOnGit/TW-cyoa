@@ -2,6 +2,8 @@
 Represents a cyoa node, <$cyoa>, or <$div class="cyoa-state"/> in compile.
 \*/
 
+"use strict";
+
 var utils = require("./utils");
 var scriptor = require("./scriptor");
 var hash = require("./hash");
@@ -239,7 +241,7 @@ Node.prototype.evalSnippet = function(dataKey,options) {
 		var script = this.element.getAttribute("data-"+dataKey);
 		if(script) {
 			rtn = scriptor.evalAll(script,options.arguments,this);
-			utils.log("Evaluating: "+dataKey+" ("+rtn+") ["+script+"]");
+			utils.log("    Evaluating: "+dataKey+" ("+rtn+") ["+script+"]");
 		}
 		return rtn;
 	}

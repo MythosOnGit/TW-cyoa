@@ -5,19 +5,11 @@ module-type: cyoagrouphandler
 
 \*/
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
-var Handler = require("$:/plugins/mythos/cyoa/js/groupHandlers/handler.js");
+exports.name = "set";
 
-function SetHandler() {
-	Handler.apply(this,arguments);
-};
-
-var Sp = SetHandler.prototype = Object.create(Handler.prototype);
-
-Sp.groupData = function() {
+exports.groupData = function() {
 	var data = {
 		exList: this.generateExclusionList(),
 		up: this.generateUpTree()
@@ -26,24 +18,22 @@ Sp.groupData = function() {
 	return data;
 };
 
-Sp.touch = function(title) {
+exports.touch = function(title) {
 	return this.variable + ".add(" + this.strIdFor(title) + ")";
 };
 
-Sp.reset = function(title) {
+exports.reset = function(title) {
 	return this.variable + ".remove(" + this.strIdFor(title) + ")";
 };
 
-Sp.resetAll = function() {
+exports.resetAll = function() {
 	return this.variable + ".clear()";
 };
 
-Sp.after = function(title) {
+exports.after = function(title) {
 	return this.variable + ".has(" + this.strIdFor(title) + ")";
 };
 
-Sp.do = function(title) {
+exports.do = function(title) {
 	return this.variable + ".flag(" + this.strIdFor(title) + ").val";
 };
-
-exports.set = SetHandler;

@@ -33,7 +33,5 @@ exports["do"] = function(tiddler,widget) {
 };
 
 function getVar(widget) {
-	var wiki = widget.wiki;
-	var stackTiddler = widget.wiki.getCyoaGroups().stack;
-	return wiki.getTiddlerDataCached(stackTiddler.fields.title).variable || "stack";
+	return widget.wiki.getTiddlerText("$:/config/mythos/cyoa/stack","stack");
 };

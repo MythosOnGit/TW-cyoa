@@ -1,3 +1,5 @@
+"use strict";
+
 exports.getSubpages = function(pageName,document) {
 	var encodedName = exports.encodePageForID(pageName);
 	var page = document.getElementById(encodedName);

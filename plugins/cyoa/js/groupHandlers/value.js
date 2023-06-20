@@ -9,37 +9,28 @@ module-type: cyoagrouphandler
 /*global $tw: false */
 "use strict";
 
-var Handler = require("$:/plugins/mythos/cyoa/js/groupHandlers/handler.js");
+exports.name = "value";
 
-function ValueHandler() {
-	Handler.apply(this,arguments);
-};
-
-ValueHandler.prototype = Object.create(Handler.prototype);
-
-
-ValueHandler.prototype.groupData = function() {
+exports.groupData = function() {
 	return this.generateUpTree();
 };
 
-ValueHandler.prototype.touch = function(title) {
+exports.touch = function(title) {
 	return this.variable + ".set(" + this.strIdFor(title) + ")";
 };
 
-ValueHandler.prototype.reset = function(title) {
+exports.reset = function(title) {
 	return this.variable + ".unset(" + this.strIdFor(title) + ")";
 };
 
-ValueHandler.prototype.resetAll = function(title) {
+exports.resetAll = function(title) {
 	return this.variable + ".clear()";
 };
 
-ValueHandler.prototype.after = function(title) {
+exports.after = function(title) {
 	return this.variable + ".is(" + this.strIdFor(title) + ")";
 };
 
-ValueHandler.prototype.afterAll = function(title) {
+exports.afterAll = function(title) {
 	return this.variable + ".any()";
 };
-
-exports.value = ValueHandler;

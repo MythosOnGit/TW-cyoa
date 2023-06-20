@@ -1,0 +1,26 @@
+tags: 
+title: Copy1/start
+tmap.id: 391cc0ca-891c-4201-a9c1-1dceb5cbb6c7
+type: text/vnd.tiddlywiki
+
+\define is-transcluding() yes
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates the simplest case of transclusion. The pages in this demo use the same descriptions of a city, and instead of copy and pasting that description, they transclude it from another tiddler. 
+""">>
+
+You embark on a long walk that will take you around a city. You're starting on the West side.
+
+<<annotate """
+
+This paragraph below is transcluded from [[Copy1/outskirts]]. If you edit this tiddler, you'll see it's appears here only as <<value "{{Copy1/outskirts}}">>, but once you've compiled your story, and you look at your story's source code, you'll see that the content of [[Copy1/outskirts]] was fully copied into this page.
+
+All transclusion is fully resolved at compile time.
+""">>
+
+{{Copy1/outskirts}}
+
+[[Walk west|Copy1/middle]]

@@ -18,6 +18,8 @@ var utils = require("$:/plugins/mythos/cyoa/js/utils");
 function appendsort(source,operator,options) {
 	var titles = [],
 		requirements = {};
+	options = options || {};
+	options.parentWidget = options.widget;
 	source(function(tiddler,title) {
 		titles.push(title);
 		// We only look for append information on this if it's
