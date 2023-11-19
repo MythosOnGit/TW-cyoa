@@ -46,10 +46,10 @@ Bp.parse = function(string) {
 				range = possibleOffStates + BigInt(set[2]);
 				var subsetState = state % range;
 				if(subsetState < possibleOffStates) {
-					self.remove(pivot);
+					removeWithinSet(self,pivot);
 					unpackSet(set[3],subsetState); // the OFF subsets
 				} else {
-					self.add(pivot,true);
+					addWithinSet(self,pivot);
 					// Subtract those on states
 					subsetState -= possibleOffStates;
 					unpackSet(set[4],subsetState); // the ON subsets
@@ -131,7 +131,7 @@ Bp.flag = function(index) {
 	return new Flag(this,index);
 };
 
-Bp.add = function(index,noBridges) {
+Bp.add = function(index) {
 	var parents = this.data.up[index];
 	this.array[index] = true;
 	var exclusions = this.data.exMap[index];
@@ -142,18 +142,16 @@ Bp.add = function(index,noBridges) {
 			}
 		}
 	}
-	if(!noBridges) {
-		var bridges = this.data.bridges[index];
-		if(bridges) {
-			for(var counter = 0; counter < bridges.length; counter++) {
-				this.add(bridges[counter],noBridges);
-			}
+	var bridges = this.data.bridges[index];
+	if(bridges) {
+		for(var counter = 0; counter < bridges.length; counter++) {
+			this.add(bridges[counter]);
 		}
 	}
 	if(parents) {
 		for(var counter = 0; counter < parents.length; counter++) {
 			if(this.array[parents[counter]] !== true) {
-				this.add(parents[counter],noBridges);
+				this.add(parents[counter]);
 			}
 		}
 	}
@@ -172,6 +170,41 @@ Bp.remove = function(index) {
 		for(var counter = 0; counter < children.length; counter++) {
 			if(this.array[children[counter]] !== false) {
 				this.remove(children[counter]);
+			}
+		}
+	}
+};
+
+/** This is like add, except it does not propogate across bridges to other sets. Used only for instantiation, since each set must instantiate itself. **/
+function addWithinSet(bitfield,index) {
+	var parents = bitfield.data.up[index];
+	bitfield.array[index] = true;
+	var exclusions = bitfield.data.exMap[index];
+	if(exclusions) {
+		for(var counter = 0; counter < exclusions.length; counter++) {
+			if(exclusions[counter] !== index) {
+				removeWithinSet(bitfield,exclusions[counter]);
+			}
+		}
+	}
+	if(parents) {
+		for(var counter = 0; counter < parents.length; counter++) {
+			if(bitfield.array[parents[counter]] !== true) {
+				addWithinSet(bitfield,parents[counter]);
+			}
+		}
+	}
+};
+
+/** This is like remove, except it does not propogate across bridges to other sets. Used only for instantiation, since each set must instantiate itself. **/
+function removeWithinSet(bitfield,index) {
+	var children = bitfield.data.down[index];
+	bitfield.array[index] = false;
+	if(children) {
+		for(var counter = 0; counter < children.length; counter++) {
+			var child = children[counter];
+			if(bitfield.array[child] !== false) {
+				removeWithinSet(bitfield,child);
 			}
 		}
 	}

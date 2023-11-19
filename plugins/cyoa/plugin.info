@@ -3,7 +3,7 @@
 	"title": "$:/plugins/mythos/cyoa",
 	"description": "Create your own Choose Your Own Adventure stories",
 	"author": "mythos",
-	"version": "1.3.1",
+	"version": "1.3.2",
 	"core-version": ">=5.2.0",
 	"source": "https://github.com/mythos/TW-CYOA",
 	"list": "configuration readme license",

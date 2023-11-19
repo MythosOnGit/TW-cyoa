@@ -135,6 +135,48 @@ it("handles implications introduced in later versions",async function() {
 	expect(newSerialized).toBe(prevSerialized);
 });
 
+/** Tests for bug where bridges from complex DAGs would mess up array allocation for later-added nodes implying that DAG. **/
+it("handles implying pages introduced in later versions",async function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		bitfieldGroup(),
+		autoVersioning(),
+		node("A1"), node("A2"),
+		node("B","A1 A2"),
+		{title: "Main"}]);
+	// Commit the pages as is
+	await test(wiki,[]);
+	wiki.addTiddlers([
+		node("C","B"),
+		node("D","C"),
+		node("E"),
+		{title: "Main", "cyoa.touch": "E"}]);
+	var serialized = await test(wiki,["E"]);
+	wiki.addTiddler({title: "Main"});
+	await test(wiki,["E"],{state: serialized});
+});
+
+/** Same as above. DAGs with exclusion groups should not cross bridges when zeroing out exclusion groups. The setup for this is very specific. Don't change node names. **/
+it("handles implying pages introduced in later versions",async function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		bitfieldGroup(),
+		autoVersioning(),
+		// This A1 will get set true when instantiated, and set false A2 and all children. (but hopefully won't mess up child  B, which is  in another group)
+		node("A1",null,{"cyoa.exclude":"X"}), node("A2",null,{"cyoa.exclude":"X"}),
+		{title: "Main", "cyoa.touch": "A1"}]);
+	// Commit the pages as is
+	await test(wiki,["A1"]);
+	wiki.addTiddlers([
+		node("B","A2"),
+		node("C","B"),
+		node("D"),
+		{title: "Main", "cyoa.touch": "A1 D"}]);
+	var firstState = await test(wiki,["A1","D"]);
+	wiki.addTiddler({title: "Main"});
+	await test(wiki,["A1","D"],{state: firstState});
+});
+
 /** Deletion of implied pages **/
 
 it('handles deletion of tiddlers after a commit',async function() {
