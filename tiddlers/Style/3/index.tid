@@ -41,7 +41,7 @@ In that case, your <<widget image>> widget looks like this:
 However, <<plugin>> allows you to embed images into the standalone file if you want. Think carefully before deciding to do this, as it may bloat the size of your html file, but if you have a small number of images, and they're small, embedding them maintains the ease and simplicity of a single-file story. Embedding is simple.
 
 # Drag an image you want to embed onto your TiddlyWiki project page (the actual browser window).
-# Press confirm on the [[$:/Import]] tiddler that comes up.
+# Press confirm on the <<tid $:/Import>> tiddler that comes up.
 
 That's it. Your image is now a part of your project as a tiddler.
 

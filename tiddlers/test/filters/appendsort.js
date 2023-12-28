@@ -9,9 +9,7 @@ Tests the [appendsort] filter operator.
 
 describe("appendsort",function() {
 
-var appendsort = require("$:/plugins/mythos/cyoa/js/filters/appendsort").appendsort;
 var utils = require("test/utils.js");
-var CircularDependencyError = appendsort.CircularDependencyError;
 
 function makeTiddlers(list,appends) {
 	var tiddlers = [];
@@ -62,19 +60,6 @@ function test(list,rules,rulesForTesting) {
 	return results;
 };
 
-it("ensures cyoa-render is enabled",function() {
-	// AAA should get placed after Main, even though it only comes up in the cyoa.append if cyoa-render is active
-	const wiki = new $tw.Wiki();
-	wiki.addTiddlers([
-		{title: "a", "cyoa.append": "c"},
-		{title: "b", "cyoa.append": "[<cyoa-render>!match[]then[a]]"},
-		{title: "c"}]);
-	var widget = utils.createWidget();
-	widget.setVariable("cyoa-render","yes");
-	const results = filter(wiki,["a","b","c"],widget);
-	testRules(results,{"b":["a"]});
-});
-
 it("works with no dependencies",function() {
 	test(["a","b","c"],{});
 });
@@ -106,23 +91,17 @@ it("keeps first item close to front as possible",function() {
 it("handles circular dependencies",function() {
 	const list = ["x0","x1","x2","x3","x4"];
 	const rules = { "x3": ["x2"],"x2": ["x1"],"x1": ["x3"]};
-	var thrown = false;
-	// The chai throw assertion doesn't work for some reason.
-	// It seems to do with the fact we're in a tiddler right now.
-	try {
-		test(list,rules);
-	}
-	catch (e) {
-		expect(e instanceof CircularDependencyError).toBeTruthy();
-		expect(e.message).toContain("Circular dependency");
-		expect(e.message).toContain("x1")
-		expect(e.message).toContain("x2")
-		expect(e.message).toContain("x3")
-		expect(e.message).not.toContain("x0")
-		expect(e.message).not.toContain("x4")
-		thrown = true;
-	}
-	expect(thrown).toBeTruthy();
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers(makeTiddlers(list,rules));
+	const results = filter(wiki,list);
+	expect(results.length).toBe(1);
+	const msg = results[0];
+	expect(msg).toContain("Filter Error: Circular dependency detected within tiddlers");
+	expect(msg).toContain("x1")
+	expect(msg).toContain("x2")
+	expect(msg).toContain("x3")
+	expect(msg).not.toContain("x0")
+	expect(msg).not.toContain("x4")
 });
 
 it("handles append sets",function() {
@@ -145,10 +124,34 @@ it("passes <<currentTiddler>> along through the widget",function() {
 	test(list,rules,testRules);
 });
 
-it("properly ignores title-only items in stream",function() {
+it("properly passes along non-existent pages in source",function() {
 	const wiki = new $tw.Wiki();
-	const list = ["titleA","titleB"];
-	expect(filter(wiki,list)).toEqual(list);
+	wiki.addTiddlers([
+		{title: "A"},
+		{title: "C", "cyoa.append": "A"},
+		{title: "D"}]);
+	const results = filter(wiki,["A","B","C","D"]);
+	expect(results).toEqual(["C","A","B","D"]);
+});
+
+it("properly ignores non-existent pages in append lists",function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		{title: "A"},
+		{title: "B", "cyoa.append": "A X"},
+		{title: "C"}]);
+	const results = filter(wiki,["A","B","C"]);
+	expect(results).toEqual(["B","A","C"]);
+});
+
+it("properly sorts non-existent pages in append lists and source",function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		{title: "B", "cyoa.append": "A"},
+		{title: "C"}]);
+	// "A" does not exist in this case, but there are directives for it. Obey them.
+	const results = filter(wiki,["A","B","C"]);
+	expect(results).toEqual(["B","A","C"]);
 });
 
 });

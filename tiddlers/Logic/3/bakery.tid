@@ -18,7 +18,7 @@ Seeing as how you already have a pie, and you can't carry another, you don't tak
 
 <<annotate """
 
-These active nodes not only manage what text gets displayed, but the first block will touch [[Logic3/pie]] to indicate a pie has been added to your inventory, but ''only'' if that node evaluates true and renders (which occurs if <<page Logic3/pie>> isn't visited).
+These active nodes not only manage what text gets displayed, but the first block will touch [[Logic3/pie]] to indicate a pie has been added to your inventory, but ''only'' if that node evaluates true and renders (which occurs if <<plink Logic3/pie>> isn't visited).
 """ >>
 
 [[Return to the town square|Logic3/troll]]

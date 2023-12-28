@@ -1,0 +1,27 @@
+cyoa.caption: //$79.75//: Buy the boat.
+cyoa.do: #{Scripts3/money} = Math.max(0, #{Scripts3/money}-79.75)
+cyoa.if: #{Scripts3/money} >= 79.75
+list-before: 
+tags: Scripts3/chores
+title: Scripts3/end
+tmap.id: 6d81d35d-85f6-4a18-ad0a-e7fb6c248d37
+type: text/vnd.tiddlywiki
+
+\define return() [[End adventure.|Demo]]
+
+<<annotate """
+
+Three things to note here.
+
+# We deduct a decimal amount from [[Scripts3/money]]. This is allowed. Any rational number is supported by the numbers, although most users may make do with integers.
+# We used <<field do>> and not <<field done>> so that the funds were deducted before the contents of this page were evaluated. If we had used <<field done>>, then the "Remaining funds" below would show our funds //before// deducting the money, which would not have been correct.
+# The <<field do>> snippet that deducts the money uses <<snippet "Math.max">> to make sure we don't go into a negative value. Not really necessary since this page tests to make sure we have enough funds, but it does show how you're able to access the javascript Math library.
+""" >>
+
+Now that you finally have enough funds to purchase that toy boat. You march confidently back to the toy store and proudly lay the money on the counter.
+
+Back home, you unpack the box. It requires assembly, and it looks vastly complicated. Seems you have more work ahead of you.
+
+Remaining funds: $<$cyoa write="#{Scripts3/money}" />
+
+<<return>>

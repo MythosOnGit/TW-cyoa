@@ -8,7 +8,7 @@ title: $:/plugins/mythos/cyoa/ui/ViewTemplate/append
 
 Appends
 
-<$list filter="[all[current]cyoa:appends[]]"><div><$list variable="weight" filter="[all[current]get[cyoa.weight]]"><<weight>>- </$list><$link><<currentTiddler>></$link></div></$list>
+<$list filter="[all[current]cyoa:appends[]]"><div><$text text={{{ [all[current]get[cyoa.weight]addsuffix[- ]] }}} /><$link/></div></$list>
 
 </div>
 

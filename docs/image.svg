@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="tc-image-export-cyoa-button tc-image-button" width="128px" height="128px" viewBox="0 0 128 128">
+ <defs>
+    <linearGradient id="gradient-fade" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="60%" stop-color="lightblue" />
+      <stop offset="100%" stop-color="lightblue" stop-opacity="0" />
+    </linearGradient>
+ </defs>
+ <path fill="none" stroke-width="7.6" stroke="url(#gradient-fade)" d="M 64,103 V 14 M 14,35 L 64,57 114,35" />
+ <circle cx="14" cy="35" r="13" fill="#6495ED"/>
+ <circle cx="114" cy="35" r="13" fill="#6495ED"/>
+ <circle cx="64" cy="14" r="13" fill="#6495ED"/>
+ <circle cx="64" cy="57" r="13" fill="#6495ED"/>
+</svg>

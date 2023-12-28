@@ -1,5 +1,5 @@
-title: Stylesheet.css
 tags: $:/tags/cyoa/Stylesheet
-type: text/css
+title: Stylesheet.css
 tmap.id: 103f1b7a-6f01-489b-b654-34da691f0382
 tmap.style: {"shape":"square","color":{"background":"rgba(207,78,50,1)","border":"rgba(171,65,38,1)"},"size":25}
+type: text/css

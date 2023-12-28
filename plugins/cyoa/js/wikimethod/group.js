@@ -12,7 +12,7 @@ const pageSetField = "cyoa.group";
 const defaultPageSet = "$:/plugins/mythos/cyoa/groups/default";
 
 var Handler = require("$:/plugins/mythos/cyoa/js/groupHandlers/handler.js");
-const groupModules = $tw.modules.createClassesFromModules("cyoagrouphandler",null,Handler);
+const cyoaTypes = $tw.modules.getModulesByTypeAsHashmap("cyoatype");
 
 exports.getCyoaDefaultGroup = function() { return defaultPageSet; };
 
@@ -42,9 +42,8 @@ exports.getCyoaGroupHandler = function(group) {
 			return undefined;
 		}
 		var groupTiddler = wiki.getTiddler(group);
-		var handler = groupTiddler.fields["cyoa.handler"];
-		var Module = groupModules[handler];
-		if(Module === undefined) {
+		var handler = groupTiddler.fields["cyoa.type"];
+		if(!cyoaTypes[handler]) {
 			var message = (handler)?
 				("Group Handler '"+handler+"' for group '"+group+"' does not exist."):
 				("Group '"+group+"' does not specify a group handler.");
@@ -53,9 +52,9 @@ exports.getCyoaGroupHandler = function(group) {
 		}
 		var data = Object.create(groupTiddler.fields);
 		data.handler = handler;
-		data.style = groupTiddler.fields["cyoa.style"];
+		data.style = groupTiddler.fields["cyoa.serializer"];
 		var tiddlers = wiki.getTiddlersInCyoaGroup(group);
-		var newHandler = new Module();
+		var newHandler = new Handler();
 		newHandler.init(wiki,group,data,tiddlers);
 		return newHandler;
 	});
@@ -118,6 +117,7 @@ exports.getCyoaGroupData = function() {
 		if(handler && handler.groupData) {
 			var key = this.getCyoaGroupVariable(group,"cyoa.key");
 			output[key] = handler.groupData();
+			output[key].type = handler.data.handler;
 		}
 	}
 	return output;

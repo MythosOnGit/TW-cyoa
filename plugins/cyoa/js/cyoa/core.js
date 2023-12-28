@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
 
-var utils = require("./utils");
-var Page = require("./page");
-var Book = require("./book");
+var utils = require('./utils');
+var Page = require('./page');
+var Link = require('./link');
+var Book = require('./book');
 
 function Core(document,state,manager) {
 	this.document = document;
@@ -14,28 +15,28 @@ function Core(document,state,manager) {
 	var self = this;
 	this.manager.onpageturn = function() {self.openPage();};
 	this.book.onlinkclick = function(link,event) {self.clicked_link(link,event);};
-	this.document.addEventListener("keydown",function(e) {
+	this.document.addEventListener('keydown',function(e) {
 		var keyArray = [];
 		if(e.altKey) {
-			keyArray.push("alt");
+			keyArray.push('alt');
 		}
 		if(e.ctrlKey) {
-			keyArray.push("ctrl");
+			keyArray.push('ctrl');
 		}
 		if(e.metaKey) {
-			keyArray.push("meta");
+			keyArray.push('meta');
 		}
 		if(e.shiftKey) {
-			keyArray.push("shift");
+			keyArray.push('shift');
 		}
 		keyArray.push(e.key);
-		var key = keyArray.join("-");
+		var key = keyArray.join('-');
 		if(self.loadedLinks[key] !== undefined) {
 			self.loadedLinks[key].element.onclick(e);
 		}
 		keyArray.pop();
 		keyArray.push(e.code);
-		key = keyArray.join("-");
+		key = keyArray.join('-');
 		if(e.code !== e.key && self.loadedLinks[key] !== undefined) {
 			self.loadedLinks[key].element.onclick(e);
 		}
@@ -57,16 +58,16 @@ Core.prototype.openPage = function(page) {
 	this.topPage = currentPage;
 	var newPages = [];
 
-	utils.log("Turning to page: " + currentPage);
-	this.document.body.setAttribute("data-title", currentPage);
+	utils.log('Turning to page: ' + currentPage);
+	this.document.body.setAttribute('data-title', currentPage);
 	this.document.body.scrollTop=this.document.documentElement.scrollTop=0;
 
-		utils.log("  Headers");
+		utils.log('  Headers');
 	this.processExtraPages(this.book.headers);
 
 	var page = this.book.getPageOrDefault(currentPage);
 	while (page) {
-		utils.log("  Page: " + page.title);
+		utils.log('  Page: ' + page.title);
 		page.execute(this.cyoa.vars);
 		page.eachActiveLink(function(node) {
 			self.registerHotkeys(node,node.hotkey || self.loadedLinks.length);
@@ -74,7 +75,7 @@ Core.prototype.openPage = function(page) {
 		newPages.push(page.title);
 		page = page.selectAppend(this.cyoa.vars,this.cyoa.stackVariable);
 	}
-		utils.log("  Footers");
+		utils.log('  Footers');
 	this.processExtraPages(this.book.footers);
 	// Close pages that aren't still open
 	for(var i = 0; i < this.openPages.length; i++) {
@@ -103,15 +104,15 @@ Core.prototype.processExtraPages = function(pages) {
 
 Core.prototype.registerHotkeys = function(node,hotkeyString) {
 	if(hotkeyString) {
-		var hotkeys = hotkeyString.toString().split(" ");
+		var hotkeys = hotkeyString.toString().split(' ');
 		for(var index = 0; index < hotkeys.length; index++) {
 			if(hotkeys[index]) {
-				var metas = hotkeys[index].split("-");
+				var metas = hotkeys[index].split('-');
 				// Take off that last key, sort the meta keys, and recombine
 				var key = metas.pop();
 				metas.sort();
 				metas.push(key);
-				this.loadedLinks[metas.join("-")] = node;
+				this.loadedLinks[metas.join('-')] = node;
 			}
 		}
 	}
@@ -122,12 +123,13 @@ Loads fresh state from the manager and distributes it for use.
 */
 Core.prototype.unpack_state = function() {
 	var self = this;
-	utils.safeCall(null,
+	safeCall(null,
 		this.document,
-		function(){self.state.deserialize(self.manager.getState());});
+		function(){self.state.deserialize(self.manager.getState(),self.cyoa.vars);});
 };
 
-Core.prototype.clicked_link = function(linkNode,event) {
+Core.prototype.clicked_link = function(linkElement,event) {
+	var linkNode = new Link(this.book,linkElement);
 	var threw = false;
 	if(linkNode.replaces) {
 		// Refresh the state, undoing any changes
@@ -139,11 +141,11 @@ Core.prototype.clicked_link = function(linkNode,event) {
 		threw = true;
 	}
 	if(!threw) {
-		utils.safeCall(this,this.document,function() {
+		safeCall(this,this.document,function() {
 			var newState;
 			var href = this.resolveNextPage(linkNode,this.cyoa.vars);
 			if(href) {
-				newState = this.state.serialize();
+				newState = this.state.serialize(this.cyoa.vars);
 				this.manager.pushState(newState,href);
 			}
 		});
@@ -163,4 +165,18 @@ Core.prototype.resolveNextPage = function(linkElement,state) {
 		next = this.topPage;
 	}
 	return next || undefined;
-}
+};
+
+function safeCall(thisArg,document,method,defaultReturn) {
+	var rtn = defaultReturn;
+	try {
+		rtn = method.call(thisArg);
+	}
+	catch(err) {
+		utils.error(err,document);
+		if(defaultReturn === undefined) {
+			throw(err);
+		}
+	}
+	return rtn;
+};

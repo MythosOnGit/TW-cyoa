@@ -17,7 +17,6 @@ Don't remove these includes, even though we don't use them. They test to make su
 */
 require("$:/plugins/mythos/cyoa/js/widgets/options");
 var CyoaWidget = require("$:/plugins/mythos/cyoa/js/widgets/cyoa").cyoa;
-var cyoaUtils = require("$:/plugins/mythos/cyoa/js/utils");
 var utils = require("test/utils.js");
 
 function defaultWiki() {
@@ -42,20 +41,17 @@ var templateAttr = " template='"+template+"' ";
 	function testNoTemplate(text,expectedTag,expectedAText) {
 		var wiki = defaultWiki();
 		wiki.addTiddler({title: "Main",text: text});
-		wiki.addTiddler({title:"$:/config/mythos/cyoa/widget-info",text:"no"});
 		var node = utils.renderTiddler(wiki,"Main");
+		var infoNodes = removeInfo(node);
 		var states = node.getElementsByClassName("cyoa-state");
-		var encoded1 = cyoaUtils.encodePageForID("options/A");
 		var encoded2 = encodeURIComponent("options/B");
 		expect(states.length).toBe(2);
 		for(var i=0; i<states.length; i++) {
 			expect(states[i].tagName.toLowerCase()).toBe(expectedTag.toLowerCase());
 		}
-		expect(states[0].getAttribute("data-depend")).toBe(encoded1);
-		node.getElementsByClassName("cyoa-state")
+		expect(infoNodes[0].textContent).toBe("Depends on: options/A");
 		// equivalent to query: ".cyoa-state a"
 		var links = [];
-		var states = node.getElementsByClassName("cyoa-state");
 		$tw.utils.each(states,function(state) {
 			links.push.apply(links,state.getElementsByTagName("a"));
 		});
@@ -65,6 +61,19 @@ var templateAttr = " template='"+template+"' ";
 		expect(links[1].textContent.trim()).toBe(expectedAText.replace("A","B"));
 		expect(links[1].getAttribute("href")).toBe("#"+encoded2);
 		return node;
+	};
+
+	// All cyoa-state elemetns have info inside them. Remove them all.
+	function removeInfo(node) {
+		var states = node.getElementsByClassName("cyoa-state");
+		var infoNodes = [];
+		$tw.utils.each(states,function(state) {
+			if (state.firstElementChild.classList.contains('cyoa-info')) {
+				infoNodes.push(state.firstElementChild);
+				state.removeChild(state.firstElementChild);
+			}
+		});
+		return infoNodes;
 	};
 
 	it("handles 'all' attribute correctly",function() {
@@ -144,9 +153,7 @@ var templateAttr = " template='"+template+"' ";
 			{title: "Main",text: "<$options filter=grapefruit/>\n"}]])
 		expect(utils.warnings()).toHaveBeenCalledTimes(1);
 		var message = utils.warnings().calls.argsFor(0)[0];
-		expect(message).toContain("grapefruit");
-		expect(message).toContain("Main");
-		expect(message).toContain("$options");
+		expect(message).toBe("Page 'Main': $cyoa widget depend includes non-page tiddler 'grapefruit'");
 	});
 
 	it("handles non-page tiddlers passed by filter",function() {
@@ -156,9 +163,7 @@ var templateAttr = " template='"+template+"' ";
 			{title: "$:/sysTiddler",text: "text"}]])
 		expect(utils.warnings()).toHaveBeenCalledTimes(1);
 		var message = utils.warnings().calls.argsFor(0)[0];
-		expect(message).toContain("$:/sysTiddler");
-		expect(message).toContain("Main");
-		expect(message).toContain("$options");
+		expect(message).toBe("Page 'Main': $cyoa widget depend includes non-page tiddler '$:/sysTiddler'");
 	});
 
 	it("doesn't issues warnings when it's not cyoa-rendering",function() {
@@ -172,8 +177,8 @@ var templateAttr = " template='"+template+"' ";
 	it("uses title as text when cyoa.caption missing",function(){
 		const wiki = new $tw.Wiki();
 		wiki.addTiddler({title: "no/tags"});
-		wiki.addTiddler({title:"$:/config/mythos/cyoa/widget-info",text:"no"});
 		var doc = utils.renderText(wiki,"<$options filter='no/tags' />");
+		removeInfo(doc);
 		var list = doc.getElementsByTagName("a");
 		expect(list.length).toBe(1);
 		var a = list[0];
@@ -190,10 +195,10 @@ var templateAttr = " template='"+template+"' ";
 			utils.draft({title:"C",text:"",tags:"target"}),
 			{title:"D",text:"",tags:"target"},
 			{title:"E",text:"",tags:"target exclude"},
-			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"$:/config/mythos/cyoa/page-filter",text:"[all[]] -[tag[exclude]]"},
 			{title:"target",text: "<$options>\n",list: "D"}]);
 		var doc = utils.renderTiddler(wiki,"target");
+		removeInfo(doc);
 		expect(doc.documentElement.textContent).toBe("DBAC");
 	});
 
@@ -206,10 +211,10 @@ var templateAttr = " template='"+template+"' ";
 			{title:"D",text:"",tags:"exclude"},
 			// Ignore drafts
 			utils.draft({title: "E",tags: "target"}),
-			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"$:/config/mythos/cyoa/page-filter",text:"[all[]] -[tag[exclude]]"},
 			{title:"target",text: "<$options>\n",list: "A B C D"}]);
 		var doc = utils.renderTiddler(wiki,"target");
+		removeInfo(doc);
 		expect(doc.documentElement.textContent).toBe("ABC");
 	});
 
@@ -218,9 +223,9 @@ var templateAttr = " template='"+template+"' ";
 		wiki.addTiddlers([
 			{title:"A"},{title:"B"},{title:"C"},
 			{title:"target",text: "<$options tiddler=list />",list: "B"},
-			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			{title:"list",list: "A C"}]);
 		var doc = utils.renderTiddler(wiki,"target");
+		removeInfo(doc);
 		expect(doc.documentElement.textContent).toBe("AC");
 	});
 
@@ -230,24 +235,21 @@ var templateAttr = " template='"+template+"' ";
 			{title:"A",tags:"target"},
 			{title:"B",tags:"target"},
 			{title:"target",text: "<$options/>\n"},
-			{title:"$:/config/mythos/cyoa/widget-info",text:"no"},
 			utils.draft({title:"target",text: "<$options/>\n"})]);
 		var doc = utils.renderTiddler(wiki,"Draft of 'target'");
+		removeInfo(doc);
 		expect(doc.documentElement.textContent).toBe("AB");
 	});
 
 	it("embeds weight into options",function() {
-		const wiki = new $tw.Wiki();
-		wiki.addTiddlers([
-			{title: "A","cyoa.weight": "13"},
+		var core = utils.testBook([
+			{title: "A","cyoa.weight": "5"},
 			{title: "B"},
-			{title: "target",text:"<$options filter='A B' />\n"}]);
-		const doc = utils.renderTiddler(wiki,"target");
-		var options = doc.getElementsByClassName("cyoa-state");
-		expect(options[0].getAttribute("data-depend")).toBe("A");
-		expect(options[0].getAttribute("data-weight")).toContain("13");
-		expect(options[1].getAttribute("data-depend")).toBe("B");
-		expect(options[1].getAttribute("data-weight")).toBeFalsy();
+			{title: "C","cyoa.weight": "1000"},
+			{title: "Main",text: "<$cyoa class=wrapper index=5>\n\n<$options filter='A B C' />\n"}])
+		var wrapper = core.document.getElementsByClassName("wrapper")[0];
+		var active = wrapper.getElementsByClassName("cyoa-active")[0];
+		expect(active.textContent).toBe("B");
 	});
 
 	// I'm not actually sure I want this behavior. It could confuse end users, and it's simple enough to exclude in each use case.
@@ -262,6 +264,6 @@ var templateAttr = " template='"+template+"' ";
 		var node = utils.renderTiddler(wiki,"main");
 		var states = node.getElementsByClassName("cyoa-state");
 		expect(states.length).toBe(1);
-		expect(states[0].getAttribute("data-depend")).toBe("options/included");
+		expect(states[0].firstElementChild.textContent).toBe("Depends on: options/included");
 	});
 });

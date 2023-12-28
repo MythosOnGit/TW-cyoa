@@ -11,9 +11,7 @@ Utils for the Tiddlywiki side of cyoa.
 
 var cyoaUtils = require("./cyoa/utils");
 
-exports.decodePage = cyoaUtils.decodePage;
 exports.encodePage = cyoaUtils.encodePage;
-exports.encodePageForID = cyoaUtils.encodePageForID;
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
@@ -70,17 +68,6 @@ exports.enquote = function(x,quote) {
 	}
 };
 
-exports.enlink = function(title) {
-	if(title.indexOf("'") < 0) {
-		return "<$link to='" + title + "'/>";
-	} else if(title.indexOf('"""') < 0 && title[title.length-1] !== '"') {
-		return '<$link to="""' + title + '"""/>';
-	} else {
-		// We need to get really sophisticated for this title
-		return "<$link to={{{[[" + title.split("]").join(']] ="]" =[[') + "]] +[join[]]}}}/>";
-	}
-};
-
 exports.toHashMap = function(list,truthValue) {
 	truthValue = truthValue || true;
 	var map = Object.create(null);
@@ -106,20 +93,6 @@ exports.createDummyWidget = function(currentTiddler,options) {
 	parentWidget.setVariable("currentTiddler",currentTiddler);
 	var pOptions = Object.assign({},options,{parentWidget: parentWidget});
 	return new Widget({},pOptions);
-};
-
-exports.filterNonPageTiddlers = function(list,widget,warningString) {
-	return list.filter(function(page) {
-		if(widget.wiki.isCyoaPage(page)) {
-			return true;
-		}
-		var rendering = widget.hasVariable("cyoa-render","yes");
-		if(rendering) {
-			var currentTiddler = widget.getVariable("currentTiddler");
-			exports.warnForTiddler(currentTiddler,warningString + " " + page,{wiki: widget.wiki});
-		}
-		return false;
-	});
 };
 
 /*
@@ -186,6 +159,7 @@ exports.processJavascript = function(script, method) {
 	filterPlaceholderRegexp.lastIndex = 0;
 	while(match = filterPlaceholderRegexp.exec(script)) {
 		var ptr = match.index + match[0].length;
+		var restartPoint = filterPlaceholderRegexp.lastIndex;
 		var placeholder = extractPlaceholder(script,ptr);
 		if (placeholder === undefined) {
 			// We hit a premature end. Quit out.
@@ -193,7 +167,8 @@ exports.processJavascript = function(script, method) {
 		}
 		ptr += placeholder.length+1;
 		method(placeholder,filterPlaceholders[match[1]],match.index,ptr);
-		//index = ptr;
+		// Reset the regexp lastIndex to what it was, because a nested call to this method may have changed it.
+		filterPlaceholderRegexp.lastIndex = restartPoint;
 	}
 };
 

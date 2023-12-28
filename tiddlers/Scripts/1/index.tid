@@ -1,5 +1,4 @@
 caption: Scripts 1: Snippets
-demo.equipment: <<annotate """  This simple page just represents possessing an equipment piece. After it's selected (visited), it sends the reader back for another choice, or it goes to the end if two equipment pieces have been selected.  Look to [[Scripts1/choice]] for an example of a <<field cyoa.if>> field on a page, and [[Scripts1/end]] for examples of <<attr if>> attributes on active nodes. """ >>
 description: Simple scripting snippets for more elaborate constraints.
 tags: Scripts
 title: Scripts1
@@ -39,10 +38,4 @@ In general, ''if'' conditions are not as easily maintainable or representable wi
 
 Here is an example project for you to explore. These nodes contain annotations that have further details and tips: <<demo>>
 
-<!--
-
-! Action Snippets (''do'' and ''done'')
-
-Pages can have the field <<field cyoa.do>> whose value is a script which is executed when the page is viewed. Unlike <<field cyoa.if>>, this script is not tested as a constraint, rather this script is used to set variable values. Here are some examples.
-
--->
+Next Tutorial:  <$link to="Scripts2">{{Scripts2!!caption}}</$link>

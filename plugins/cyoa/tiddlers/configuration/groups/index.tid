@@ -1,0 +1,37 @@
+caption: Groups
+tags: $:/tags/cyoa/Configuration
+title: $:/plugins/mythos/cyoa/configuration/groups
+
+<$let
+	titleState="$:/state/mythos/cyoa/groupName"
+	tabState=<<qualify $:/state/mythos/cyoa/groupsTab>>>
+
+<em class="tc-edit">Add new group:</em>
+<$edit-text tiddler=<<titleState>> tag="input" default="" placeholder="group name" />
+<$button tooltip="Add a new cyoa group with the given unique name" >
+<$set name="groupName" filter="[<titleState>get[text]]">
+<$action-createtiddler
+	$basetitle=<<groupName>>
+	tags="$:/tags/cyoa/Type"
+	cyoa.type=set
+	cyoa.serializer=string />
+<$action-setfield
+	$tiddler=<<tabState>>
+	$field=text
+	$value=<<groupName>> />
+<$action-deletetiddler
+	$tiddler=<<titleState>> />
+</$set>
+<$text text="add"/>
+</$button>
+
+<$macrocall
+	$name="tabs"
+	tabsList="[[$:/tags/cyoa/Type]tagging[]] $:/plugins/mythos/cyoa/stack"
+	default="$:/plugins/mythos/cyoa/groups/default"
+	explicitState=<<tabState>>
+	class="tc-vertical"
+	template="$:/plugins/mythos/cyoa/configuration/groups/tabTemplate"
+/>
+
+</$let>

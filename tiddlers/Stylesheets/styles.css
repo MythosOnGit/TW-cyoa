@@ -23,6 +23,7 @@ a .doc-widget {
 	color: <<color tiddler-link-foreground>>;
 }
 .doc-snippet {
+	display: inline-block;
 	background-color: inherit;
 	border: none;
 	color: <<color message-foreground>>;

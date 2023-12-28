@@ -14,6 +14,7 @@ title: $:/plugins/mythos/cyoa/ui/EditTemplate/group
   &#32;
   <$button message="tm-remove-field" param="cyoa.group" class="tc-btn-invisible tc-btn-icon" tooltip="Reset group" aria-label="reset group">
    {{$:/core/images/delete-button}}
+   <$action-setfield $tiddler="$:/temp/cyoa/edit-state" text=`cyoa.group-$(currentTiddler)$`/>
   </$button>
  </$fieldmangler>
 </span>

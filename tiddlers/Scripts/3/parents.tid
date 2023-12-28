@@ -1,0 +1,29 @@
+cyoa.caption: Explain to your parents that you're broke.
+cyoa.if: #{Scripts3/money} == 0
+tags: Scripts3/chores
+title: Scripts3/parents
+tmap.id: 5b83a598-7cea-453f-9e38-d00ed5957449
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page demonstrates the important difference between a number which is set to 0, and a number that is not set. The <<field if>> snippet attached to this page is <$transclude $variable="snippet" _={{!!cyoa.if}} />, which is true in both cases.
+
+But the first node in this page tests if we're //before <<plink Scripts3/money>>//, which is only true if the number is unset (never set, or most recently reset). If the number has been set to 0 (like it can be in [[Scripts3/bitcoin]]), it's still considered set, and thus //visited//.
+""" >>
+
+You find your parents and explain to them your financial situation and why you need the money.
+
+<$cyoa before="Scripts3/money">
+
+Your father breaks into a long speech about the importants of hard work, earning your way, and how this is a great opportunity for you to learn how to make money.
+
+Long story short, your parents don't give you any money.
+</$cyoa><$else done="#{Scripts3/money} += 100">
+
+The story about how you lost all your money online particularly seems to move your mother. Though your father thinks you were an idiot, she later slips you a hundred dollars.
+
+You'll find out a decade later that this came out of your college fund.
+</$else>
+
+[[Next day|Scripts3/chores]]

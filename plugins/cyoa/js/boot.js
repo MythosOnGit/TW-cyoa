@@ -3,26 +3,11 @@
 var _boot = (function(cyoa,inBrowser) {
 
 cyoa = cyoa || Object.create(null);
+var modules = cyoa.modules = cyoa.modules || Object.create(null);
 var boot = cyoa.boot = cyoa.boot || Object.create(null);
-var state;
 
-/*
-This is encodePage, but it works exclusively on a string. encodePage can
-also take an array.
-*/
-function encodeString(idString) {
-	var dictionary = { "/": "%2F" };
-	var encoded = encodeURIComponent(idString);
-	for(var dec in dictionary) {
-		var enc = dictionary[dec];
-		encoded = encoded.split(enc).join(dec);
-	}
-	return encoded;
-};
-
-boot.declare = function(modules,args) {
-	state.declare.apply(state,args);
-}
+// This is the only one available in production.
+boot.saver = "uri";
 
 boot.reportError = function(error) {
 	console.error(error.stack || error);
@@ -36,7 +21,7 @@ boot.reportError = function(error) {
 /*
 Ripped from $tw.utils.resolvePath
 */
-boot.resolvePath = function(sourcePath,rootPath) {
+function resolvePath(sourcePath,rootPath) {
 	var src = sourcePath.split("/");
 	var root = (rootPath || "").split("/");
 	root.splice(root.length-1,1);
@@ -55,18 +40,19 @@ boot.resolvePath = function(sourcePath,rootPath) {
 
 var moduleSets = {"cyoa": "$:/plugins/mythos/cyoa/js/cyoa/cyoa.js"};
 
-boot.resolveModuleGivenPath = function(modules,path) {
-	if(modules[path]) {
+function resolveModuleGivenPath(path) {
+	var mods = modules.titles;
+	if(mods[path]) {
 		return path;
-	} else if(modules[path + ".js"]) {
+	} else if(mods[path + ".js"]) {
 		return path + ".js";
-	} else if(modules[moduleSets[path]]) {
+	} else if(mods[moduleSets[path]]) {
 		return moduleSets[path];
 	}
 	return null;
 };
 
-boot.execute = function(modules,path,root) {
+modules.execute = function(path,root) {
 	if(!path) {
 		throw new Error("require requires a non-empty string ("+path+")");
 	}
@@ -74,8 +60,8 @@ boot.execute = function(modules,path,root) {
 	if(path[0] == ".")  {
 		rootToUse = root;
 	}
-	var name = boot.resolvePath(path,rootToUse);
-	var realPath = boot.resolveModuleGivenPath(modules,name);
+	var name = resolvePath(path,rootToUse);
+	var realPath = resolveModuleGivenPath(name);
 	if(!realPath) {
 		if(!inBrowser) {
 			return require(path);
@@ -83,12 +69,12 @@ boot.execute = function(modules,path,root) {
 			throw new Error("Module '"+name+"' not found");
 		}
 	}
-	var moduleSet = modules[realPath];
+	var moduleSet = modules.titles[realPath];
 	if(moduleSet.loading) {
 		throw new Error("Cyclic dependency encountered importing '"+name+"'");
 	}
 	if(!moduleSet.loaded) {
-		var code = "(function(module,exports,declare,require,cyoa) {(function(){" + moduleSet.text + "\n;})();\nreturn exports;\n})\n";
+		var code = "(function(module,exports,require,$cyoa) {(function(){" + moduleSet.text + "\n;})();\nreturn exports;\n})\n";
 		code += "\n\n//# sourceURL=" + name;
 		try {
 			moduleSet.loading = true;
@@ -97,8 +83,7 @@ boot.execute = function(modules,path,root) {
 			fn.call(null,
 				module,
 				module.exports,
-				function() {return boot.declare(modules,arguments);},
-				function(path) {return boot.execute(modules,path,realPath);},
+				function(path) {return modules.execute(path,realPath);},
 				cyoa);
 			moduleSet.module = module;
 			moduleSet.loaded = true;
@@ -114,7 +99,7 @@ boot.execute = function(modules,path,root) {
 
 boot.gatherModules = function(document) {
 	var scriptHolders = document.getElementsByClassName("cyoa-scripts");
-	var modules = Object.create(null);
+	var mods = Object.create(null);
 	for(var index = 0; index < scriptHolders.length; index++) {
 		var div = scriptHolders[index].firstElementChild;
 		for(; div; div = div.nextElementSibling) {
@@ -122,29 +107,29 @@ boot.gatherModules = function(document) {
 			var encodedName = div.id;
 			var type = div.getAttribute("module-type");
 			var name = decodeURIComponent(encodedName);
-			modules[name] = {
+			mods[name] = {
 				text: div.textContent,
 				type: type,
 				loaded: false
 			};
 		}
 	}
-	return modules;
+	return mods;
 }
 
-boot.forEachModuleOfType = function(modules,type,method) {
-	for(var name in modules) {
-		var module = modules[name];
-		if(module.type === type) {
-			var exports = boot.execute(modules,name);
+modules.forEachModuleOfType = function(type,method) {
+	if(modules.types[type]) {
+		for(var name in modules.types[type]) {
+			var module = modules.types[type][name];
+			var exports = modules.execute(name);
 			method(name,exports);
 		}
 	}
 };
 
-boot.assignModulesOfType = function(modules,type,target) {
+modules.assignModulesOfType = function(type,target) {
 	target = target || Object.create(null);
-	boot.forEachModuleOfType(modules,type,function(name,exports) {
+	modules.forEachModuleOfType(type,function(name,exports) {
 		for(var member in exports) {
 			target[member] = exports[member];
 		}
@@ -152,25 +137,64 @@ boot.assignModulesOfType = function(modules,type,target) {
 	return target;
 };
 
-boot.executeModules = function(modules) {
-	for(var name in modules) {
-		boot.execute(modules,name);
+modules.getModulesByTypeAsHashmap = function(type,nameField) {
+	nameField = nameField || "name";
+	var results = Object.create(null);
+	modules.forEachModuleOfType(type,function(title,module) {
+		results[module[nameField]] = module;
+	});
+	return results;
+};
+
+modules.createClassesFromModule = function(type,baseClass) {
+	var classes = Object.create(null);
+	modules.forEachModuleOfType(type,function(title,moduleExports) {
+		var newClass = function() {};
+		if(baseClass) {
+			newClass.prototype = Object.create(baseClass.prototype);
+			newClass.prototype.constructor = baseClass;
+		}
+		Object.assign(newClass.prototype,moduleExports);
+		classes[moduleExports.name] = newClass;
+	});
+	return classes;
+};
+
+boot.executeModules = function() {
+	for(var name in modules.titles) {
+		modules.execute(name);
 	}
 };
 
 boot.boot = function(window) {
-	var modules = boot.gatherModules(window.document);
-	var Lib = boot.execute(modules,"cyoa");
-	state = new Lib.State();
-	var manager = new Lib.UriManager(window);
+	modules.titles = boot.gatherModules(window.document);
+	// Split modules into types
+	modules.types = Object.create(null);
+	for(var name in modules.titles) {
+		var module = modules.titles[name];
+		var type = module.type || "";
+		modules.types[type] = modules.types[type] || Object.create(null);
+		modules.types[type][name] = module;
+	}
+	// Start booting up
+	var Lib = modules.execute("cyoa");
+	var state = new Lib.State();
+	var savers = modules.assignModulesOfType("cyoasaver");
+	var manager = new savers[boot.saver](window);
 	cyoa.core = new Lib.Core(window.document,state,manager);
 	// Assign all those methods to the global cyoa.
-	boot.assignModulesOfType(modules,"cyoamethod",cyoa);
-	cyoa.stateClasses = boot.assignModulesOfType(modules,"state");
-	cyoa.utils = Lib.utils;
+	modules.assignModulesOfType("cyoamethod",cyoa);
+	cyoa.utils = modules.assignModulesOfType("cyoautils");
 	cyoa.core.cyoa = cyoa; // getting a little wierd here
 	cyoa.book = cyoa.core.book;
-	boot.executeModules(modules);
+	boot.executeModules();
+	// Create state variables now that groups.js ran
+	cyoa.vars = Object.create(null);
+	for(var variable in cyoa.data) {
+		var dataSet = cyoa.data[variable];
+		state.declare(variable,dataSet.type,dataSet);
+	}
+	// Open the first page
 	cyoa.core.openPage();
 };
 
@@ -194,3 +218,5 @@ if(typeof(module) !== "undefined" && typeof(exports) !== "undefined") {
 		_boot(window.$cyoa,true);
 	};
 }
+
+//# sourceURL=$:/plugins/mythos/cyoa/js/boot.js

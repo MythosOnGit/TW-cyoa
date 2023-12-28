@@ -2,10 +2,10 @@
 Represents a cyoa link, which is a type of node.
 \*/
 
-"use strict";
+'use strict';
 
-var Node = require("./node");
-var utils = require("./utils");
+var Node = require('./node');
+var utils = require('./utils');
 
 var Link = function(book,element) {
 	Node.apply(this,arguments);
@@ -17,11 +17,11 @@ Link.prototype = Object.create(Node.prototype);
 /*
 Returns a title
 */
-Object.defineProperty( Link.prototype,"to",{
+Object.defineProperty( Link.prototype,'to',{
 	get: function() {
-		var href = this.element.getAttribute("href");
+		var href = this.element.getAttribute('href');
 		if(href) {
-			href = utils.stripHash(href);
+			href = stripHash(href);
 			// the href and uri use different encoding schemes,
 			// so we got to decode/encode
 			if(href) {
@@ -32,14 +32,21 @@ Object.defineProperty( Link.prototype,"to",{
 	}
 });
 
-Object.defineProperty(Link.prototype,"replaces",{
+Object.defineProperty(Link.prototype,'replaces',{
 	get: function() {
-		return this.element.classList.contains("cyoa-replace");
+		return this.element.classList.contains('cyoa-replace');
 	}
 });
 
-Object.defineProperty(Link.prototype,"returns",{
+Object.defineProperty(Link.prototype,'returns',{
 	get: function() {
-		return this.element.classList.contains("cyoa-return");
+		return this.element.classList.contains('cyoa-return');
 	}
 });
+
+function stripHash(anchor) {
+	if(anchor[0] == '#') {
+		return anchor.slice(1);
+	}
+	return anchor;
+};

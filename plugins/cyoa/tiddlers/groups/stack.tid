@@ -1,5 +1,7 @@
 caption: stack
 title: $:/plugins/mythos/cyoa/stack
+cyoa.type: stack
+cyoa.serializer: string
 
 |Variable: |<$edit-text tiddler="$:/config/mythos/cyoa/stack" default="stack" tag="input" /> |
 

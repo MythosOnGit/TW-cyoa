@@ -3,10 +3,20 @@ extension: .html
 title: $:/plugins/mythos/cyoa/templates/cyoaFile
 type: text/vnd.tiddlywiki
 
+\function serializer.all() [[cyoatype]modules[]moduleproperty[name]addprefix[cyoa]addsuffix[serializer]modules[]]
+\function serializer.for(name) [get[cyoa.type]addprefix[cyoa]addsuffix[serializer]modules[]] :filter[<currentTiddler>moduleproperty[name]match<name>]
+\function serializer.used() [[$:/tags/cyoa/Type]tagging[]] [[$:/plugins/mythos/cyoa/stack]] :map[serializer.for{!!cyoa.serializer}]
+\function serializer.unused() [serializer.all[]] -[serializer.used[]]
+\import [subfilter{$:/core/config/GlobalImportFilter}]
+
 \define tv-wikilink-template() #$uri_encoded$
 \define tv-config-toolbar-icons() no
 \define tv-config-toolbar-text() no
 \define tv-config-toolbar-class() tc-btn-invisible
+
+<!-- This renders any tiddler as though it were being compiled into the cyoa file instead of being rendered in tiddlywiki. cyoa widgets will be active instead of being fully expanded for ease of editing. -->
+\define cyoa-render() yes
+
 &lt;!doctype html>
 &lt;html>
 &lt;head>
@@ -14,10 +24,16 @@ type: text/vnd.tiddlywiki
 
 </head>
 &lt;body class="cyoa-body">
-{{$:/plugins/mythos/cyoa/templates/cyoaFile/body||$:/plugins/mythos/cyoa/templates/cyoa-render}}
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/body}}
 &lt;div class="cyoa-scripts" type="application/json">
-{{{ [[$:/tags/cyoa/Javascript]tagging[]!is[draft]type[application/javascript]sort[]] ||$:/plugins/mythos/cyoa/templates/div-js-module}}}
-<$vars format="plainwikified">{{{ [[$:/tags/cyoa/Javascript]tagging[]!is[draft]!type[application/javascript]sort[]] ||$:/plugins/mythos/cyoa/templates/div-js-module }}}</$vars>
+{{{
+	[[$:/tags/cyoa/Javascript]tagging[]!is[draft]type[application/javascript]sort[]]
+	-[serializer.unused[]]
+	||$:/plugins/mythos/cyoa/templates/div-js-module
+}}}
+<$vars format="plainwikified">{{{
+	[[$:/tags/cyoa/Javascript]tagging[]!is[draft]!type[application/javascript]sort[]]
+	||$:/plugins/mythos/cyoa/templates/div-js-module }}}</$vars>
 </div>
 {{$:/plugins/mythos/cyoa/js/boot.js||$:/core/templates/javascript-tiddler}}
 </body>

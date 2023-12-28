@@ -1,6 +1,8 @@
 title: $:/config/EditTemplateFields/Visibility/
 
 cyoa.caption: hide
+cyoa.do: hide
+cyoa.done: hide
 cyoa.group: hide
 cyoa.only: hide
 cyoa.append: hide

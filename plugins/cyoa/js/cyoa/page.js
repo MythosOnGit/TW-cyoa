@@ -2,10 +2,10 @@
 Represents a cyoa page.
 \*/
 
-"use strict";
+'use strict';
 
-var utils = require("./utils");
-var Node = require("./node");
+var utils = require('./utils');
+var Node = require('./node');
 
 var Page = function(book,element) {
 	Node.apply(this,arguments);
@@ -18,14 +18,14 @@ function getter(name,method) {
 	Object.defineProperty(Page.prototype,name,{ get: method });
 };
 
-getter("title",function() { return utils.decodePage(this.element.id); } );
-getter("appendList",function() { return this.getPageList("data-append"); } );
-getter("isLink",function() { return false; } );
-getter("isStateful",function() { return true; } );
-getter("parent",function() { return undefined; } );
+getter('title',function() { return decodeURIComponent(this.element.id); } );
+getter('appendList',function() { return this.getPageList('data-append'); } );
+getter('isLink',function() { return false; } );
+getter('isStateful',function() { return true; } );
+getter('parent',function() { return undefined; } );
 
 Page.prototype.isDefault = function() {
-	return this.element.classList.contains("cyoa-default");
+	return this.element.classList.contains('cyoa-default');
 };
 
 /*
@@ -70,7 +70,7 @@ PageListIterator.prototype.next = function(skipRest) {
 			this.index++;
 			var page = this.book.getPage(title);
 			if(!page) {
-				var msg = "append page '"+title+"' does not exist.";
+				var msg = 'append page \''+title+'\' does not exist.';
 				utils.error(new Error(msg));
 			} else {
 				if(page.test(this.state)) {

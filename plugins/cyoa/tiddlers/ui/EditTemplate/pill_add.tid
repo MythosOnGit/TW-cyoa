@@ -1,7 +1,0 @@
-title: $:/plugins/mythos/cyoa/ui/EditTemplate/pill/add
-
-\whitespace trim
-<$button class="cyoa-field-button-add">
-<$action-setfield $field=<<currentField>> $value="" />
-<<key>>
-</$button>

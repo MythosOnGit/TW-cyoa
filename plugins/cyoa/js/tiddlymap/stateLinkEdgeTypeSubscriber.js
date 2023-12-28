@@ -7,7 +7,6 @@ This edgetype manager displays edges for all <$cyoa to="something" />
 occurrences.
 \*/
 
-/*jslint node: true, browser: true */
 "use strict";
 
 var AbstractRefEdgeTypeSubscriber = require("$:/plugins/felixhayashi/tiddlymap/js/AbstractRefEdgeTypeSubscriber").default;

@@ -8,8 +8,6 @@ Compiles the cyoa file given the pages and configuration of the given tiddler di
 \*/
 (function() {
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var getFilename = require("$:/plugins/mythos/cyoa/js/macros/filename").run;

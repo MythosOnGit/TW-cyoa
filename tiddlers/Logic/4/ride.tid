@@ -15,7 +15,7 @@ In theory, there's no reason why the reader can't ride the carnival rides over a
 
 Instead, this page is "first only", and you'll see that [[Logic4/actions]] actually resets this. What this does is it makes it so that the link can be clicked many times, but //not twice in a row//. At least one other thing has to happen between carnival rides. This way, no repeat pages.
 
-This works because pages and nodes perform their touches and resets after all their interal content is process. So <<page Logic4/actions>> resets this page only after it's rendered its <<wlink OptionsWidget>> once without it.
+This works because pages and nodes perform their touches and resets after all their interal content is process. So <<plink Logic4/actions>> resets this page only after it's rendered its <<wlink OptionsWidget>> once without it.
 """>>
 
 Now that you're small enough, you go outside the tent and enjoy the rollercoaster rides. It's great fun, and you return to the tent exhausted. Somehow, a day has passed, yet it seems like only a few hours have. It all seemed like a blur.

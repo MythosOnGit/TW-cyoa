@@ -1,0 +1,5 @@
+priority: 5
+scope: [cyoa:group[numbers]]
+style: {"color":{"background":"rgba(200,163,252,1)"}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa_group:numbers
+type: text/vnd.tiddlywiki

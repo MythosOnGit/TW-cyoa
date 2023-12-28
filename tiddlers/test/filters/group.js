@@ -9,7 +9,7 @@ Tests the [cyoa:tracked[]] filter operator.
 
 const utils = require("test/utils.js");
 
-const defaultSetTiddler = utils.defaultGroup();
+const defaultSetTiddler = utils.defaultGroup("set", {"cyoa.serializer": "bitfield"});
 const defTitle = defaultSetTiddler.title;
 
 describe("group filter",function() {

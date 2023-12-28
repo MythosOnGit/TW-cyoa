@@ -1,10 +1,6 @@
 .cyoa-state:not(.cyoa-control) {
     position: relative;
-    /*outline-style: solid;
-      outline-width: thin;
-      outline-color: #888888;
-      I'd rather use the outline for these boxes, but nooooo.
-      Firefox has an outstanding bug about this that's lasted 4 years. Lazy, asses.
+    /* I'd rather use the outline for these boxes, but Firefox has an outstanding bug about this that's lasted 4 years.
     */
     box-shadow: 0px 0px 0px 1px #888888;
     background-color: #BBB4;
@@ -14,20 +10,13 @@
     background-color: #D994;
 }
 
-.cyoa-info {
-    padding-left: 24px;
-    text-indent: -20px;
-    white-space: normal;
-}
-
 .cyoa-info p {
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
-/* Info exclusive to the page */
-.cyoa-info.tc-subtitle {
-    padding-left: 20px;
+.cyoa-info a.cyoa-error {
+    color: red;
 }
 
 /* Info exclusive to the nodes */
@@ -35,6 +24,7 @@
     color: black;
     font-weight: normal;
     padding-right: 4px;
+    padding-left: 4px;
     padding-top: 2px;
 }
 
@@ -42,6 +32,7 @@
 .cyoa-state:not(.cyoa-control) > .cyoa-info {
     display: none;
     position: absolute;
+    min-width: 4em;
 
     bottom: 100%;
     right: -1px;
@@ -56,17 +47,35 @@
     border-top-right-radius: 6px;
 }
 
-.cyoa-state:not(.cyoa-control):hover > .cyoa-info {
+.cyoa-state:not(.cyoa-control):hover > .cyoa-info:not(:empty) {
     display: block;
+}
+
+.cyoa-state.cyoa-control > .cyoa-info:empty:before {
+    content: "-⟐-";
+    font-size: large;
+    font-weight: bold;
 }
 
 /* Sets empty widgets to show their info instead. */
 .cyoa-state.cyoa-control > .cyoa-info {
-    display: block;
     background-color: #CFEEEE;
     border-style: solid;
     border-width: thin;
     border-color: #888888;
+}
+
+div.cyoa-state > .cyoa-info {
+    white-space: normal;
+    display: block;
+}
+
+.cyoa-state.cyoa-control:not(div) > .cyoa-info > br {
+    content: "";
+}
+.cyoa-state.cyoa-control:not(div) > .cyoa-info > br:before {
+    content: ";";
+    padding-right: 4px;
 }
 
 .tc-cyoa-imply-list {

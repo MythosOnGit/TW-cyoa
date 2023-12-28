@@ -5,7 +5,7 @@ type: text/vnd.tiddlywiki
 
 \rules except wikilink
 
-<<plugin>> manages state by using pages the same way other engines may use variables. It will track which pages have been visited, and which ones haven't. Thus, every page in your generated cyoa can have two ''states'':
+<<plugin>> manages state by using pages the same way other engines may use variables. By default, it will simply track which pages have been visited, and which ones haven't. Thus, every page in your generated cyoa can have two ''states'':
 
 * ''Set'': This page state indicates the given page has either been visited (viewed as a part of any [[Page Run]]), or it's been touched by another page or node. 
 * ''Unset'': This page state indicates that the given page has never been visited or touched, or it's been reset since the last time it's been touched or visited.
@@ -14,12 +14,8 @@ type: text/vnd.tiddlywiki
 
 ! Groups
 
-All tracked tiddlers must belong to a page group. Pages in a group will have some form of representation in the generated cyoa's URL. Unless otherwise specified, they will be added to the default group.
+Pages that are tracked must belong to a [[Page Group]]. You don't have to specify a page group for your page. Unspecified pages will get automatically added to the default page group. More details about page groups are found [[here|Page Group]].
 
-!! Default group (and automatic tracking)
+! Values
 
-<<plugin>> will create and maintain states for any pages that require tracking. It does this by examining the all tiddlers during compile. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. If other tiddlers list a given pages in a <<field cyoa.after>> fields, then that page will be tracked. And so forth.
-
-It does a fairly good job of figuring out what tiddlers need to be tracked, and which don't, but some complicated wikitext can confuse it. For instance, given: `<$tiddler tiddler="TrickyPage"><$cyoa after="[all[current]]"/></$tiddler>`, the engine won't figure out that "TrickyPage" needs to be tracked, and you'll get a warning at compile time. To remedy this, explicitly add TrickyPage to the default group using the tiddler's edit options under the cyoa menu:
-
-: {{$:/plugins/mythos/cyoa/ui/EditTemplate/group}}
+While by default, the engine only tracks whether a tracked page is ''set'' or ''unset'', it can track more elaborate information for a given page depend on the [[Type|Page Types]] of its Page group.

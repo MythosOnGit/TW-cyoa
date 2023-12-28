@@ -7,79 +7,37 @@ tags: $:/tags/test-spec
 
 var cyoa = require("$:/plugins/mythos/cyoa/js/boot")();
 var boot = cyoa.boot;
-var utils = require("cyoa").utils;
+var modules = cyoa.modules;
 var domParser = require("test/dom-parser");
 var MockWindow = require("test/cyoa/mock/window");
 
 describe("Boot",function() {
 
-describe("#utils",function() {
-	//encodeURIComponent: encodes all but: a-zA-Z0-9_.!~*'()-
-	//html4 ids: /[a-zA-Z][a-zA-Z0-9_:.-]*/
-	//html5 ids: /[^\s]+/
-	//URI
-	//  fragment    = *( pchar / "/" / "?" )
-	//  pchar       = unreserved / ptc-encoded / sub-delims / ":" / "@"
-	//  ureserved   = ALPHA / DIGIT / "-" / "." / "_" / "~"
-	//  pct-encoded = "%" HEXDIG HEXDIG
-	//  sub-delims  = "!"/ "$"/ "&"/ "'"/ "("/ ")"/ "*"/ "+"/ ","/ ";"/ "="
-	//    or basically anything but: #^[]{}\"<> and raw %
-	// because of html5 ids, we also forbid spaces.
-	// because of the uri search requirements, we also forbid: "?", "&", "="
-	// What we do differently from encodeURI:  $'/+,;
-	var forbidden = "?&=#^[]{}\\ \"<>";
-
-	function assertEncoded(encoded) {
-		for(var c = 0; c < forbidden.length; c++) {
-			expect(encoded).not.toContain(forbidden[c]);
-		}
-		expect(encoded).not.toMatch(/%[^0-9A-F]/);
-		expect(encoded).not.toMatch(/%.[^0-9A-F]/);
+it("#boot can load scripts",function() {
+	var coreFile = encodeURIComponent("$:/plugins/mythos/cyoa/js/cyoa/cyoa.js");
+	var testpage = `<!doctype html>
+	<html><body>
+	  <div class="cyoa-scripts">
+		<div id="${coreFile}">
+	<pre>exports.Core = function(win) {};
+	exports.State = function(){};
+	exports.declare = function(){};
+	exports.Core.prototype.openPage = function() {
+		$tw.test.bookOpened = true;
 	};
-
-	function flip(str) {
-		var enc = utils.encodePage(str);
-		assertEncoded(enc);
-		var dec = utils.decodePage(enc);
-		expect(dec).toBe(str);
-
-		var vanillaEnc = encodeURIComponent(str);
-		expect(utils.decodePage(vanillaEnc)).toBe(str);
-	};
-
-	it("encodes and decodes page strings",function() {
-		flip("this with spaces%and%percents");
-		flip("path/to/something interesting.jpg");
-		flip("anything?+something else=something&nothing");
-		flip(forbidden);
-	});
-});
-
-describe("#boot",function() {
-	it("can load scripts",function() {
-		var coreFile = encodeURIComponent("$:/plugins/mythos/cyoa/js/cyoa/cyoa.js");
-		var testpage = `<!doctype html>
-		<html><body>
-		  <div class="cyoa-scripts">
-		    <div id="${coreFile}">
-		<pre>exports.Core = function(win) {};
-		exports.State = function(){};
-		exports.declare = function(){};
-		exports.UriManager = function(){};
-		exports.Core.prototype.openPage = function() {
-			$tw.test.bookOpened = true;
-		};
-		</pre>
-		    </div>
-		  </div>
-		</body> </html>`;
-		$tw.test = $tw.test || Object.create(null);
-		$tw.test.bookOpened = false;
-		var doc = domParser.parseBodyAndHead(testpage);
-		var window = new MockWindow(doc);
-		boot.boot(window);
-		expect($tw.test.bookOpened).toBe(true);
-	});
+	</pre>
+		</div>
+		<div id="saver" module-type="cyoasaver">
+		 <pre>exports.uri = function() {};</pre>
+		</div>
+	  </div>
+	</body> </html>`;
+	$tw.test = $tw.test || Object.create(null);
+	$tw.test.bookOpened = false;
+	var doc = domParser.parseBodyAndHead(testpage);
+	var window = new MockWindow(doc);
+	boot.boot(window);
+	expect($tw.test.bookOpened).toBe(true);
 });
 
 describe("#require",function() {
@@ -101,19 +59,21 @@ describe("#require",function() {
 		return modules;
 	};
 
-	function testReqs(modules,source,expected) {
-		expect(boot.execute(modules,source).reqs).toEqual(expected);
+	function testReqs(mods,source,expected) {
+		modules.titles = mods;
+		expect(modules.execute(source).reqs).toEqual(expected);
 	};
 
 	it("can load with or without extension",function() {
-		var modules = generateMods({
+		var mods = generateMods({
 			"test.js": {},
 			"file.js": {},
 			"file": {},
 			"nested/deep/file.js": {},
 		});
 		function test(input,output) {
-			var mod = boot.execute(modules,input);
+			modules.titles = mods;
+			var mod = modules.execute(input);
 			expect(mod.file).toBe(output);
 		};
 		test("file","file");
@@ -122,18 +82,6 @@ describe("#require",function() {
 		test("test.js","test.js");
 		test("nested/deep/file","nested/deep/file.js");
 		test("nested/deep/file.js","nested/deep/file.js");
-	});
-
-	it("can load by module-type",function() {
-		var mods = generateMods({
-			"test/A.js": {text: "exports.A = 5;",module: "test"},
-			"test/B.js": {text: "exports.B = 6;"},
-			"test/C.js": {text: "exports.C = 7;",module: "test"},
-		});
-		var obj = boot.assignModulesOfType(mods,"test");
-		expect(obj.A).toBe(5);
-		expect(obj.B).toBeUndefined();
-		expect(obj.C).toBe(7);
 	});
 
 	it("can load locally and globally",function() {
@@ -205,8 +153,10 @@ describe("#require",function() {
 			var mods = {"file.js": {text: text}};
 			var err;
 			expect(function() {
-				try { boot.execute(mods,"file.js"); }
-				catch(e) {
+				try {
+					modules.titles = mods;
+					modules.execute("file.js");
+				} catch(e) {
 					err = e;
 					throw e;
 				}
@@ -227,7 +177,8 @@ describe("#require",function() {
 			"c.js": {req: ["a.js"]},
 		});
 		expect(function() {
-			boot.execute(mods,"a.js");
+			modules.titles = mods;
+			modules.execute("a.js");
 		}).toThrowError("Error importing 'a.js': Error importing 'b.js': Error importing 'c.js': Cyclic dependency encountered importing 'a.js'");
 
 	});

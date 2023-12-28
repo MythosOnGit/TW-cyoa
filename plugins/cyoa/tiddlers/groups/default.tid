@@ -1,7 +1,7 @@
 caption: default
-cyoa.handler: set
+cyoa.type: set
 cyoa.key: state
-cyoa.style: bitfield
+cyoa.serializer: bitfield
 tags: $:/tags/cyoa/Type
 title: $:/plugins/mythos/cyoa/groups/default
 

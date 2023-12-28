@@ -16,7 +16,7 @@ Here are three examples of conditional snippets as applied to <<widget cyoa>> no
 
 <<annotate """
 
-This block mixes the declarative constraint <<attr after>> with a conditional <<attr if>> snippet. This is just fine. Both constraints must be met, which in this case means <<page Scripts1/kilt>> must be set, and also either <<page Scripts1/cestus>> ''or'' <<page Scripts1/gladius>> must be set.
+This block mixes the declarative constraint <<attr after>> with a conditional <<attr if>> snippet. This is just fine. Both constraints must be met, which in this case means <<plink Scripts1/kilt>> must be set, and also either <<plink Scripts1/cestus>> ''or'' <<plink Scripts1/gladius>> must be set.
 """ >>
 
 The pit boss looks you over and nods approvingly. "You might be small, but you know how to pick a good set of equipment. You might not die right away."
@@ -37,7 +37,7 @@ The pit boss glances you over. "Good pick. That weapon will keep you safe. Count
 
 <<annotate """
 
-In this case, <<snippet "!#{Scripts1/plate} && !#{Scripts1/kilt}">>. Note the <<snippet !>> before each placeholder. This means  ''not'' <<page Scripts1/plate>> and ''not'' <<page Scripts1/kilt>>.
+In this case, <<snippet "!#{Scripts1/plate} && !#{Scripts1/kilt}">>. Note the <<snippet !>> before each placeholder. This means  ''not'' <<plink Scripts1/plate>> and ''not'' <<plink Scripts1/kilt>>.
 
 This script could actually be written as a declarative <<attr before>> attribute with the value <<value "Scripts1/plate Scripts1/kilt">>, which would be simpler to understand. It's done using a script here just for demonstration. 
 """ >>

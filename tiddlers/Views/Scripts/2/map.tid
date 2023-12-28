@@ -1,0 +1,29 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Scripts 2: Numbers/map
+type: text/vnd.tiddlywiki
+
+{
+ "57f2cab5-279f-40c4-8006-0c9cf17cb043": {
+  "x": -120,
+  "y": -75
+ },
+ "b28f42b5-af97-4f78-ab87-ba4d600434de": {
+  "x": 200,
+  "y": 0
+ },
+ "50100541-717b-40a7-99f6-d7c41c67fa90": {
+  "x": 0,
+  "y": 0
+ },
+ "498833be-353f-485f-aed6-5bcd39113710": {
+  "x": 120,
+  "y": 60
+ },
+ "9a2b811d-fe95-4cf7-ba58-6af245435dd9": {
+  "x": -120,
+  "y": 75
+ },
+ "083923aa-6ec9-4e7a-aad9-59ea9c442047": {
+  "x": 125,
+  "y": -100
+ }
+}

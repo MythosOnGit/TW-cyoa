@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 <th>Description</th>
 <th>Type</th>
 </tr>
-<$list filter="[tag[Attributes]widget<currentTiddler>]" counter="row">
+<$list filter="[tag[Attributes]widget<currentTiddler>!is[draft]]" counter="row">
 <tr class={{{ [<row>remainder[2]match[0]then[evenRow]else[oddRow]] }}}>
 <td>{{!!caption}}</td>
 <td><$transclude /></td>

@@ -7,8 +7,6 @@ Else widget: Short hand for <$cyoa else></$cyoa>
 
 \*/
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 exports.baseClass = "cyoa";

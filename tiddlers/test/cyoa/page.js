@@ -10,7 +10,6 @@ Tests the cyoa Page class.
 var Book = require("cyoa").Book;
 var domParser = require("test/dom-parser");
 var utils = require("test/utils.js");
-var cyoa = utils.cyoa;
 
 describe("Page",function() {
 
@@ -112,11 +111,12 @@ function quoteattr(str) {
 
 	it("hashes string indexes (and abs them)",function() {
 		const str = "0";
-		expect(cyoa.hash(str)).withContext("Uh oh. The hash method must have changed. This tests needs a string which hashes to less than 0 to ensure that something using it handles negatives.").toBeLessThanOrEqual(-1);
-		var doc = createDoc([
-			{id: "Main",index: `'${str}'`,append: "A"},
-			{id: "A"}]);
-		flip(doc,"Main","A");
+		var cyoamethods = $tw.modules.applyMethods("cyoamethod");
+		expect(cyoamethods.hash(str)).withContext("Uh oh. The hash method must have changed. This tests needs a string which hashes to less than 0 to ensure that something using it handles negatives.").toBeLessThanOrEqual(-1);
+		var core = utils.testBook([
+			{title: "Main","cyoa.index": `'${str}'`,"cyoa.append": "A"},
+			{title: "A"}]);
+		expect(core.openPages).toEqual(['Main','A']);
 	});
 
 	it("weighted indices",function() {

@@ -4,17 +4,18 @@ tmap.id: 5936f4f3-fd71-46ce-ab34-677f7f3d9759
 type: text/vnd.tiddlywiki
 
 \define link-to-tw(tiddler, caption)
-\define _tw-active-links() GettingStarted [[Filter Operators]]
 \whitespace trim
 \define _actual-link() <a href=<<url>> class="tc-tiddlylink-external" target="_blank" rel="noopener noreferrer"><$text text=<<caption>> /></a>
-<$let caption={{{ [<__caption__>!match[]else<__tiddler__>]}}}>
-<$list filter="[enlist<_tw-active-links>] [[]] +[match<__tiddler__>]"
+<$let
+	activeLinks= "GettingStarted [[Filter Operators]]"
+	caption={{{ [<__caption__>!match[]else<__tiddler__>]}}}>
+<$list filter="[enlist<activeLinks>] [[]] +[match<__tiddler__>]"
 	emptyMessage="""<$let
 		escaped-tiddler={{{ [<__tiddler__>split[ ]join[%2520]] }}}
-		url={{{ [[https://tiddlywiki.com/static/]addsuffix<escaped-tiddler>addsuffix[.html]] }}}><<_actual-link>></$let>""">
+		url={{{ [<escaped-tiddler>addprefix[https://tiddlywiki.com/static/]addsuffix[.html]] }}}><<_actual-link>></$let>""">
 <$let
 	escaped-tiddler={{{ [<__tiddler__>split[ ]join[%20]] }}}
-	url={{{ [[https://tiddlywiki.com/#]addsuffix<escaped-tiddler>] }}}><<_actual-link>>
+	url={{{ [<escaped-tiddler>addprefix[https://tiddlywiki.com/#]] }}}><<_actual-link>>
 </$let>
 </$list>
 </$let>

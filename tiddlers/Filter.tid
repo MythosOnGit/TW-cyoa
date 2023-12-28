@@ -11,7 +11,7 @@ They are a native TiddlyWiki concept, and <<link-to-tw Filters "their documentat
 ```
 Item/potion Item/shield [[Item/short sword]]
 ```
-This filter is just listing items, and it's no different than a [[title list|Lists]]. And just like title lists, titles with spaces in them need to be wrapped in double brackets.
+This filter is just listing items, and it's no different than a [[Title List]]. And just like title lists, titles with spaces in them need to be wrapped in double brackets.
 
 ---
 ```

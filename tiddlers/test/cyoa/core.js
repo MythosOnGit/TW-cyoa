@@ -10,7 +10,8 @@ var Cyoa = require("cyoa");
 const utils = require("test/utils.js");
 var domParser = require("test/dom-parser");
 var MockWindow = require("test/cyoa/mock/window");
-var MockManager = require("test/cyoa/mock/manager");
+var savers = $tw.modules.applyMethods("cyoasaver");
+var MockManager = savers.mock;
 
 function test_element_list(element_list,expected_ids) {
 	var ids = element_list.map(function(e) {return e.id; });
@@ -74,45 +75,12 @@ it("deactivates nodes and pages once they're closed", function() {
 
 it("deactivates the start page after it closes", function() {
 	var core = utils.testBook([
-		{title: "$:/config/mythos/cyoa/start", text: "Start"},
-		{title: "Start"},
+		{title: "Target"},
 		{title: "Main"}]);
-	expect(core.document.getElementById("Start").classList.contains("cyoa-active")).toBe(false);
+	expect(core.document.getElementById("Target").classList.contains("cyoa-active")).toBe(false);
 	// Let's just confirm that Start actually is a start page.
-	core.openPage();
-	expect(core.document.getElementById("Start").classList.contains("cyoa-active")).toBe(true);
-});
-
-/*
-This test requires the $cyoa.document property to exist. Otherwise, I'll just fill up my code with document arguments.
-*/
-describe("#openPage",function() {
-	var sample_html = `<div class="cyoa-header">
-	  <a id="Hl" class="tc-tiddlylink" href="nowhere">link text</a>
-	</div>
-	<div class="cyoa-content">
-	  <div id="A" class="cyoa-page cyoa-start" data-append="C">
-	    <a id="Al" class="tc-tiddlylink" href="#nowhere">link text</a>
-	  </div>
-	  <div id="B" class="cyoa-page">
-	    <a id="Bl" class="tc-tiddlylink" href="#A">link text</a>
-	  </div>
-	  <div id="C" class="cyoa-page">
-	    <a id="Cl" class="tc-tiddlylink" href="#D">link text</a>
-	  </div>
-	  <div id="D" class="cyoa-page">
-	    <a id="Dl" class="tc-tiddlylink" href="#nowhere">link text</a>
-	  </div>
-	</div>
-	<div class="cyoa-footer">
-	  <a id="Fl" class="tc-tiddlylink" href="#nowhere">link text</a>
-	</div>`;
-
-	it("finds the start page",function() {
-		var core = newCore(sample_html);
-		core.openPage();
-		expect(core.topPage).toBe("A");
-	});
+	core.openPage("Target");
+	expect(core.document.getElementById("Target").classList.contains("cyoa-active")).toBe(true);
 });
 
 it("sets body title",function() {
@@ -133,7 +101,6 @@ it("handles titles with odd characters",function() {
 describe("#resolveNextPage",function() {
 	var href = "Misty's \"dark\" revenge/rampage/teaparty";
 	var hrefEnc = encodeURIComponent(href);
-	var hrefPageEnc = Cyoa.utils.encodePage(href);
 	var badPage = "Don't go to \"the scary place\"";
 	var badPage2 = "Bad stack";
 

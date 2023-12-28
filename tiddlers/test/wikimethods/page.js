@@ -48,6 +48,12 @@ it("non-existent tiddlers",function() {
 	test([{title: "A"},{title: "C"}],["A","C"]);
 });
 
+it("group types",function() {
+	test([{title: "A"},{title: "B"},{title: "C",tags: "$:/tags/cyoa/Type"}],["A","B"]);
+	config = {title: filterConfig,text: "[!tag[exclude]]"};
+	test([config,{title: "A"},{title: "B",tags: "exclude"},{title: "C",tags: "$:/tags/cyoa/Type"}],["A"]);
+});
+
 });
 
 describe("wikimethod: isCyoaPage",function() {

@@ -1,0 +1,10 @@
+tags: $:/tags/Macro
+title: Macros/vis
+tmap.id: 15751a44-9828-497a-94bc-7e817a4ae9d0
+type: text/vnd.tiddlywiki
+
+\define vis-edit() <div class="vis-network" style="display:inline"><div class="vis-edit-mode" style="display:inline; position:relative;"><button class="vis-button vis-edit" style="height:24px; float:none"><div class="vis-label" style="position:relative">Edit Node</div></button></div></div>
+
+\define vis-connect() <div class="vis-network" style="display:inline"><div class="vis-manipulation" style="display:inline; position:relative; background:none;"><button class="vis-button vis-connect" style="height:24px; float:none"><div class="vis-label" style="position:relative">Add Edge</div></button></div></div>
+
+Used to display vis-network buttons for tutorials.

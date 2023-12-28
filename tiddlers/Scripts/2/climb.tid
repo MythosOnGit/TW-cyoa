@@ -1,0 +1,63 @@
+cyoa.caption: Climb the mountain.
+cyoa.group: numbers
+tags: Scripts2/options
+title: Scripts2/climb
+tmap.id: 083923aa-6ec9-4e7a-aad9-59ea9c442047
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+Notice that <<plink Scripts2/climb>> is a page, but it's also number variable that represents how far the reader has climbed.
+
+It never touches itself, but relies on the implicit touch of visiting this page to increment itself.
+""" >>
+
+<$cyoa if="#{Scripts2/climb} >= 7 && #{Scripts2/hunger} >= 3">
+
+<<annotate """
+
+The first node is the victory outcome. It occurs only after climbing 7 times, and that the character has been fasting at least 3 days.
+
+It's separate from the other nodes, because it doesn't share the same choices of returning to town or continuing.
+""">>
+
+Finally, you crest the mountain and arrive at a clearing on top. Up among the snow and crags is a small temple, or so it seems from the outside.
+
+Inside, however, come the savory smells. It's a ramen restaurant run by one of the local boys from town who explains that the old man who used to work here retired, but that he can cook just as well.
+
+The dinner tastes amazing; hunger is the best garnish. Your order many expensive bowls, and a fortune cookie that comes with the check tells you that "to accomplish greatness, take one step at a time."
+
+Your quest is complete. Filled with inspiration, you head back down the mountain. The travel agent was absolutely right that this trip would be worth it and was not at all overblown.
+
+[[Return home.|Demo]]
+</$cyoa>
+<$else>
+
+<<annotate """
+
+The following block is a <<widget first>> node, because you //can// do that with all pages, even ones that are numbers. If this page hasn't been incremented (or visited), it will be considered as though it's never been visited.
+""" >>
+<$first>
+
+You locate the path leading up the mountain and begin. After hours of hiking, the village is just a speck far below, but it seems you've only begun your trek.
+</$first>
+
+<<annotate """
+
+The next two blocks are just short aesthetic nodes that alternate appearing depending on whether <<plink Scripts2/climb>> is set to an even or odd number. This makes sure that clicking the "climb" option doesn't result in an identical page. Just like in [[Scripts2/fast]], it's important to make sure this page varies from click to click, otherwise readers won't see anything change, and they may think the game isn't doing anything.
+""" >>
+
+<$else if="#{Scripts2/climb} % 2 == 0">
+
+You keep climbing. The town is still just a speck, but so is the mountain top ahead.
+</$else>
+
+<$else>
+
+You keep climbing. The path gets even more steep and unhospitable.
+</$else>
+
+[[Continue climbing.|Scripts2/climb]]
+
+[[Return to town.|Scripts2/return]]
+</$else>

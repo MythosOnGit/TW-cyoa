@@ -1,0 +1,5 @@
+title: Serializers
+tmap.id: 4e6aa13d-b553-4d72-bed2-23f4eb2384c6
+type: text/vnd.tiddlywiki
+
+Don't worry about serializers for now. They're not finalized. Right now, the ones configured in the the Ready-To-Go project will work fine.

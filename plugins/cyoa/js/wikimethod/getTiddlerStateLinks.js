@@ -11,8 +11,6 @@ This is very repetitive compared to getTiddlerTracks and getTiddlerLinks.
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var utils = require("../utils");

@@ -1,0 +1,16 @@
+caption: cyoa.done
+tags: Fields
+title: DoneField
+tmap.id: a2462e0b-8896-4593-b73c-4ffa5264855a
+type: text/vnd.tiddlywiki
+value-type: Snippet
+
+The <<field cyoa.done>> field is an action that will be execute only if the tiddler's corresponding page is viewed. It will execute //after// any content in the page is evaluated and rendered, in contrast to <<flink DoField>>, which executes //before//.
+
+The <<field cyoa.do>> field is a snippet which can be used to directly modify state, either to set page values, or to perform something more advanced with the webpage DOM. ''Its return value is ignored.''
+
+You can set page values by using placeholders. You can also use these placeholders to //get// a value too. For instance...
+
+<<snippet "#{wealth} += #{foundCoins}">>
+
+Visit the [[page on Snippets|Snippet]] for more information on snippet syntax.

@@ -1,6 +1,7 @@
 tags: $:/tags/Macro
 title: Macros/example
 tmap.id: 0f0f1bd2-5871-46f7-b12f-31eed2d41649
+type: text/vnd.tiddlywiki
 
 \define example(text, segue:"Displays as:" )
 ```html
@@ -13,6 +14,6 @@ $segue$
 $text$
 <<<
 \end
-\relink example text:wikitext
+\relink example text:wikitext segue:wikitext
 
 Used for displaying text-and-output examples consistently.

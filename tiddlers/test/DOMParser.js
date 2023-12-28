@@ -51,7 +51,9 @@ NodeJSDOMParser.prototype.parseFromString = function(content,type) {
 	doc.body = doc.getElementsByTagName("body")[0];
 	if(nodeProto === undefined) {
 		nodeProto = Object.getPrototypeOf(doc.documentElement);
+		nodeProto.getElementsByClassName = getElementsByClassName;
 		Object.defineProperty(nodeProto,"classList",{get: classList});
+		Object.defineProperty(nodeProto,"className",{get: className});
 		Object.defineProperty(nodeProto,"id",{get: id});
 		Object.defineProperty(nodeProto,"firstElementChild",{get: firstElementChild});
 		Object.defineProperty(nodeProto,"innerHTML",{
@@ -103,6 +105,10 @@ function classList() {
 	return new ClassList(this);
 };
 
+function className() {
+	return this.getAttribute("class");
+};
+
 function id() {
 	return this.getAttribute("id");
 };
@@ -131,12 +137,22 @@ function nextElementSibling() {
 
 function getElementsByClassName(className){
 	var ls = [];
-	_visitNode(this.documentElement,function(node) {
-		if(node.nodeType == 1 /*ELEMENT_NODE*/
-		&& node.hasAttribute("class")
-		&& node.classList.contains(className)) {
-			ls.push(node);
-			}
+	var starts;
+	if (this.documentElement) {
+		// It's the root. Start with documentElement
+		starts = [this.documentElement];
+	} else {
+		// It's a nested element. Start with all its children
+		starts = this.childNodes;
+	}
+	$tw.utils.each(starts,function(element) {
+		_visitNode(element,function(node) {
+			if(node.nodeType == 1 /*ELEMENT_NODE*/
+			&& node.hasAttribute("class")
+			&& node.classList.contains(className)) {
+				ls.push(node);
+				}
+		});
 	});
 	return ls;
 };

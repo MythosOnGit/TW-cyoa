@@ -8,5 +8,4 @@ type: text/vnd.tiddlywiki
 	tabsList="[tag[Versions]!sort[created]]"
 	default={{{ [tag[Versions]!sort[created]] }}}
 	class="tc-vertical"
-	template="ReleaseTemplate"
 	buttonTemplate="Templates/version-button" />

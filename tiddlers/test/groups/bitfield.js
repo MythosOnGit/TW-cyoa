@@ -13,7 +13,7 @@ describe("bitfield",function() {
 
 function testBook(expected /*. tiddlerArrays */) {
 	var arrays = Array.prototype.slice.call(arguments,1);
-	arrays.unshift(utils.defaultGroup());
+	arrays.unshift(defaultBitfield());
 	var rtn = utils.testBookDefaultVar(arrays);
 	expect(rtn.results).toEqual(expected);
 	return rtn.state;
@@ -34,11 +34,22 @@ function node(name,parent,attributes) {
 };
 
 function bitfieldGroup(title) {
-	return utils.group(title,"set",{"cyoa.style": "bitfield"});
+	return utils.group(title,"set",{"cyoa.serializer": "bitfield"});
+};
+
+function defaultBitfield() {
+	return utils.defaultGroup("set", {"cyoa.serializer": "bitfield"});
 };
 
 function valueOf(state) {
 	return state.substr(state.indexOf("=")+1);
+};
+
+function firstOf(state) {
+	// Just get the first item. There should only be one
+	for(var item in state) {
+		return state[item];
+	}
 };
 
 it("bridges with multiple connections work",function() {
@@ -49,7 +60,7 @@ it("bridges with multiple connections work",function() {
 	var prevSerialized = testBook(["1","3"],tiddlers,{title: "Main","cyoa.touch": "1 3"});
 	var newSerialized = testBook(["1","3"],tiddlers,extra,{title: "Main","cyoa.touch": "1 3"});
 	// The addition of a new versioned tiddler shouldn't change things
-	expect(newSerialized).toBe(prevSerialized);
+	expect(newSerialized).toEqual(prevSerialized);
 	var newSerialized = testBook(["1"],tiddlers,extra,
 		{title: "Main",text: "<$cyoa touch=2 reset=3/>"});
 });
@@ -106,7 +117,7 @@ it("compresses trees to an acceptably small bitfield",function() {
 		node("X"),
 		{title: "Main","cyoa.touch": "X"}]);
 	// If it's larger than that, then the tree isn't compressing as much as it can. It shouldn't be "w". That's 32, not 16.
-	expect(valueOf(serialized)).toBe("d");
+	expect(firstOf(serialized)).toBe("d");
 });
 
 it("can clear",function() {
@@ -118,7 +129,7 @@ it("does not print if empty",function() {
 	var serialized = testBook([],[node("A"),
 		{title: "Main",text: "<$cyoa reset='A'/>"}]);
 	// It should not be t=0, or anything=0
-	expect(serialized).toBe("");
+	expect(serialized).toEqual({});
 });
 
 it("handles cyclic graphs gracefully",function() {
@@ -135,7 +146,7 @@ it("creating tree with irrelevant tiddlers is ignored",function() {
 	utils.warnings(spyOn);
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.defaultGroup(),
+		defaultBitfield(),
 		bitfieldGroup("other"),
 		node("A",undefined,{"cyoa.group": "other"}),
 		node("B","A",{"cyoa.group": "other"}),
@@ -164,7 +175,7 @@ it("compresses multiple implications well",function() {
 	var serialized = testBook(
 		["A1","A2","B1","B2","C1","C2","C3","D1","D2","D3","E","F","G","H1","H2","I","J"],
 		tiddlers.concat({title: "Main","cyoa.touch": "J"}));
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long"); // t=!
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long"); // t=!
 	testBook(
 		["A1","A2","B1","B2","C1","C2","C3","D1","D2","E","F"],
 		tiddlers.concat({title: "Main",text: "<$cyoa touch=J reset=D3/>"}));
@@ -186,7 +197,7 @@ it("handles multiple implication tricky cases",function() {
 
 it("handles exclusion groups",function() {
 	var tiddlers = [
-		utils.defaultGroup(),
+		defaultBitfield(),
 		node("root",null),
 		node("A"),node("B"),node("C"),
 		node("D","root",{"cyoa.exclude": "X"}),
@@ -210,16 +221,16 @@ it("compresses exclusions well",function() {
 	var serialized = testBook(
 		["A","B","C1","C2","C3","D1","D3","E1","E3","F1","F3"],
 		tiddlers.concat({title: "Main","cyoa.touch": "F2 F1 F3"}));
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long");
 	var serialized = testBook(
 		["A","B","C1","C2","C3","D2","E2","F2"],
 		tiddlers.concat({title: "Main","cyoa.touch": "F1 F3 F2"}));
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long");
 });
 
 it("handles exclusion of implied items",function() {
 	testBook(["A","B","C"],[
-		utils.defaultGroup(),
+		defaultBitfield(),
 		node("A",null,{"cyoa.exclude": "X"}),node("B","A"),node("C","B"),
 			node("A1","A"),node("A2","A1"),node("A3","A2"),
 		node("D",null,{"cyoa.exclude": "X"}),node("F","D"),
@@ -235,7 +246,7 @@ it("handles exclusives in separate trees",function() {
 	}
 	tiddlers.push({title: "Main","cyoa.touch": "[prefix[A]]"});
 	var serialized = testBook(["A19"],tiddlers);
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long");
 });
 
 it("handles mixed exclusions interleaved together",function() {
@@ -248,14 +259,14 @@ it("handles mixed exclusions interleaved together",function() {
 		node("A5",undefined,{"cyoa.exclude": "X"}),
 		node("A6"),node("A7"),node("A8")];
 	var serialized = testBook(["A1","A2","A3","A6","A7","A8"],tiddlers.concat({title: "Main","cyoa.touch": "[prefix[A]] A3"}));
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long");
 	var serialized = testBook(["A4","A5","A6","A7","A8"],tiddlers.concat({title: "Main","cyoa.touch": "[prefix[A]]"}));
-	expect(valueOf(serialized).length).toBe(1,serialized + " was too long");
+	expect(firstOf(serialized).length).toBe(1,firstOf(serialized) + " was too long");
 });
 
 it("handles exclusion within the same tree",function() {
 	testBook(["A","root","worksOneWay","worksTheOther"],[
-		utils.defaultGroup(),
+		defaultBitfield(),
 		node("root",null),
 		node("A","root",{"cyoa.exclude": "X"}),
 		node("B","root",{"cyoa.exclude": "X"}),
@@ -275,7 +286,7 @@ it("separates nodes in different version blocks",function() {
 	var serialized = testBook(["X"],tiddlers,extras,{title: "Main","cyoa.touch": "X"});
 	// Mostly, I don't care about the serialized form, but I must make sure versioned nodes don't get lumped in with lower version trees.
 	// If this is 8, it means X is in the 4th position, but the tree before it should only take up 2 bits.
-	expect(valueOf(serialized)).toBe("4");
+	expect(firstOf(serialized)).toBe("4");
 
 	// Make sure touches propogate through version blocks
 	testBook(["A","B","C","D","Y"],tiddlers,extras,{title: "Main","cyoa.touch": "Y"});
@@ -305,7 +316,7 @@ it("handles implication trees with huge numbers of states",function() {
 	}
 	var tree = children.map((title) => node(title,"X"));
 	tree.unshift(node("X"));
-	tree.unshift(utils.defaultGroup());
+	tree.unshift(defaultBitfield());
 	tree.push(node("Z","Y01 Y02"));
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers(tree.concat({title: "Main","cyoa.touch": "Y59 Y00"}));

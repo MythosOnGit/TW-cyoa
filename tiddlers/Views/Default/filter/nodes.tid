@@ -1,2 +1,3 @@
-filter: [all[]]
+filter: [all[]] -[tag[$:/tags/cyoa/Type]]
 title: $:/plugins/felixhayashi/tiddlymap/graph/views/Default/filter/nodes
+type: text/vnd.tiddlywiki

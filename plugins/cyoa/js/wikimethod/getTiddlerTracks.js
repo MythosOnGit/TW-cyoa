@@ -7,25 +7,22 @@ GetTidderTracks method. Fetches all tracked tiddlers within a given tiddler.
 This quite likely includes itself, as most tracking tiddlers will be tracking themselves and not other tiddlers.
 
 \*/
-(function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
-var keywords = require("$:/plugins/mythos/cyoa/js/snippets/tracking.js");
+var logic = require("$:/plugins/mythos/cyoa/js/logic.js");
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 var CyoaWidget = require("$:/plugins/mythos/cyoa/js/widgets/cyoa.js").cyoa;
-var utils = require("../utils");
-
-var ONLY_VALUES = {first:true,visited:true};
 
 exports.getTiddlerTracks = function(title) {
 	var tiddler = this.getTiddler(title);
 	if(tiddler) {
 		return this.getCacheForTiddler(title,"cyoa-tracks",() => {
-			var list = getWidgetTracks(this,title);
-			getFieldTracks(tiddler,this,list);
+			var parentWidget = new Widget({});
+			parentWidget.setVariable("currentTiddler",title);
+			var options = {parentWidget: parentWidget,wiki: this};
+			var list = getWidgetTracks(this,title,options);
+			getFieldTracks(tiddler,this,list,options);
 			return list;
 		});
 	} else {
@@ -33,96 +30,42 @@ exports.getTiddlerTracks = function(title) {
 	}
 };
 
-function pushItem(list,item) {
-	if(item && list.indexOf(item) === -1) {
-		list.push(item);
-	}
-};
-
-function pushListItems(list,listItems) {
-	var items = $tw.utils.parseStringArray(listItems);
+function pushListItems(list,items) {
 	if(items) {
-		$tw.utils.pushTop(list,items);
+		for (var i = 0; i < items.length; i++) {
+			$tw.utils.pushTop(list,items[i]);
+		}
 	}
 };
 
 /*
 Return an array of tiddler titles that specified by the tracked widgets. I _would_ have this append to a list passed in for consistency with getFieldTracks, but I'm not sure how that would play out with the caching.
 */
-function getWidgetTracks(wiki,title) {
-	var parentWidget = new Widget({});
-	parentWidget.setVariable("currentTiddler",title);
-	var options = {parentWidget: parentWidget,wiki: wiki};
+function getWidgetTracks(wiki,title,options) {
 	return wiki.traverseTiddlerStateWidgets(title,"cyoa-widget-tracks",function(ptn) {
 		var widget = new CyoaWidget(ptn,options);
 		widget.computeAttributes();
-		var list = [];
-		if(ONLY_VALUES[ptn.type]) {
-			list.push(title);
-		}
-
-		var only = widget.attributes.only;
-		if(ONLY_VALUES[only]) {
-			pushItem(list,title);
-		}
-		$tw.utils.each(keywords.snippets,function(keyword) {
-			if(widget.attributes[keyword]) {
-				utils.processJavascript(widget.attributes[keyword],function(placeholder,module) {
-					$tw.utils.pushTop(list,module.getTitles(placeholder,widget,{wiki:wiki}));
-				});
-			}
-		});
-		$tw.utils.each(keywords.trackers,function(keyword) {
-			// We don't want to parse macros, because more often than not, it's <<currentTiddler>> and it's being used in a template tiddler that shouldnt be tracked.
-			var node = ptn.attributes[keyword];
-			if(node && node.type === "macro") {
-				return
-			}
-			var items = widget.attributes[keyword];
-			pushListItems(list,items);
-		});
-		return list;
+		var tiddler = wiki.getTiddler(title);
+		return logic.getWidgetTracks(tiddler,widget,options);
 	});
 };
 
 /*
 This one appends instead of returns so we don't have to bother merging the lists later.
 */
-function getFieldTracks(tiddler,wiki,listToAppendTo) {
-	var parentWidget = new Widget({});
-	parentWidget.setVariable("currentTiddler",tiddler.fields.title);
-	var widget = new Widget({},{parentWidget: parentWidget});
-	var list = listToAppendTo || [];
-	if(ONLY_VALUES[tiddler.fields["cyoa.only"]]) {
-		pushItem(list,tiddler.fields.title);
-	}
-	if(tiddler.fields["cyoa.imply"]) {
-		pushItem(list,tiddler.fields.title);
-		pushListItems(list,tiddler.fields["cyoa.imply"]);
-	}
-	if(tiddler.fields["cyoa.exclude"]) {
-		// If this is in an exclusion group, it must be tracked.
-		pushItem(list,tiddler.fields.title);
-	}
-	forEachField(tiddler,keywords.snippets,function(keyword,field) {
-		utils.processJavascript(tiddler.fields[field],function(placeholder,module) {
-			$tw.utils.pushTop(list,module.getTitles(placeholder,widget,{wiki:wiki}));
-		});
-	});
-	forEachField(tiddler,keywords.trackers,function(method,field) {
-		var pageStr = tiddler.fields[field];
-		var pageArray = wiki.filterTiddlers(pageStr,widget);
-		pushListItems(list,pageArray);
-	});
+function getFieldTracks(tiddler,wiki,list,options) {
+	var widget = new CyoaWidget(parseTreeForTiddler(tiddler),options);
+	widget.computeAttributes();
+	pushListItems(list,logic.getWidgetTracks(tiddler,widget,options));
 }
 
-})();
-
-function forEachField(tiddler,keywords,method) {
-	$tw.utils.each(keywords,function(keyword) {
-		var field = "cyoa."+keyword;
-		if(tiddler.hasField(field)) {
-			method(keyword,field);
+function parseTreeForTiddler(tiddler) {
+	var attributes = {};
+	for (var field in tiddler.fields) {
+		if (field.indexOf("cyoa.") == 0) {
+			var name = field.substr(5);
+			attributes[name] = {name: name, type: "string", value: tiddler.fields[field]};
 		}
-	});
-}
+	}
+	return {type: 'cyoa', attributes: attributes};
+};

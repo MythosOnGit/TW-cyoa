@@ -1,0 +1,13 @@
+cyoa.append: Scripts3/chores
+tags: 
+title: Scripts3/start
+tmap.id: cfc549ee-2526-4dc7-8147-e1a5fe8c3fd6
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It shows how numbers can be arithmetically manipulated through [[Action Snippets|Snippet]]. In this example, it manipulates [[Scripts3/money]] as a character earns and loses wealth.""" >>
+
+Nosed pressed to the shop window's glass, you eye the giant toy boat. Attached to it is the price tag: ''$79.75''. You haven't a penny to your name since your parents don't give you an allowance, but you will find a way to make the money.

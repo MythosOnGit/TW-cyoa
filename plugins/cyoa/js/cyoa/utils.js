@@ -1,112 +1,24 @@
-"use strict";
-
-exports.getSubpages = function(pageName,document) {
-	var encodedName = exports.encodePageForID(pageName);
-	var page = document.getElementById(encodedName);
-	if (page) {
-		var strList = page.getAttribute("data-append");
-		if(strList) {
-			return strList.split(" ").map(decodeURIComponent);
-		}
-		return [];
-	}
-	return null;
-};
-
-exports.getMetaContent = function(name,doc) {
-	doc = doc || document;
-	var list = doc.getElementsByTagName("meta");
-	for(var index = 0; index < list.length; index++) {
-		var meta = list[index];
-		if(meta.getAttribute("name") == name) {
-			return meta.getAttribute("content");
-		}
-	}
-	return null;
-};
-
-exports.stripHash = function(anchor) {
-	if(anchor[0] == "#") {
-		return anchor.slice(1);
-	}
-	return anchor;
-}
+'use strict';
 
 exports.error = function(error,document) {
 	console.error(error);
 	if(document) {
-		var elem = document.getElementsByClassName("cyoa-error")[0];
+		var elem = document.getElementsByClassName('cyoa-error')[0];
 		if(elem) {
-			var str = "<li class='cyoa-error-item'>"+error+"</li>";
+			var str = '<li class=\'cyoa-error-item\'>'+error+'</li>';
 			elem.innerHTML += str;
 		}
 	}
 }
 
-
-/*
-This is encodePage, but it works exclusively on a string. encodePage can also take an array.
-*/
-function encodeString(idString) {
-	var dictionary = { "/": "%2F" };
-	var encoded = encodeURIComponent(idString);
-	for(var dec in dictionary) {
-		var enc = dictionary[dec];
-		encoded = encoded.split(enc).join(dec);
-	}
-	return encoded;
-};
-
-exports.encodePage = function(idStringOrArray) {
-	if(typeof idStringOrArray === "string") {
-		return encodeString(idStringOrArray);
-	} else {
-		return idStringOrArray.map(encodeString).join(" ");
-	}
-};
-
-exports.encodePageForID = function(idStringOrArray) {
-	function encode(idString) {
-		return idString.split("%").join("%25").split(" ").join("%20")
-	};
-	if(typeof idStringOrArray === "string") {
-		return encode(idStringOrArray);
-	} else {
-		return idStringOrArray.map(encode).join(" ");
-	}
-};
-
-
-exports.decodePage = function(idString) {
-	return decodeURIComponent(idString);
-};
-
-exports.hop = function(object,property) {
-	return object ? Object.prototype.hasOwnProperty.call(object,property): false;
-};
-
 exports.clearErrors = function(document) {
-	var elem = document.getElementById("cyoa-error");
+	var elem = document.getElementById('cyoa-error');
 	while (elem && elem.lastChild) {
 		elem.removeChild(elem.lastChild);
 	}
 }
 
 exports.log = function(message) {
-}
-
-exports.safeCall = function(thisArg,document,method,defaultReturn) {
-	var rtn = defaultReturn;
-	try {
-		rtn = method.call(thisArg);
-	}
-	catch(err) {
-		exports.error(err,document);
-		if(defaultReturn === undefined) {
-			throw(err);
-		}
-	}
-	return rtn;
 }
 
 /*
@@ -145,12 +57,44 @@ exports.generateDownTree = function(upTree) {
 	return downTree;
 };
 
+exports.addToTree = function(array,index,up,down,exclusionMap) {
+	var parents = up[index];
+	array[index] = true;
+	var exclusions = exclusionMap[index];
+	if(exclusions) {
+		for(var counter = 0; counter < exclusions.length; counter++) {
+			if(exclusions[counter] !== index) {
+				exports.removeFromTree(array,exclusions[counter],down);
+			}
+		}
+	}
+	if(parents) {
+		for(var counter = 0; counter < parents.length; counter++) {
+			if(array[parents[counter]] !== true) {
+				exports.addToTree(array,parents[counter],up,down,exclusionMap);
+			}
+		}
+	}
+};
+
+exports.removeFromTree = function(array,index,down) {
+	var children = down[index];
+	array[index] = false;
+	if(children) {
+		for(var counter = 0; counter < children.length; counter++) {
+			if(array[children[counter]] !== false) {
+				exports.removeFromTree(array,children[counter],down);
+			}
+		}
+	}
+};
+
 exports.parseStringList = function(string,delimiter) {
-	var str = "",
+	var str = '',
 		escaped = false,
 		anyNonEmpty = false,
 		list = [];
-	string = string || "";
+	string = string || '';
 	for(var index=0; index<string.length;index++) {
 		var c = string.charAt(index);
 		if(escaped) {
@@ -158,11 +102,11 @@ exports.parseStringList = function(string,delimiter) {
 			anyNonEmpty = true;
 			escaped = false;
 		} else {
-			if(c=="~") {
+			if(c=='~') {
 				escaped = true;
 			} else if(c==delimiter) {
 				list.push(str);
-				str = "";
+				str = '';
 			} else {
 				anyNonEmpty = true;
 				str += c;
@@ -170,7 +114,7 @@ exports.parseStringList = function(string,delimiter) {
 		}
 	}
 	// Special case. Don't add the last thing if we have only
-	// empty strings. "" -> [], "." -> [""]
+	// empty strings. '' -> [], '.' -> ['']
 	if(anyNonEmpty) {
 		list.push(str);
 	}
@@ -194,11 +138,11 @@ exports.stringifyList = function(list,delimiter) {
 };
 
 function escapeValue(string,delimiter) {
-	var str = "";
+	var str = '';
 	for(var index=0; index<string.length;index++) {
 		var c = string.charAt(index);
-		if(c=="~" || c==delimiter) {
-			str = str+"~"+c;
+		if(c=='~' || c==delimiter) {
+			str = str+'~'+c;
 		} else {
 			str = str+c;
 		}

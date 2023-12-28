@@ -8,13 +8,12 @@ State widget
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
-var snippets = require("$:/plugins/mythos/cyoa/js/snippets");
+var snippets = require("$:/plugins/mythos/cyoa/js/logic");
+const ATTRS = ["append","depend","if","do","done","write","index","weight","hotkey"];
 
 var CyoaWidget = function(parseTreeNode,options) {
 	this.initialise(parseTreeNode,options);
@@ -34,39 +33,41 @@ CyoaWidget.prototype.render = function(parent,nextSibling) {
 	this.parentDomNode = parent;
 	this.computeAttributes();
 	this.execute();
-	var domNode = this.createDomNode();
-	parent.insertBefore(domNode,nextSibling);
-	this.renderChildren(domNode,null);
-	var infoNode = this.createInfoNode();
-	if(!this.compiling() && domNode.childNodes.length == 0) {
-		// Make this a dedicated info node
-		domNode.className += " cyoa-control";
+	this.domNode = this.createDomNode();
+	parent.insertBefore(this.domNode,nextSibling);
+	this.renderChildren(this.domNode,null);
+	if(!this.compiling()) {
+		if(this.domNode.childNodes.length <= 1) {
+			// Make this a dedicated info node. This is because there's no easy way in CSS to tell if a node is empty (while also having an info element)
+			// The length is tested against 1 because all nodes at least have an info node
+			this.domNode.className += " cyoa-control";
+		}
+		this.infoNode = this.domNode.children[0];
+		if(containsError(this.infoNode)) {
+			// There's an error somewhere in info, make the infoNode itself errored so it can be more notifying.
+			this.domNode.className += " cyoa-error";
+		}
 	}
-	if(infoNode) {
-		domNode.insertBefore(infoNode,domNode.firstChild);
-	}
-	this.domNodes.push(domNode);
+	this.domNodes.push(this.domNode);
 };
 
-CyoaWidget.prototype.createInfoNode = function() {
-	// Make the useful info if we're not compiling
-	var infoContainer;
-	if(this.info) {
-		var infoContainer = this.document.createElement("span"),
-			infoParser = this.wiki.parseText("text/vnd.tiddlywiki",this.info,{
-				parseAsInline: true}),
-			infoNode = this.wiki.makeWidget(infoParser,{document: this.document,parentWidget: this});
-		infoNode.render(infoContainer,null);
-		infoContainer.setAttribute("class","cyoa-info");
-		return infoContainer;
+function containsError(node) {
+	for(var index = 0; index < node.children.length; index++) {
+		var child = node.children[index];
+		if(child.nodeType === 1) { //ELEMENT_NODE
+			if(child.className.indexOf("cyoa-error") >= 0
+			|| containsError(child)) {
+				return true;
+			}
+		}
 	}
-	return null;
+	return false;
 };
 
 CyoaWidget.prototype.createDomNode = function() {
 	var tag = this.getTag();
 	var domNode = this.document.createElement(tag);
-	if(this.id) domNode.setAttribute("id",utils.encodePageForID(this.id));
+	if(this.id) domNode.setAttribute("id",encodePageForID(this.id));
 	domNode.className = this.getClassName();
 	if(this.isLink() && tag === "a") {
 		domNode.setAttribute("href",this.getLinkText());
@@ -77,56 +78,34 @@ CyoaWidget.prototype.createDomNode = function() {
 	for(var i in this.customAttributes) {
 		domNode.setAttribute(i,this.customAttributes[i]);
 	}
-	if(this["if"]) domNode.setAttribute("data-if",this["if"]);
-	if(this["do"]) domNode.setAttribute("data-do",this["do"]);
-	if(this["done"]) domNode.setAttribute("data-done",this["done"]);
-	if(this.index) domNode.setAttribute("data-index",this.index);
-	if(this.weight) domNode.setAttribute("data-weight",this.weight);
-	if(this.hotkey) domNode.setAttribute("data-hotkey",this.hotkey);
-	if(this.write) domNode.setAttribute("data-write",this.write);
-	if(this.depends.length > 0) {
-		domNode.setAttribute("data-depend",utils.encodePageForID(this.depends));
-	}
-	if(this.appends.length > 0) {
-		domNode.setAttribute("data-append",utils.encodePageForID(this.appends));
+	if(this.compiling()) {
+		$tw.utils.each(ATTRS,(attribute) => {
+			if(this[attribute]) {
+				domNode.setAttribute("data-"+attribute,this[attribute]);
+			}
+		});
 	}
 	return domNode;
 };
 
-CyoaWidget.prototype.compileInfo = function() {
+CyoaWidget.prototype.makeInfoNode = function() {
 	var array = [];
-	function add(str) {
-		if(str) {
-			array.push.apply(array,str.split(";"));
-		}
+	if(this.page && this.caption) {
+		array.push([
+			{type: "element", tag: "strong", children: [{type: "text", text: "Caption: "}]},
+			{type: "transclude", attributes: {"$field": {type: "string", value: "cyoa.caption"}}}]);
 	}
-	if(this.errors.length > 0) {
-		array.push("<span class=tc-error>Errors: " + this.errors.join("; ") + "</span>");
+	if(this.else) {
+		array.push([{type: "element", tag: "strong", children: [{type: "text", text: "Else"}]}]);
 	}
-	if(this.caption) {
-		add("''Caption:'' " + this.caption);
-	}
-	if(this.else) array.push("''Else''");
-	add(this.if);
-	if(this.depends.length > 0) {
-		array.push("Depends on " + this.depends.map(utils.enlink).join(" or "));
-	}
-	if(this.index) {
-		array.push(this.index);
-	}
-	if(this.weight) {
-		array.push(this.weight);
-	}
-	add(this.do);
-	add(this.done);
-	if(this.write) {
-		array.push(this.write);
-	}
-	if(array.length > 0) {
-		return "<p>"+array.join("</p><p>")+"</p>";
-	} else {
-		return null;
-	}
+	array.push.apply(array,snippets.getInfoNodes(this));
+	var br = {type: "element", tag: "br"};
+	var children = array.length? array.reduce((result,x) => result.concat(br,x)): undefined;
+	return {
+		type: "element",
+		tag: "span",
+		attributes: {class: {type: "string", value: "cyoa-info"}},
+		children: children};
 };
 
 CyoaWidget.prototype.compiling = function() {
@@ -140,7 +119,6 @@ CyoaWidget.prototype.getClassName = function() {
 	if(this["return"]) { classes.push("cyoa-return"); }
 	if(this["replace"]) { classes.push("cyoa-replace"); }
 	if(this["onclick"]) { classes.push("cyoa-onclick"); }
-	if(this.errors.length > 0 && !this.compiling()) { classes.push("cyoa-error"); }
 	if(this.isLink()) {
 		classes.push("tc-tiddlylink");
 		if(this.isShadow) {
@@ -193,19 +171,14 @@ CyoaWidget.prototype.makeContentTemplate = function(title) {
 	}]
 }
 
-CyoaWidget.prototype.makeErrorChild = function(message) {
-	return [{ type: "text",text: message}];
-}
-
 /*
 I'm not sure if I should be using the wikiLinkTemplate macro. I should disable it somehow if this is cyoa rendering.
 */
 CyoaWidget.prototype.getLinkText = function() {
-	var encode = utils.encodePageForID;
 	var wikiLinkTemplateMacro = this.getVariable("tv-wikilink-template");
 	var wikiLinkTemplate = wikiLinkTemplateMacro ? wikiLinkTemplateMacro.trim() : "#$uri_encoded$";
-	var wikiLinkText = wikiLinkTemplate.replace("$uri_encoded$",encode(this.to));
-	wikiLinkText = wikiLinkText.replace("$uri_doubleencoded$",encode(encode(this.to)));
+	var wikiLinkText = wikiLinkTemplate.replace("$uri_encoded$",encodePageForID(this.to));
+	wikiLinkText = wikiLinkText.replace("$uri_doubleencoded$",encodePageForID(encodePageForID(this.to)));
 	wikiLinkText = this.getVariable("tv-get-export-link",{params: [{name: "to",value: this.defaultTo}],defaultValue: wikiLinkText});
 	return wikiLinkText;
 }
@@ -226,52 +199,49 @@ CyoaWidget.prototype.execute = function() {
 	}
 	this.to =        this.getAttribute("to") || "";
 	this.defaultTo = this.to || currentTiddler;
-	this.depends =   snippets.getPageDependList(tiddler,this);
-	this.appends =   snippets.getPageAppendList(tiddler,this);
 	this.else =      this.getAttribute("else",this.else);
 	this.noscript =  this.getAttribute("noscript");
 	this["return"] = this.getAttribute("return");
 	this["onclick"] =this.getAttribute("onclick");
 	this["replace"] =this.getAttribute("replace");
 	this.stateTag =  this.getAttribute("tag");
-	this.hotkey =    this.getAttribute("hotkey");
 	this.caption =   this.getAttribute("caption");
 	this["class"] =  this.getAttribute("class");
 	this.id =        this.getAttribute("id");
 	this.style =     this.getAttribute("style");
-	this.errors =    [];
-	const ATTRS = ["if","do","done","write","index","weight"];
-	$tw.utils.each(ATTRS,(attribute) => {
-		try {
-			this[attribute] = snippets.getWidgetString(attribute,tiddler,this);
 
-		} catch (e) {
-			if(this.compiling()) {
-				// We're compiling, so we'll log a warning message and proceed as best we can.
-				utils.warnForTiddler(tiddler,e,{wiki: this.wiki});
-			} else {
-				// We're in Tiddlywiki, so we'll replace the contents with a warning message so the user finds this fault quickly.
-				this.errors.push(e);
-			}
-		}
-	});
 	if(this.onclick || this.to) {
 		this.isMissing = !this.wiki.tiddlerExists(this.defaultTo);
 		this.isShadow = this.wiki.isShadowTiddler(this.defaultTo);
 	}
-
-	if(!this.compiling()
-	&& this.wiki.getTiddlerText("$:/config/mythos/cyoa/widget-info","yes") === "yes") {
-		// If we're just displaying in the project, and not rendering
-		this.info = this.compileInfo();
-	}
+	var children;
 	if(!this.hasChildren() && this.isLink()) {
 		// Make up some children for this widget
-		this.makeChildWidgets(this.makeContentTemplate(this.defaultTo));
+		children = this.makeContentTemplate(this.defaultTo);
+	} else if(this.parseTreeNode.children) {
+		children = this.parseTreeNode.children.slice(0);
 	} else {
-		// Construct whatever children it already has
-		this.makeChildWidgets();
+		children = [];
 	}
+	if(!this.compiling()) {
+		children.unshift(this.makeInfoNode());
+	} else if (!this.page || tiddler) {
+		// We're compiling, and everything looks fine
+		$tw.utils.each(ATTRS,(attribute) => {
+			try {
+				this[attribute] = snippets.getWidgetString(attribute,tiddler,this);
+			} catch(e) {
+				// We're compiling, so we'll log a warning message and proceed as best we can.
+				utils.warnForTiddler(tiddler,e,{wiki: this.wiki});
+			}
+		});
+	} else if(currentTiddler.indexOf("Error:") >= 0) {
+		// The page itself is an error, probably from the filter
+		utils.warn(currentTiddler);
+	} else {
+		utils.warnForTiddler(tiddler,"does not exist",{wiki: this.wiki});
+	}
+	this.makeChildWidgets(children);
 };
 
 /*
@@ -279,13 +249,29 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 */
 CyoaWidget.prototype.refresh = function(changedTiddlers) {
 	// c = changed attributes
-	var c = this.computeAttributes();
-	if(c.to || c.tag || c["class"] || c.id || c.style || c.weight || c.stateTag || c.noscript || c.replace) {
+	var changedAttributes = this.computeAttributes();
+	if($tw.utils.count(changedAttributes) > 0
+	|| changedTiddlers[this.to]) {
 		this.refreshSelf();
 		return true;
+	} else if(this.refreshChildren(changedTiddlers)) {
+		// We might update the error state of the node if the info changed.
+		this.domNode.classList.toggle('cyoa-error',containsError(this.infoNode));
+		return true;
+	}
+	return false;
+};
+
+function encodePageForID(idStringOrArray) {
+	function encode(idString) {
+		return idString.split("%").join("%25").split(" ").join("%20")
+	};
+	if(typeof idStringOrArray === "string") {
+		return encode(idStringOrArray);
 	} else {
-		return this.refreshChildren(changedTiddlers);
+		return idStringOrArray.map(encode).join(" ");
 	}
 };
+
 
 })();

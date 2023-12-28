@@ -1,0 +1,56 @@
+caption: Set
+list-before: 
+tags: [[Page Types]]
+title: Page Types/set
+tmap.id: 28342f8c-855b-4452-8c67-474d2450f074
+type: text/vnd.tiddlywiki
+
+A ''Set'' is the default type. It's the one the default page group uses as well (though that can be changed).
+
+<$type.logic>
+
+<$fill $name="values">
+
+<<var Boolean>> - Either <<value true>> or <<value false>>, depending on whether it's been visited or not.
+</$fill>
+<$fill $name="after">
+
+True if a page is visited, or set.
+</$fill>
+<$fill $name="before">
+
+True if a page has not been visited, or has been reset.
+</$fill>
+<$fill $name="touch">
+
+Sets the page to visited, or <<value true>>.
+</$fill>
+<$fill $name="reset">
+
+Unsets the page so it's considered unvisited, or <<value false>>.
+</$fill>
+<$fill $name="imply">
+
+If page <<page B>> implies page <<page A>>, and <<page B>> gets touched or set to <<value true>>, <<page A>> will also be set to <<value true>>. If <<page B>> get reset or set to <<value false>>, <<page A>> will remain <<page true>>.
+</$fill>
+<$fill $name="exclude">
+
+When a page gets set, it will reset all other pages with which it shares an exclusion group.
+</$fill>
+
+
+
+<$fill $name="afterall">
+
+True if //any// page within the group is set.
+</$fill>
+<$fill $name="beforeall">
+
+True if no page withing the group is set.
+</$fill>
+<$fill $name="resetall">
+
+Unsets all of the pages in a group back to <<value false>>, or unvisited.
+</$fill>
+
+</$type.logic>

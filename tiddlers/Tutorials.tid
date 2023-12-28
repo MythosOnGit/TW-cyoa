@@ -15,7 +15,7 @@ These tutorials are meant to be read sequentially. Start with first and proceed 
 
 <li>{{!!description}}
 
-<ul><$list filter="[all[current]tagging[]]">
+<ul><$list filter="[all[current]tagging[]!is[draft]]">
 <li><$link>{{!!caption}}</$link> --- {{!!description}}</li>
 </$list></ul>
 </li>

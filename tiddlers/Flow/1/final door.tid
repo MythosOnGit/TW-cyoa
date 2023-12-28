@@ -7,5 +7,5 @@ You finally arrive at a grand stone door. Before it is a pedestal with an inset.
 
 <<annotate """
 
-This page is appended by [[Flow1/treachery]] and [[Flow1/savagery]]. In turn, it appends [[Flow1/end]], creating a three-page page run. Allthough all these pages are separate tiddlers here in TiddlyWiki, when the reader visits either <<page Flow1/treachery>> or <<page Flow1/savagery>>, they will see all three pages in a row as though they are a single long page.
+This page is appended by [[Flow1/treachery]] and [[Flow1/savagery]]. In turn, it appends [[Flow1/end]], creating a three-page page run. Allthough all these pages are separate tiddlers here in TiddlyWiki, when the reader visits either <<plink Flow1/treachery>> or <<plink Flow1/savagery>>, they will see all three pages in a row as though they are a single long page.
 """ >>

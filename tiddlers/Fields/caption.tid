@@ -9,11 +9,11 @@ The <<field cyoa.caption>> field of a tiddler is the caption used by widgets suc
 
 ! Examples
 
-The tiddler [[Logic1/atrium]] has a <<field cyoa.caption>> set to <$macrocall $name="value" _={{Logic1/atrium!!cyoa.caption}} />.
+The tiddler [[Tiddler_A]] has a <<field cyoa.caption>> set to <$macrocall $name="value" _={{Tiddler_A!!cyoa.caption}} />.
 
 Then options widget acts like the following:
 
-<<example """<$options filter="Logic1/atrium" />""">>
+<<example """<$options filter="Tiddler_A" />""">>
 
 ! Wikitext
 

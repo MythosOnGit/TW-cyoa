@@ -1,0 +1,57 @@
+title: $:/plugins/mythos/cyoa/configuration/groups/editor
+
+\procedure table()
+\whitespace trim
+<$reveal tag="table" state="!!cyoa.type" type="nomatch" text=''>
+<tbody>
+<tr>
+	<td align="left">Variable:</td>
+	<td align="left"><$edit-text
+		field="cyoa.key"
+		placeholder={{{ [all[current]cyoa:variable[]] }}}
+		tag="input" /></td></tr>
+<tr>
+	<td align="left">Serializer:</td>
+	<td align="left">
+		<$let handler={{!!cyoa.type}}>
+			<$select field="cyoa.serializer" >
+				<$list variable='module'
+					filter="[[cyoa$(handler)$serializer]substitute[]modules[]]">
+					<option value={{{ [<module>moduleproperty[name]] }}} >
+						<$text text={{{ [<module>get[description]] }}} />
+</option></$list></$select></$let></td></tr>
+<$reveal
+	tag="tr"
+	state="!!cyoa.serializer"
+	type="match"
+	text="string" >
+	<td align="left">Filter:</td>
+	<td align="left"><$edit-text
+		field="filter"
+		tag="input"
+		placeholder="[get[title]]"/></td></$reveal>
+</tbody></$reveal>
+\end
+
+
+
+
+<em>Group Type:</em> <$select field="cyoa.type"><$list filter="[[cyoatype]modules[]] :filter[moduleproperty[hidden]count[]match[0]] +[moduleproperty[name]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select>
+
+<$transclude $variable=table $mode=inline />
+
+{{!!text}}
+
+!! Pages
+
+//<small>Count: <$count filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>]" /></small>//
+
+<ul class="tc-cyoa-imply-list">
+
+<$list filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>!has[cyoa.imply]sort[title]]">
+
+<li>
+
+<$transclude $tiddler="$:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node" $mode="inline" />
+
+</li></$list></ul>

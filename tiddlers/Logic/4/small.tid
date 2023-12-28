@@ -11,7 +11,7 @@ You take a sip of the drink labeled "Diet Drink Me". Gradually over a minute, yo
 
 <<annotate """
 
-[[Logic4/cookie]] resets this page. Since [[Logic4/tiny]] (which is "Drink Me") implies this page, it stands that ''not'' this page implies ''not'' <<page Logic4/tiny>> (that's the contrapositive), so resetting this page (<<page Logic4/small>>) automatically resets <<page Logic4/tiny>> too.
+[[Logic4/cookie]] resets this page. Since [[Logic4/tiny]] (which is "Drink Me") implies this page, it stands that ''not'' this page implies ''not'' <<plink Logic4/tiny>> (that's the contrapositive), so resetting this page (<<plink Logic4/small>>) automatically resets <<plink Logic4/tiny>> too.
 
-Effectively, it's impossible to enter the illegal state where <<page tiny>> is set, but this page is not. This is good! For simple cases like this, resetting both pages would have been fine, but for larger projects, making illegal states impossible makes your story more foolproof.
+Effectively, it's impossible to enter the illegal state where <<plink Logic4/tiny>> is set, but this page is not. This is good! For simple cases like this, resetting both pages would have been fine, but for larger projects, making illegal states impossible makes your story more foolproof.
 """ >>

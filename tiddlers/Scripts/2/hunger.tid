@@ -1,0 +1,12 @@
+cyoa.group: numbers
+tags: [[Virtual Page]]
+title: Scripts2/hunger
+tmap.id: 498833be-353f-485f-aed6-5bcd39113710
+type: text/vnd.tiddlywiki
+
+\relink link x
+\define link(x) <$link to=<<__x__>> />
+
+<!-- If you're wondering why I made those links macros instead of just linking directly, it's so TiddlyMap doesn't register the links and make edges. -->
+
+This is a page which represents the character's hunger as a scaler value. It gets manipulated by <<link Scripts2/fast>>, and tested for in <<link Scripts2/climb>>.

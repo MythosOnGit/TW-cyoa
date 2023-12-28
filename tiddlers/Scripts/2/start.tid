@@ -1,0 +1,17 @@
+cyoa.append: Scripts2/options
+tags: 
+title: Scripts2/start
+tmap.id: 57f2cab5-279f-40c4-8006-0c9cf17cb043
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+It demonstrates simple declarative use-cases of incrementing and checking numbers. There's [[Scripts2/hunger]] which increments whenever the character fasts in [[Scripts2/fast]], and there's the [[Scripts2/climb]] number, which increments as it revisits itself over and over, changing only after it gets large enough and other conditions are met.""" >>
+
+After traveling far, you arrive in a small village at the base of a mountain. You're here to seek answers from a wize man who lives at the mountain top, but the locals all give you the same warning:
+
+"//If you must fast for days before climbing the mountain, or you will never reach the top.//"
+
+This seems like a silly superstition to you, but the choice is yours.

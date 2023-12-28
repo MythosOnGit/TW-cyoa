@@ -15,5 +15,5 @@ Appended pages are still pages. They can be linked to directly, just as [[Flow1/
 
 Not only does appending allow you to reuse pages as parts of other pages, but it reduces duplication in your generated interactive novel too.
 
-Despite how <<page Flow1/end>> is both linked to and appended, it only appears once in your generated file, thus keeping file size down.
+Despite how <<plink Flow1/end>> is both linked to and appended, it only appears once in your generated file, thus keeping file size down.
 """ >>

@@ -1,0 +1,39 @@
+caption: Scripts 3: Do and Done
+description: Manipulating variables directly with action snippets
+tags: Scripts
+title: Scripts3
+tmap.id: 4302c16d-1bcb-438c-b20d-47ea2f49dbd8
+type: text/vnd.tiddlywiki
+
+Being able to track how often a page is visited or touched is great, but obviously we'll eventually want to do something to numbers besides increment them by 1 and reset them to 0. We will want to perform all sorts of arithmetic on them. We might want to use negative numbers, large numbers, or decimals.
+
+For this, we'll need to use <<field do>> and <<field done>>. These snippet fields which allow you to write small scripts using placeholders like #{my_page} just like <<field if>> does. The difference is that these are Action Snippets instead of Conditional Snippets. Action Snippets are not expressions that are tested to see whether a page or node should be shown, but rather are used to modify variables.
+
+For instance, you may have hitpoints for your character in your story. Here are some snippets you might use:
+
+; <<snippet """#{hitpoints} = 100""" >>
+: This script sets the value of hitpoints to 100.
+;<<snippet """#{hitpoints} -= #{poisoned}*5""" >>
+:This subtracts five times the value of <<page poisoned>> from <<page hitpoints>>. <<page poisoned>> could be another number representing the severity of how poisoned you are, or it could be an ordinary boolean flag, in which case it will behave like 0 or 1, and thus subtract 5 from <<page hitpoints>> if true.
+;<<snippet """#{hitpoints} = Math.max(0, #{hitpoints} - 15)""" >>
+:Snippets are expressions executed by your browser's javascript engine, which means you have access to all the built-in javascript libraries and syntax (if you want). In this case, we're taking advantage of features in the javascript ''Math'' library.
+
+In all types of snippets, if a number page has not been set, it's value is assumed to be zero. If a number has been set, ''even if it has been set to zero'', it will be treated as visited. The only way to make a number behave as unvisted again is to reset it.
+
+!!! Attaching action snippets to pages
+
+You can attach these snippets to pages, to be executed when the page is viewed, the same way you add <<field if>> snippets. Edit a page's corresponding tiddler, and you'll find the <<field do>> and <<field done>> buttons beside <<field if>> in the edit panel pill <<pill "if do done">>. Clicking on them creates text fields where you can input your scripts.
+
+!!! <<widget cyoa>> widget
+
+To have action snippets execute when a <<widget cyoa>> node is rendered, you can use the corresponding attributes <<attr do>> and <<attr done>>.
+
+!! ''do'' vs ''done''
+
+Both <<attr do>> and <<attr done>> execute their scripts only if a page or a node evaluates to true. The only difference between the two is //when// they're executed. <<attr do>> is executed at the start of a page or node, before any of its contents is evaluated, and <<attr done>> is executed after its contents is evaluated.
+
+If you're wondering when <<attr touch>> and <<attr reset>> declarations are executed, it's ''after'' a node's contents is evaluated, much like with <<attr done>>
+
+! Demo
+
+This example project shows how currency can be tracked in a story. These nodes contain additional annotations: <<demo>>

@@ -22,14 +22,14 @@ In the generated interactive novel, this page will come out green (with light-co
     color: khaki;
 }
 ```
-Thus when this page (<<page Style2/yard>>) is the active page, that css is active.
+Thus when this page (<<plink Style2/yard>>) is the active page, that css is active.
 
 This CSS will ''not'' apply if this page is only visible because it's appended by another page. This must be the first page in the current page run.
 """ >>
 
 <<annotate """
 
-Also, you'll notice that in TiddlyMap, this node is green. That's because it's been manually customized. You can manually customize any node by clicking on it in the graph and clicking {{$:/plugins/felixhayashi/vis/img/network/editIcon.png}} ''Edit Node''.
+Also, you'll notice that in TiddlyMap, this node is green. That's because it's been manually customized. You can manually customize any node by clicking on it in the graph and clicking <<vis-edit>>.
 
 This has no effect on your interactive novel. It's just a useful trick you might like to organize your project.
 """ >>

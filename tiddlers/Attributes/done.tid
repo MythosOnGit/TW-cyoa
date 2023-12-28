@@ -1,0 +1,9 @@
+caption: done
+tags: Attributes
+title: DoneAttribute
+tmap.id: 98dcc1fc-d799-4bc1-b55d-039378e3cc63
+type: text/vnd.tiddlywiki
+value-type: Snippet
+widget: CyoaWidget
+
+A [[code snippet|Snippet]] which is evaluated as an action only if the widget is rendered. The action is performed //after// the widgets inner content is rendered and evaluated.

@@ -4,9 +4,11 @@ tags: $:/tags/cyoa/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/only
 
 \whitespace trim
-<$radio class="cyoa-edit-only" field="cyoa.only" value="" actions="""<$action-deletefield $field="cyoa.only"/>""">always</$radio>
-<$radio class="cyoa-edit-only" field="cyoa.only" value="first">first</$radio>
-<$radio class="cyoa-edit-only" field="cyoa.only" value="visited">visited</$radio>
+\procedure set-edit-state() <$action-setfield $tiddler="$:/temp/cyoa/edit-state" text=`cyoa.only-$(currentTiddler$)` />
+
+<$radio class="cyoa-edit-only" field="cyoa.only" value="" actions="""<$action-deletefield $field="cyoa.only"/><<set-edit-state>>""">always</$radio>
+<$radio class="cyoa-edit-only" field="cyoa.only" value="first" actions=<<set-edit-state>>>first</$radio>
+<$radio class="cyoa-edit-only" field="cyoa.only" value="visited" actions=<<set-edit-state>>>visited</$radio>
 <$reveal type="match" state="!!cyoa.only" text="never">
-<$radio class="cyoa-edit-only" field="cyoa.only" value="never">never</$radio>
+<$radio class="cyoa-edit-only" field="cyoa.only" value="never" actions=<<set-edit-state>> >never</$radio>
 </$reveal>

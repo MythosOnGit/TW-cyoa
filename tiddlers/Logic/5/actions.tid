@@ -6,7 +6,7 @@ type: text/vnd.tiddlywiki
 
 Here we provide a list to each "colored tent" option.
 
-We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Logic5/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<page "Logic5/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
+We're using a filter rather than simply listing out all the mask pages. This is more advanced, but more useful. In this case, <<value "[[Logic5/tent]listed[cyoa.exclude]]">>, which effectively reads, "take <<plink "Logic5/tent">>, and get all tiddlers where that is listed in their <<field cyoa.exclude>> field". The advantage to this is we can add other "colored tent" tiddlers later, and they'll automatically appear in this options list.
 """ >>
 
 <$options filter="[[Logic5/tent]listed[cyoa.exclude]]"/>
@@ -15,7 +15,7 @@ We're using a filter rather than simply listing out all the mask pages. This is 
 
 Below is a link which should appear only if ''any'' of "colored tent" pages have been visited. However, nodes and pages in <<plugin>> evaluate truthy only if //all// of their constraints are met. There are several tricks to evaluate true if ''any'' of a list of constraints are met, and here's one of them:
 
-We test that //all// of the "colored tent" pages are ''not'' visited in a [[control node]], and then we have an <<wlink ElseWidget>> right after it which is the actual link. Therefore, the link shows if "all of the tent pages are not visited" is //not// true, or in other words, the opposite: "any of the tent pages are visited".
+We test that //all// of the "colored tent" pages are ''not'' visited in a [[control node|Control Nodes]], and then we have an <<wlink ElseWidget>> right after it which is the actual link. Therefore, the link shows if "all of the tent pages are not visited" is //not// true, or in other words, the opposite: "any of the tent pages are visited".
 """ >>
 
 <$cyoa before="[[Logic5/tent]listed[cyoa.exclude]]"/>

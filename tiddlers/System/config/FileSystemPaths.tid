@@ -5,6 +5,7 @@ type: text/vnd.tiddlywiki
 [removesuffix[Field]lowercase[]addprefix[Fields/]]
 [tag[Widgets]removesuffix[Widget]lowercase[]addprefix[Widgets/]]
 [tag[Attributes]removesuffix[Attribute]lowercase[]addprefix[Attributes/]]
+[tag[Examples]addprefix[Examples/]]
 [tag[Plugins]lowercase[]addprefix[Plugins/]]
 [tag[Versions]removeprefix[Version ]addprefix[Versions/]]
 [tag[Tutorials]addsuffix[/index]]

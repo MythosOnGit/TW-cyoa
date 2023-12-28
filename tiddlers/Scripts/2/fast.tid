@@ -1,0 +1,42 @@
+cyoa.append: Scripts2/options
+cyoa.caption: Fast for the day.
+tags: Scripts2/options
+title: Scripts2/fast
+tmap.id: 9a2b811d-fe95-4cf7-ba58-6af245435dd9
+type: text/vnd.tiddlywiki
+
+You find a quiet spot and begin a day of meditating, sipping water, and being present to your surroundings.
+
+<$cyoa if="#{Scripts2/hunger} >= 7" reset="Scripts2/hunger">
+
+<<annotate """
+
+If you fast for too long, you pass out. This resets [[Scripts2/hunger]].
+""" >>
+
+...You pass out around noon from low blood sugar. You awaken that night in one of the bed of the local monks. They bring soup for you to eat, and they //insist// you do so. It seems you fasted for too long.
+</$cyoa><$else touch="Scripts2/hunger">
+
+<<annotate """
+
+This block increments [[Scripts2/hunger]] by touching it.
+
+The following are just short aesthetic nodes to help vary each of the days of fasting. Just like in [[Scripts2/climb]], it's important to make sure this page varies from day to day, otherwise readers will be clicking on the fasting link and not seeing anything change. They may think the game is stuck.
+""" >>
+
+<$cyoa if="#{Scripts2/hunger} % 2 == 0">
+Birds chirp in nearby trees.
+</$cyoa><$else>
+Children play in the streets.
+</$else>
+<$cyoa if="#{Scripts2/hunger} % 3 == 0">
+The housekeeper of your inn comes by to sweep.
+</$cyoa>
+<$cyoa if="#{Scripts2/hunger} > 2">
+Your stomach growls. A lot.
+</$cyoa>
+Come nightfall, you retire to bed.
+
+</$else>
+
+The next day arrives. You must decide what to do.

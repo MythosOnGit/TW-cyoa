@@ -9,11 +9,9 @@ This dominantly appends items.
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
-var snippetManager = require("$:/plugins/mythos/cyoa/js/snippets");
+var snippetManager = require("$:/plugins/mythos/cyoa/js/logic");
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
 
 /*

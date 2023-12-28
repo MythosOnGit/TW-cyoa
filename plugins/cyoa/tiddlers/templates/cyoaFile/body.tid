@@ -7,7 +7,7 @@ type: text/vnd.tiddlywiki
 {{$:/cyoaHeader|| $:/core/templates/html-tiddler }}
 </div>
 <div class="cyoa-content">
-{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline}}
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/core/templates/html-tiddler }}
 </div>
 <div class="cyoa-footer">
 {{$:/cyoaFooter|| $:/core/templates/html-tiddler }}

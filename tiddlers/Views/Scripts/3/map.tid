@@ -1,0 +1,33 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Scripts 3: Do and Done/map
+type: text/vnd.tiddlywiki
+
+{
+ "5b83a598-7cea-453f-9e38-d00ed5957449": {
+  "x": 75,
+  "y": -75
+ },
+ "cfc549ee-2526-4dc7-8147-e1a5fe8c3fd6": {
+  "x": -150,
+  "y": 0
+ },
+ "b01bca5a-b0b2-4998-a379-2eb1c19caa48": {
+  "x": -75,
+  "y": -75
+ },
+ "6d81d35d-85f6-4a18-ad0a-e7fb6c248d37": {
+  "x": 150,
+  "y": 0
+ },
+ "ccdf3f5e-1339-4174-9e8f-637bd1e9ddfc": {
+  "x": -55,
+  "y": 75
+ },
+ "73343c66-41d7-4f87-9945-dbdeb0bd95c1": {
+  "x": 0,
+  "y": 0
+ },
+ "ffb56eac-24c4-400f-918a-835f9358db14": {
+  "x": 75,
+  "y": 75
+ }
+}

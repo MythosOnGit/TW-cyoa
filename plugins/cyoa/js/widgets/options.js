@@ -13,8 +13,6 @@ Adds attrs: tag, all
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var ListWidget = require("$:/core/modules/widgets/list.js").list;
@@ -121,21 +119,9 @@ OptionsWidget.prototype.hasChildren = function() {
 
 OptionsWidget.prototype.getTiddlerList = function() {
 	var filter = this.getAttribute("filter"),
-		wiki = this.wiki,
-		rendering = this.hasVariable("cyoa-render","yes");
+		wiki = this.wiki;
 	if(filter) {
-		var results = wiki.filterTiddlers(filter,this),
-			pageMap = wiki.getCyoaPageMap();
-		return results.filter(function(title) {
-			var tiddler = wiki.getTiddler(title);
-			if(!pageMap[title]) {
-				if(rendering && (!tiddler || !tiddler.isDraft())) {
-					utils.warnForTiddler(this.getVariable("currentTiddler"),"$options widget lists non-page tiddler "+title,{wiki: wiki});
-				}
-				return false;
-			}
-			return true;
-		},this);
+		return wiki.filterTiddlers(filter + " +[!is[draft]]",this);
 	} else {
 		return utils.getOptionsList(this.title,wiki);
 	}

@@ -1,0 +1,14 @@
+tags: Versions
+title: Version 1.4.0
+tmap.id: 1ecd9b7b-1e67-4432-b0d9-70f713e4837b
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+!!!Features
+
+* Introducing numbers as variables that pages can represent. Along with that comes two new tutorials to help introduce them.
+* Also introducing <<field do>> and <<field done>>, snippet fields and attributes that can be used for direct manipulation of variables, like numbers.
+* Vastly improved the information that <<plugin>> gives you with pages and nodes, regarding their constraints, actions, and potential errors.
+* Fixed <<wlink OptionsWidget>> to signal when it's supposed to list non-page tiddlers, instead of hiding them.
+* Fixed the append list to do the same.
+* Countless improvements and refactors under the hood.

@@ -1,0 +1,18 @@
+cyoa.append: Scripts2/options
+cyoa.reset: Scripts2/climb
+title: Scripts2/return
+tmap.id: b28f42b5-af97-4f78-ab87-ba4d600434de
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page resets the climbing distance. Whatever it was set to, it becomes unset, and thus returns to the default value of <<value 0>>.
+""">>
+
+<$cyoa if="#{Scripts2/climb} >= 2">
+
+Despite having climbed for hours, remarkably it only takes you a few minutes to get back to town.
+</$cyoa><$else>
+
+"It doesn't take you too long to get back to town. Overall, your hike today wasn't that long.
+</$else>

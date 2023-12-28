@@ -1,6 +1,18 @@
 title: $:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Root
 
-<$list filter="[all[current]cyoa:roots[cyoa.imply]]" counter="counter">
+<!-- We use .exclude to try our best to filter out duplicates and prevent infinite loops. -->
+\function .exclude()
+[enlist<excluded>] [all[current]] +[format:titlelist[]join[ ]]
+\end
+
+\function parent(item, excluded)
+[<item>each:list-item[cyoa.imply]]
+-[enlist<excluded>]
+:map:flat[function[parent],<currentTiddler>,<.exclude>]
+~[<item>]
+\end
+
+<$list filter="[function[parent],<currentTiddler>unique[]!has[cyoa.imply]]" counter="counter">
 
 <$let showAllChildren=<<counter-first>> >
 

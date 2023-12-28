@@ -8,18 +8,17 @@ don't have any page group tags.
 
 \*/
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils.js");
 var Record = require("$:/plugins/mythos/cyoa/js/groupHandlers/record.js");
 
 function Style(){};
-Style.prototype.touch = function(){};
+Style.prototype.amendRecord = function(){};
 Style.prototype.init = function(){};
 Style.prototype.exportData = function(){};
-var styleClasses = $tw.modules.createClassesFromModules("cyoagrouphandlerstyle",null,Style);
+Style.prototype.getIdFor = function(entry,index) {return index;};
+var styleClasses = $tw.modules.createClassesFromModules("cyoaserializermanager",null,Style);
 
 /*
 group: string of group name
@@ -36,13 +35,15 @@ Hp.init = function(wiki,group,data,pages) {
 	this.variable = wiki.getCyoaGroupVariable(group,"cyoa.key");
 	var styleClass = styleClasses[this.data.style || "string"];
 	if(!styleClass) {
-		utils.warn("Grouphandler warning: In "+this.data.title+", style '"+this.data.style+"' not recognized.");
-		styleClass = styleClasses.string;
+		// This doesn't have a codec stager, so we can use the default stager.
+		styleClass = Style;
 	}
 	this.style = new styleClass();
 	this.style.init(wiki,this.data);
 	Record.call(this,wiki,group,pages);
 	this.update();
+	// And now the styles have a chance to write data however they want
+	this.changed = this.style.amendRecord(this.entries) || this.changed;
 	// Okay. Now that we've updated the record, lets pull out the pageMap
 	if(Record.versioningEnabled(wiki)) {
 		// This will likely occur after all compiling is done.
@@ -50,30 +51,28 @@ Hp.init = function(wiki,group,data,pages) {
 	}
 };
 
-/*
-Should be overridden
-*/
+Hp.groupData = function() {
+	var data = {
+		exList: this.generateExclusionList(),
+		up: this.generateUpTree(),
+		encoder: this.data.style || "string"
+	};
+	this.style.exportData(data);
+	return data;
+};
+
 Hp.after = function(title) {
-	return null;
+	return this.variable + ".is(" + this.strIdFor(title) + ")";
 };
 
-/*
-Should be overridden
-*/
 Hp.touch = function(title) {
-	return null;
+	return this.variable + ".touch(" + this.strIdFor(title) + ")";
 };
 
-/*
-Should be overridden
-*/
 Hp.reset = function(title) {
-	return null;
+	return this.variable + ".reset(" + this.strIdFor(title) + ")";
 };
 
-/*
-Can be overridden
-*/
 Hp.before = function(title) {
 	var rtn = this.after(title);
 	if(rtn) {
@@ -82,30 +81,18 @@ Hp.before = function(title) {
 	return rtn;
 };
 
-/*
-Can be overridden
-*/
 Hp.afterAll = function(title) {
-	return null;
+	return this.variable + ".any()";
 }
 
-/*
-Can be overridden
-*/
 Hp.touchAll = function(title) {
 	return null;
 }
 
-/*
-Should be overridden?
-*/
 Hp.resetAll = function(title) {
-	return null;
+	return this.variable + ".clear()";
 }
 
-/*
-Can be overridden
-*/
 Hp.beforeAll = function(title) {
 	var rtn = this.afterAll(title);
 	if(rtn) {
@@ -123,23 +110,23 @@ Hp.visited = function(title) {
 };
 
 Hp.index = function(title) {
-	return this.after(title);
+	return this.if(title);
 };
 
 Hp.weight = function(title) {
-	return this.after(title);
+	return this.if(title);
 };
 
 Hp.write = function(title) {
-	return this.after(title);
+	return this.if(title);
 };
 
 Hp.do = function(title) {
-	return this.after(title);
+	return this.variable + ".x(" + this.strIdFor(title) + ").val";
 };
 
 Hp.if = function(title) {
-	return this.after(title);
+	return  this.variable + ".get(" + this.strIdFor(title) +")";
 };
 
 Hp.idFor = function(title) {
@@ -173,10 +160,6 @@ This calls one of the sub getIdMap methods, this allows sub classes to add new s
 */
 Hp.generateIdFor = function(page,counter) {
 	return this.style.getIdFor(this,page,counter);
-};
-
-Hp.touchEntry = function(info,index) {
-	return this.style.touch(this,info,index)
 };
 
 Hp.generateUpTree = function() {

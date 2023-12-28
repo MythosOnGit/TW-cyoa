@@ -1,0 +1,51 @@
+caption: Numbermap
+tags: [[Page Types]]
+title: Page Types/numbermap
+tmap.id: 6cc60112-719b-429c-b982-d1711efdf1a7
+type: text/vnd.tiddlywiki
+
+All of the pages in a ''Number Map'' represent numbers.
+
+<$type.logic>
+
+<$fill $name="values">
+
+<<var Number>> - As supported by javascript, which can be any rational number within an enormous range. By default, an unset page is equal to <<value 0>>.
+</$fill>
+<$fill $name="after">
+
+True if a page has been incremented or set, even if it's set to <<value 0>>.
+</$fill>
+<$fill $name="before">
+
+True if a page has not been visited, or has been reset. Setting it explicitly to <<value 0>> does not do this.
+</$fill>
+<$fill $name="touch">
+
+Increments the value by <<value 1>>. Unset values will be set to <<value 1>>
+</$fill>
+<$fill $name="reset">
+
+Unsets the page so it's considered unvisited. Its value will default to <<value 0>>
+</$fill>
+<$fill $name="exclude">
+
+When a page gets set, it will reset all other pages with which it shares an exclusion group.
+</$fill>
+
+
+
+<$fill $name="afterall">
+
+True if //any// page within the group is set.
+</$fill>
+<$fill $name="beforeall">
+
+True if no page withing the group is set.
+</$fill>
+<$fill $name="resetall">
+
+Unsets all of the pages in a group .
+</$fill>
+
+</$type.logic>

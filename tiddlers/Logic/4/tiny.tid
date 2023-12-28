@@ -18,5 +18,5 @@ You can no longer reach the table, but now that you can see under it just fine, 
 
 This page implies [[Logic4/small]] and [[Logic4/cookie]]. Thus, when this page is set, both of those pages will automatically be set too. If either of those pages are reset, this page is also reset.
 
-''However'': If this page is set, and then reset, both <<page Logic4/small>> and <<page Logic4/cookie>> will remain set.
+''However'': If this page is set, and then reset, both <<plink Logic4/small>> and <<plink Logic4/cookie>> will remain set.
 """ >>

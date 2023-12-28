@@ -5,10 +5,10 @@ packing and unpacking scripts, and executing them safely.
 
 'use strict'
 
-var utils = require("./utils");
+var utils = require('./utils');
 
 exports.unpack = function(pack) {
-	return utils.parseStringList(pack,";");
+	return utils.parseStringList(pack,';');
 };
 
 /*
@@ -19,8 +19,8 @@ returns: an array of values corresponding to the returned values from each snipp
 exports.eval = function(pack,state,thisVar) {
 	state = state || {};
 	var keys = Object.keys(state);
-	keys.unshift("__script__");
-	keys.push("return eval(__script__)");
+	keys.unshift('__script__');
+	keys.push('return eval(__script__)');
 	var caller = Function.apply(Object.create(Function.prototype),keys);
 	var packArray = exports.unpack(pack);
 	var args = [null];

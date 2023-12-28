@@ -10,8 +10,6 @@ Filters tiddlers based on whether they'll be included in the compiled cyoa.
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils");

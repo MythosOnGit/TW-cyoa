@@ -55,7 +55,7 @@ Congratulations. You have complete a most frightful quest.
 
 <<annotate """
 
-In this case, the starting page of this adventure is also the ending page, but if you examine the <<wlink ElseWidget>> chain, you'll see it's only reachable if both <<tid "Logic3/troll">> and <<tid "Logic3/victory">> is visited.
+In this case, the starting page of this adventure is also the ending page, but if you examine the <<wlink ElseWidget>> chain, you'll see it's only reachable if both <<tlink "Logic3/troll">> and <<tlink "Logic3/victory">> is visited.
 """ >>
 
 <!--	HEY READER

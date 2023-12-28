@@ -14,5 +14,5 @@ The beast is no more.
 
 <<annotate """
 
-This page is the other page which touches <<tid "Logic3/victory">>, the first being <<tid "Logic3/throw">>. There are two paths to victory here, but since they touch the same flag, than the end page (<<tid "Logic3/start">>), only needs to check <<tid "Logic3/victory">>, it doesn't matter what other page was the one that touched it.
+This page is the other page which touches <<tlink "Logic3/victory">>, the first being <<tlink "Logic3/throw">>. There are two paths to victory here, but since they touch the same flag, than the end page (<<tlink "Logic3/start">>), only needs to check <<tlink "Logic3/victory">>, it doesn't matter what other page was the one that touched it.
 """ >>

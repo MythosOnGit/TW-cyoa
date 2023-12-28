@@ -16,13 +16,7 @@ function Record(wiki,title,pages) {
 	this.name = wiki.getCyoaGroupVariable(title, "cyoa.key");
 	var record = wiki.getTiddlerData(versionPrefix + this.name,{});
 	this.changed = false;
-	if(Array.isArray(record)) {
-		// Old style
-		this.entries = record.flat();
-		this.changed = true;
-	} else {
-		this.entries = record.entries || [];
-	}
+	this.entries = record.entries || [];
 	this.wiki = wiki;
 	this.pages = pages;
 };
@@ -40,19 +34,6 @@ Rp.forEachEntry = function(callback) {
 		var entry = this.entries[index];
 		callback(entry,this);
 	}
-};
-
-Rp.generateUpTree = function() {
-	var tree = Object.create(null);
-	var self = this;
-	var index = 0;
-	this.forEachEntry(function(info) {
-		if(info.imply) {
-			tree[index] = info.imply.slice(0);
-		}
-		index++;
-	});
-	return tree;
 };
 
 Object.defineProperty(Rp,"length",{
@@ -138,8 +119,6 @@ Rp.update = function() {
 						// If this is still an active page, it must still be implied. If not, we must force it.
 
 						if(title && !implies(implicationTree,info.title,title)) {
-							// It must still be implied for back-compat.
-							newImply.push(index);
 							// oldImply is where legacy implies go. This way we don't issue this warning multiple times.
 							if(!info.oldImply || info.oldImply.indexOf(index) < 0) {
 								utils.warnForTiddler(info.title,"Tiddler no longer implies '"+title+"', which would be a backward-incompatible change. CYOA will retain the implication until the version history is next cleared.",{wiki: self.wiki});
@@ -158,6 +137,8 @@ Rp.update = function() {
 						}
 					}
 					checkIfMustBeImplied(parent);
+					// Ultimately, there's no reason to ever drop old implications
+					newImply.push(parent);
 				}
 			}
 		}
@@ -168,19 +149,6 @@ Rp.update = function() {
 			info.exclude = newExclude;
 		}
 	});
-	// And now the styles have a chance to write data however they want
-	counter = 0;
-	this.forEachEntry(function(info) {
-		// We give the styles a chance to put in their own metadata
-		if(self.touchEntry(info,counter)) {
-			self.changed = true;
-		}
-		counter++;
-	});
-};
-
-Rp.touch = function() {
-	throw "The Record class cannot update records on its own, it must be used through a subclass."
 };
 
 // returns [[indexA,indexB],[indexC,indexD]]

@@ -42,34 +42,6 @@ function testTracks(expected,text,extraFields) {
 	testMethod("getTiddlerTracks",expected,Object.assign({text: text},extraFields));
 }
 
-describe("wikimethod: transclude",function() {
-
-it("Finds syntax transcludes",function() {
-	testTranscludes(["file A"],"Syntax transclude: {{file A}}");
-});
-
-it("Finds widget transcludes",function() {
-	var text = "Widget: <$transclude tiddler='file A' />";
-	testTranscludes(["file A"],text);
-});
-
-it("Finds nested transcludes",function() {
-	testTranscludes(["file A","inner"],`
-		<$set name="A" value="B">
-			<$transclude tiddler="file A">
-				<$transclude tiddler="inner" />
-			</$transclude>
-		</$set>`);
-});
-
-it("doesn't duplicate transcludes",function() {
-	testTranscludes(
-		["file A","file B"],
-		"{{file A}}-{{file B}}-{{file A}}");
-});
-
-});
-
 describe("wikimethod: Cyoa links",function() {
 
 it("Finds nested cyoa widgets",function() {

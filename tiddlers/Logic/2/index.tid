@@ -21,7 +21,7 @@ Just like <<field cyoa.append>>, Both <<field cyoa.after>> and <<field cyoa.befo
 
 !!! Visually
 
-If you're using TiddlyMap, "after" constraints are represented with dotted green edges, and "before" constraints are dotted red-orange edges. You can create them the same way as drawing "append" edges. Use {{$:/plugins/felixhayashi/vis/img/network/connectIcon.png}} ''Add Edge'' to drag a new edge from node <<page Rescue_Princess>> to node <<page Slay_Dragon>>. In the "Edge type" popup, specify "tw-filter:cyoa.after". Then draw a second edge from node <<page Rescue_Princess>> to node <<page Princess_Died>> and specify an edge type of "tw-filter:cyoa.before".
+If you're using TiddlyMap, "after" constraints are represented with dotted green edges, and "before" constraints are dotted red-orange edges. You can create them the same way as drawing "append" edges. Use <<vis-connect>> to drag a new edge from node <<page Rescue_Princess>> to node <<page Slay_Dragon>>. In the "Edge type" popup, specify "tw-filter:cyoa.after". Then draw a second edge from node <<page Rescue_Princess>> to node <<page Princess_Died>> and specify an edge type of "tw-filter:cyoa.before".
 
 Multiples edges can be drawn from one node to others to create additional constraints. All must be satisfied for that node to evaluate true.
 

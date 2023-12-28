@@ -1,0 +1,38 @@
+title: Page Group
+tmap.id: 8d69e20f-0da9-4c02-9a84-37b879a07e2b
+type: text/vnd.tiddlywiki
+
+All [[tracked|Tracking]] tiddlers must belong to a page group. Pages in a group will have some form of representation in the generated cyoa's URL. Unless otherwise specified, they will be added to the default group.
+
+!! Default group (and automatic tracking)
+
+<<plugin>> will create and maintain states for any pages that require tracking. It does this by examining the all tiddlers during compile. For instance, if a tiddler contains a <<widget first>> widget, then it needs to be tracked, and so the engine will create state for it. A page lists other tiddlers in a <<field cyoa.after>> fields, then those pages will be tracked. And so forth.
+
+It does a fairly good job of figuring out what tiddlers need to be tracked, and which don't, but some complicated wikitext can confuse it. For instance, given: `<$tiddler tiddler="TrickyPage"><$cyoa after="[all[current]]"/></$tiddler>`, the engine won't figure out that "TrickyPage" needs to be tracked, and you'll get a warning at compile time. To remedy this, explicitly add TrickyPage to the default group using the tiddler's edit options under the cyoa menu:
+
+: {{$:/plugins/mythos/cyoa/ui/EditTemplate/group}}
+
+!! Creating new groups
+
+You can create other groups besides the default group and add pages to that group. Here are some reasons to do that. Each group will use its own variable in your story's URI to record its state. This allows groups to use different serializers. Also, groups can be configured to be a different [[types|Page Types]]. For instance, one group might contain numbers instead of the default binary flags.
+
+To create a new group go into the <<plugin>> settings by following the given steps.
+
+# Click {{$:/core/ui/Buttons/control-panel}} in your project's page controls.
+# Go to the "Plugins" tab.
+# Click on or expand the "Cyoa" plugin from the list of plugins.
+# In the <<plugin>> control panel, go to "configuration" -> "Groups"
+# In the "Add New Group" text field, input a name and click "add". This will create a new tiddler using that name. That tiddler represents your new group.
+
+Now that you have a new group, you can configure it by clicking on its tab along the left (if it isn't already selected).
+
+* You can change the [[group type|Page Types]] to something other than a `set`, which is the default binary type.
+* You can change the ''variable'' that the engine will use to assign the group's state to in your story's [[URL Query String]].
+* You can change the serializer that the engine uses to compress that group's state to a string. [[Different serializers have different pros and cons|Page Types]].
+* Depending on the type of serializer you use, you may have additional options to fill out, such as a filter that the engine uses to generate a string key for each page when using a string serializer.
+
+!! Declarative logic using groups as a whole
+
+Since groups are each represented by a specific tiddler, you can use that tiddler with declarative logic to perform certain actions. For instance, if you have a group called <<page numbers>>, and you reset the <<page numbers>> tiddler, that will reset every number in that group. See [[Page Types]] for more information on how groups can be manipulated. Each type may behave differently.
+
+<<note """The default group is $:/plugins/mythos/cyoa/groups/default, which you can <<attr touch>>, <<attr reset>>, etc... but generally, it's expected that you'll be manipulating your custom groups instead.""" >>

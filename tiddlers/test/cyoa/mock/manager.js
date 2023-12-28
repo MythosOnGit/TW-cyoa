@@ -1,17 +1,18 @@
 /*\
 title: test/cyoa/mock/manager.js
+tags: $:/tags/cyoa/Javascript
 type: application/javascript
-module-type: library
+module-type: cyoasaver
 
 Mock manager class which handles state itself instead of relying on a URI.
 \*/
 
 function Manager() {
-	this.state = "";
+	this.state = Object.create(null);
 	this.page = "";
 };
 
-module.exports = Manager;
+exports.mock = Manager;
 
 Manager.prototype.pushState = function(newState,newPage) {
 	this.state = newState;

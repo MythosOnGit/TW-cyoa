@@ -1,12 +1,11 @@
 /*\
-Represents a cyoa node, <$cyoa>, or <$div class="cyoa-state"/> in compile.
+Represents a cyoa node, <$cyoa>, or <$div class='cyoa-state'/> in compile.
 \*/
 
-"use strict";
+'use strict';
 
-var utils = require("./utils");
-var scriptor = require("./scriptor");
-var hash = require("./hash");
+var utils = require('./utils');
+var scriptor = require('./scriptor');
 
 var Node = function(book,element) {
 	this.book = book;
@@ -19,49 +18,49 @@ function getter(name,method) {
 	Object.defineProperty(Node.prototype,name,{ get: method });
 }
 
-getter("id",function() { return utils.decodePage(this.element.id); } );
-getter("dependList",function() { return this.getPageList("data-depend"); } );
-getter("hotkey",function() { return this.element.getAttribute("data-hotkey"); } );
-getter("isElse",function() { return this.element.classList.contains("cyoa-else"); } );
-getter("isLink",function() { return this.element.classList.contains("tc-tiddlylink"); } );
-getter("isOnclick",function() { return this.element.classList.contains("cyoa-onclick"); } );
-getter("isStateful",function() { return this.element.classList.contains("cyoa-state"); } );
-getter("parent",function() {
+getter('id',function() { return decodeURIComponent(this.element.id); } );
+getter('dependList',function() { return this.getPageList('data-depend'); } );
+getter('hotkey',function() { return this.element.getAttribute('data-hotkey'); } );
+getter('isElse',function() { return this.element.classList.contains('cyoa-else'); } );
+getter('isLink',function() { return this.element.classList.contains('tc-tiddlylink'); } );
+getter('isOnclick',function() { return this.element.classList.contains('cyoa-onclick'); } );
+getter('isStateful',function() { return this.element.classList.contains('cyoa-state'); } );
+getter('parent',function() {
 	var par = this.element.parentNode;
 	if(!par || !par.classList) {
 		return undefined;
 	}
-	if(par.classList.contains("cyoa-page")) {
+	if(par.classList.contains('cyoa-page')) {
 		return this.book.getPage(par.id);
 	} else {
 		return new Node(this.book,par);
 	}
 });
 
-Object.defineProperty(Node.prototype,"active",{
+Object.defineProperty(Node.prototype,'active',{
 	get: function() {
-		return this.element.classList.contains("cyoa-active") || !this.isStateful;
+		return this.element.classList.contains('cyoa-active') || !this.isStateful;
 	},
 	set: function(visible) {
-		this.element.classList.toggle("cyoa-active",visible);
+		this.element.classList.toggle('cyoa-active',visible);
 	}
 });
 
-Object.defineProperty(Node.prototype,"to",{
+Object.defineProperty(Node.prototype,'to',{
 	get: function() {
 		var href = this.element.href;
 		if(href) {
-			return utils.decodePage(href.substr(href.indexOf("#")+1));
+			return decodeURIComponent(href.substr(href.indexOf('#')+1));
 		}
 		return null;
 	},
 	set: function(page) {
-		this.element.setAttribute("href","#"+page);
+		this.element.setAttribute('href','#'+page);
 	}
 });
 
 Node.prototype.getIndex = function(state) {
-	return this.evalSnippet("index",{arguments: state});
+	return this.evalSnippet('index',{arguments: state});
 };
 
 Node.prototype.eachActiveLink = function(method) {
@@ -89,16 +88,16 @@ Node.prototype.execute = function(state) {
 		this.active = true;
 		var options = {arguments: state};
 		if(!this.isOnclick) {
-			this.evalSnippet("do",options);
+			this.evalSnippet('do',options);
 		}
-		if(this.element.hasAttribute("data-write")) {
-			var write = this.evalSnippet("write",options);
+		if(this.element.hasAttribute('data-write')) {
+			var write = this.evalSnippet('write',options);
 			this.element.innerHTML = write;
 		} else {
 			this.executeChildren(state);
 		}
 		if(!this.isOnclick) {
-			this.evalSnippet("done",options);
+			this.evalSnippet('done',options);
 		}
 	}
 };
@@ -133,12 +132,12 @@ Node.prototype.executeOnclick = function(state) {
 			ancestry.push(node);
 		}
 	}
-	// Execute "do"s coming down, and then "done"s coming back up.
+	// Execute 'do's coming down, and then 'done's coming back up.
 	for(var index=ancestry.length-1; index>=0; index--) {
-		ancestry[index].evalSnippet("do",{rethrow: true,arguments: state});
+		ancestry[index].evalSnippet('do',{rethrow: true,arguments: state});
 	}
 	for(var index=0; index < ancestry.length; index++) {
-		ancestry[index].evalSnippet("done",{rethrow: true,arguments: state});
+		ancestry[index].evalSnippet('done',{rethrow: true,arguments: state});
 	}
 };
 
@@ -152,17 +151,17 @@ Node.prototype.selectFromList = function(index,iterator,state) {
 	var index = index || 0;
 	var indexNumber, skipRest = false;
 	switch (typeof index) {
-	case "function":
+	case 'function':
 		// We set the number to somethign that guarantees we evaluate all nodes.
 		indexNumber = Number.MAX_SAFE_INTEGER;
 		break;
-	case "string":
-		indexNumber = Math.abs(hash.hash(index));
+	case 'string':
+		indexNumber = Math.abs($cyoa.hash(index));
 		break;
 	default: // numbers and booleans
-	case "number":
+	case 'number':
 		if(index < 0) {
-			throw new Error("index cannot be less than zero ("+index+")");
+			throw new Error('index cannot be less than zero ('+index+')');
 		}
 		indexNumber = index;
 	}
@@ -178,7 +177,7 @@ Node.prototype.selectFromList = function(index,iterator,state) {
 			item.active = false;
 		}
 	}
-	if(typeof index === "function") {
+	if(typeof index === 'function') {
 		indexNumber = index(weightedLength);
 	}
 	indexNumber = indexNumber % weightedLength;
@@ -200,7 +199,7 @@ Node.prototype.selectFromList = function(index,iterator,state) {
 };
 
 /*
-This tests a $cyoa element to see if it's "truthy", meaning all it's conditionals and dependencies evaulate to true and this can be rendered.  Should have no side-effects.
+This tests a $cyoa element to see if it's 'truthy', meaning all it's conditionals and dependencies evaulate to true and this can be rendered.  Should have no side-effects.
 */
 Node.prototype.test = function(state) {
 	return recursiveTest(this,state,{});
@@ -210,7 +209,7 @@ Node.prototype.test = function(state) {
 This is private and wrapped by another method because getting a bad arg can cause an infinit loop.
 */
 function recursiveTest(node,state,visited) {
-	if(!node.evalSnippet("if",{default: true,arguments: state})) {
+	if(!node.evalSnippet('if',{default: true,arguments: state})) {
 		return false;
 	}
 	var pageList = node.dependList;
@@ -238,16 +237,16 @@ Node.prototype.evalSnippet = function(dataKey,options) {
 	options = options || {}
 	try {
 		var rtn = options.default;
-		var script = this.element.getAttribute("data-"+dataKey);
+		var script = this.element.getAttribute('data-'+dataKey);
 		if(script) {
 			rtn = scriptor.evalAll(script,options.arguments,this);
-			utils.log("    Evaluating: "+dataKey+" ("+rtn+") ["+script+"]");
+			utils.log('    Evaluating: '+dataKey+' ('+rtn+') ['+script+']');
 		}
 		return rtn;
 	}
 	catch(err) {
 		var message = err.message || err.toString();
-		err.message = "<i>"+dataKey+"</i> attribute failed ("+script+"): " + message;
+		err.message = '<i>'+dataKey+'</i> attribute failed ('+script+'): ' + message;
 		utils.error(err,this.book.document);
 		if(options.rethrow) {
 			throw(err);
@@ -259,7 +258,7 @@ Node.prototype.evalSnippet = function(dataKey,options) {
 Node.prototype.getPageList = function(attribute) {
 	var str = this.element.getAttribute(attribute);
 	if(str) {
-		return str.split(" ").map(utils.decodePage);
+		return str.split(' ').map(decodeURIComponent);
 	}
 	return [];
 };
@@ -270,7 +269,7 @@ Node.prototype.getWeight = function(state) {
 };
 
 function isStateful(element) {
-	return element.classList.contains("cyoa-state");
+	return element.classList.contains('cyoa-state');
 };
 
 function TreeIterator(book,element,state) {

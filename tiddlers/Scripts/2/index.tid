@@ -1,0 +1,42 @@
+caption: Scripts 2: Numbers
+description: Numbers for more sophisticated game states.
+tags: Scripts
+title: Scripts2
+tmap.id: d8c0b177-0f42-44f4-8f5f-f726df2cba79
+type: text/vnd.tiddlywiki
+
+By default, tiddlers, or pages, each represent a simple booleans. They are visited or not visited---<<value true>> or <<value false>>---but as our stories grow in complexity, we mave have need to track more sophisticated tracking. For instance, maybe we need to track //how many times// a page has been visited. For these case, we need to convert a page to represent a number instead of a boolean, and to do that, we need to change a pages group.
+
+Let's pretend we have a page called <<page days>> which we need to track how many days have passed in our story. Edit <<page days>>. In the <<plugin>> edit panel, there's a field for `group`.
+
+> {{||$:/plugins/mythos/cyoa/ui/EditTemplate}}
+
+Select that field and choose <<value numbers>>. That's all you have to do. <<value numbers>> is a page group included with the starter project that's configured such that all member pages are treated as numbers. It's also configured to have its own color in TiddlyMap.
+
+<<note """''If <<value numbers>> isn't there,'' then you either created your project from scratch, or you downloaded the Ready-to-go project in a prior <<plugin>> release. [[See here about how to create a numbers group.|Page Group]]""">>
+
+! Manipulating a number
+
+You can peform any sort of arithmetic operations on numbers that you want, but let's start by looking at a simple use-case, were we simply need to track how many times some event has occurred, such as tracking how many days have passed in our story. For this, we can manipulate the number in a strictly declarative fashion which is both simple and intuitive. Let's pretend we have a page called <<page days>> that we use to track how many days have passed in our story.
+
+!! <<attr touch>> and <<attr reset>>
+
+You can <<attr touch>> a number. Doing so increases its value by 1. If it had never been set or visited previously, or it had been reset (and thus it had a default value of 0), it will then be set to 1.
+
+<<note """View a page counts as touching it, so viewing a number page will increment it by 1.""">>
+
+Resetting a number page unsets it, and thus returns its value to 0. This is different than explicitly setting a number to 0, which in that case will still be considered visited, and will be tracked in your story's URI.
+
+!! <<attr before>> and <<attr after>>
+
+If a number page hasn't been touched in any way, it will be treated as unvisited for the sake of <<field before>> and <<field after>>. If it has been touched, then it is visited, whether it's been touched once, or a million times. is unset, it will be treated as unvisited.
+
+!! <<attr if>> snippets
+
+Obviously, only testing whether it's been visited or not is insufficient. If that were all we needed, we could have left the page as a boolean. That's why you'll certainly need the <<pill if>> snippet we learned about in the previous lesson. The placeholders for those types of pages return a number value instead of a boolean, so for instance <<snippet """#{days} > 10""" >> tests whether the <<page days>> page has been visted or touched more than 10 times. You can use any comparison operator which is supported by javascript. [[See here|Snippet]] for a rundown on different ways to test numbers.
+
+! Demo
+
+Here is an example project for you to explore. These nodes contain additional annotations: <<demo>>
+
+Next Tutorial:  <$link to="Scripts3">{{Scripts3!!caption}}</$link>

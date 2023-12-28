@@ -1,0 +1,12 @@
+cyoa.group: numbers
+tags: [[Virtual Page]]
+title: Scripts3/money
+tmap.id: b01bca5a-b0b2-4998-a379-2eb1c19caa48
+type: text/vnd.tiddlywiki
+
+This number represents how much money the main character has.
+
+<<annotate """
+
+Notice that we never set this page to an initial value. We can start manipulating it right away, because when unset, numbers will default to 0.
+""" >>

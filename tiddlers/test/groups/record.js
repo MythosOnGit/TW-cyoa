@@ -45,14 +45,13 @@ async function test(wiki,expected,options) {
 };
 
 function bitfieldGroup() {
-	return utils.group("grp","set",{"cyoa.style": "bitfield"});
+	return utils.group("grp","set",{"cyoa.serializer": "bitfield"});
 };
 
 const bitfield = { name:"bitfield", group:bitfieldGroup() };
-const index64 = { name:"index64", group:utils.group("grp","set",{"cyoa.style": "index64"}) };
-const index10 = { name:"index10", group:utils.group("grp","set",{"cyoa.style": "index10"}) };
+const index10 = { name:"index10", group:utils.group("grp","set",{"cyoa.serializer": "index10"}) };
 // The removeprefix here crashes if it's given undefined, making it good for testing
-const string = { name:"string", group:utils.group("grp","set",{"cyoa.style": "string", filter: "[removeprefix[A]addprefix[_]] ~[addprefix[__]]"}) };
+const string = { name:"string", group:utils.group("grp","set",{"cyoa.serializer": "string"}) };
 
 function node(name,parent,attributes) {
 	var n = Object.assign({title: name,"cyoa.group": "grp"},attributes);
@@ -70,6 +69,7 @@ function renameTiddler(wiki,from,to) {
 	// we swap out $tw.wiki with a dummy. We have to swap out $tw.wiki because
 	// the th-renaming-tiddler hook only works with $tw.wiki (issue #6536)
 	$tw.wiki.renameTiddler("non-existent","also-non-existent");
+	$tw.wiki.deleteTiddler("also-non-existent");
 	try {
 		$tw.wiki = wiki;
 		wiki.renameTiddler(from,to);
@@ -94,12 +94,12 @@ it("handles renaming of tiddlers after a commit",async function() {
 	renameTiddler(wiki,"Unrelated","Still unrelated");
 	wiki.addTiddler({title: "Main","cyoa.touch": "X E"});
 	var nextSerialized = await test(wiki,["A","E","X"]);
-	expect(nextSerialized).toBe(prevSerialized);
+	expect(nextSerialized).toEqual(prevSerialized);
 });
 
 /** Nodes and implications added **/
 
-as(bitfield,index64).
+as(bitfield).
 it("handles implied nodes introduced in later versions", async function(group) {
 	const wiki = new $tw.Wiki()
 	wiki.addTiddlers([
@@ -209,20 +209,40 @@ it("allows implied pages to be removed",async function() {
 	await test(wiki,["A2","Z1"],{state: serialized});
 });
 
-it("allows removed implied pages to be routed around",async function() {
+as(bitfield,string).
+it("allows removed implied pages to be routed around",async function(group) {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		bitfieldGroup(),
+		group,
 		autoVersioning(),
 		node("A"),node("B","A"),node("C","B"),node("D","C"),
 		{title: "Main","cyoa.touch": "D"}]);
 	var serialized = await test(wiki,["A","B","C","D"]);
 	wiki.deleteTiddler("B");
 	wiki.deleteTiddler("C");
-	wiki.addTiddlers([
-		node("D","A"),
-		{title: "Main"}]);
+	wiki.addTiddler(node("D","A"));
+	// Works if D gets touched from a fresh state
+	var laterSerialized = await test(wiki,["A","D"]);
+	// No matter the serializer, it should manage this with one character
+	expect(laterSerialized.grp.length).toBe(1);
+	// Works if D was already touched.
+	wiki.addTiddler({title: "Main"});
 	await test(wiki,["A","D"],{state: serialized});
+});
+
+as(bitfield,string).
+it("remembers removed pages enough for implications",async function(group) {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		group,
+		autoVersioning(),
+		node("A"),node("B","A"),node("C","B"),
+		{title: "Main","cyoa.touch": "B"}]);
+	var serialized = await test(wiki,["A","B"]);
+	wiki.deleteTiddler("B");
+	wiki.addTiddler(node("C","A"));
+	wiki.addTiddler({title: "Main"});
+	await test(wiki,["A"],{state: serialized});
 });
 
 it("warns when existing imply is unlinked",async function() {
@@ -322,7 +342,7 @@ it("handles exclusion across different versions",async function() {
 	wiki.addTiddler(node("B2","A1",{"cyoa.exclude": "X"}));
 	var newSerialized = await test(wiki,["A1","A3","B3"]);
 	// The addition of a new versioned tiddler shouldn"t change things
-	expect(newSerialized).toBe(prevSerialized);
+	expect(newSerialized).toEqual(prevSerialized);
 	wiki.addTiddler({title: "Main","cyoa.touch": "B1 B3 B2"});
 	await test(wiki,["A1","A3","B2"]);
 });
@@ -341,7 +361,7 @@ it("can clear the version history and repack",async function(group) {
 	wiki.addTiddler(node("B"));
 	var newState = await test(wiki,["C"]);
 	// This is already expected.
-	expect(newState).toBe(oldState);
+	expect(newState).toEqual(oldState);
 	// But after we clear the groups, all the pages should be repacked.
 	wiki.clearCyoaGroups();
 	var changedState = test(wiki,["C"]);
@@ -352,7 +372,7 @@ it("can clear the version history and repack",async function(group) {
 it("warns and refuses when a page would have a different id",async function() {
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([node("A"),node("B"),node("C"),
-		utils.group("grp","set",{"cyoa.style": "string",filter: "[addsuffix[z]]"}),
+		utils.group("grp","set",{"cyoa.serializer": "string",filter: "[addsuffix[z]]"}),
 		autoVersioning(),
 		{title: "Main","cyoa.touch":"B C"}]);
 	var oldState = await test(wiki,["B","C"]);
@@ -362,12 +382,12 @@ it("warns and refuses when a page would have a different id",async function() {
 	var newState = await test(wiki,["C","X"]);
 	// We will issue a warning and retain the old id.
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'X': Tiddler would now use id 'Xz' instead of 'Bz', which would be a backward-incompatible change. CYOA will retain the use of 'Bz' until the version history is next cleared.");
-	expect(newState).toBe(oldState);
+	expect(newState).toEqual(oldState);
 	utils.warnings().calls.reset();
 	newState = await test(wiki,["C","X"]);
 	// It warns, but it only warns once.
 	expect(utils.warnings()).not.toHaveBeenCalled();
-	expect(newState).toBe(oldState);
+	expect(newState).toEqual(oldState);
 	// But it warns again if renamed again
 	renameTiddler(wiki,"X","Y");
 	wiki.addTiddler({title: "Main","cyoa.touch": "Y C"});

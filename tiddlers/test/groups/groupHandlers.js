@@ -26,7 +26,8 @@ it("uses title for variable if no cyoa.key given",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group(name,"set"),
 		{title: "Main", "cyoa.group": name}]);
-	expect(results.state.serialize()).toContain("testGroup=");
+	var state = results.state.serialize(results.cyoa.vars);
+	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
 it("uses title for variable if cyoa.key is blank",function() {
@@ -34,7 +35,8 @@ it("uses title for variable if cyoa.key is blank",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group("testGroup","set",{"cyoa.key":""}),
 		{title: "Main", "cyoa.group": "testGroup"}]);
-	expect(results.state.serialize()).toContain("testGroup=");
+	var state = results.state.serialize(results.cyoa.vars);
+	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
 it("uses title even if caption exists",function() {
@@ -42,7 +44,8 @@ it("uses title even if caption exists",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group("testGroup","set",{caption: "no"}),
 		{title: "Main", "cyoa.group": "testGroup"}]);
-	expect(results.state.serialize()).toContain("testGroup=");
+	var state = results.state.serialize(results.cyoa.vars);
+	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
 it("uses variable field for variable if given",function() {
@@ -51,7 +54,8 @@ it("uses variable field for variable if given",function() {
 	var results = utils.testBook([
 		utils.group(title,"set",{"cyoa.key":variable}),
 		{title: "Main", "cyoa.group": title}]);
-	expect(results.state.serialize()).toContain("test_Var=");
+	var state = results.state.serialize(results.cyoa.vars);
+	expect(Object.keys(state)).toEqual(["test_Var"]);
 });
 
 it("uses variable field even if it's a reserved word",function() {
@@ -60,7 +64,8 @@ it("uses variable field even if it's a reserved word",function() {
 	var results = utils.testBook([
 		utils.group(title,"set",{"cyoa.key":variable}),
 		{title: "Main", "cyoa.group": title}]);
-	expect(results.state.serialize()).toContain("_default=");
+	var state = results.state.serialize(results.cyoa.vars);
+	expect(Object.keys(state)).toEqual(["_default"]);
 });
 
 it("warns when no handler is passed",function() {

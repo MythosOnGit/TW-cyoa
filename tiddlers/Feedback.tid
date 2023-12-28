@@ -2,11 +2,12 @@ caption: Feedback & Reporting Issues
 tags: Main
 title: Feedback
 tmap.id: 26604490-604b-4afb-b17f-76ec8194bf02
+type: text/vnd.tiddlywiki
 
 <!-- Just a little obfuscations so the bots can't scrape my email. -->
 \define email(address) [ext[$address$|mailto:$address$]]
 
-If you have any questions about the documentation or how to use <<plugin>>, or if you'd just like to share your thoughts with me, you can contact me at <$macrocall $name="email" address={{{ mythos [enlist[nym hush com]join[.]] +[join[@]] }}} />.
+If you have any questions about the documentation or how to use <<plugin>>, or if you'd just like to share your thoughts with me, you can contact me at <$macrocall $name="email" address={{{ [enlist[mythos]] [enlist[nym hush com]join[.]] +[join[@]] }}} />.
 
 !! Reporting Issues
 

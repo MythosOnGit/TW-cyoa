@@ -14,6 +14,6 @@ If any of your tiddlers include a space in them, then they must be wrapped in do
 [[Page/Cat Sith]] Page/Cyclops [[Page/Questing Beast]]
 ```
 
-Also, all lists are just simple filters, so any field that also takes a [[Filter|filter]] can also take a list.
+Also, all lists are just simple filters, so any field that also takes a [[Filter]] can also take a list.
 
 Lists are native to TiddlyWiki, and <<link-to-tw "Title List" "their documentation">> goes into further detail.

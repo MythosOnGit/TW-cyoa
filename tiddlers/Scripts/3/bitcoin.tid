@@ -1,0 +1,32 @@
+cyoa.caption: Invest in cryptocurrency.
+cyoa.if: #{Scripts3/money} > 0
+tags: Scripts3/chores
+title: Scripts3/bitcoin
+tmap.id: ffb56eac-24c4-400f-918a-835f9358db14
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page shows examples of using <<attr do>> and <<attr done>> as node attributes.
+""">>
+
+Using the software your texting penpal told you to download, you get to work buying low and selling high.
+
+<$cyoa if="#{Scripts3/money} >= 40" done="#{Scripts3/money} = 0">
+
+<<annotate """
+
+This block reduces your funds back down to zero. ''Note that it doesn't reset [[Scripts3/money]]. That means that page is still //set//, and will be treated as visited.'' This is relevant when it comes to [[Scripts3/parents]].
+""">>
+
+But that's strange. You can't seem to access your account. You reach out to your penpal, but oddly, his phone number is disconnected. All of your investments are lost. Seems you have to start over.
+</$cyoa><$else do="#{Scripts3/money} *= 2">
+
+<<annotate """
+
+This shows a simple example of multiplying a number.
+""" >>
+Remarkably, in just one day, you manage to double your wealth.
+</$else>
+
+[[Next day|Scripts3/chores]]

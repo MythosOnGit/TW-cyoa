@@ -13,17 +13,22 @@ type: text/vnd.tiddlywiki
 \define var(_) <code class="doc-var">$_$</code>
 \define attr(_) <code class="doc-attr">$_$</code>
 \define page(_) <$let tv-wikilinks="no"><code class="doc-tiddler">$_$</code></$let>
+\define plink(_) <$let tv-wikilinks="no"><code class="doc-tiddler">$_$</code></$let>
 \define plugin() //TW5-cyoa//
 \define pill(_) <$vars fields=<<_____>>>{{||$:/plugins/mythos/cyoa/ui/EditTemplate/pill}}</$vars>
 \define tid(_)
-\rules except wikilink
+\rules except wikilink syslink
+<code class="doc-tiddler">$_$</code>
+\end
+\define tlink(_)
+\rules except wikilink syslink
 <code class="doc-tiddler">$_$</code>
 \end
 \define icon(_) <span class="doc-icon"><$transclude tiddler=<<_____>> /></span>
 
 \relink wlink to
 \relink flink to
-\relink page _
-\relink tid _
+\relink plink _
+\relink tlink _
 
 Contains various macro wrappers so this demo can remain consistent about how it formats various terms.

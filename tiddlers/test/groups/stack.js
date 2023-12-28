@@ -26,7 +26,7 @@ describe("Cyoa Stack",function() {
 it("pushes and pops well enough",function() {
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers([
-		utils.defaultGroup("stack",{"cyoa.style": "string"}),
+		utils.defaultGroup("stack",{"cyoa.serializer": "string"}),
 		node("t A"),node("t\"B"),node("t'C"),
 		{title: "Main",text: `
 			<$cyoa touch="""[[t A]] [[t"B]]"""/>

@@ -7,7 +7,7 @@ type: text/vnd.tiddlywiki
 
 This page is visited after any of the three tents. We want to acknowledge which team the reader chose with a "You throw in with...", but if we were to list out the team names individually, we'd always have to remember to edit this page if we added/changed/removed any teams.
 
-Instead, we use a nifty little <<widget list>> widget to enumerate each page in the <<page "Logic5/tent">> set and print out their <<field name>> field.
+Instead, we use a nifty little <<widget list>> widget to enumerate each page in the <<plink "Logic5/tent">> set and print out their <<field name>> field.
 """ >>
 
 You decide to throw in with the

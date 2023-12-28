@@ -1,0 +1,8 @@
+tags: Reference
+title: Page Types
+tmap.id: 1c13c525-3cb3-4c35-9c64-20fb7a83de65
+type: text/vnd.tiddlywiki
+
+[[Page Groups|Page Group]] can be configured so that all of the pages they contain are of a unique types. Each type will have its own set of [[Serializers]] used to turn that group's state into a string to be stored in the [[URL Query String]].
+
+<<tabs "[tag[Page Types]]" 'Page Types/set' "$:/state/tab1">>

@@ -1,0 +1,17 @@
+tags: 
+title: Scripts3/chores
+tmap.id: 73343c66-41d7-4f87-9945-dbdeb0bd95c1
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+To output the character's current wealth, we use the attribute <<attr write>>, which you may have noticed, is undocumented.
+
+That attribute's behavior isn't locked down yet, but it will be discussed in upcoming tutorials.
+""" >>
+
+Current wealth: $<$cyoa write="#{Scripts3/money}" />/$79.75
+
+Setting out into town, you look for honest, hard-working chores you can do for the community to earn the necessary wealth.
+
+<$options />

@@ -10,7 +10,7 @@ Have variable 'format' set to htmlencoded (or unset) if you're transcluding java
 Have it set to plainwikified if you're transcluding wikitext which will be javascript.
 
 --><$vars
-	moduletype={{{ [all[current]get[cyoa.module-type]addprefix[ module-type="]addsuffix["]] }}}
+	moduletype={{{ [all[current]get[module-type]addprefix[ module-type="]addsuffix["]] }}}
 ><$set
 	name="format"
 	value=<<format>>

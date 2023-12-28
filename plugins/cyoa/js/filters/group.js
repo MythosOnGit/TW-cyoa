@@ -11,8 +11,6 @@ cyoa:getgroup[] -> Returns dominantly-appended list of input tiddlers' groups
 
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 exports.group = function(source,operator,options) {

@@ -10,5 +10,5 @@ Congratulations. You have found a way out of the museum.
 
 <<annotate """
 
-The link above is a [[hard link|Hard Links]] to <<page Demo>>, which means it will always be visible in the game, even if <<page Demo>> has contraints which [[evaluate to "false"|Evaluation]].
+The link above is a [[hard link|Hard Links]] to <<plink Demo>>, which means it will always be visible in the game, even if <<plink Demo>> has contraints which [[evaluate to "false"|Evaluation]].
 """ >>

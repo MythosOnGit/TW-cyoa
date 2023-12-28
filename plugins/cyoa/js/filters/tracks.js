@@ -8,8 +8,6 @@ Filter operator for returning all the tiddlers the given tiddler tracks in cyoa.
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 /*

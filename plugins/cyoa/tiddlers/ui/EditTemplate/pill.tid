@@ -1,21 +1,38 @@
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/pill
 
+<!-- This is kept as a separate template file so it can be called by the documentation wiki, or in other cases. -->
+
 \whitespace trim
 
 <span class="cyoa-field-pill">
 
-<$list variable=key filter="[<fields>split[ ]]">
+<$list variable="key" filter="[<fields>split[ ]]">
 
 <$vars currentField={{{ [<key>addprefix[cyoa.]] }}}>
 
-<$list variable=toggle
-	filter="[all[current]!has:field<currentField>]"
-	template="$:/plugins/mythos/cyoa/ui/EditTemplate/pill/add"
-	emptyMessage="""\whitespace trim
-<$button class="cyoa-field-button-remove">
-<$action-deletefield $field=<<currentField>> $value="" />
-<<key>>
-</$button>
-""" />
+<%if [all[current]!has:field<currentField>] %>
 
-</$vars></$list></span>
+<$button class="cyoa-field-button-add">
+
+<$action-sendmessage $message="tm-add-field" $param=<<currentField>> />
+
+<$action-setfield $tiddler="$:/temp/cyoa/edit-state" text=`$(currentField)$-$(currentTiddler)$` />
+
+<$text text=<<key>> />
+
+</$button>
+<%else%>
+
+<$button class="cyoa-field-button-remove">
+
+<$action-deletefield $field=<<currentField>> $value="" />
+
+<$action-setfield $tiddler="$:/temp/cyoa/edit-state" text=""/>
+
+<$text text=<<key>> />
+
+</$button>
+<%endif%>
+</$vars>
+</$list>
+</span>

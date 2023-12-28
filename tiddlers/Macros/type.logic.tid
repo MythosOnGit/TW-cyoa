@@ -1,0 +1,34 @@
+tags: $:/tags/Macro
+title: Macros/type.logic
+tmap.id: 88a03f66-8330-48cb-a8cc-8035d76239e8
+type: text/vnd.tiddlywiki
+
+\widget $type.logic()
+<$slot $name="values" />
+
+!!! Manipulating Pages within a group
+
+<table><$list filter="[enlist[before after touch reset imply exclude]]">
+<tr>
+<th align=left><$text text={{{[all[current]titlecase[]]}}} /></th>
+<td><$slot $name=<<currentTiddler>>>
+
+''Unsupported''</$slot></td></tr>
+</$list></table>
+
+!!! Manipulating the group itself
+
+<table><$list filter="[enlist[before after touch reset]]">
+<tr>
+<th align=left><$text text={{{[all[current]titlecase[]]}}} /></th>
+<td><$slot $name={{{ [all[current]addsuffix[all]] }}} >
+
+''Unsupported''</$slot></td></tr>
+\end
+
+
+
+
+This helps render information about the [[Page Types|Page Types]] in a way that ensures uniform presentation.
+
+<$type.logic />

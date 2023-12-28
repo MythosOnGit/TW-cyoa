@@ -15,6 +15,132 @@
 			}
 		},
 		{
+			"path": "./utils",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoautils",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/utils/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./cyoamethod",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoamethod",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/cyoamethod/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./savers",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoasaver",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/savers/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoatype",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types/stringmap",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoastringmapserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/stringmap/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types/numbermap",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoanumbermapserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/numbermap/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types/stack",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoastackserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/stack/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types/value",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoavalueserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/value/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
+			"path": "./types/set",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoasetserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/set/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
 			"path": ".",
 			"filesRegExp": "^.*\\.tid$",
 			"isTiddlerFile": false,

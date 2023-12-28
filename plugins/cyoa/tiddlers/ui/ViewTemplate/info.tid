@@ -1,0 +1,15 @@
+list-after: $:/plugins/mythos/cyoa/ui/ViewTemplate/group
+tags: $:/tags/ViewTemplate
+title: $:/plugins/mythos/cyoa/ui/ViewTemplate/info
+
+\whitespace trim
+<$reveal type="nomatch" state=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+
+<$genesis
+	$type="$cyoa"
+	page
+	class="tc-subtitle"
+	$names="[all[current]fields[]removeprefix[cyoa.]]"
+	$values="[all[current]fields[]prefix[cyoa.]] :map[<..currentTiddler>get<currentTiddler>]" />
+
+</$reveal>

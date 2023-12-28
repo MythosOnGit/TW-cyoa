@@ -15,8 +15,6 @@ null (or nothing if used as a filter)
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils");

@@ -10,22 +10,17 @@ Test utilities for the cyoa tiddlywiki testing framework.
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
 var Widget = require("$:/core/modules/widgets/widget").widget;
 var MockWindow = require("test/cyoa/mock/window");
+var Boot = require("$:/plugins/mythos/cyoa/js/boot");
 const domParser = require("test/dom-parser");
-const Cyoa = require("cyoa");
-const State = Cyoa.State;
-const Core = Cyoa.Core;
-const Book = Cyoa.Book;
-const MockManager = require("test/cyoa/mock/manager");
 
 /*
 This prepares stateClasses with all the modules used as cyoa variables.
 */
-exports.stateClasses = assignModulesOfType("state");
 exports.cyoa = assignModulesOfType("cyoamethod");
 
 function assignModulesOfType(type) {
 	var output = Object.create(null);
-	const stateClassModules = $tw.wiki.filterTiddlers("[all[shadows+tiddlers]field:cyoa.module-type["+type+"]]");
+	const stateClassModules = $tw.wiki.filterTiddlers("[[$:/tags/cyoa/Javascript]tagging[]field:module-type["+type+"]]");
 	for(var i = 0; i < stateClassModules.length; i++) {
 		var module = require(stateClassModules[i]);
 		for(var member in module) {
@@ -46,6 +41,20 @@ A shortcut to utils.warn for jasmine spy manipulation
 */
 exports.warnings = function(spyOn) {
 	return (spyOn !== undefined) ? spyOn(utils,"warn") : utils.warn;
+};
+
+exports.forEachNamedModule = function(moduleType,jasmineCall) {
+	var modules = $tw.modules.types[moduleType];
+	if(!modules) {
+		throw new Error("Can't find any modules of type: " + moduleType);
+	}
+	for(var module in modules) {
+		var codec = /\nexports\.name *= *.([^'"]+)/.exec(modules[module].definition);
+		if(!codec) {
+			throw new Error("Can't find the name in module: " + module);
+		}
+		jasmineCall(codec[1]);
+	}
 };
 
 exports.renderTiddler = function(wiki,title) {
@@ -88,15 +97,15 @@ exports.activeNodes = function(core) {
 
 exports.defaultGroup = function(handler,fields) {
 	handler = handler || "set";
-	fields = Object.assign({caption:"default","cyoa.style": "bitfield"},fields);
+	fields = Object.assign({caption:"default"},fields);
 	return exports.group("$:/plugins/mythos/cyoa/groups/default",handler,fields);
 };
 
 exports.group = function(title,handler,fields) {
-	const tiddler = Object.assign({title: title,type: "application/x-tiddler-dictionary",tags: "$:/tags/cyoa/Type"},fields);
+	const tiddler = Object.assign({title: title,tags: "$:/tags/cyoa/Type"},fields);
 	const indices = [];
 	if(handler !== undefined) {
-		tiddler["cyoa.handler"] = handler;
+		tiddler["cyoa.type"] = handler;
 	}
 	tiddler.text = indices.join("\n");
 	return tiddler;
@@ -107,9 +116,10 @@ exports.testBook = function(tiddlerArrays,options) {
 	const wiki = options.wiki || new $tw.Wiki();
 	// Load in tiddlers we need to operate this test
 	wiki.addTiddlers([
+		$tw.wiki.getTiddler("$:/core/config/GlobalImportFilter"),
+		$tw.wiki.getTiddler("$:/core/templates/html-tiddler"),
 		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/page"),
 		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/cyoaFile/pages"),
-		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/html-tiddler-inline"),
 		{title: "$:/config/mythos/cyoa/start", text: "Main"}]);
 	// Then load in tiddlers specific to this particular test
 	for(var i = 0; i < tiddlerArrays.length; i++) {
@@ -123,41 +133,54 @@ exports.testBook = function(tiddlerArrays,options) {
 	}
 
 	// Create the actual book.
-	var html = wiki.renderText("text/plain","text/vnd.tiddlywiki","\\define cyoa-render() yes\n\\rules only filteredtranscludeinline transcludeinline\n<div class='cyoa-content'>{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline}}</div><div class='cyoa-footer'>{{$:/cyoaFooter|| $:/plugins/mythos/cyoa/templates/html-tiddler-inline }}</div>");
+	var html = wiki.renderText("text/plain","text/vnd.tiddlywiki","\\define cyoa-render() yes\n\\import [subfilter{$:/core/config/GlobalImportFilter}]\n\\rules only filteredtranscludeinline transcludeinline\n<div class='cyoa-content'>{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/core/templates/html-tiddler}}</div><div class='cyoa-footer'>{{$:/cyoaFooter|| $:/core/templates/html-tiddler }}</div>");
 	var doc = domParser.parseBodyAndHead(html);
-	var state = new State();
-	// Generate the declarations for state
-	var cyoa = Object.create(null);
-	cyoa.stateClasses = exports.stateClasses;
-	getGroupScript(wiki)(cyoa,function(){state.declare.apply(state,arguments)});
-	// Declare any groups that exist in this tiddler
-	var core = new Core(doc,state,new MockManager());
-	core.cyoa = cyoa;
-	// Open first the main page to touch stuff
-	core.openPage("Main");
-	return core;
+	doc.wiki = wiki;
+	var cyoa = Boot();
+	// We need to swap out this method with a debug one
+	cyoa.boot.gatherModules = gatherModules;
+	// We need to use a mock saver. This tells boot to load a different kind
+	cyoa.boot.saver = "mock";
+	cyoa.boot.boot({document: doc})
+	return cyoa.core;
 };
 
-function getGroupScript(wiki) {
-	var template = $tw.wiki.getTiddlerText("$:/plugins/mythos/cyoa/js/cyoa/groups.js");
-	var javascript = wiki.renderText("text/plain","text/vnd.tiddlywiki",template);
-	return eval("(function(cyoa,declare){"+javascript+"})");
+function gatherModules(document) {
+	var tiddlers = $tw.wiki.getTiddlersWithTag("$:/tags/cyoa/Javascript");
+	var mods = Object.create(null);
+	for(var index = 0; index < tiddlers.length; index++) {
+		var tiddler = $tw.wiki.getTiddler(tiddlers[index]);
+		var text = tiddler.fields.text;
+		// This one needs fresh rendering
+		if(tiddler.fields.type !== 'javascript') {
+			text = document.wiki.renderText("text/plain",tiddler.fields.type,text);
+		}
+		mods[tiddler.fields.title] = {
+			text: text,
+			type: tiddler.fields['module-type'],
+			loaded: false
+		};
+	}
+	return mods;
 };
 
 exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
 	group = group || "$:/plugins/mythos/cyoa/groups/default";
-	var core = exports.testBook([{title: "Results",text: "<$list filter='[cyoa:group["+group+"]]'>\n\n<$cyoa after='[all[current]]' >\n\n<$text text=<<currentTiddler>> />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
+	var core = exports.testBook([{title: "Results",text: "<$list variable=target filter='[cyoa:group["+group+"]]'>\n\n<$cyoa $data-title=<<target>> after='[<target>]' write=`#{$(target)$}` />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
 	var rtn = {};
-	rtn.state = (options && options.state) || core.state.serialize();
+	rtn.state = (options && options.state) || core.state.serialize(core.cyoa.vars);
 	core.manager.getState = () => rtn.state;
 	// Now open results so the core will load the serialized state.
 	core.openPage("Results");
 	// Lets collect those results in the only way I can figure out how
 	var elem = core.book.getPage("Results").element;
 	rtn.results = [];
+	rtn.vars = {};
 	for(var child = elem.firstElementChild; child; child = child.nextElementSibling) {
 		if(child.classList.contains("cyoa-active")) {
-			rtn.results.push(child.textContent);
+			var title = child.getAttribute('data-title')
+			rtn.results.push(title);
+			rtn.vars[title] = child.textContent;
 		}
 	}
 	return rtn;
@@ -228,6 +251,6 @@ exports.click = function(core,elemId) {
 	var elem = core.document.getElementById(elemId);
 	var w = getWindow(core.document);
 	var fakeEvent = new w.KeyboardEvent("click",{});
-	core.clicked_link(new Cyoa.Link(core.book,elem),fakeEvent);
+	core.clicked_link(elem,fakeEvent);
 };
 

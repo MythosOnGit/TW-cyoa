@@ -8,8 +8,6 @@ Given a title, will return true or false if that title is a cyoa page.
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
@@ -38,7 +36,7 @@ exports.getCyoaPageMap = function() {
 			var list = filter(eachSource(wiki));
 			list = list.filter((x) => {
 				var t = wiki.getTiddler(x);
-				return t && !t.isDraft();
+				return t && !t.isDraft() && !t.hasTag("$:/tags/cyoa/Type");
 			});
 			rtn = utils.toHashMap(list);
 		} finally {

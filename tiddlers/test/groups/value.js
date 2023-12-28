@@ -12,12 +12,18 @@ const utils = require("test/utils.js");
 
 describe("Value Group",function() {
 
-function testBook(expected /*,tiddlerArrays... */) {
-	var tiddlerArrays = Array.prototype.slice.call(arguments,1);
-	tiddlerArrays.unshift([utils.defaultGroup("value",{"cyoa.style": "string"})]);
-	var rtn = utils.testBookDefaultVar(tiddlerArrays);
+function forEachCodec(jasmineCall) {
+	return utils.forEachNamedModule("cyoavalueserializer",jasmineCall);
+};
+
+function defaultGroup(codec) {
+	return utils.defaultGroup("value",{"cyoa.serializer": codec});
+};
+
+function testBook(expected,tiddlerArray) {
+	var rtn = utils.testBookDefaultVar(tiddlerArray);
 	expect(rtn.results).toEqual(expected);
-	return rtn.state;
+	return rtn;
 };
 
 function node(name,parent,attributes) {
@@ -26,105 +32,126 @@ function node(name,parent,attributes) {
 	return n;
 };
 
-function valueOf(state) {
-	return state.substr(state.indexOf("=")+1);
+function firstOf(state) {
+	// Just get the first item. There should only be one
+	for(var item in state) {
+		return state[item];
+	}
 };
 
-it("works",function() {
-	var state = testBook(["B"],
-		[node("A"),node("B"),
-		{title: "Main","cyoa.touch": "A B"}]);
-	expect(valueOf(state)).toBe("B");
+it("defaults to string codec",function() {
+	var results = testBook(['TestTiddler'],[
+		utils.defaultGroup("value"),
+		node('TestTiddler'),
+		{title: "Main", "cyoa.touch": "TestTiddler"}]);
+	expect(firstOf(results.state)).toEqual("TestTiddler");
 });
 
-it("resets work only on active",function() {
-	testBook(["A"],
-		[node("A"),node("B"),
+forEachCodec(codec =>
+it("works",function() {
+	testBook(["B"],[
+		defaultGroup(codec),
+		node("A"),node("B"),
+		{title: "Main","cyoa.touch": "A B"}]);
+}));
+
+forEachCodec(codec =>
+it("specific resets work only on active",function() {
+	testBook(["A"],[
+		defaultGroup(codec),
+		node("A"),node("B"),
 		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
 		{title: "Main2","cyoa.reset": "B"}]);
-	var state = testBook([],
-		[node("A"),node("B"),
+	testBook([], [
+		defaultGroup(codec),
+		node("A"),node("B"),
 		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
 		{title: "Main2","cyoa.reset": "A"}]);
-	expect(state).toBe("");
-});
+}));
 
+forEachCodec(codec =>
 it("implication chains work",function() {
-	var state = testBook(["A","B","C"],
-		[node("A"),node("B","A"),node("C","B"),node("D"),
+	var result = testBook(["A","B","C"],[
+		defaultGroup(codec),
+		node("A"),node("B","A"),node("C","B"),node("D"),
 		{title: "Main","cyoa.touch": "C"}]);
-	expect(valueOf(state)).toBe("C");
-});
+	// There should only be a single character written
+	expect(firstOf(result.state).length).toBe(1);
+}));
 
 /*
 I'm not positive I want this functionality, but we'll go with it for now.
 */
+forEachCodec(codec =>
 it("behaves differently than sets with regard to implications",function() {
 	// touching an implied page still changes selection to it
-	var state = testBook(["A"],
-		[node("A"),node("B","A"),node("C","B"),
+	testBook(["A"],[
+		defaultGroup(codec),
+		node("A"),node("B","A"),node("C","B"),
 		{title: "Main","cyoa.touch": "C A"}]);
-	expect(valueOf(state)).toBe("A");
-
 	// Also, reseting clears. It doesn't downgrade.
-	state = testBook([],
-		[node("A"),node("B","A"),node("C","B"),
-		{title: "Main","cyoa.touch": "C","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.reset": "C"}]);
-	expect(state).toBe("");
-
+	testBook([],[
+		defaultGroup(codec),
+		node("A"),node("B","A"),node("C","B"),
+		{title: "Main",text: "<$cyoa touch=C reset=C />"}]);
 	// Also, reseting an implied does nothing
-	state = testBook(["A","B","C"],
-		[node("A"),node("B","A"),node("C","B"),
-		{title: "Main","cyoa.touch": "C","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.reset": "A"}]);
-	expect(valueOf(state)).toBe("C");
-});
+	testBook(["A","B","C"],[
+		defaultGroup(codec),
+		node("A"),node("B","A"),node("C","B"),
+		{title: "Main",text: "<$cyoa touch=C reset=A />"}]);
+}));
 
-it("clearing works",function() {
-	var state = testBook([],
-		[node("A"),node("B"),
-		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.reset": "[cyoa:var[]]"}]);
-	expect(state).toBe("");
-});
+forEachCodec(codec =>
+it(codec + " clearing works",function() {
+	var group = defaultGroup(codec);
+	var title = group.title;
+	var state = testBook([],[
+		group,node("A"),node("B","A"),node("C"),
+		{title: "Main",text: `<$cyoa touch='C B' reset='${title}' />`}]);
+}));
 
+forEachCodec(codec =>
 it("testing variable tests if set or not",function() {
+	var group = defaultGroup(codec);
+	var title = group.title;
 	// can positively test for after
-	testBook(["B"],[node("A"),node("B"),
-		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
-		{title:"Main2","cyoa.touch":"B","cyoa.after":"[cyoa:var[]]"}]);
-
+	testBook(["B"],[
+		group,
+		node("A"),node("B"),
+		{title: "Main",text: `<$cyoa touch=A/><$cyoa after='${title}' touch=B/>`}]);
 	// can negatively test for after
-	testBook([],[node("A"),
-		{title: "Main","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.touch":"A","cyoa.after":"[cyoa:var[]]"}]);
-
+	testBook([],[
+		group,
+		node("A"),node("B"),
+		// We'll touch and reset the group, because that might mess things up.
+		{title: "Main",text: `<$cyoa touch=A reset=A/><$cyoa after='${title}' touch=B/>`}]);
 	// can positively test for before
-	testBook(["A"],[node("A"),node("B"),
-		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.touch":"B","cyoa.before":"[cyoa:var[]]"}]);
-
+	testBook(["A"],[
+		group,
+		node("A"),node("B"),
+		{title: "Main",text: `<$cyoa touch=A/><$cyoa before='${title}' touch=B/>`}]);
 	// can negatively test for before
-	testBook(["A"],[node("A"),
-		{title: "Main","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.touch": "A","cyoa.before": "[cyoa:var[]]"}]);
-});
+	testBook(["A"],[
+		group,
+		node("A"),
+		{title: "Main",text: `<$cyoa before='${title}' touch=A/>`}]);
+}));
 
-it("handles base10 mode",function() {
-	var index10 = utils.defaultGroup("value",{"cyoa.style": "index10"});
+it("handles base64 mode",function() {
+	var index10 = utils.defaultGroup("value",{"cyoa.serializer": "index64"});
 	// 0 isn't treated as falsey
-	var state = testBook(["A"],
-		[node("A"),index10,
+	var result = testBook(["A"],[
+		index10,
+		node("A"),
 		{title: "Main","cyoa.touch": "A"}]);
-	expect(valueOf(state)).toBe("0");
+	expect(firstOf(result.state)).toBe("0");
 
 	// Can identify proper time to reset
-	state = testBook([],
-		[node("A"),index10,
-		{title: "Main","cyoa.touch": "A","cyoa.append": "Main2"},
-		{title: "Main2","cyoa.reset": "A"}]);
-	expect(state).toBe("");
+	result = testBook([],[
+		index10,
+		node("A"),
+		{title: "Main",text: "<$cyoa touch=A reset=A/>"}]);
+	expect(result.state).toEqual({});
 });
 
 });

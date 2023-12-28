@@ -10,8 +10,6 @@ This filter acts as a namespace for several small, simple filters, such as
 \*/
 (function(){
 
-/*jslint node: true, browser: true */
-/*global $tw: false */
 "use strict";
 
 var cyoaFilterOperators;

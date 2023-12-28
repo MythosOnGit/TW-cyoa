@@ -1,6 +1,7 @@
 tags: Concepts
 title: Evaluation
 tmap.id: 4c15e590-2dde-4706-945c-f3e47a10d7dc
+type: text/vnd.tiddlywiki
 
 \rules except wikilink
 
@@ -10,7 +11,7 @@ If a page or an active node doesn't have any constraints, then it will always ev
 
 ! Pages
 
-Constraints that apply to pages are done through fields and the {{Buttons/edit-template}} of their corresponding tiddlers. For instance, if a page's "Show only" is set to "first", then the page will only evaluate to ''true'' if it is [[untouched|Tracking]].
+Constraints that apply to pages are done through fields and the TW5-cyoa edit panel of their corresponding tiddlers. For instance, if a page's "Show only" is set to "first", then the page will only evaluate to ''true'' if it is [[untouched|Tracking]].
 
 Pages that evaluate to false will be passed over in [[append lists|Appending]] and will be hidden if listed in <<wlink OptionsWidget>> widgets. However, [[Hard Links]] which point to a false page will still be visible and interactable.
 
