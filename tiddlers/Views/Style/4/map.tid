@@ -1,0 +1,31 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Style 4: Stylesheets/map
+type: text/vnd.tiddlywiki
+
+{
+ "8c4f5c9b-e3fd-4494-8672-12752686e5ce": {
+  "x": 0,
+  "y": -40
+ },
+ "30eeab23-c253-4017-922f-7d27e7f34a17": {
+  "shape": "square",
+  "color": {
+   "background": "rgba(207,78,50,1)",
+   "border": "rgba(171,65,38,1)"
+  },
+  "size": 25,
+  "x": -125,
+  "y": 0
+ },
+ "fa569b2a-1655-43ae-ab30-7ef088a39fa7": {
+  "x": 100,
+  "y": 40
+ },
+ "6551047f-5e56-4c34-96ad-1bad0ceaff69": {
+  "x": 250,
+  "y": -40
+ },
+ "b0fcf97e-8a2a-4670-8c42-23f0b31757cb": {
+  "x": 250,
+  "y": 40
+ }
+}

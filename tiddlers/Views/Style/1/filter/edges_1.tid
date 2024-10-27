@@ -1,3 +1,0 @@
-filter: -[prefix[_]] -[[tw-list:tags]] -[[tw-list:list]]
-title: $:/plugins/felixhayashi/tiddlymap/graph/views/Style 1: Wikitext/filter/edges
-type: text/vnd.tiddlywiki

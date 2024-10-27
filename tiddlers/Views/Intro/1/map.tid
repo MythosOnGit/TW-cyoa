@@ -2,10 +2,6 @@ title: $:/plugins/felixhayashi/tiddlymap/graph/views/Intro 1: Hello Adventure/ma
 type: text/vnd.tiddlywiki
 
 {
- "103f1b7a-6f01-489b-b654-34da691f0382": {
-  "x": 150,
-  "y": 0
- },
  "ed581aad-e63f-49f5-9cfc-8f20a1d7d348": {
   "size": 25,
   "font": {
@@ -13,6 +9,10 @@ type: text/vnd.tiddlywiki
   },
   "shape": "star",
   "x": 0,
+  "y": 0
+ },
+ "0ebffbd8-bc6c-4e84-8f20-0dcaf039ecd2": {
+  "x": 100,
   "y": 0
  }
 }

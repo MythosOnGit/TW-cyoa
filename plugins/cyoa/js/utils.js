@@ -195,11 +195,12 @@ function extractPlaceholder(script,ptr) {
 };
 
 exports.getGroupScript = function(page,keyword,wiki) {
-	var group;
-	if(!wiki.tiddlerExists(page)) {
+	var group,
+		tiddler = wiki.getTiddler(page);
+	if(!tiddler) {
 		throw keyword+" page '"+page+"' does not exist";
 	}
-	if(wiki.getTiddler(page).hasTag("$:/tags/cyoa/Type")) {
+	if(tiddler.hasTag("$:/tags/cyoa/Type")) {
 		group = page;
 		keyword = keyword + "All";
 	} else {

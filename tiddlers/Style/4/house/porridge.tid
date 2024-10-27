@@ -1,5 +1,5 @@
 tags: 
-title: Style2/house/porridge
+title: Style4/house/porridge
 tmap.id: b0fcf97e-8a2a-4670-8c42-23f0b31757cb
 type: text/vnd.tiddlywiki
 
@@ -9,11 +9,11 @@ No one is inside the house, but it's clearly lived in. The furniture is well-dus
 
 Also, it's very red in here.
 
-[[Go upstairs.|Style2/house/bed]]
+[[Go upstairs.|Style4/house/bed]]
 
 <<annotate """
 
-Your interactive novel will appear brick-red when this page is visited because [[the stylesheet for this demo|Style2/stylesheet.css]] has
+Your interactive novel will appear brick-red when this page is visited because [[the stylesheet for this demo|Style4/stylesheet.css]] has
 
 ```css
 .cyoa-body[data-title^="Style2/house/"] {

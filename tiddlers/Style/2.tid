@@ -1,7 +1,7 @@
-caption: Style 1: Wikitext Markup
+caption: Style 2: Wikitext Markup
 description: Learning Tiddlywiki's easy-to-use markup for simple styling.
 tags: Style
-title: Style1
+title: Style2
 tmap.id: e1851902-f7b8-4d2f-81cf-de5536c18d30
 type: text/vnd.tiddlywiki
 
@@ -21,4 +21,4 @@ The demo for this tutorial shows many more uses of wikitext. Click on a node bel
 
 There's even more that TiddlyWiki can do, but it would take up too much space to cover it all in this tutorial, but the demo covered what will likely come up for you. At some point, you may want to check out <<link-to-tw WikiText "the TiddlyWiki's section on wikitext">>.
 
-Next Tutorial:  <$link to="Style2">{{Style2!!caption}}</$link>
+Next Tutorial:  <$link to="Style3">{{Style3!!caption}}</$link>

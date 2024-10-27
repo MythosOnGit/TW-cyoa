@@ -1,6 +1,6 @@
 caption: Formatting
 tags: 
-title: Style1/formatting
+title: Style2/formatting
 tmap.id: 46658347-b512-421e-b024-1bc66ce91ffd
 type: text/vnd.tiddlywiki
 
@@ -19,7 +19,7 @@ Within this dungeon is a //terrible// beast of ''unimaginable'' power. __Do not 
 //You have been warned.//
 <<<
 
-[[Enter the cave|Style1/paragraphs and linebreaks]]
+[[Enter the cave|Style2/paragraphs and linebreaks]]
 
 <<annotate """
 

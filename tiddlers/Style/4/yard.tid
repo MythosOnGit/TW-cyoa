@@ -1,4 +1,4 @@
-title: Style2/yard
+title: Style4/yard
 tmap.id: fa569b2a-1655-43ae-ab30-7ef088a39fa7
 tmap.style: {"color":{"background":"rgba(11,135,5,1)"}}
 type: text/vnd.tiddlywiki
@@ -7,11 +7,11 @@ type: text/vnd.tiddlywiki
 
 You are in the front yard of the house, and it is indeed styled differently. Everything around you is greenish, but the house is red brick. The door appears to be unlocked.
 
-[[Enter the house.|Style2/house/porridge]]
+[[Enter the house.|Style4/house/porridge]]
 
 <<annotate """
 
-In the generated interactive novel, this page will come out green (with light-colored links) because [[the stylesheet for this demo|Style2/stylesheet.css]] has
+In the generated interactive novel, this page will come out green (with light-colored links) because [[the stylesheet for this demo|Style4/stylesheet.css]] has
 
 ```css
 .cyoa-body[data-title="Style2/yard"] {
@@ -22,7 +22,7 @@ In the generated interactive novel, this page will come out green (with light-co
     color: khaki;
 }
 ```
-Thus when this page (<<plink Style2/yard>>) is the active page, that css is active.
+Thus when this page (<<plink Style4/yard>>) is the active page, that css is active.
 
 This CSS will ''not'' apply if this page is only visible because it's appended by another page. This must be the first page in the current page run.
 """ >>

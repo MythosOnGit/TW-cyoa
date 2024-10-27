@@ -11,8 +11,9 @@
     {
       "file": "templates_cyoa.css",
       "fields": {
-        "title": "$:/plugins/mythos/cyoa/templates/cyoa.css",
-        "type": "text/css"
+        "title": "$:/plugins/mythos/cyoa/core.css",
+        "type": "text/css",
+        "tags": "$:/tags/cyoa/Stylesheet"
       }
     },
     {

@@ -90,7 +90,7 @@ CyoaWidget.prototype.createDomNode = function() {
 
 CyoaWidget.prototype.makeInfoNode = function() {
 	var array = [];
-	if(this.page && this.caption) {
+	if(this.caption) {
 		array.push([
 			{type: "element", tag: "strong", children: [{type: "text", text: "Caption: "}]},
 			{type: "transclude", attributes: {"$field": {type: "string", value: "cyoa.caption"}}}]);
@@ -114,7 +114,9 @@ CyoaWidget.prototype.compiling = function() {
 
 CyoaWidget.prototype.getClassName = function() {
 	var classes = this["class"] ? this["class"].split(" ") : [];
-	classes.push(this.page ? "cyoa-page" : "cyoa-state");
+	if(!this.page) {
+		classes.push("cyoa-state");
+	}
 	if(this.else) { classes.push("cyoa-else"); }
 	if(this["return"]) { classes.push("cyoa-return"); }
 	if(this["replace"]) { classes.push("cyoa-replace"); }
@@ -227,6 +229,7 @@ CyoaWidget.prototype.execute = function() {
 		children.unshift(this.makeInfoNode());
 	} else if (!this.page || tiddler) {
 		// We're compiling, and everything looks fine
+		// As in, we're a nameless node, or we're a page representing a tiddler.
 		$tw.utils.each(ATTRS,(attribute) => {
 			try {
 				this[attribute] = snippets.getWidgetString(attribute,tiddler,this);

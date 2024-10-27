@@ -7,6 +7,5 @@ type: text/vnd.tiddlywiki
 <title>{{$:/config/mythos/cyoa/title}}</title>
 
 <style type="text/css">
-{{ $:/plugins/mythos/cyoa/templates/cyoa.css || $:/core/templates/wikified-tiddler }}
-{{{ [tag[$:/tags/cyoa/Stylesheet]!has[draft.of]] ||$:/core/templates/wikified-tiddler}}}
+{{{ [[$:/tags/cyoa/Stylesheet]tagging[]!is[draft]] ||$:/core/templates/wikified-tiddler}}}
 </style>

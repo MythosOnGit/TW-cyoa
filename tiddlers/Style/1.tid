@@ -1,0 +1,28 @@
+caption: Style 1: Color Palettes
+description: Customizing your story's appearance
+tags: Style
+title: Style1
+tmap.id: 3323393c-4fc7-4f46-8005-bbb7c16a6a33
+type: text/vnd.tiddlywiki
+
+You've able to generate a story, and that's swell, but surely you'd like to customize it's appearance. <<plugin>> provides tools for doing just that. First, you'll need to access the <<plugin>> control panel in your project.
+
+If you downloaded the starter project from <<tlink Intro1>>, then you'll find an easy link to the control panel in your pre-supplied <<page Start>> page. But if you're not using the starter project, or you have since deleted that link, you'll need to access it the usual way.
+
+# Go to your TiddlyWiki's Control Panel. Access this by clicking the <<icon $:/core/images/options-button>> button in the page controls along the right-hand side of your TiddlyWiki's main view. It's above the search bar.
+# In the Control Panel, go to the <<value Plugins>> tab.
+# From the list of plugins, click or expand <<tlink $:/plugins/mythos/cyoa>>.
+
+This should reveal the <<plugin>> Control panel. There's a lot going on here, but right now we're only going to look at appearance customization.
+
+<<note "Make sure you access the <<plugin>> Control Panel for //your// project, and not for this demo site. This demo site is only good for generating the example adventures used for the tutorials.">>
+
+!! Color Palette
+
+In the <<value configuration>> tab (should already be open), go to the <<value Palette>> tab. This menu gives the ability to select from several pre-defined color palettes to apply to your generated story. Currently, it's set to <$transclude $variable="tiddler" _={{{ [{$:/config/mythos/cyoa/palette}get[name]] }}} />. You can choose any palette you wish. The preview gives you an idea what it will look like, but once selected, you can see for yourself by generating your story and seeing for yourself.
+
+If a particular palette isn't quite to your liking, you can further customize it by clicking on the <<value "show editor">> button, which will give you the ability to swap out any colors you wish.
+
+Once you've customized your story to your liking, feel free to move on to the next tutorial. Remember, you can always change your story's appearance later, or customize it even more precisely than these options allow (although we'll wait for a later tutorial to discuss that).
+
+Next Tutorial:  <$link to="Style2">{{Style2!!caption}}</$link>

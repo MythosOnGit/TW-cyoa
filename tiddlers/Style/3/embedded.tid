@@ -27,7 +27,7 @@ You'll see that the embedded fox image has it's own image as its icon on the map
 
 Neither of these things are automatic. It's simply something I set up to clarify the demo, but you can get the same effects yourself.
 
-# To have a tiddler use its own image as a map icon (or any image), set its <<field icon>> field to itself (in this case, <<tlink Style3/fox.jpg>>).
+# To have a tiddler use its own image as a map icon (or any image), set its <<field icon>> field to itself (in this case, <<tiddler Style3/fox.jpg>>).
 # To create a custom edge between two nodes, click <<vis-connect>> on the map, and draw an edge between the two. In the resulting popup, specify whatever edge name you'd like to create.
 
 You can later customize how this edge appears in

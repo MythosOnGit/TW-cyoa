@@ -1,4 +1,4 @@
-title: Style2/house/bed
+title: Style4/house/bed
 tmap.id: 6551047f-5e56-4c34-96ad-1bad0ceaff69
 type: text/vnd.tiddlywiki
 
@@ -12,7 +12,7 @@ Also, it's very red in here too.
 
 <<annotate """
 
-You'll notice that this page and also [[Style2/house/porridge]] have different-colored nodes in TiddlyMap. Unlike with [[Style2/yard]], this isn't manually set per page, but rather by custom node-type <<page Style2/house>>. If you'd like, you can edit existing node types or create your own by going to "<span class="tmap-unicode-icon">▢</span>&#32;Manage node-types"  in ~TiddlyMap's
+You'll notice that this page and also [[Style4/house/porridge]] have different-colored nodes in TiddlyMap. Unlike with [[Style4/yard]], this isn't manually set per page, but rather by custom node-type <<page Style2/house>>. If you'd like, you can edit existing node types or create your own by going to "<span class="tmap-unicode-icon">▢</span>&#32;Manage node-types"  in ~TiddlyMap's
 <$button>{{$:/core/images/menu-button}}</$button>
 menu.
 

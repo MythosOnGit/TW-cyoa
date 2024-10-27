@@ -1,0 +1,9 @@
+title: $:/plugins/mythos/cyoa/configuration/palette/preview
+
+\whitespace trim
+
+<$wikify name="preview" text={{$:/plugins/mythos/cyoa/compile/preview}} >
+
+<iframe title="preview" class="cyoa-preview" sandbox="allow-scripts" srcdoc=<<preview>> >
+
+</iframe></$wikify>

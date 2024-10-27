@@ -1,0 +1,41 @@
+caption: Style 4: Stylesheets
+description: More elaborate styling using CSS
+tags: Style
+title: Style4
+tmap.id: 0e54db19-ad75-4e0f-a3bd-bf5da58b330e
+type: text/vnd.tiddlywiki
+
+<<plugin>> provides tools for stylizing the color palette and layout for customizing your story, but if you're creating anything elaborate, chances are you'll need to customize your styling beyond that. For that, you may to dive into CSS or Cascading Style Sheets. This tutorial isn't about how to write CSS. That's a far ranging topic which requires [[tutorials|https://www.w3schools.com/css/]] [[of its own|https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps]]. This tutorial is about how to apply written CSS to your interactive story.
+
+!! Where to write CSS
+
+You can create a tiddler that can contain CSS that will be applied to your story's generated page, instead of being another page. All you need to do is give it the tag <<tag $:/tags/cyoa/Stylesheet>>.
+
+That's all you have to do. However, to make TiddlyWiki treat the tiddler as CSS instead of wikitext when viewing or editing it, you should set its type. Edit your tiddler and look for the Type dropdown near its bottom. It looks like this:
+
+@@..tc-tiddler-edit-frame
+<$tiddler tiddler="Stylesheet.css">{{||$:/core/ui/EditTemplate/type}}</$tiddler>
+@@
+
+Set it to <<value "Static Stylesheet (text/css)">>. Now it will display the page as CSS script instead of wikitext. It can be easier to work with like this. (It won't be highlighted in your project unless you install the [[Highlight plugin|$:/plugins/tiddlywiki/highlight]].)
+
+You don't actually have to set the tiddler to CSS. It's just a convenience. (In fact, if you don't, you can apply wikitext to programmatically generate CSS, but that's an advanced topic for another day.)
+
+!! Stylesheets in TiddlyWiki too
+
+TiddlyWiki uses a similar tag <<tag $:/tags/Stylesheet>> to indicate when a tiddler's contents should be used for CSS within ~TiddlyWiki itself. In fact, you can put both tags on a tiddler, and both your ~TiddlyWiki project and your generated interactive story will use the CSS. This can be helpful if you'd like your tiddlers to emulate your generated pages, although not all CSS can be meaningfully shared like this.
+
+
+!! How to apply CSS to a specific page
+
+CSS in a tiddler tagged with <<tag $:/tags/cyoa/Stylesheet>> will be active for your entire interactive story. That means content like <<value "ul { ... }">> will apply to all your bullet-point lists.
+
+However, you might have css which you only want applied when a particular page is viewed. Fortunately, <<plugin>> sets a <<value data-title>> attribute on the your interactive story's main <<elem body>> element to whatever page is currently selected. So content like <<value '.cyoa-body[data-title="myPage"] { ... }'>> will apply only when page <<page myPage>> is currently the main page.
+
+<<note """<<value cyoa-body>> is a class that <<plugin>> applies to your page's <<elem body>> element. You could set CSS to <<value 'body[data-title="myPage"]'>> instead, but specifying the classes is a better practice.""" >>
+
+!! How to apply CSS to sets of pages
+
+TiddlyWiki core has a way of applying CSS to specific tiddlers <<link-to-tw "Custom styles by data-tags" "based on tags">>. <<plugin>> doesn't have this. (But it might someday!)
+
+What you can do is apply CSS to tiddlers based on pattern matching its ID. For instance, <<value """.cyoa-body[data-title^="House/"] { ... }""" >> will apply its css to all pages whose title begins with <<value House/>>. There are <<link-to-tw "Custom styles by data-tags" "other pattern matching tricks too">>, and there is an example of all these CSS tricks in this tutorial's demo: <<demo>>

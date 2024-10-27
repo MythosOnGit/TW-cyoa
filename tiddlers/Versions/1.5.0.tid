@@ -1,0 +1,10 @@
+tags: Versions
+title: Version 1.5.0
+tmap.id: b25475ca-2ca4-4e83-a12e-c96d3e11846a
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+!!!Features
+
+* Introduced the concepts of palettes, which allow you to configure the color scheme of your generated story without ever having to dip your hands into CSS. It's currently in its infancy, and this release is mostly just to get some feedback from the community before pushing onward.
+* New tutorial for the palette system, and moved the CSS tutorial farther down, since it's now considered and "advanced topic".

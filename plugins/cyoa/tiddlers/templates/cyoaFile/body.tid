@@ -1,14 +1,21 @@
 title: $:/plugins/mythos/cyoa/templates/cyoaFile/body
 type: text/vnd.tiddlywiki
 
-\rules only filteredtranscludeinline transcludeinline
+\parameters (pagefilter: "[all[tiddlers+shadows]cyoa:page[]] [cyoa:start[]]+[putfirst[]]+[appendsort[]]")
+
+\procedure page-divs()
+\whitespace trim
+<$parameters filter=<<pagefilter>> >
+<$list filter=<<filter>>>
+<$view tiddler="$:/plugins/mythos/cyoa/templates/page" field="text" format="htmlwikified" />
+\end
+\rules only filteredtranscludeinline transcludeinline macrocallinline
+<<page-divs "[[$:/tags/cyoa/Overlay]tagging[]!is[draft]]">>
+<div class="cyoa-wrapper">
 <ul class="cyoa-error"></ul>
-<div class="cyoa-header">
-{{$:/cyoaHeader|| $:/core/templates/html-tiddler }}
-</div>
+<<page-divs "[[$:/tags/cyoa/Header]tagging[]!is[draft]]">>
 <div class="cyoa-content">
-{{$:/plugins/mythos/cyoa/templates/cyoaFile/pages|| $:/core/templates/html-tiddler }}
+<<page-divs>>
 </div>
-<div class="cyoa-footer">
-{{$:/cyoaFooter|| $:/core/templates/html-tiddler }}
+<<page-divs "[[$:/tags/cyoa/Footer]tagging[]!is[draft]]">>
 </div>

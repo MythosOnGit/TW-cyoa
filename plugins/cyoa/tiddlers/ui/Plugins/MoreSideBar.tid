@@ -1,0 +1,5 @@
+caption: //cyoa// Themes
+title: $:/plugins/mythos/cyoa/ui/MoreSideBar/Plugins/CyoaThemes
+future-tags: $:/tags/MoreSideBar/Plugins
+
+<$list filter="[!has[draft.of]plugin-type[cyoatheme]sort[name]]" template="$:/core/ui/PluginListItemTemplate" emptyMessage={{$:/language/ControlPanel/Plugins/Empty/Hint}}/>

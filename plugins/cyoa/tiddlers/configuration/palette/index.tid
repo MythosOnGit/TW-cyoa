@@ -1,0 +1,63 @@
+caption: Palette
+tags: $:/tags/cyoa/Configuration
+title: $:/plugins/mythos/cyoa/configuration/palette
+
+\whitespace trim
+
+!!! Preview
+
+{{$:/plugins/mythos/cyoa/configuration/palette/preview}}
+
+Select a color palette for your generated story.
+
+<$linkcatcher to="$:/config/mythos/cyoa/palette">
+<div class="tc-chooser">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/Palette]sort[name]]">
+<$set name="cls" filter="[all[current]match{$:/config/mythos/cyoa/palette}]" value="tc-chooser-item tc-chosen" emptyValue="tc-chooser-item">
+<div class=<<cls>>>
+<$link to={{!!title}}>
+''<$view field="name" format="text"/>''
+&#32;-&#32;
+<$view field="description" format="text"/>
+
+<$importvariables filter="$:/snippets/currpalettepreview $:/core/macros/utils">
+<!-- Tiddlywiki uses the following lineup:
+foreground
+background
+muted-foreground
+primary
+page-background
+tab-background
+tiddler-info-background
+-->
+<div class="tc-swatches-horiz"><$list filter="
+	foreground
+	background
+	title-foreground
+	subtitle-foreground
+	page-link-foreground
+	external-link-foreground
+" variable="colour"><<swatch>></$list></div>
+</$importvariables>
+</$link>
+</div>
+</$set>
+</$list>
+</div>
+</$linkcatcher>
+
+
+<!-- Palette editor -->
+
+<$reveal type="nomatch" state="$:/state/mythos/cyoa/ShowPaletteEditor" text="yes">
+
+<$button set="$:/state/mythos/cyoa/ShowPaletteEditor" setTo="yes">show editor</$button>
+
+</$reveal>
+
+<$reveal type="match" state="$:/state/mythos/cyoa/ShowPaletteEditor" text="yes">
+
+<$button set="$:/state/mythos/cyoa/ShowPaletteEditor" setTo="no">hide editor</$button>
+{{$:/plugins/mythos/cyoa/configuration/palette/manager}}
+
+</$reveal>

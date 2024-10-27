@@ -1,0 +1,21 @@
+title: $:/plugins/mythos/cyoa/compile/preview
+type: text/vnd.tiddlywiki
+
+\define tv-wikilink-template() #$uri_encoded$
+\define tv-config-toolbar-icons() no
+\define tv-config-toolbar-text() no
+\define tv-config-toolbar-class() tc-btn-invisible
+
+<!-- This renders any tiddler as though it were being compiled into the cyoa file instead of being rendered in tiddlywiki. cyoa widgets will be active instead of being fully expanded for ease of editing. -->
+\define cyoa-render() yes
+
+&lt;!doctype html>
+&lt;html>
+&lt;head>
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/head}}
+
+</head>
+&lt;body class="cyoa-body">
+{{$:/plugins/mythos/cyoa/templates/cyoaFile/body|[cyoa:start[]]}}
+</body>
+</html>

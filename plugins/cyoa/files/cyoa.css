@@ -160,5 +160,14 @@ table.cyoa-edit, .cyoa-edit tr, .cyoa-edit td {
  * EditTemplate group list not have italics.
  */
 a.cyoa-group-listitem {
-    font-style: normal;
+	font-style: normal;
+}
+
+/**cyoa-preview is for the configuration palatte menu's preview of what your generated file would look like.
+ */
+iframe.cyoa-preview {
+	border: 1px solid black;
+	width: 100%;
+	height: 20em;
+	overflow: scroll;
 }

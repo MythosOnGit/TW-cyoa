@@ -1,4 +1,0 @@
-title: $:/plugins/mythos/cyoa/templates/cyoaFile/pages
-type: text/vnd.tiddlywiki
-
-{{{ [all[tiddlers+shadows]cyoa:page[]] [cyoa:start[]]+[putfirst[]]+[appendsort[]] ||$:/plugins/mythos/cyoa/templates/page}}}

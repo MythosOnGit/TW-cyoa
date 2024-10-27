@@ -4,6 +4,11 @@ type: text/vnd.tiddlywiki
 
 ! The Title
 
-This is the first page that will be shown in your generated CYOA story. ''Delete its contents and put in whatever you want.''
+This is the first page that will be shown in your generated CYOA story. This is skeleton content meant as an example. You can edit this tiddler (by clicking the {{$:/core/images/edit-button}} button in the upper right of this tiddler), then ''delete this content and put in whatever you want.''
+
+Here are some links that go to a few more skeleton pages to help you get started on your writing adventure.
+
+[[Edit my project's aesthetics.|Layout]]
 
 Also, you may want to check out [[the CYOA configuration page|$:/plugins/mythos/cyoa]], but you don't have to right now. Everything should already work.
+

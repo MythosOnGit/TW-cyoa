@@ -24,8 +24,7 @@ type: text/plain
 [[$:/config/RelinkOnRename]]
 [[$:/plugins/felixhayashi/tiddlymap/misc/meta]]
 [[$:/state/tab/sidebar--595412856]]
-[[Start]]
-[[Stylesheet.css]]
+[subfilter{$:/plugins/felixhayashi/tiddlymap/graph/views/Intro 1: Hello Adventure/filter/nodes!!filter}]
 [tag[$:/tags/cyoa/Type]]
 
 +[sort[title]]

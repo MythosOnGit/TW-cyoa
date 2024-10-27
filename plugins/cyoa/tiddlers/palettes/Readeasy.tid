@@ -1,0 +1,24 @@
+title: $:/plugins/mythos/cyoa/palettes/Readeasy
+name: Readeasy
+color-scheme: light
+description: A straight-forward option
+tags: $:/tags/cyoa/Palette
+type: application/x-tiddler-dictionary
+
+background: #FFFFFF
+foreground: #7E7674
+alert-background: #FFBABA
+alert-foreground: #D8000C
+external-link-background: inherit
+external-link-background-hover: inherit
+external-link-background-visited: inherit
+external-link-foreground: #000000
+external-link-foreground-hover: #666666
+external-link-foreground-visited: #000000
+page-link-background: inherit
+page-link-foreground: #000000
+subtitle-background: inherit
+subtitle-foreground: #909090
+title-background: inherit
+title-foreground: #222222
+#social-icons: #D3D3D3

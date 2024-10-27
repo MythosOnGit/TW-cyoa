@@ -53,3 +53,5 @@ Now you need to link to it from specific pages. Let's say your image was called 
 It's the same <<attr source>> attribute as before, only now it's pointing to an existing image tiddler. That's all it takes.
 
 Here's a demonstration of all three image techniques: <<demo>>
+
+Next Tutorial:  <$link to="Style4">{{Style4!!caption}}</$link>

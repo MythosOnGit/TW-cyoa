@@ -1,0 +1,39 @@
+title: $:/plugins/mythos/cyoa/configuration/palette/manager
+
+\import $:/PaletteManager
+
+\define palette-manager-table()
+\whitespace trim
+<table>
+<tbody>
+<$set name="colorList"
+	filter="[{$:/state/cyoa/palettemanager/showexternal}match[yes]]"
+	value="[all[shadows+tiddlers]tag[$:/tags/cyoa/Palette]indexes[]]"
+	emptyValue="[<currentTiddler>indexes[]]">
+<$list filter=<<colorList>> variable="colourName"> <<palette-manager-colour-row>> </$list>
+</$set>
+</tbody>
+</table>
+\end
+
+\whitespace trim
+
+<$set name="currentTiddler" value={{$:/config/mythos/cyoa/palette}}>
+
+<<lingo Prompt>>&#32;<$link to=<<currentTiddler>> />
+
+<$list filter="[all[current]is[shadow]is[tiddler]]" variable="listItem">
+<<lingo Prompt/Modified>>
+&#32;
+<$button message="tm-delete-tiddler" param=<<currentTiddler>> ><<lingo Reset/Caption>></$button>
+</$list>
+
+<$list filter="[all[current]is[shadow]!is[tiddler]]" variable="listItem">
+<<lingo Clone/Prompt>>
+</$list>
+
+<$button message="tm-new-tiddler" param=<<currentTiddler>> ><<lingo Clone/Caption>></$button>
+
+<$checkbox tiddler="$:/state/cyoa/palettemanager/showexternal" field="text" checked="yes" unchecked="no"><span class="tc-small-gap-left"><<lingo Names/External/Show>></span></$checkbox>
+
+<<palette-manager-table>>

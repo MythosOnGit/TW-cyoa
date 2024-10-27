@@ -63,6 +63,7 @@ Core.prototype.openPage = function(page) {
 	this.document.body.scrollTop=this.document.documentElement.scrollTop=0;
 
 		utils.log('  Headers');
+	this.processExtraPages(this.book.overlays);
 	this.processExtraPages(this.book.headers);
 
 	var page = this.book.getPageOrDefault(currentPage);

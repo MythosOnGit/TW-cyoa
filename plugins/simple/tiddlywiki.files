@@ -1,0 +1,12 @@
+{
+  "tiddlers": [
+    {
+      "file": "base.css",
+      "fields": {
+        "title": "$:/themes/mythos/simple/base.css",
+        "type": "text/vnd.tiddlywiki",
+        "tags": [ "$:/tags/cyoa/Stylesheet" ]
+      }
+    }
+  ]
+}

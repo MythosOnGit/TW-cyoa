@@ -2,7 +2,14 @@ title: $:/plugins/mythos/cyoa/templates/page
 type: text/vnd.tiddlywiki
 
 <$vars
-	class={{{ [all[current]cyoa:start[]then[cyoa-start cyoa-active]else[]] }}}
+	class={{{
+		[all[current]tag[$:/tags/cyoa/Header]then[cyoa-header]]
+		[all[current]tag[$:/tags/cyoa/Footer]then[cyoa-footer]]
+		[all[current]tag[$:/tags/cyoa/Overlay]then[cyoa-overlay]]
+		cyoa-page
+		+[first[]]
+		[all[current]cyoa:start[]then[cyoa-start cyoa-active]]
+		+[join[ ]] }}}
 	attributes={{{ [all[current]fields[]prefix[cyoa.]!match[cyoa.group]!match[cyoa.imply]join[ ]] }}}
 	currentPage=<<currentTiddler>> >
 

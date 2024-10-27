@@ -6,7 +6,6 @@ module-type: command
 Compiles the cyoa file given the pages and configuration of the given tiddler directory.
 
 \*/
-(function() {
 
 "use strict";
 
@@ -51,5 +50,3 @@ Command.prototype.execute = function() {
 };
 
 exports.Command = Command;
-
-})();

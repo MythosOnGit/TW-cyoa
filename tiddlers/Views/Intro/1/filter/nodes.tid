@@ -1,3 +1,3 @@
-filter: [tmap.id[103f1b7a-6f01-489b-b654-34da691f0382]] [tmap.id[ed581aad-e63f-49f5-9cfc-8f20a1d7d348]]
+filter: [tmap.id[ed581aad-e63f-49f5-9cfc-8f20a1d7d348]] [field:tmap.id[0ebffbd8-bc6c-4e84-8f20-0dcaf039ecd2]]
 title: $:/plugins/felixhayashi/tiddlymap/graph/views/Intro 1: Hello Adventure/filter/nodes
 type: text/vnd.tiddlywiki

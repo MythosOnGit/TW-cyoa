@@ -1,0 +1,11 @@
+{
+	"name": "Simple",
+	"title": "$:/themes/mythos/simple",
+	"description": "Simple theme for cyoa stories",
+	"author": "Mythos",
+	"version": "1.5.0",
+	"core-version": ">=5.3.4",
+	"source": "https://github.com/mythos/TW-CYOA",
+	"dependents": "",
+	"plugin-type": "cyoatheme"
+}

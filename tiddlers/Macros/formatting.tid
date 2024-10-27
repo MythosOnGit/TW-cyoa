@@ -20,15 +20,26 @@ type: text/vnd.tiddlywiki
 \rules except wikilink syslink
 <code class="doc-tiddler">$_$</code>
 \end
-\define tlink(_)
+\define tiddler(_)
 \rules except wikilink syslink
 <code class="doc-tiddler">$_$</code>
+\end
+\define tlink(to)
+\whitespace trim
+<$link to=<<__to__>> >
+<%if [<__to__>plugin-type[plugin]] %>
+''<$view tiddler=<<__to__>> field="name"/>'':&#32;<$view tiddler=<<__to__>> field="description"/>
+<%else%>
+<$view tiddler=<<__to__>> field="caption"><$text text=<<__to__>> /></$view>
+<%endif%>
+</$link>
 \end
 \define icon(_) <span class="doc-icon"><$transclude tiddler=<<_____>> /></span>
 
 \relink wlink to
 \relink flink to
+\relink tlink to
 \relink plink _
-\relink tlink _
+\relink tiddler _
 
 Contains various macro wrappers so this demo can remain consistent about how it formats various terms.

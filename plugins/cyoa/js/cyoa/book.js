@@ -8,6 +8,7 @@ function Book(document) {
 	this.document = document;
 	this.headers = makePages(this,'cyoa-header');
 	this.footers = makePages(this,'cyoa-footer');
+	this.overlays = makePages(this,'cyoa-overlay');
 	var pages = this.document.getElementsByClassName('cyoa-page');
 	this.pages = Object.create(null);
 	for(var index=0; index<pages.length; index++) {

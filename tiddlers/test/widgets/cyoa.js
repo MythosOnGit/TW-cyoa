@@ -378,7 +378,7 @@ it("can take custom hotkeys",function() {
 		{title: "Main",text: "<$cyoa to=Main2 hotkey=c />"},
 		{title: "Main2",text: "<$cyoa to=Main3 hotkey='w ArrowUp' />"},
 		{title: "Main3"},
-		{title: "$:/cyoaFooter",text: "<$cyoa to=Main4 hotkey=i />"},
+		{title: "Footer",tags:"$:/tags/cyoa/Footer",text: "<$cyoa to=Main4 hotkey=i />"},
 		{title: "Main4"}
 	]]);
 	var event = utils.keydown(core,"c",67,"KeyC");
@@ -388,7 +388,7 @@ it("can take custom hotkeys",function() {
 	var event = utils.keydown(core,"ArrowUp",38,"ArrowUp");
 	expect(core.manager.getPage()).toBe("Main3");
 	expect(event.defaultPrevented).toBe(true);
-	// hotkeys are accessable from the footer
+	// hotkeys are accessable from a footer
 	var event = utils.keydown(core,"i",73,"KeyI");
 	expect(core.manager.getPage()).toBe("Main4");
 	expect(event.defaultPrevented).toBe(true);
