@@ -11,10 +11,18 @@ body {
 	font-weight: normal;
 }
 
-.cyoa-error {
+#\$\:\/cyoaError {
 	color: <<cyoa-colour alert-foreground>>;
 	background-color: <<cyoa-colour alert-background>>;
+	padding-left: 40px;
+	margin-top: 16px;
+	margin-bottom: 16px;
 	border-radius: 8px;
+}
+
+#\$\:\/cyoaError span {
+	display: list-item;
+	list-style-type: disc;
 }
 
 h1 {

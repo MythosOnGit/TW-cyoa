@@ -16,8 +16,8 @@ var utils = require("test/utils.js");
 
 var dir = "$:/config/mythos/cyoa/meta/";
 
-var head = "$:/plugins/mythos/cyoa/templates/cyoaFile/head";
-var metaElement = "$:/plugins/mythos/cyoa/templates/meta-element";
+var head = "$:/plugins/mythos/cyoa/compile/head";
+var metaElement = "$:/plugins/mythos/cyoa/compile/meta-element";
 var tiddlerCyoaHead = $tw.wiki.getTiddler(head);
 var tiddlerMetaElem = $tw.wiki.getTiddler(metaElement);
 
@@ -28,7 +28,7 @@ function makeWiki() {
 };
 
 function extractMeta(wiki) {
-	var head = "$:/plugins/mythos/cyoa/templates/cyoaFile/head",
+	var head = "$:/plugins/mythos/cyoa/compile/head",
 		text = wiki.renderTiddler("text/vnd.tiddlywiki",head,{}),
 		match,
 		regex = /<meta (\w+)="([^"]*)"\s+content="([^"]*)"\s*>/g,

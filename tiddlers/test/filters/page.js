@@ -70,7 +70,7 @@ it("exclusive",function() {
 	testFilter(wiki,wiki.getTiddlers(),["A","C"]);
 });
 
-it("excludes all drafts",function() {
+it("excludes all drafts, even when pulling tag list",function() {
 	var wiki = new $tw.Wiki();
 	wiki.addTiddlers([
 		{title: "A","tags": "testPage"},

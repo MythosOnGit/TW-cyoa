@@ -5,7 +5,7 @@ tags: $:/tags/PageControls
 type: text/vnd.tiddlywiki
 
 <$button tooltip="Compile the cyoa file" aria-label="compile cyoa" class=<<tv-config-toolbar-class>> selectedClass="tc-selected">
-<$action-sendmessage $message="tm-download-file" $param="$:/plugins/mythos/cyoa/templates/cyoaFile" filename=<<cyoa-filename>> />
+<$action-sendmessage $message="tm-download-file" $param="$:/plugins/mythos/cyoa/compile/file" filename=<<cyoa-filename>> />
 <$list filter="[<tv-config-toolbar-icons>prefix[yes]]">
 {{$:/plugins/mythos/cyoa/images/compile}}
 </$list>

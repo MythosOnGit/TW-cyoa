@@ -20,7 +20,7 @@
 			"--rendertiddler","$:/core/save/all","test.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/]plugin-type[plugin]!prefix[$:/plugins/tiddlywiki/]!prefix[$:/plugins/mythos/]!match[$:/plugins/tiddlywiki/highlight]!match[$:/plugins/flibbles/relink]]",
 			"--test"
 		],
-		"dist": [
+		"index": [
 			"--output", "./docs/",
 			"--setfield", "$:/plugins/mythos/cyoa", "created", "Templates/now", "text/plain",
 			"--rendertiddler","$:/core/save/all","index.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/tiddlywiki/]!match[$:/plugins/tiddlywiki/highlight]] -[prefix[test/]] -[tag[Discard]]"

@@ -40,7 +40,7 @@ Command.prototype.execute = function() {
 		filename,
 		this.commander.wiki.renderTiddler(
 			"text/vnd.tiddlywiki",
-			"$:/plugins/mythos/cyoa/templates/cyoaFile",
+			"$:/plugins/mythos/cyoa/compile/file",
 			{variables: variables}),
 		"utf8",
 		function(err) { self.callback(err); }

@@ -2,8 +2,12 @@ title: $:/plugins/mythos/cyoa/configuration/palette/preview
 
 \whitespace trim
 
+<!-- reset-state is a variable that detects changes to the theme-state temp tiddler, which is used to indicate a theme change. Contents ignored. -->
+
+<$vars reset-state={{$:/temp/mythos/cyoa/theme-state}}>
+
 <$wikify name="preview" text={{$:/plugins/mythos/cyoa/compile/preview}} >
 
 <iframe title="preview" class="cyoa-preview" sandbox="allow-scripts" srcdoc=<<preview>> >
 
-</iframe></$wikify>
+</iframe></$wikify></$vars>

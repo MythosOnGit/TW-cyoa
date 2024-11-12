@@ -1,0 +1,4 @@
+title: $:/plugins/mythos/cyoa/compile/meta-element
+type: text/vnd.tiddlywiki
+
+<$set name="name" filter="[all[current]removeprefix[$:/config/mythos/cyoa/meta/]]"><$set name="attribute" filter="[<name>prefix[og:]]" value="property" emptyValue="name">&lt;meta <$macrocall $name="attribute" />="<$macrocall $name="name" />" content="{{!!text}}"></$set></$set>

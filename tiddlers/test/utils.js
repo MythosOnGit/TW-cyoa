@@ -117,8 +117,8 @@ exports.testBook = function(tiddlerArrays,options) {
 	// Load in tiddlers we need to operate this test
 	wiki.addTiddlers([
 		$tw.wiki.getTiddler("$:/core/config/GlobalImportFilter"),
-		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/page"),
-		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/templates/cyoaFile/body"),
+		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/compile/page"),
+		$tw.wiki.getTiddler("$:/plugins/mythos/cyoa/compile/body"),
 		{title: "$:/config/mythos/cyoa/start", text: "Main"}]);
 	// Then load in tiddlers specific to this particular test
 	for(var i = 0; i < tiddlerArrays.length; i++) {
@@ -132,7 +132,7 @@ exports.testBook = function(tiddlerArrays,options) {
 	}
 
 	// Create the actual book.
-	var html = wiki.renderText("text/plain","text/vnd.tiddlywiki","\\define cyoa-render() yes\n\\import [subfilter{$:/core/config/GlobalImportFilter}]\n{{$:/plugins/mythos/cyoa/templates/cyoaFile/body}}");
+	var html = wiki.renderText("text/plain","text/vnd.tiddlywiki","\\define cyoa-render() yes\n\\import [subfilter{$:/core/config/GlobalImportFilter}]\n{{$:/plugins/mythos/cyoa/compile/body}}");
 	var doc = domParser.parseBodyAndHead(html);
 	doc.wiki = wiki;
 	var cyoa = Boot();

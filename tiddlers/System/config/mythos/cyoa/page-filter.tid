@@ -1,4 +1,4 @@
 title: $:/config/mythos/cyoa/page-filter
 type: text/x-tiddler-filter
 
-[all[]!is[system]] :filter[splitbefore[/]removesuffix[/]tags[]tag[Tutorials]] -[tag[Virtual Page]]
+[all[]] -[tag[Virtual Page]]

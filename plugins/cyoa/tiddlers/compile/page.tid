@@ -1,0 +1,28 @@
+title: $:/plugins/mythos/cyoa/compile/page
+type: text/vnd.tiddlywiki
+
+<$vars
+	class={{{
+		[all[current]tag[$:/tags/cyoa/Header]then[cyoa-header]]
+		[all[current]tag[$:/tags/cyoa/Footer]then[cyoa-footer]]
+		[all[current]tag[$:/tags/cyoa/Top]then[cyoa-top]]
+		[all[current]tag[$:/tags/cyoa/Bottom]then[cyoa-bottom]]
+		cyoa-page
+		+[first[]]
+		[all[current]cyoa:start[]then[cyoa-start cyoa-active]]
+		+[join[ ]] }}}
+	attributes={{{ [all[current]fields[]prefix[cyoa.]!match[cyoa.group]!match[cyoa.imply]join[ ]] }}}
+	currentPage=<<currentTiddler>> >
+
+<$entity entity="&#10;"/>
+
+<$genesis $type="$cyoa"
+	page
+	id=<<currentTiddler>>
+	class=<<class>>
+	$names="[<attributes>split[ ]removeprefix[cyoa.]]"
+	$values="[<attributes>split[ ]] :map[<..currentTiddler>get<currentTiddler>else[]]">
+
+<$list filter="[all[current]!has[plugin-type]!field:hide-body[yes]]">
+
+<$transclude />

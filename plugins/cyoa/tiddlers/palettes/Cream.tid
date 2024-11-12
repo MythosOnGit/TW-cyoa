@@ -1,0 +1,14 @@
+title: $:/plugins/mythos/cyoa/palettes/Cream
+name: Cream
+color-scheme: light
+description: Soft and warm Irish cream colors
+tags: $:/tags/cyoa/Palette
+type: application/x-tiddler-dictionary
+
+background: #FBF9F2
+foreground: #2B2924
+alert-background: #FFBABA
+alert-foreground: #D8000C
+page-link-foreground: #836406
+external-link-foreground: #836406
+external-link-foreground-visited: #836406

@@ -12,8 +12,8 @@ boot.saver = "uri";
 boot.reportError = function(error) {
 	console.error(error.stack || error);
 	if(inBrowser) {
-		var str = "<li class='cyoa-error-item'>"+error+"</li>";
-		var elem = document.getElementsByClassName("cyoa-error")[0];
+		var str = "<span>"+error+"</span>";
+		var elem = document.getElementById("$:/cyoaError");
 		elem.innerHTML += str;
 	}
 }

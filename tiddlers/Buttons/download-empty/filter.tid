@@ -1,4 +1,5 @@
 title: Buttons/download-empty/filter
+tags: [[Virtual Page]]
 tmap.id: 7b6db5bb-c19d-448b-a82a-8b3138c3dcf1
 type: text/plain
 
@@ -17,10 +18,12 @@ type: text/plain
 [[$:/plugins/flibbles/vis-network]]
 [[$:/plugins/flibbles/relink]]
 [[$:/plugins/mythos/cyoa]]
+[prefix[$:/themes/mythos]]
 
 [prefix[$:/plugins/felixhayashi/tiddlymap/graph/views/Default]]
 [prefix[$:/plugins/felixhayashi/tiddlymap/graph/edgeTypes/]]
 [[$:/config/mythos/cyoa/start]]
+[[$:/config/mythos/cyoa/page-filter]]
 [[$:/config/RelinkOnRename]]
 [[$:/plugins/felixhayashi/tiddlymap/misc/meta]]
 [[$:/state/tab/sidebar--595412856]]

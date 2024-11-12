@@ -1,0 +1,17 @@
+color-scheme: dark
+description: A straight forward white-on-black
+name: Dark
+tags: $:/tags/cyoa/Palette
+title: $:/plugins/mythos/cyoa/palettes/Dark
+type: application/x-tiddler-dictionary
+
+background: #1e1e1e
+foreground: #dbdbdb
+alert-background: #FFBABA
+alert-foreground: #D8000C
+external-link-foreground: #0000ee
+external-link-foreground-hover: #0000bb
+external-link-foreground-visited: #0000ee
+page-link-foreground: #7897f3
+subtitle-foreground: <<cyoa-colour foreground>>
+title-foreground: <<cyoa-colour foreground>>

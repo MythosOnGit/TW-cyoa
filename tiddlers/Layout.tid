@@ -1,9 +1,0 @@
-title: Layout
-tmap.id: 0ebffbd8-bc6c-4e84-8f20-0dcaf039ecd2
-type: text/vnd.tiddlywiki
-
-This is example page that your readers can navigate to. Its current contents is just an example, and you can delete and replace it with something else.
-
-However, before you do, you might want to configure your project's palette. After you remove this content, the palette control panel can be accessed through the Cyoa section in the plugins tab of the TiddlyWiki [[$:/ControlPanel]].
-
-{{$:/plugins/mythos/cyoa/configuration/palette}}

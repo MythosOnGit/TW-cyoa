@@ -1,0 +1,20 @@
+title: $:/plugins/mythos/cyoa/compile/div-js-module
+type: text/vnd.tiddlywiki
+
+<!--
+
+This template is used for saving tiddlers as an HTML DIV containing the content
+as raw text readable as javascript.
+
+Have variable 'format' set to htmlencoded (or unset) if you're transcluding javascript.
+Have it set to plainwikified if you're transcluding wikitext which will be javascript.
+
+--><$vars
+	moduletype={{{ [all[current]get[module-type]addprefix[ module-type="]addsuffix["]] }}}
+><$set
+	name="format"
+	value=<<format>>
+	emptyValue="htmlencoded"
+>`<div id="`<$text text={{{ [all[current]search-replace:g[%],[%25]search-replace:g[ ],[%20]] }}} />`"`<$text text=<<moduletype>> />`>
+<pre>`<$view field="text" format=<<format>> />`</pre>
+</div>`</$set></$vars>

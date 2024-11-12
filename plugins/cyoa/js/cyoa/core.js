@@ -63,7 +63,7 @@ Core.prototype.openPage = function(page) {
 	this.document.body.scrollTop=this.document.documentElement.scrollTop=0;
 
 		utils.log('  Headers');
-	this.processExtraPages(this.book.overlays);
+	this.processExtraPages(this.book.tops);
 	this.processExtraPages(this.book.headers);
 
 	var page = this.book.getPageOrDefault(currentPage);
@@ -78,6 +78,7 @@ Core.prototype.openPage = function(page) {
 	}
 		utils.log('  Footers');
 	this.processExtraPages(this.book.footers);
+	this.processExtraPages(this.book.bottoms);
 	// Close pages that aren't still open
 	for(var i = 0; i < this.openPages.length; i++) {
 		var title = this.openPages[i];

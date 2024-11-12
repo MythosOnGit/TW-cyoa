@@ -33,8 +33,6 @@ tiddler-info-background
 <div class="tc-swatches-horiz"><$list filter="
 	foreground
 	background
-	title-foreground
-	subtitle-foreground
 	page-link-foreground
 	external-link-foreground
 " variable="colour"><<swatch>></$list></div>

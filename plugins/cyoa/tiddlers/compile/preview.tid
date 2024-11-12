@@ -12,10 +12,10 @@ type: text/vnd.tiddlywiki
 &lt;!doctype html>
 &lt;html>
 &lt;head>
-{{$:/plugins/mythos/cyoa/templates/cyoaFile/head}}
+{{$:/plugins/mythos/cyoa/compile/head}}
 
 </head>
 &lt;body class="cyoa-body">
-{{$:/plugins/mythos/cyoa/templates/cyoaFile/body|[cyoa:start[]]}}
+{{$:/plugins/mythos/cyoa/compile/body|[cyoa:start[]]}}
 </body>
 </html>

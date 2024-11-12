@@ -3,3 +3,4 @@ title: $:/config/FileSystemExtensions
 type: text/vnd.tiddlywiki
 
 [suffix[.css]then[.css]]
+[type[text/x-tiddler-title]then[.tid]]

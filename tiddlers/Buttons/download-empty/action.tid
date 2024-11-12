@@ -1,4 +1,5 @@
 title: Buttons/download-empty/action
+tags: [[Virtual Page]]
 tmap.id: 1b943e79-4184-48fa-8dc3-1dde345a3fea
 
 \define saveTiddlerFilter() [subfilter{Buttons/download-empty/filter}]

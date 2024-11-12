@@ -3,16 +3,16 @@
 exports.error = function(error,document) {
 	console.error(error);
 	if(document) {
-		var elem = document.getElementsByClassName('cyoa-error')[0];
+		var elem = document.getElementById('$:/cyoaError');
 		if(elem) {
-			var str = '<li class=\'cyoa-error-item\'>'+error+'</li>';
+			var str = '<span>'+error+'</span>';
 			elem.innerHTML += str;
 		}
 	}
 }
 
 exports.clearErrors = function(document) {
-	var elem = document.getElementById('cyoa-error');
+	var elem = document.getElementById('$:/cyoaError');
 	while (elem && elem.lastChild) {
 		elem.removeChild(elem.lastChild);
 	}

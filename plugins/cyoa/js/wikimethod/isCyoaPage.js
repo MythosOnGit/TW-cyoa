@@ -36,7 +36,9 @@ exports.getCyoaPageMap = function() {
 			var list = filter(eachSource(wiki));
 			list = list.filter((x) => {
 				var t = wiki.getTiddler(x);
-				return t && !t.isDraft() && !t.hasTag("$:/tags/cyoa/Type");
+				return t
+					&& !t.isDraft()
+					&& !t.hasTag("$:/tags/cyoa/Type");
 			});
 			rtn = utils.toHashMap(list);
 		} finally {

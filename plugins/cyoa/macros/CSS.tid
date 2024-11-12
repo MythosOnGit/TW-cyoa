@@ -4,6 +4,6 @@ tags: $:/tags/Global
 \define cyoa-colour(name)
 \whitespace trim
 <$transclude tiddler={{$:/config/mythos/cyoa/palette}} index="$name$">
-	<$transclude tiddler="$:/plugins/mythos/cyoa/palettes/Readeasy" index="$name" />
+	<$transclude tiddler="$:/plugins/mythos/cyoa/palettes/Basic" index="$name" />
 </$transclude>
 \end

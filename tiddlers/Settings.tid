@@ -1,0 +1,14 @@
+tags: [[Virtual Page]]
+title: Settings
+tmap.id: 0ebffbd8-bc6c-4e84-8f20-0dcaf039ecd2
+tmap.style: {"color":{"background":"rgba(252,151,156,1)"}}
+type: text/vnd.tiddlywiki
+
+<!--
+
+This page is a shortcut to the settings for your CYOA story.
+
+Feel free to delete this page if you wish. It's merely here as a convenience. These settings can also be accessed from the plugin's tab in your TiddlyWiki's Control Panel, accessable from the Gear icon in your Page Toolbar (on the right, above the graph.)
+-->
+
+{{$:/plugins/mythos/cyoa/configuration}}

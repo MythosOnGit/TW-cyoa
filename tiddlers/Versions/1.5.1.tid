@@ -1,0 +1,10 @@
+tags: Versions
+title: Version 1.5.1
+tmap.id: b014d1cd-7ca5-4f33-9bac-73e9b8105482
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+!!!Features
+
+* Added color palette selector and a new tutorial to walk users through that. Hopefully no one will have to resort to CSS anymore to get the colors they want.
+* There's a hidden "cyoatheme" manager in place too, but I only have one theme. Once I have more themes, I'll make this visible. If you're any good at making simple themes, let me know. I'm not.

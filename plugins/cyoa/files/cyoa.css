@@ -33,6 +33,7 @@
     display: none;
     position: absolute;
     min-width: 4em;
+    max-width: 100%;
 
     bottom: 100%;
     right: -1px;

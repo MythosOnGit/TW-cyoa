@@ -1,0 +1,11 @@
+title: $:/plugins/mythos/cyoa/compile/head
+type: text/vnd.tiddlywiki
+
+\rules only filteredtranscludeinline transcludeinline macrocallinline
+<meta charset="utf-8">
+{{{ [all[shadows+tiddlers]prefix[$:/config/mythos/cyoa/meta/]has[text]!has[draft.of]] ||$:/plugins/mythos/cyoa/compile/meta-element }}}
+<title>{{$:/config/mythos/cyoa/title}}</title>
+<style type="text/css">
+{{{ [[$:/tags/cyoa/Stylesheet]tagging[]!is[draft]] ||$:/core/templates/wikified-tiddler}}}
+</style>
+{{{ [all[shadows+tiddlers]tag[$:/tags/cyoa/Bootscript]!is[draft]get[text]addprefix[<script type="application/javascript">]addsuffix[</script>]] }}}

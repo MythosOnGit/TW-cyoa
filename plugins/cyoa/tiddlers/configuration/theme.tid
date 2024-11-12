@@ -1,0 +1,25 @@
+caption: Theme
+tags: $:/tags/cyoa-beta/Configuration
+title: $:/plugins/mythos/cyoa/configuration/theme
+
+\whitespace trim
+!!! Preview
+
+{{$:/plugins/mythos/cyoa/configuration/palette/preview}}
+
+Select a color palette for your generated story.
+
+<$linkcatcher to="$:/config/mythos/cyoa/theme">
+<div class="tc-chooser">
+<$list filter="[plugin-type[cyoatheme]sort[title]]">
+<$set name="cls" filter="[all[current]field:title{$:/config/mythos/cyoa/theme}] ~[[$:/config/mythos/cyoa/theme]!has[text]then[$:/themes/mythos/simple]field:title<currentTiddler>]" value="tc-chooser-item tc-chosen" emptyValue="tc-chooser-item">
+<div class=<<cls>>><$link to={{!!title}}>
+''<$view field="name" format="text"/>''
+&#32;
+<$view field="description" format="text"/>
+</$link>
+</div>
+</$set>
+</$list>
+</div>
+</$linkcatcher>

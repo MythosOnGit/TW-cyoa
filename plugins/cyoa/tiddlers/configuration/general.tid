@@ -12,4 +12,4 @@ Please see the [[Readme file|$:/plugins/mythos/cyoa/readme]] for more informatio
 |[[Filename (*.html)|$:/config/mythos/cyoa/filename]] |<$edit-text tiddler='$:/config/mythos/cyoa/filename' tag='input' /> |
 |[[HTML Title|$:/config/mythos/cyoa/title]] | <$edit-text tiddler='$:/config/mythos/cyoa/title' tag='input' /> |
 |[[Header Content|$:/cyoaHeader]] |This content appears before the story pages in cyoa files.<br><$edit tag='textarea' tiddler='$:/cyoaHeader' default='' /> |
-|[[Footer Content|$:/cyoaFooter]] |This content appears after the story pages in cyoa files.<br><$edit tag='textarea' tiddler='$:/cyoaFooter' default='' /> |
+|[[Footer Content|$:/cyoaFooter]] |This content appears after the story pages in cyoa files.<br><$fieldmangler tiddler="$:/cyoaFooter"><$edit tag='textarea' tiddler='$:/cyoaFooter' default='' inputActions="<$action-sendmessage $message='tm-add-tag' $param='$:/tags/cyoa/Footer'/>" /></$fieldmangler> |

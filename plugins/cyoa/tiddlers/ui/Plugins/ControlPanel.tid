@@ -1,5 +1,5 @@
 caption: //cyoa// Themes (<$count filter="[!has[draft.of]plugin-type[cyoatheme]]"/>)
 title: $:/plugins/mythos/cyoa/ui/ControlPanel/Plugins/Installed/CyoaThemes
-future-tags: $:/tags/ControlPanel/Plugins
+tags: $:/tags/ControlPanel/Plugins-beta
 
 <<plugin-table cyoatheme>>
