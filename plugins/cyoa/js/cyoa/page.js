@@ -35,12 +35,23 @@ Page.prototype.getAppendIndex = Node.prototype.getIndex;
 Page.prototype.getIndex = function() { return undefined; };
 
 /*
+Performs all the same actions as execute, but takes care of self-touching if this page is tracked.
+*/
+Page.prototype.execute = function(state, doNotRecurse) {
+	Node.prototype.execute.call(this,state,doNotRecurse);
+	var title = this.title;
+	if(state.isTracked(title) && !this.getPageList('data-reset').includes(title)) {
+		state.query(title, 'visit');
+	}
+};
+
+/*
 By default, returns first appendPage whose conditions are true.
 Takes an optional index method which selects the nth append page instead of the first (index 0). Indexes larger than the available pages will be modulo'ed down to size.
 */
-Page.prototype.selectAppend = function(state,stackVariable,index) {
+Page.prototype.selectAppend = function(state) {
 	var appendArray = this.appendList,
-		stack = state[stackVariable],
+		stack = state.stack,
 		stackTop = stack && stack.top();
 	if(stackTop && appendArray.indexOf(stackTop) >= 0) {
 		// If one of the appendArray is on top of the push stack, automatically select it.
@@ -48,10 +59,8 @@ Page.prototype.selectAppend = function(state,stackVariable,index) {
 		return this.book.getPage(stackTop);
 	} else {
 		var iterator = new PageListIterator(this.book,appendArray,state);
-		if(index === undefined) {
-			index = this.getAppendIndex(state);
-		}
-		return this.selectFromList(index,iterator);
+		var index = this.getAppendIndex(state);
+		return this.selectFromList(index,iterator,state);
 	}
 };
 

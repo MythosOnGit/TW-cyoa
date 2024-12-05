@@ -20,7 +20,7 @@ exports["page"] = function(source,operator,options) {
 	if(pagesMap === null) {
 		var w = options.widget;
 		var msg = "Filter Error: cyoa:page filter operator cannot be used in the cyoa Page Filter";
-		if(w && w.hasVariable("cyoa-render","yes")) {
+		if(w && w.getVariable("cyoa-render") === "yes") {
 			throw new TypeError(msg);
 		}
 		return [msg];

@@ -13,23 +13,6 @@ var MockWindow = require("test/cyoa/mock/window");
 var Boot = require("$:/plugins/mythos/cyoa/js/boot");
 const domParser = require("test/dom-parser");
 
-/*
-This prepares stateClasses with all the modules used as cyoa variables.
-*/
-exports.cyoa = assignModulesOfType("cyoamethod");
-
-function assignModulesOfType(type) {
-	var output = Object.create(null);
-	const stateClassModules = $tw.wiki.filterTiddlers("[[$:/tags/cyoa/Javascript]tagging[]field:module-type["+type+"]]");
-	for(var i = 0; i < stateClassModules.length; i++) {
-		var module = require(stateClassModules[i]);
-		for(var member in module) {
-			output[member] = module[member];
-		}
-	}
-	return output;
-};
-
 function cyoaRenderWidget(widget) {
 	var container = $tw.fakeDocument.createElement("div");
 	widget.render(container,null);
@@ -75,11 +58,10 @@ exports.renderText = function(wiki,text) {
 };
 
 exports.draft = function(fields) {
-	const newFields = Object.assign({},fields);
-	newFields.title = `Draft of '${fields.title}'`;
-	newFields["draft.of"] = fields.title;
-	newFields["draft.title"] = fields.title;
-	return newFields;
+	return Object.assign({
+		"draft.of": fields.title,
+		"draft.title": fields.title,
+	},fields,{title: `Draft of '${fields.title}'`});
 };
 
 exports.activeNodes = function(core) {
@@ -161,28 +143,6 @@ function gatherModules(document) {
 		};
 	}
 	return mods;
-};
-
-exports.testBookDefaultVar = function(tiddlerArrays,group,options) {
-	group = group || "$:/plugins/mythos/cyoa/groups/default";
-	var core = exports.testBook([{title: "Results",text: "<$list variable=target filter='[cyoa:group["+group+"]]'>\n\n<$cyoa $data-title=<<target>> after='[<target>]' write=`#{$(target)$}` />\n\n</$cyoa></$list>\n"}].concat(tiddlerArrays),options);
-	var rtn = {};
-	rtn.state = (options && options.state) || core.state.serialize(core.cyoa.vars);
-	core.manager.getState = () => rtn.state;
-	// Now open results so the core will load the serialized state.
-	core.openPage("Results");
-	// Lets collect those results in the only way I can figure out how
-	var elem = core.book.getPage("Results").element;
-	rtn.results = [];
-	rtn.vars = {};
-	for(var child = elem.firstElementChild; child; child = child.nextElementSibling) {
-		if(child.classList.contains("cyoa-active")) {
-			var title = child.getAttribute('data-title')
-			rtn.results.push(title);
-			rtn.vars[title] = child.textContent;
-		}
-	}
-	return rtn;
 };
 
 /*

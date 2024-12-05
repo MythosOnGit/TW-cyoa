@@ -9,7 +9,7 @@ Handles the "only" field and attribute.
 
 "use strict";
 
-var utils = require("$:/plugins/mythos/cyoa/js/utils.js")
+var logic = require("../logic");
 
 var prettyStrings = {
 	first: "Only first time",
@@ -17,7 +17,7 @@ var prettyStrings = {
 	never: "Only never",
 };
 
-var tracked = {first: true, visited: true, never: false};
+var tracked = {first: true, visited: true};
 
 exports.infoTree = function(widget) {
 	var value = prettyStrings[widget.attributes.only];
@@ -36,15 +36,25 @@ exports.tracks = function(widget,tiddler) {
 	}
 };
 
-exports["if"] = function(widget,tiddler) {
-	var value = widget.attributes.only;
-	if(prettyStrings[value]) {
-		var page = tiddler.fields.title;
-		if(value === "never") {
-			// Special case. "Never" pages don't need to be a part of any group, because they don't need tracking to know not to test true
-			return "0";
-		} else {
-			return utils.getGroupScript(page,value,widget.wiki);
-		}
+exports.after = function(widget,tiddler) {
+	if(widget.attributes.only === "visited") {
+		var title = tiddler.fields.title;
+		logic.rememberTrackedTiddler(widget.wiki,title);
+		return [title];
 	}
+	return null;
+};
+
+exports.before = function(widget,tiddler) {
+	if(widget.attributes.only === "first") {
+		var title = tiddler.fields.title;
+		logic.rememberTrackedTiddler(widget.wiki,title);
+		return [title];
+	}
+	return null;
+};
+
+// Special case. "Never" pages don't need to be a part of any group, because they don't need tracking to know not to test true
+exports.if = function(widget,tiddler) {
+	return (widget.attributes.only === "never")? "0": null;
 };

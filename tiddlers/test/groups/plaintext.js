@@ -13,7 +13,7 @@ const utils = require("test/utils.js");
 describe("Plaintext Serializer",function() {
 
 function defaultGroup(filter) {
-	var group = utils.defaultGroup("set",{"cyoa.serializer": "string"})
+	var group = utils.defaultGroup("set",{"cyoa.serializer": "string", "cyoa.key": "output"})
 	if(filter) {
 		group.filter = filter;
 	}
@@ -21,9 +21,9 @@ function defaultGroup(filter) {
 };
 
 function testBook(expected,tiddlerArray) {
-	var rtn = utils.testBookDefaultVar(tiddlerArray);
-	expect(rtn.results).toEqual(expected);
-	return rtn;
+	var core = utils.testBook(tiddlerArray);
+	expect(core.state.allVisited()).toEqual(expected);
+	return core;
 };
 
 function node(name,parent,attributes) {
@@ -32,21 +32,14 @@ function node(name,parent,attributes) {
 	return n;
 };
 
-function firstOf(state) {
-	// Just get the first item. There should only be one
-	for(var item in state) {
-		return state[item];
-	}
-};
-
 it("handles default string style with strange names",function() {
 	var weird = "sp ce ap\'s qu\"te";
 	var rtn = testBook([weird],[
 		defaultGroup(),
 		{title: weird},
 		{title: weird+"B"},
-		{title: "Main",text: `<$cyoa touch="[prefix[sp]]" reset="[suffix[B]]"/>`}]);
-	expect(firstOf(rtn.state)).toBe(weird);
+		{title: "Main",text: `<$cyoa touch="[prefix[sp]]"/><$cyoa reset="[suffix[B]]"/>`}]);
+	expect(rtn.state.serialize().output).toBe(weird);
 });
 
 it("handles string style with filter",function() {
@@ -54,21 +47,21 @@ it("handles string style with filter",function() {
 		defaultGroup("[removeprefix[page/]]"),
 		node("page/Apples"),node("page/Dogs"),
 		{title: "Main","cyoa.touch": "[prefix[page]]"}]);
-	expect(firstOf(rtn.state)).toBe("Apples.Dogs");
+	expect(rtn.state.serialize().output).toBe("Apples.Dogs");
 });
 
 it("handles string filter collisions",function() {
 	utils.warnings(spyOn);
-	testBook(['page-C'],[
+	testBook(['page-A','page-B','page-C'],[
 		defaultGroup("[splitbefore[-]]"),
 		node("page-A"),node("page-B"),node("page-C"),
 		{title: "Main","cyoa.touch": "[prefix[page]]"}]);
-	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: In default group, the following tiddlers all resolved to variable 'page-': page-A, page-B, page-C");
+	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: In default group, the following tiddlers all resolved to variable 'page-': 'page-A', 'page-B', 'page-C'");
 });
 
 it("handles string filter empty strings",function() {
 	utils.warnings(spyOn);
-	testBook(["bad/B","page/A","page/B"],[
+	testBook(["bad/A","bad/B","page/A","page/B"],[
 		defaultGroup("[prefix[page/]]"),
 		node("bad/A"),node("bad/B"),node("page/A"),node("page/B"),
 		{title: "Main","cyoa.touch": "[prefix[page]] [prefix[bad]]"}]);
@@ -82,7 +75,7 @@ it("keeps clean serial string in implication chain with excludes",function() {
 		node("root"),
 		defaultGroup(),
 		{title: "Main","cyoa.touch": "A B"}]);
-	expect(firstOf(rtn.state)).toBe("B");
+	expect(rtn.state.serialize().output).toBe("B");
 });
 
 });

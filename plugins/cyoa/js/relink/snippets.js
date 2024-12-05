@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/mythos/cyoa/js/relink.js
+title: $:/plugins/mythos/cyoa/js/relink/snippets.js
 type: application/javascript
 module-type: relinkfieldtype
 
@@ -9,7 +9,7 @@ This module allows relink to recognize and relink cyoa snippets.
 
 "use strict";
 
-var utils = require("./utils");
+var utils = require("../utils");
 var relinkUtils = require("$:/plugins/flibbles/relink/js/utils.js");
 
 exports.name = "snippet";

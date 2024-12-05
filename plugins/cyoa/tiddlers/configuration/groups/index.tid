@@ -27,7 +27,7 @@ title: $:/plugins/mythos/cyoa/configuration/groups
 
 <$macrocall
 	$name="tabs"
-	tabsList="[[$:/tags/cyoa/Type]tagging[]] $:/plugins/mythos/cyoa/stack"
+	tabsList="[[$:/tags/cyoa/Type]tagging[]] $:/plugins/mythos/cyoa/groups/stack"
 	default="$:/plugins/mythos/cyoa/groups/default"
 	explicitState=<<tabState>>
 	class="tc-vertical"

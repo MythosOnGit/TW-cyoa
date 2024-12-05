@@ -13,7 +13,7 @@ State widget
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 var utils = require("$:/plugins/mythos/cyoa/js/utils");
 var snippets = require("$:/plugins/mythos/cyoa/js/logic");
-const ATTRS = ["append","depend","if","do","done","write","index","weight","hotkey"];
+const ATTRS = ["append","depend","if","before","after","touch","reset","push","do","done","value","write","index","weight","hotkey"];
 
 var CyoaWidget = function(parseTreeNode,options) {
 	this.initialise(parseTreeNode,options);

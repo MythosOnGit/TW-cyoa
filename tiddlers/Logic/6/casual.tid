@@ -1,0 +1,10 @@
+cyoa.append: Logic6/options
+cyoa.caption: Your jeans and tee-shirt.
+cyoa.exclude: Logic6/clothing
+cyoa.only: first
+tags: Logic6/options
+title: Logic6/casual
+tmap.id: 3736c040-2772-45fc-b89d-f0decc3bbfae
+type: text/vnd.tiddlywiki
+
+You put on your jeans and tee-shirt. Very comfortable, but both have holes and paint stains on them since you they used to belong to the contractor who painted your neighbor's house.

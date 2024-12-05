@@ -17,12 +17,14 @@ The result returned from these can be a string, a list of strings, or something 
 
 "use strict";
 
+var logic = require("../logic");
 var utils = require("../utils");
 
 var fields = {
 	"do": "do",
 	"done": "do",
 	"if": "if",
+	"value": "value",
 	"write": "write",
 	"index": "index",
 	"weight": "weight"};
@@ -46,8 +48,8 @@ $tw.utils.each(fields,function(keyword,field) {
 });
 
 function replaceWildcards(script,keyword,msg,widget) {
-	var wiki = widget.wiki;
 	if(script) {
+		var wiki = widget.wiki;
 		var ptr = 0;
 		var output = [];
 		var error = false;
@@ -61,7 +63,8 @@ function replaceWildcards(script,keyword,msg,widget) {
 			return true;
 		};
 		function processTitle(title) {
-			return utils.getGroupScript(title,keyword,wiki);
+			logic.rememberTrackedTiddler(widget.wiki,title);
+			return "#{" + logic.encodePageForID(title) + "}";
 		};
 		utils.processJavascript(script,function(placeholder,module,start,end) {
 			output.push(script.substring(ptr,start));
@@ -145,4 +148,3 @@ function pushTreeForInbetweenText(list,string,start,end) {
 		}
 	}
 };
-

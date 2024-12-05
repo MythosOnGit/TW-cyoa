@@ -32,7 +32,7 @@ ActionWidget.prototype.render = function(parent,nextSibling) {
 
 ActionWidget.prototype.execute = function() {
 	this.job = this.getAttribute("$job");
-	checkStatus(this);
+	//this.wiki.commitCyoaGroups();
 	this.makeChildWidgets();
 };
 
@@ -41,7 +41,7 @@ Refresh the widget by ensuring our attributes are up to date
 */
 ActionWidget.prototype.refresh = function(changedTiddlers) {
 	var changedAttributes = this.computeAttributes();
-	if(checkStatus(this) || $tw.utils.count(changedAttributes) > 0) {
+	if($tw.utils.count(changedAttributes) > 0) {
 		this.refreshSelf();
 		return true;
 	}
@@ -52,35 +52,7 @@ ActionWidget.prototype.refresh = function(changedTiddlers) {
 Invoke the action associated with this widget
 */
 ActionWidget.prototype.invokeAction = function(triggeringWidget,event) {
-	switch(this.job) {
-		case "commit":
-			this.wiki.commitCyoaGroups();
-			// Set the state flag to not-dirty
-			this.wiki.addTiddler({title: dirtyStateTiddler,text: "no"});
-			break;
-		case "clear":
-			this.wiki.clearCyoaGroups();
-			break;
-		case "checkStatus":
-		default:
-			return false;
-	}
-	return true;
-};
-
-function checkStatus(widget) {
-	if(widget.job === "checkStatus") {
-		// This action is the one that updates the state tiddler
-		var wasDirty = widget.wiki.getTiddlerText(dirtyStateTiddler,"yes") === "yes";
-		if(!wasDirty) {
-			// If it is currently dirty...
-			if(widget.wiki.commitCyoaGroups(true)) { // true = dryRun
-				widget.wiki.addTiddler({title: dirtyStateTiddler,text: "yes"});
-				return true;
-			}
-		}
-	}
-	return false;
+	this.wiki.commitCyoaGroups();
 };
 
 exports["action-cyoa"] = ActionWidget;

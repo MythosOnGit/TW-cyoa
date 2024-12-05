@@ -83,21 +83,26 @@ activeLinks: list which will be populated with list of active link
              supplied, a fresh list is returned.
 returns: A list of link elements which should be keyed up to number keys.
 */
-Node.prototype.execute = function(state) {
+Node.prototype.execute = function(state, doNotRecurse) {
 	if(this.isStateful) {
 		this.active = true;
 		var options = {arguments: state};
 		if(!this.isOnclick) {
 			this.evalSnippet('do',options);
+			this.pushPageList(state);
 		}
 		if(this.element.hasAttribute('data-write')) {
 			var write = this.evalSnippet('write',options);
 			this.element.innerHTML = write;
-		} else {
+		} else if(!doNotRecurse) {
 			this.executeChildren(state);
 		}
 		if(!this.isOnclick) {
 			this.evalSnippet('done',options);
+			// Manage all resets
+			this.evalPageList(state,'reset');
+			// Manage all touches
+			this.evalPageList(state,'touch');
 		}
 	}
 };
@@ -134,10 +139,17 @@ Node.prototype.executeOnclick = function(state) {
 	}
 	// Execute 'do's coming down, and then 'done's coming back up.
 	for(var index=ancestry.length-1; index>=0; index--) {
-		ancestry[index].evalSnippet('do',{rethrow: true,arguments: state});
+		var ancestor = ancestry[index];
+		ancestor.evalSnippet('do',{rethrow: true,arguments: state});
+		ancestor.pushPageList(state);
 	}
 	for(var index=0; index < ancestry.length; index++) {
-		ancestry[index].evalSnippet('done',{rethrow: true,arguments: state});
+		var ancestor = ancestry[index];
+		ancestor.evalSnippet('done',{rethrow: true,arguments: state});
+		// Manage all resets
+		ancestor.evalPageList(state,'reset');
+		// Manage all touches
+		ancestor.evalPageList(state,'touch');
 	}
 };
 
@@ -209,9 +221,12 @@ Node.prototype.test = function(state) {
 This is private and wrapped by another method because getting a bad arg can cause an infinit loop.
 */
 function recursiveTest(node,state,visited) {
-	if(!node.evalSnippet('if',{default: true,arguments: state})) {
+	if(!node.evalSnippet('if',{default: true,arguments: state})
+	|| !node.testPageList(state,'after')
+	|| !node.testPageList(state,'before')) {
 		return false;
 	}
+
 	var pageList = node.dependList;
 	if(pageList.length > 0) {
 		// This works, even if the first element is a $cyoa widget. That's because no elements visited after this will also be a $cyoa widget, only pages with IDs.
@@ -228,6 +243,18 @@ function recursiveTest(node,state,visited) {
 		return false;
 	}
 	return true;
+};
+
+Node.prototype.pushPageList = function(state) {
+	var pushes = this.getPageList('data-push');
+	for(var index = 0; index < pushes.length; index++) {
+		var title = pushes[index];
+		if(title === 'true') {
+			// This is an absolute hack, but it'll work for now until I get a more suitable method for pushing top page.
+			title = $cyoa.core.topPage;
+		}
+		state.stack.push(title);
+	}
 };
 
 /*
@@ -255,6 +282,23 @@ Node.prototype.evalSnippet = function(dataKey,options) {
 	}
 };
 
+Node.prototype.testPageList = function(state,attributeName) {
+	var pages = this.getPageList('data-'+attributeName);
+	for(var index = 0; index < pages.length; index++) {
+		if(!state.query(pages[index], attributeName)) {
+			return false;
+		}
+	}
+	return true;
+};
+
+Node.prototype.evalPageList = function(state,attributeName) {
+	var pages = this.getPageList('data-' + attributeName);
+	for(var index = 0; index < pages.length; index++) {
+		state.query(pages[index], attributeName);
+	}
+};
+
 Node.prototype.getPageList = function(attribute) {
 	var str = this.element.getAttribute(attribute);
 	if(str) {
@@ -265,7 +309,7 @@ Node.prototype.getPageList = function(attribute) {
 
 Node.prototype.getWeight = function(state) {
 	var weight = this.evalSnippet('weight',{default: 1, arguments: state});
-	return weight < 0? 0: weight;
+	return weight < 0? 0: Math.floor(weight);
 };
 
 function isStateful(element) {

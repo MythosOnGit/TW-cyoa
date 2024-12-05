@@ -6,46 +6,8 @@ tags: $:/tags/test-spec
 Tests the cyoa Book class, which runs everything.
 
 \*/
-var Cyoa = require("cyoa");
+
 const utils = require("test/utils.js");
-var domParser = require("test/dom-parser");
-var MockWindow = require("test/cyoa/mock/window");
-var savers = $tw.modules.applyMethods("cyoasaver");
-var MockManager = savers.mock;
-
-function test_element_list(element_list,expected_ids) {
-	var ids = element_list.map(function(e) {return e.id; });
-	expect(ids).toEqual(expected_ids);
-};
-
-function newCore(html,state) {
-	state = state || new Cyoa.State();
-	var doc = domParser.parseBodyAndHead(html);
-	var manager = new MockManager();
-	var core = new Cyoa.Core(doc,state,manager);
-	core.cyoa = {vars: Object.create(null)};
-	return core;
-};
-
-function getWindow(document) {
-	if($tw.browser) {
-		return window;
-	} else {
-		return new MockWindow(document);
-	}
-};
-
-function sendKeyboardEvent(document,keyboardEventInit) {
-	var w = getWindow(document);
-	var init = Object.assign({view: w,bubbles: true,cancelable: true},
-	                         keyboardEventInit);
-	// The most hackiest of hacks. This is because we use our
-	// own custom window, which maybe we don't have to do anymore
-	// given the new jsdom version
-	var event = new w.KeyboardEvent("keydown",init);
-	document.dispatchEvent(event);
-	return event;
-};
 
 describe("Book",function() {
 
@@ -73,6 +35,14 @@ it("deactivates nodes and pages once they're closed", function() {
 	// We didn't check the start page yet. Make sure it turned off.
 });
 
+it("can follow links with complicated titles",function() {
+	var href = "Misty's \"dark\" revenge/rampage/teaparty";
+	var core = utils.testBook([
+		{title: "Main", text: '\\define link()'+href+'\n<a id="a" class="cyoa-state" href=<<link>> >Link text</a>'}]);
+	utils.click(core,'a');
+	expect(core.topPage).toBe(href);
+});
+
 it("deactivates the start page after it closes", function() {
 	var core = utils.testBook([
 		{title: "Target"},
@@ -98,41 +68,14 @@ it("handles titles with odd characters",function() {
 	expect(core.topPage).toBe(title);
 });
 
-describe("#resolveNextPage",function() {
-	var href = "Misty's \"dark\" revenge/rampage/teaparty";
-	var hrefEnc = encodeURIComponent(href);
-	var badPage = "Don't go to \"the scary place\"";
-	var badPage2 = "Bad stack";
-
-	function core() {
-		return new Book(window);
-	};
-
-	function flipv(newCyoa,expected,html) {
-		var cyoa = Object.create(null);
-		var state = new Cyoa.State();
-		cyoa.stack = newCyoa.stack;
-
-		var core = newCore(html,state);
-		core.topPage = newCyoa.mainPage;
-		var elem = new Cyoa.Link(core,core.document.getElementById("a"));
-		var result = core.resolveNextPage(elem,cyoa);
-		expect(result).toBe(expected);
-	};
-
-	it("resolves page from href",function() {
-		flipv({stack: [],mainPage: badPage},href,`
-		<div id="Main" class="cyoa-page cyoa-start">
-		  <a id="a" class="cyoa-state" href="#${hrefEnc}">Link text</a>
-		</div>`);
-	});
-
-	it("resolves page from cyoa.mainPage",function() {
-		flipv({stack: [],mainPage: href},href,`
-		<div id="Main" class="cyoa-page cyoa-start">
-		  <a id="a" class="cyoa-state" href="#">Link text</a>
-		</div>`);
-	});
+// This test exists because there were some cases were null and undefined were becoming tracked tiddlers when they weren't supposed to be.
+it("can handle pages called null and undefined",function() {
+	var core = utils.testBook([
+		utils.defaultGroup(),
+		{title: "Main", "cyoa.touch": "null undefined"},
+		{title: "null"},
+		{title: "undefined"}]);
+	expect(core.state.allVisited()).toEqual(["null", "undefined"]);
 });
 
 }); // Book

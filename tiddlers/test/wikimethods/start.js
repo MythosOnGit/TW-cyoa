@@ -17,6 +17,7 @@ function test(tiddlers,expected) {
 	wiki.addTiddlers(tiddlers);
 	var output = wiki.getCyoaStartPage();
 	expect(output).toBe(expected);
+	return wiki;
 };
 
 it("with start config",function() {
@@ -69,6 +70,17 @@ it("first DefaultTiddler option is not in page-filter",function() {
 		{title: "$:/config/mythos/cyoa/page-filter",text: "[!tag[exclude]]"},
 		{title: "Dashboard",tags: "exclude"},
 		{title: "Start",text: "Anything"}],"Start");
+});
+
+it("start pages are never virtual",function() {
+	var wiki = test([
+		{title: "Start", tags: "Virtual"},
+		{title: "Other", tags: "Virtual"},
+		{title:startConfig, text: "Start"},
+		{title: "$:/config/mythos/cyoa/page-filter", text: "[!tag[Virtual]]"}],
+		"Start");
+	expect(wiki.isCyoaPage("Start")).toBe(true);
+	expect(wiki.isCyoaPage("Other")).toBe(false);
 });
 
 });

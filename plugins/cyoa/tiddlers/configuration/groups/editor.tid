@@ -8,7 +8,7 @@ title: $:/plugins/mythos/cyoa/configuration/groups/editor
 	<td align="left">Variable:</td>
 	<td align="left"><$edit-text
 		field="cyoa.key"
-		placeholder={{{ [all[current]cyoa:variable[]] }}}
+		placeholder={{{ [all[current]cyoa:variable[cyoa.key.asifempty]] }}}
 		tag="input" /></td></tr>
 <tr>
 	<td align="left">Serializer:</td>
@@ -35,10 +35,13 @@ title: $:/plugins/mythos/cyoa/configuration/groups/editor
 
 
 
+<% if [all[current]!match[$:/plugins/mythos/cyoa/groups/rule]] %>
 
 <em>Group Type:</em> <$select field="cyoa.type"><$list filter="[[cyoatype]modules[]] :filter[moduleproperty[hidden]count[]match[0]] +[moduleproperty[name]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select>
 
 <$transclude $variable=table $mode=inline />
+
+<% endif %>
 
 {{!!text}}
 
@@ -48,7 +51,7 @@ title: $:/plugins/mythos/cyoa/configuration/groups/editor
 
 <ul class="tc-cyoa-imply-list">
 
-<$list filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>!has[cyoa.imply]sort[title]]">
+<$list filter="[all[shadows+tiddlers]cyoa:group<currentTiddler>] :filter[list[!!cyoa.imply]cyoa.group<..currentTiddler>count[]match[0]] +[sort[title]]">
 
 <li>
 

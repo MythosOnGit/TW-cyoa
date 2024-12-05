@@ -18,10 +18,13 @@ function test(tiddlers,expected) {
 	expect(Object.keys(output)).toEqual(expected);
 };
 
+// The default filter is "[!tag[Virtual Page]]" in case users want to use what the demo uses.
 it("without config",function() {
 	test([{title: "A"},{title: "B",tags: "exclude"}],["A","B"]);
 	// no system tiddlers
 	test([{title: "A"},{title: "B"},{title: "$:/system"}],["A","B"]);
+	// no [[Virtual Page]] tiddlers
+	test([{title: "A"},{title: "B"},{title: "C", tags: "[[Virtual Page]]"}],["A","B"]);
 	// no cyoa css tiddlers
 	test([{title: "A"},{title: "B.css",type: "text/css",tags: "$:/tags/cyoa/Stylesheet",text: "/* contains no actual css */"}],["A"]);
 	// no cyoa javascript tiddlers
@@ -36,11 +39,18 @@ it("with config",function() {
 	test([config,{title: "A"},{title: "B",tags: "exclude"},{title: "C.css",type: "text/css",tags: "$:/tags/cyoa/Stylesheet",text: "/* contains no actual css */"}],["A"]);
 	test([config,{title: "A"},{title: "B",tags: "exclude"},{title: "C.js",type: "application/javascript",tags: "$:/tags/cyoa/Javascript",text: "/* contains no actual javascript */"}],["A"]);
 	test([config,{title: "A"},{title: "B"},{title: "Draft of 'B'","draft.of": "B","draft.title": "B"},{title: "C",tags: "exclude"}],["A","B"]);
+	// [[Virtual Page]] stops applying once users use their own filter
+	test([config,{title: "A"},{title: "B",tags: "[[Virtual Page]]"}],["A","B"]);
 });
 
 it("empty config",function() {
 	const config = {title: filterConfig,text: ""};
-	test([config,{title: "A"},{title: "B",tags: "exclude"},{title: "$:/system"}],["A","B"]);
+	test([config,
+		{title: "A"},
+		{title: "B",tags: "exclude"},
+		{title: "C",tags: "[[Virtual Page]]"},
+		{title: "$:/system"}],
+		["A","B"]);
 });
 
 it("non-existent tiddlers",function() {

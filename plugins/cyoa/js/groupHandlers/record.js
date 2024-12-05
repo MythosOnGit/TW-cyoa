@@ -9,21 +9,63 @@ Object to manage the versioning record for a group.
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils.js");
 
+function Style(){};
+Style.prototype.amendRecord = function(){};
+Style.prototype.init = function(){};
+Style.prototype.exportData = function(){};
+Style.prototype.keepRecord = true;
+var styleClasses = $tw.modules.createClassesFromModules("cyoaserializermanager",null,Style);
+
 const versionPrefix = "$:/config/mythos/cyoa/records/";
 const autoVersioningTitle = "$:/config/mythos/cyoa/autoVersioning";
+var cyoaTypes = $tw.modules.getModulesByTypeAsHashmap("cyoatype");
 
-function Record(wiki,title,pages) {
+function Record(wiki,title) {
+	this.wiki = wiki;
+	this.title = title;
+	this.changed = false;
 	this.name = wiki.getCyoaGroupVariable(title, "cyoa.key");
 	var record = wiki.getTiddlerData(versionPrefix + this.name,{});
-	this.changed = false;
 	this.entries = record.entries || [];
-	this.wiki = wiki;
-	this.pages = pages;
 };
 
 module.exports = Record;
 
 var Rp = Record.prototype;
+
+Rp.update = function(pages) {
+	var groupTiddler = this.wiki.getTiddler(this.title);
+	var data = groupTiddler && groupTiddler.fields || {};
+	this.fields = data;
+	var handler = data["cyoa.type"];
+	this.styleString = data["cyoa.serializer"] || 'string';
+	if(!cyoaTypes[handler]) {
+		var message = (handler)?
+			("Type '"+handler+"' for group '"+this.title+"' does not exist."):
+			("Group '"+this.title+"' does not specify a type.");
+		utils.warn("GroupHandler warning: "+message);
+		// Perhaps I should default to something instead. I don't think I should fail here.
+		return undefined;
+	}
+
+	this.pages = pages;
+	this.variable = this.wiki.getCyoaGroupVariable(this.title,"cyoa.key");
+	this.updateRecord();
+	this.style = getStyle(this.wiki, this.styleString, data);
+	this.changed = this.style.amendRecord(this.entries) || this.changed;
+	return true;
+};
+
+Rp.groupData = function() {
+	var data = {
+		exList: generateExclusionList(this),
+		up: generateUpTree(this),
+		type: this.fields['cyoa.type'],
+		encoder: this.styleString
+	};
+	this.style.exportData(data);
+	return data;
+};
 
 module.exports.versioningEnabled = function(wiki) {
 	return wiki.getTiddlerText(autoVersioningTitle,"disable") !== "disable";
@@ -51,20 +93,19 @@ Rp.toString = function() {
 	return "{\"entries\":[\n" + newRecord.join(",\n") + "\n]}";
 };
 
-Rp.commit = function(wiki) {
-	if(this.changed) {
-		wiki.addTiddler({
+Rp.commit = function() {
+	if(this.style.keepRecord && this.changed) {
+		this.wiki.addTiddler({
 			title: versionPrefix + this.name,
 			text: this.toString(),
 			type: "application/json"});
 	}
-	return this.changed;
 };
 
 /*
 Updates and returns the written versioning record for this group.
 */
-Rp.update = function() {
+Rp.updateRecord = function() {
 	var pageMap = Object.create(null);
 	this.indexMap = Object.create(null);
 	var newPages = [];
@@ -80,6 +121,7 @@ Rp.update = function() {
 		// If the corresponding tiddler has since been deleted or removed...
 		if(info.title && !self.pages[info.title]) {
 			info.title = undefined;
+			self.changed = true;
 		}
 		++counter;
 	});
@@ -149,6 +191,34 @@ Rp.update = function() {
 			info.exclude = newExclude;
 		}
 	});
+};
+
+function getStyle(wiki,stringName,fields) {
+	var styleClass = styleClasses[stringName];
+	if(!styleClass) {
+		// This doesn't have a codec stager, so we can use the default stager.
+		styleClass = Style;
+	}
+	// And now the styles have a chance to write data however they want
+	var style = new styleClass();
+	style.init(wiki, fields);
+	return style;
+};
+
+function generateUpTree(record) {
+	var tree = Object.create(null);
+	var index = 0;
+	record.forEachEntry(function(info) {
+		if(info.imply) {
+			tree[index] = info.imply;
+		}
+		index++;
+	});
+	return tree;
+};
+
+function generateExclusionList(record) {
+	return record.exclusionArray.map((set) => set.map((title) => record.indexMap[title]));
 };
 
 // returns [[indexA,indexB],[indexC,indexD]]
@@ -237,7 +307,9 @@ function getImplicationTree(wiki,pages) {
 				for(var index = 0; index < implications.length; index++) {
 					var implication = implications[index];
 					if(!pages[implication]) {
-						utils.warnForTiddler(title,"Implies page '"+implication+"' which is not in the same group",{wiki: wiki});
+						if(!isRule(wiki, implication)) {
+							utils.warnForTiddler(title,"Implies page '"+implication+"' which is not in the same group",{wiki: wiki});
+						}
 					} else if(implication === title || output[implication] === null) {
 						utils.warnForTiddler(title,"Detected cyclic dependency in 'cyoa.imply' chain",{wiki: wiki});
 					} else {
@@ -254,6 +326,16 @@ function getImplicationTree(wiki,pages) {
 	$tw.utils.each(pages,processTitle);
 	purgeRedundantImplications(output,downTree);
 	return output;
+};
+
+// Rules can be implied without warning.
+function isRule(wiki, title) {
+	var tiddler = wiki.getTiddler(title);
+	if(!tiddler) {
+		return false;
+	}
+	var group = wiki.getTiddler(tiddler.fields['cyoa.group']);
+	return group && group.fields['cyoa.type'] === 'rule';
 };
 
 function purgeRedundantImplications(tree,downMap) {
@@ -282,45 +364,4 @@ function purgeRedundantImplications(tree,downMap) {
 			trace(node);
 		}
 	});
-};
-
-/*** Below are the code hooks for keeping records up-to-date when tiddlers are renamed. ***/
-
-$tw.hooks.addHook("th-renaming-tiddler",function(newTiddler,oldTiddler) {
-	// This hook catches procedural renames of a tiddler, which never happens in the core.
-	if (oldTiddler && newTiddler) {
-		relinkTiddler(newTiddler.fields.title,oldTiddler.fields.title);
-	}
-	return newTiddler;
-});
-
-$tw.hooks.addHook("th-saving-tiddler",function(newTiddler,draftTiddler) {
-	// This hook catches manual renames, which is pretty much all of them.
-	if (draftTiddler && newTiddler) {
-		relinkTiddler(newTiddler.fields.title,draftTiddler.fields["draft.of"]);
-	}
-	return newTiddler;
-});
-
-/*
-Here's a hook which will update the names inside a record during a rename.
-*/
-function relinkTiddler(newTitle,oldTitle) {
-	var wiki = $tw.wiki;
-	var group = wiki.getTiddlerCyoaGroup(oldTitle);
-	if(group) {
-		// This renamed tiddler belongs to a group. We may have to  rename it.
-		var record = new Record(wiki,group);
-		// If a record exists for this group, we must go through it and find the tiddler.
-		record.forEachEntry(function(info) {
-			// We found it.
-			if(info.title === oldTitle) {
-				info.title = newTitle;
-				record.changed = true;
-				// We could break now if we could...
-			}
-		});
-		// If we updated the record, commit it now
-		record.commit(wiki);
-	}
 };

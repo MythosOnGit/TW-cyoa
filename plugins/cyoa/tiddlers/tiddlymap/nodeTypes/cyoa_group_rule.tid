@@ -1,0 +1,6 @@
+description: Nodes of this type act as rules that define relationships.
+priority: 5
+scope: [cyoa:group[$:/plugins/mythos/cyoa/groups/rule]]
+style: {"color":{"background":"rgba(174,182,191,1)"}}
+title: $:/plugins/felixhayashi/tiddlymap/graph/nodeTypes/cyoa_group:rule
+type: text/vnd.tiddlywiki

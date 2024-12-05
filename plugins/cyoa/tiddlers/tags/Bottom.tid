@@ -1,0 +1,5 @@
+title: $:/tags/cyoa/Bottom
+tags: $:/tags/cyoa/Layout
+class: cyoa-bottom
+
+Pages tagged with this layout tag will appear above the main content wrapper in a section that likely has fixed position

@@ -72,7 +72,7 @@ it("doesn't bother with sorting",function() {
 		{title: "c","cyoa.only": "first"},
 		{title: "d","cyoa.only": "first"}
 	]);
-	wiki.getCyoaGroupData({commitNow: true});
+	wiki.commitCyoaGroups();
 	wiki.addTiddler({title: "a","cyoa.only": "first"});
 	test(wiki,"[cyoa:group[]]",["a","b","c","d"]);
 });

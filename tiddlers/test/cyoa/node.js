@@ -73,15 +73,16 @@ it("active links ordered despite mixed elements in index",function() {
 
 it("low indexes don't compute later nodes unnecessarily",function() {
 	var core = utils.testBook([[
-		utils.defaultGroup("set",{"cyoa.key":"test"}),
+		utils.defaultGroup("numbermap",{"cyoa.key":"test"}),
+		{title: "sum"},
 		{title: "Main",text: `
-		<$cyoa index=15 do="test.sum = 0">
-			<$cyoa id=1 weight=10 if="test.sum += 1" />
-			<$cyoa id=2 weight=10 if="(test.sum += 2) && false" />
-			<$cyoa id=3 weight=10 if="test.sum += 4" />
-			<$cyoa id='not touched' weight=10 if="test.sum += 8" />
+		<$cyoa index=15 do="#{sum} = 0">
+			<$cyoa id=1 weight=10 if="#{sum} += 1" />
+			<$cyoa id=2 weight=10 if="(#{sum} += 2) && false" />
+			<$cyoa id=3 weight=10 if="#{sum} += 4" />
+			<$cyoa id='not touched' weight=10 if="#{sum} += 8" />
 		</$cyoa>
-		<$cyoa id=check if="test.sum === 7" />
+		<$cyoa id=check if="#{sum} === 7" />
 	`}]]);
 	expect(touchedStates(core)).toEqual(['3','check']);
 });

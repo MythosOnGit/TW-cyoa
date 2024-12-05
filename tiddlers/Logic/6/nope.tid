@@ -1,0 +1,25 @@
+cyoa.after: Logic6/naked
+cyoa.before: Logic6/lunch
+cyoa.caption: Leave.
+cyoa.group: $:/plugins/mythos/cyoa/groups/rule
+list-after: 
+tags: Logic6/options
+title: Logic6/nope
+tmap.id: 17623786-32e9-4f5d-b9ad-73f9704b4cff
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This is the option to leave that appears before you're ready. It'll run checks and tell you what's wrong.
+
+''Notice that this page is also a rule.'' This way, the page for //actually// leaving need only test that it comes //before// this page. Because when this page is true (i.e. you're not ready), then that page should be false. When this page is false (i.e. you're ready), then the finishing page should be available.
+
+But this way, we don't have to repeat all the constraints.""" >>
+
+<$cyoa after="Logic6/naked">
+
+You're one step out the door when you realize you've completely forgotten to put on anything at all. You're not pretty enough to get away with that. You return.
+</$cyoa><$else>
+
+You're dressed, but you forgot your lunch. Isn't it in your underwear drawer?
+</$else>

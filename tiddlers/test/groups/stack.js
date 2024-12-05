@@ -9,12 +9,6 @@ Tests the cyoa String-hashable Stack.
 
 const utils = require("test/utils.js");
 
-function testPremadeBook(wiki,expected) {
-	var rtn = utils.testBookDefaultVar([],undefined,{wiki: wiki});
-	expect(rtn.results).toEqual(expected);
-	return rtn.state;
-};
-
 function node(name,parent,attributes) {
 	var n = Object.assign({title: name},attributes);
 	if(parent) { n["cyoa.imply"] = parent; }
@@ -31,7 +25,8 @@ it("pushes and pops well enough",function() {
 		{title: "Main",text: `
 			<$cyoa touch="""[[t A]] [[t"B]]"""/>
 			<$cyoa after="""[[t"B]]""" before="[[t A]]" reset='[[t"B]]' touch="t'C"/>`}]);
-	var state = testPremadeBook(wiki,["t'C"]);
+	var core = utils.testBook([],{wiki: wiki});
+	expect(core.state.allVisited()).toEqual(["t'C"]);
 });
 
 });

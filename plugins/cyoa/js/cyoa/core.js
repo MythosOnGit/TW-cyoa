@@ -5,9 +5,9 @@ var Page = require('./page');
 var Link = require('./link');
 var Book = require('./book');
 
-function Core(document,state,manager) {
+function Core(document,state,manager,book) {
 	this.document = document;
-	this.book = new Book(document);
+	this.book = book;
 	this.topPage = undefined;
 	this.manager = manager;
 	this.state = state;
@@ -69,12 +69,12 @@ Core.prototype.openPage = function(page) {
 	var page = this.book.getPageOrDefault(currentPage);
 	while (page) {
 		utils.log('  Page: ' + page.title);
-		page.execute(this.cyoa.vars);
+		page.execute(this.state);
 		page.eachActiveLink(function(node) {
 			self.registerHotkeys(node,node.hotkey || self.loadedLinks.length);
 		});
 		newPages.push(page.title);
-		page = page.selectAppend(this.cyoa.vars,this.cyoa.stackVariable);
+		page = page.selectAppend(this.state);
 	}
 		utils.log('  Footers');
 	this.processExtraPages(this.book.footers);
@@ -93,8 +93,8 @@ Core.prototype.processExtraPages = function(pages) {
 	var self = this;
 	for(var index=0; index < pages.length; index++) {
 		var page = pages[index];
-		if(page.test(this.cyoa.vars)) {
-			page.execute(this.cyoa.vars);
+		if(page.test(this.state)) {
+			page.execute(this.state);
 			page.eachActiveLink(function(node) {
 				self.registerHotkeys(node,node.hotkey);
 			});
@@ -127,7 +127,7 @@ Core.prototype.unpack_state = function() {
 	var self = this;
 	safeCall(null,
 		this.document,
-		function(){self.state.deserialize(self.manager.getState(),self.cyoa.vars);});
+		function(){self.state.deserialize(self.manager.getState());});
 };
 
 Core.prototype.clicked_link = function(linkElement,event) {
@@ -138,16 +138,16 @@ Core.prototype.clicked_link = function(linkElement,event) {
 		this.unpack_state();
 	}
 	try {
-		linkNode.executeOnclick(this.cyoa.vars);
+		linkNode.executeOnclick(this.state);
 	} catch(err) {
 		threw = true;
 	}
 	if(!threw) {
 		safeCall(this,this.document,function() {
 			var newState;
-			var href = this.resolveNextPage(linkNode,this.cyoa.vars);
+			var href = this.resolveNextPage(linkNode,this.state);
 			if(href) {
-				newState = this.state.serialize(this.cyoa.vars);
+				newState = this.state.serialize();
 				this.manager.pushState(newState,href);
 			}
 		});
@@ -158,7 +158,7 @@ Core.prototype.clicked_link = function(linkElement,event) {
 Core.prototype.resolveNextPage = function(linkElement,state) {
 	var next = undefined;
 	if(linkElement.returns) {
-		next = state[this.cyoa.stackVariable].pop();
+		next = state.stack.pop();
 	}
 	if(!next) {
 		next = linkElement.to;

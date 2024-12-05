@@ -51,6 +51,8 @@ function getMetaTiddlers(wiki) {
 	return tiddlers;
 };
 
+/** <head> section **/
+
 it("has meta 'generator' built in",function() {
 	var metaTags = extractMeta($tw.wiki);
 	expect(metaTags["generator"].value).toBe("TiddlyWiki: Cyoa plugin");
@@ -102,6 +104,24 @@ it("ignores draft tiddlers",function() {
 	wiki.addTiddler(utils.draft({title: dir+"ignored",text: "don't render"}));
 	var metaTags = extractMeta(wiki);
 	expect(Object.keys(metaTags)).not.toContain("ignored");
+});
+
+/** <body> section **/
+
+it("can have alternate content sections",function() {
+	var core = utils.testBook([
+		{title: "Main"},
+		{title: "$:/tags/cyoa/Top", tags: "$:/tags/cyoa/Layout", class: "cyoa-top"},
+		{title: "PageTop", tags: "$:/tags/cyoa/Top", text: "INCLUDED TEXT"}]);
+	expect(core.document.documentElement.innerHTML).toContain("INCLUDED TEXT");
+	var pageTop = core.document.getElementById("PageTop");
+	expect(pageTop).not.toBeUndefined();
+	expect(pageTop.className).not.toContain('cyoa-page');
+	expect(pageTop.className).toContain('cyoa-top');
+	// Make sure there isn't a copy of it in the article body
+	var contentElems = core.document.getElementsByClassName('cyoa-content');
+	expect(contentElems.length).toBe(1);
+	expect(contentElems[0].innerHTML).not.toContain('INCLUDED TEXT');
 });
 
 });

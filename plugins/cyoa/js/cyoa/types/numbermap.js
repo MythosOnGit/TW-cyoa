@@ -15,27 +15,12 @@ exports.touch = function(index) {
 	this.beExclusiveFor(index);
 };
 
-function Value(set,index) {
-	this.numbers = set;
-	this.index = index;
-};
-
-Object.defineProperty(Value.prototype,'val',{
-	get: function() { return this.numbers.set[this.index] || 0;},
-	set: function(value) { this.numbers.assign(this.index,value);}
-});
-
-// A short-named method for getting a getter/setter for a specific index
-exports.x = function(index) {
-	return new Value(this,index);
-};
-
 exports.is = function(index) {
 	var value = this.set[index];
 	return value != undefined && value != null;
 };
 
-exports.get = function(index) {
+exports.value = function(index) {
 	return this.set[index] || 0;
 };
 
@@ -47,7 +32,7 @@ exports.assign = function(index,number) {
 	}
 };
 
-exports.reset = function(index) {
+exports.unassign = function(index) {
 	this.assign(index,undefined);
 };
 

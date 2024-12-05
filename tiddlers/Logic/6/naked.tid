@@ -1,0 +1,17 @@
+cyoa.before: [cyoa.exclude[Logic6/clothing]]
+cyoa.group: $:/plugins/mythos/cyoa/groups/rule
+tags: [[Virtual Page]]
+title: Logic6/naked
+tmap.id: c2b543ec-c546-4d07-b267-b4d137ee71f0
+type: text/vnd.tiddlywiki
+
+This rule is true only if the reader hasn't put on any clothes.
+
+Testing against this provides and easy way to confirm whether the reader is naked without having to use any elaborate constraints.
+
+<<annotate """
+
+This is a rule. it is true only if all of the pages in the exclusion group <<page Logic6/clothing>> are unset, and since everything is unset to begin with, that means the character begins naked, and we can trust that this rule will already be true.
+
+The filter I put in before to achieve this is: <$transclude $variable=value _={{!!cyoa.before}} />
+""" >>

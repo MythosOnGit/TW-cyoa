@@ -1,0 +1,15 @@
+cyoa.append: Logic6/options
+tags: 
+title: Logic6/start
+tmap.id: 995f565a-4439-4745-b48c-e498443bcc44
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This demo corresponds to <<tutorial>>.
+
+Here we show how rules can be used to reduce repetition among your constraints, and how to create new kinds of intuitive conditions.""" >>
+
+Your goal today is to get dressed and get out the door. Sometimes small goals are all we can hope to accomplish.
+
+Staggering out of bed, you open your wardrobe.

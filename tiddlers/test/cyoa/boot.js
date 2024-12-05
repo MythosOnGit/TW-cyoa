@@ -21,6 +21,7 @@ it("#boot can load scripts",function() {
 		<div id="${coreFile}">
 	<pre>exports.Core = function(win) {};
 	exports.State = function(){};
+	exports.Book = function(){};
 	exports.declare = function(){};
 	exports.Core.prototype.openPage = function() {
 		$tw.test.bookOpened = true;

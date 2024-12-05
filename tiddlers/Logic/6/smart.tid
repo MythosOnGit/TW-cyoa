@@ -1,0 +1,10 @@
+cyoa.append: Logic6/options
+cyoa.caption: Your trousers and tie
+cyoa.exclude: Logic6/clothing
+cyoa.only: first
+tags: Logic6/options
+title: Logic6/smart
+tmap.id: e223086c-5f46-4dd1-ba8d-9fe7262eca89
+type: text/vnd.tiddlywiki
+
+You fetch your trousers and button-down shirt. Both very wrinkly. Then your tie. You won't be the handsomest man at the office, but at least you won't get yelled at.

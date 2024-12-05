@@ -1,0 +1,12 @@
+caption: Value
+class: value
+filter: [get[cyoa.group]cyoa.type[rule]]
+tags: $:/tags/cyoa/EditTemplate
+list-after: $:/plugins/mythos/cyoa/ui/EditTemplate/only
+title: $:/plugins/mythos/cyoa/ui/EditTemplate/value
+
+\whitespace trim
+<$edit-text
+  field="cyoa.value"
+  class="cyoa-edit-value"
+  inputActions="""<$list variable=_ filter="[<actionValue>is[blank]]"><$action-deletefield $field="cyoa.value" /></$list>""" />

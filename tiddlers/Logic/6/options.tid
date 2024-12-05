@@ -1,0 +1,12 @@
+title: Logic6/options
+tmap.id: 9b218969-3942-4a6b-8107-ebc27174a136
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+Here we have a simple conversation pattern of options. Nothing we haven't seen before.
+
+The three outfits are all in an exclusion group called <<page Logic6/clothing>>, so if the reader puts on another outfit, the previous one is removed.
+""" >>
+
+<$options />

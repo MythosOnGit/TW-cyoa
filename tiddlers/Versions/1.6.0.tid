@@ -1,0 +1,10 @@
+tags: Versions
+title: Version 1.6.0
+tmap.id: 0662b229-2f44-4f95-a44c-b12501365a46
+type: text/vnd.tiddlywiki
+
+\rules except wikilink
+
+* Performed a full revamp on how pages are stored and represented internally
+* Fixed issue where pages may not be properly tracked if they're referenced in oblique ways.
+* Introduced the concept of Rules, along with a tutorial introducing them.

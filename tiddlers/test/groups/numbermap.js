@@ -16,25 +16,18 @@ function forEachCodec(jasmineCall) {
 };
 
 function defaultGroup(codec) {
-	return utils.defaultGroup("numbermap",{"cyoa.serializer": codec});
+	return utils.defaultGroup("numbermap",{"cyoa.serializer": codec, "cyoa.key": "output"});
 };
 
 function testBook(expected,tiddlerArray) {
-	var rtn = utils.testBookDefaultVar(tiddlerArray);
-	expect(rtn.results).toEqual(expected);
-	return rtn;
+	var core = utils.testBook(tiddlerArray);
+	expect(core.state.allVisited()).toEqual(expected);
+	return core;
 };
 
 function node(name,attributes) {
 	var n = Object.assign({title: name},attributes);
 	return n;
-};
-
-function firstOf(state) {
-	// Just get the first item. There should only be one
-	for(var item in state) {
-		return state[item];
-	}
 };
 
 forEachCodec(codec =>
@@ -52,7 +45,7 @@ it("can reset",function() {
 	testBook(["B"],[
 		defaultGroup(codec),
 		node("A"),node("B"),node("C"),
-		{title: "Main",text: "<$cyoa touch='A B' reset=A/>"}]);
+		{title: "Main",text: "<$cyoa touch='A B'/><$cyoa reset=A/>"}]);
 }));
 
 forEachCodec(codec =>
@@ -103,26 +96,26 @@ it(codec + " can use negative numbers",function() {
 
 forEachCodec(codec =>
 it(codec + " handles fractional numbers",function() {
-	var results = testBook(["A","B","C","E"],[
+	var core = testBook(["A","B","C","E"],[
 		defaultGroup(codec),
 		node("A"),node("B"),node("C"),node("D"),node("E"),
 		{title: "Main",text: `
 			<$cyoa do="#{A}=0, #{B}=-2.3, #{C}=(50/7), #{D}=6, #{E}=(1/512)" />
 			<$cyoa reset=D />`}]);
-	expect(results.vars.A).toBe("0");
-	expect(results.vars.B).toBe("-2.3");
-	expect(results.vars.C).toBe((50/7).toString());
-	expect(results.vars.E).toBe((1/512).toString());
+	expect(core.state.query("A")).toBe(0);
+	expect(core.state.query("B")).toBe(-2.3);
+	expect(core.state.query("C")).toBe(50/7);
+	expect(core.state.query("E")).toBe(1/512);
 }));
 
 it("vlq keeps the state string small",function() {
 	function test(number,length) {
-		var results = testBook(["A","B"],[
+		var core = testBook(["A","B"],[
 			defaultGroup("vlq"),node("A"),node("B"),
 			{title: "Main", text: "<$cyoa do='#{A}=0.5, #{B}="+number+"' />"}]);
-		expect(results.vars.B).toBe(number.toString());
+		expect(core.state.query("B")).toBe(number);
 		// The first three bytes go to {A}, which forces rational mode
-		var state = firstOf(results.state);
+		var state = core.state.serialize().output;
 		expect(state.length-3).toBe(length, number + " => " + state);
 	};
 	test(15,2);
@@ -135,47 +128,47 @@ it("vlq keeps the state string small",function() {
 
 forEachCodec(codec =>
 it(codec + " manages near zero",function() {
-	var results = testBook(["A","B"],[
+	var core = testBook(["A","B"],[
 		defaultGroup(codec),node("A"),node("B"),
 		{title: "Main", text: `
 			<$cyoa do='#{A}=1/2**25' />
 			<$cyoa do='#{B}=0.001' />`}]);
-	expect(results.vars.A).toBe((1/2**25).toString());
-	expect(results.vars.B).toBe((0.001).toString());
+	expect(core.state.query("A")).toBe(1/2**25);
+	expect(core.state.query("B")).toBe(0.001);
 }));
 
 forEachCodec(codec =>
 it(codec + " manages large numbers",function() {
-	var results = testBook(["A","B"],[
+	var core = testBook(["A","B"],[
 		defaultGroup(codec),node("A"),node("B"),
 		{title: "Main", text: `
 			<$cyoa do='#{A}=Number.MAX_SAFE_INTEGER*4' />
 			<$cyoa do='#{B}=Number.MIN_SAFE_INTEGER*4' />`}]);
-	expect(results.vars.A).toBe((Number.MAX_SAFE_INTEGER*4).toString());
-	expect(results.vars.B).toBe((Number.MIN_SAFE_INTEGER*4).toString());
+	expect(core.state.query("A")).toBe(Number.MAX_SAFE_INTEGER*4);
+	expect(core.state.query("B")).toBe(Number.MIN_SAFE_INTEGER*4);
 }));
 
 forEachCodec(codec =>
 it(codec + " manages humongous numbers",function() {
-	var results = testBook(["A","B"],[
+	var core = testBook(["A","B"],[
 		defaultGroup(codec),node("A"),node("B"),
 		{title: "Main", text: `
 			<$cyoa do='#{A}=Number.MAX_SAFE_INTEGER*(2**900)' />
 			<$cyoa do='#{B}=Number.MIN_SAFE_INTEGER*(2**900)' />`}]);
-	expect(results.vars.A).toBe((Number.MAX_SAFE_INTEGER*(2**900)).toString());
-	expect(results.vars.B).toBe((Number.MIN_SAFE_INTEGER*(2**900)).toString());
-	expect(firstOf(results.state).length).toBeLessThan(55);
+	expect(core.state.query("A")).toBe((Number.MAX_SAFE_INTEGER*(2**900)));
+	expect(core.state.query("B")).toBe((Number.MIN_SAFE_INTEGER*(2**900)));
+	expect(core.state.serialize().output.length).toBeLessThan(55);
 }));
 
 forEachCodec(codec =>
 it(codec + " ignores -0 but does not choke",function() {
-	var results = testBook(["A","Confirm"],[
+	var core = testBook(["A","Confirm"],[
 		defaultGroup(codec),
 		node("A"),node("Confirm"),
 		{title: "Main",text: `
 			<$cyoa do="#{A}=(-3*0)" />
 			<$cyoa if="1/#{A}> 0" touch=Confirm />`}]);
-	expect(results.vars.A).toBe("0");
+	expect(core.state.query("A")).toBe(0);
 }));
 
 forEachCodec(codec =>

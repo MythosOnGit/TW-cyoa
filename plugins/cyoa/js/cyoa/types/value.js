@@ -13,9 +13,7 @@ exports.is = function(item) {
 	return check(this.data.up,this.set,item);
 };
 
-exports.get = function(item) {
-	return this.is(item);
-};
+exports.value = exports.is;
 
 function check(tree,value,item) {
 	if(value === item) {
@@ -32,11 +30,15 @@ function check(tree,value,item) {
 	return false;
 };
 
+exports.assign = function(index,value) {
+	return value ? this.set.touch(this.index): this.set.reset(this.index);
+};
+
 exports.touch = function(item) {
 	this.set = item;
 };
 
-exports.reset = function(item) {
+exports.unassign = function(item) {
 	if(this.set === item) {
 		this.set = null;
 	}

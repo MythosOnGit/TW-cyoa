@@ -44,7 +44,7 @@ it("can handle filters for tracking attributes",function() {
 
 it("can touch, reset, after, and before through tiddler",function() {
 	var core = utils.testBook([
-		utils.defaultGroup("set",{"cyoa.serializer": "string", "cyoa.key":"test"}),
+		utils.defaultGroup(),
 		{title: "A"},{title: "B"},{title: "C"},{title: "D"},
 		{title: "E"},{title: "F"},{title: "G"},{title: "H"},
 		{title: "I"},{title: "J"},
@@ -65,12 +65,12 @@ it("can touch, reset, after, and before through tiddler",function() {
 		{title: "U2","cyoa.only": "never","cyoa.touch": "J"},
 		// we cleanup because we want a predictable order of our test results.
 		{title: "cleanup","cyoa.reset": "Y1 Y2 Z2"}]);
-	expect(core.state.serialize(core.cyoa.vars)).toEqual({test: "B.D.F.H.U2"});
+	expect(core.state.allVisited()).toEqual(["B","D","F","H","U2"]);
 });
 
-it("executes touch and reset in specified order",function() {
+it("executes resets before touches",function() {
 	var core = utils.testBook([
-		utils.defaultGroup("set",{"cyoa.serializer": "string", "cyoa.key":"test"}),
+		utils.defaultGroup(),
 		{title: "A1"},
 			{title: "B1","cyoa.imply": "A1"},
 			{title: "C1","cyoa.imply": "B1"},
@@ -84,7 +84,27 @@ it("executes touch and reset in specified order",function() {
 			<$cyoa touch="D1" reset="B1" />
 			<$cyoa reset="B2" touch="D2" />`}]);
 	// the touch and reset are swapped on those last two, which should result in different outcomes.
-	expect(core.state.serialize(core.cyoa.vars)).toEqual({test: "A1.D2"});
+	expect(core.state.allVisited()).toEqual(["A1","A2","B1","B2","D1","D2"]);
+});
+
+it("pages can reset themselves",function() {
+	var core = utils.testBook([
+		utils.defaultGroup(),
+		{title: "Main", "cyoa.touch": "A", "cyoa.append": "A"},
+		{title: "A", "cyoa.only": "visited", "cyoa.reset": "A", "cyoa.touch": "B"},
+		{title: "B"}]);
+	// the touch and reset are swapped on those last two, which should result in different outcomes.
+	expect(core.state.allVisited()).toEqual(["B"]);
+});
+
+it("identifes hard-to-figure tracking relationships when compiling",function() {
+	var core = utils.testBook([
+		utils.defaultGroup(),
+		// Use this order, so B is discovered before A, so we test the alphabeticalness of tracked pages.
+		{title: 'Main', 'cyoa.touch': 'B', 'cyoa.append': 'Next'},
+		{title: 'Next', text: "<$list filter=A><$cyoa touch=<<currentTiddler>> /></$list>"},
+		{title: 'A'}, {title: 'B'}]);
+	expect(core.state.allVisited()).toEqual(["A","B"]);
 });
 
 it("ignores macros when looking for tracking",function() {

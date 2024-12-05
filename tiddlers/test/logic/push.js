@@ -10,13 +10,12 @@ Tests the cyoa push mechanic.
 describe("Logic: push",function() {
 
 const utils = require("test/utils.js");
-const stackTiddler = $tw.wiki.getCyoaGroups().stack;
 
 function testBook(expectedOpenPages /*,tiddlerArrays... */) {
 	var tiddlerArrays = Array.prototype.slice.call(arguments,1);
-	var core = utils.testBook([[stackTiddler]].concat(tiddlerArrays));
+	var core = utils.testBook(tiddlerArrays);
 	expect(core.openPages).toEqual(expectedOpenPages);
-	return core.cyoa.vars;
+	return core;
 };
 
 function node(name,attributes) {
@@ -26,8 +25,8 @@ function node(name,attributes) {
 it("prioritizes pushed pages",function() {
 	var tiddlers = [node("A"),node("B",{"cyoa.if": "false"}),node("C"),
 		{title: "Main","cyoa.push": "B","cyoa.append": "A B C"}];
-	var vars = testBook(["Main","B"],tiddlers);
-	expect(vars.stack.toString()).toBe("");
+	var core = testBook(["Main","B"],tiddlers);
+	expect(core.state.stack.toString()).toBe("");
 });
 
 it("works with other variables",function() {
@@ -37,7 +36,8 @@ it("works with other variables",function() {
 		{title: "Main","cyoa.push": "B","cyoa.append": "A B C"}];
 	var core = utils.testBook([tiddlers]);
 	expect(core.openPages).toEqual(["Main","B"]);
-	expect(core.cyoa.vars.other.toString()).toBe("D");
+	expect(core.state.stack.toString()).toBe("D");
+	expect(core.state.serialize()).toEqual({other: "D"});
 });
 
 it("takes top of stack only",function() {
@@ -45,31 +45,31 @@ it("takes top of stack only",function() {
 		{title: "Main","cyoa.append": "Main2","cyoa.push": "B"},
 		{title: "Main2","cyoa.append": "Main3","cyoa.push": "C"},
 		{title: "Main3","cyoa.append": "A B C"}];
-	var vars = testBook(["Main","Main2","Main3","C"],tiddlers);
-	expect(vars.stack.toString()).toBe("B");
+	var core = testBook(["Main","Main2","Main3","C"],tiddlers);
+	expect(core.state.stack.toString()).toBe("B");
 });
 
 it("ignores push stack if top not in append list",function() {
 	var tiddlers = [node("A"),node("B"),node("C"),node("notThere"),
 		{title: "Main","cyoa.append": "A B C","cyoa.push": "notThere"}];
-	var vars = testBook(["Main","A"],tiddlers);
-	expect(vars.stack.toString()).toBe("notThere");
+	var core = testBook(["Main","A"],tiddlers);
+	expect(core.state.stack.toString()).toBe("notThere");
 });
 
 it("provides warning when pushing nonexistent tiddler",function() {
-	var vars;
+	var core;
 	utils.warnings(spyOn);
 	//field
-	vars = testBook(["Main","A"],[node("A"),node("B"),node("C"),
+	core = testBook(["Main","A"],[node("A"),node("B"),node("C"),
 		{title: "Main","cyoa.append": "A B C","cyoa.push": "notThere"}]);
-	expect(vars.stack.toString()).toBe("");
+	expect(core.state.stack.toString()).toBe("");
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'Main': pushes non-page tiddler 'notThere'");
 
 	// widget
 	utils.warnings().calls.reset();
-	vars = testBook(["Main","A"],[node("A"),node("B"),node("C"),
+	core = testBook(["Main","A"],[node("A"),node("B"),node("C"),
 		{title: "Main","cyoa.append": "A B C",text: "<$cyoa push='notThere' />"}]);
-	expect(vars.stack.toString()).toBe("");
+	expect(core.state.stack.toString()).toBe("");
 	expect(utils.warnings()).toHaveBeenCalledWith("Page 'Main': $cyoa widget pushes non-page tiddler 'notThere'");
 });
 
@@ -90,7 +90,6 @@ it("provides details when non-page is pushed in tiddlywiki",function() {
 it("can return to pushed pages",function() {
 	// I put the test in an appended page to make sure it's not taking <<currentTiddler>> by mistake.
 	var core = utils.testBook([[
-		$tw.wiki.getCyoaGroups().stack,
 		{title: "Main","cyoa.append": "Main2"},
 		{title: "Main2",text: "<$cyoa id=link1 onclick push=Main to=menu />","cyoa.append": "Main3"},
 		{title: "Main3",text: "<$cyoa id=link3 to=menu />"},
@@ -104,6 +103,22 @@ it("can return to pushed pages",function() {
 	utils.click(core,"link3");
 	utils.click(core,"link2");
 	expect(core.manager.getPage()).toBe("defPage");
+});
+
+// This is not final behavior. Only behavior that exists for now before figuring out a proper longterm way to do this
+it("can push the top page when not specified",function() {
+	var core = utils.testBook([
+		{title: "Main", text: "<$cyoa id=link1 to=ReturnHere />"},
+		{title: "ReturnHere", "cyoa.append": "Appended"},
+		// This onclick push pushes the ReturnHere, not Append. Top page, not containing page.
+		{title: "Appended", text: "<$cyoa id=link2 onclick push to=Menu />"},
+		{title: "Menu", text: "<$cyoa id=link3 return />"}]);
+	utils.click(core, "link1");
+	expect(core.manager.getPage()).toBe("ReturnHere");
+	utils.click(core, "link2");
+	expect(core.manager.getPage()).toBe("Menu");
+	utils.click(core, "link3");
+	expect(core.manager.getPage()).toBe("ReturnHere");
 });
 
 /*

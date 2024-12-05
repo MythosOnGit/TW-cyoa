@@ -1,0 +1,5 @@
+title: $:/tags/cyoa/Footer
+tags: $:/tags/cyoa/Layout
+class: cyoa-footer
+
+Pages tagged with this layout tag will append any main content. It will exist within the same story flow as the currently displayed page.

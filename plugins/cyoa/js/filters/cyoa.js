@@ -34,7 +34,7 @@ exports.cyoa = function(source,operator,options) {
 		var msg = "Filter Error: Unknown suffix '" + (suffixPair[0]||"") + "' for the 'cyoa' filter operator";
 		// If we're compiling, throw this message instead of return it.
 		// It'll make diagnosing easier.
-		if(options.widget && options.widget.hasVariable("cyoa-render","yes")) {
+		if(options.widget && options.widget.getVariable("cyoa-render") === "yes") {
 			throw msg;
 		} else {
 			return [msg];

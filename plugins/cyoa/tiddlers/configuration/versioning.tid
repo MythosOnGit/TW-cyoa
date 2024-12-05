@@ -42,7 +42,7 @@ Committed {{$:/core/images/save-button}}
 <$button>
 
 <$action-confirm $message="Are you sure you wish to clear your page version record? Any future CYOAs you generate will not be backward compatible with past ones.">
-<$action-cyoa $job="clear"/>
+<$action-deletetiddler $filter="[prefix[$:/config/mythos/cyoa/records/]]" />
 Clear Version History
 </$action-confirm>
 </$button>

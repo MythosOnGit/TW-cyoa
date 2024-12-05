@@ -23,32 +23,33 @@ exports.amendRecord = function(entries) {
 		empties = [];
 	for(var index = 0; index < entries.length; index++) {
 		var info = entries[index];
-		var id = "";
-		// If there is no info.title, that probably means this tiddler was removed from the group, and we can ignore it.
-		if(info.title) {
-			id = this.filter([info.title])[0] || "";
+		// If there is no info.title, that probably means this tiddler was removed from the group. We must still remember its old id.
+		var id = (info.title && this.filter([info.title])[0]) || info.id || "";
+		if(!id && id !== 0) {
+			// If the id was null, undefined, or emptystring, bad.
+			empties.push(info.title);
+		} else if(this.idMap[id] !== undefined) {
+			// This id already existed in versioned data. We have a collision
+			if(!collisions[id]) {
+				reportCollision(collisions, id, this.idMap[id]);
+			}
+			reportCollision(collisions, id, info.title);
+		} else {
 			if(!info.id) {
-				if(!id && id !== 0) {
-					// If the id was null, undefined, or emptystring, bad.
-					empties.push(info.title);
-				} else if(this.idMap[id]) {
-					// This id already existed in versioned data. We have a collision
-					if(!collisions[id]) {
-						collisions[id] = [this.idMap[id]];
-					}
-					collisions[id].push(info.title);
-				} else {
-					this.idMap[id] = info.title;
-					info.id = id;
+				info.id = id;
+				changed = true;
+			} else if (info.id !== id) {
+				if(info.nextId !== id) {
+					utils.warnForTiddler(info.title,"Tiddler would now use id '"+id+"' instead of '"+info.id+"', which would be a backward-incompatible change. CYOA will retain the use of '"+info.id+"' until the version history is next cleared.",{wiki: this.wiki});
+					info.nextId = id;
 					changed = true;
 				}
-			} else if(info.id !== id && info.nextId !== id) {
-				utils.warnForTiddler(info.title,"Tiddler would now use id '"+id+"' instead of '"+info.id+"', which would be a backward-incompatible change. CYOA will retain the use of '"+info.id+"' until the version history is next cleared.",{wiki: this.wiki});
-				info.nextId = id;
-				changed = true;
+				// Now go with the old id
+				id = info.id;
 			}
+			this.idMap[id] = info.title || null;
+			this.keys[index] = id;
 		}
-		this.keys[index] = info.id || id;
 	}
 	// Now issue any warnings.
 	// If we had collsions, we need to warn about them.
@@ -61,6 +62,15 @@ exports.amendRecord = function(entries) {
 		utils.warn("GroupHandler warning: In "+(this.data.caption || this.data.title)+" group, the following tiddlers all resolved to an empty variable: "+empties.join(", "));
 	}
 	return changed;
+};
+
+function reportCollision(collisionMap, id, title) {
+	if(!collisionMap[id]) {
+		collisionMap[id] = [];
+	}
+	collisionMap[id].push(title?
+		"'"+title+"'":
+		"(removed page placeholder)");
 };
 
 exports.exportData = function(data) {

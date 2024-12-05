@@ -1,0 +1,15 @@
+cyoa.append: Logic6/options
+cyoa.caption: Dig through your underwear drawer.
+cyoa.only: first
+tags: Logic6/options
+title: Logic6/lunch
+tmap.id: 63849e5b-2bac-4a9a-92d4-dcf11f4ffc41
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page is one of the requirements for being able to leave.""" >>
+
+You dig through your underwear drawer and find the lunch you prepared last night: a ham sandwich and a juice box. Both room temperature.
+
+As I said, your life is a mess.

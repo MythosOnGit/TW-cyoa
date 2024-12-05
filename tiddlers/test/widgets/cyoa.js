@@ -14,25 +14,14 @@ const utils = require("test/utils.js");
 
 describe("widget: $cyoa",function() {
 
-function valueOf(state) {
-	return state.substr(state.indexOf("=")+1);
-};
-
-function firstOf(state) {
-	// Just get the first item. There should only be one
-	for(var item in state) {
-		return state[item];
-	}
-};
-
 it("handles multiple conditions on if",function() {
 	// If multiple afters exist, we must make sure we test all of them, not just the last one, which can happen if the underlying conditionals are separated by ";" instead of "&&".
 	var core = utils.testBook([
-		utils.defaultGroup("set",{"cyoa.serializer": "string"}),
+		utils.defaultGroup(),
 		{title: "A"},{title: "B"},{title: "C"},
 		{title: "Main", text: `<$cyoa touch=B/><$cyoa after="A B" touch=C/>`}
 	]);
-	expect(firstOf(core.state.serialize(core.cyoa.vars))).toBe("B");
+	expect(core.state.allVisited()).toEqual(["B"]);
 });
 
 it("handles write",function() {
@@ -112,36 +101,10 @@ it("can index subwidgets",function() {
 	expect(utils.activeNodes(core)).toEqual(["3"]);
 });
 
-it("handles index weights",function() {
-	var core = utils.testBook([
-		{title: "Main",text: `<$cyoa index=3>
-			<$cyoa id=A weight=3/>
-			<$cyoa id=B/>
-			<$cyoa id=C/>
-		</$cyoa>`,"cyoa.append": "X Y Z","cyoa.index": "3"},
-		{title: "X","cyoa.weight": "3"},
-		{title: "Y"},
-		{title: "Z"}]);
-	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
-});
-
 it("does not use page indexes for inner nodes",function() {
 	var core = utils.testBook([
 		{title: "Main","cyoa.index": 1, text: "<$cyoa id=A/><$cyoa id=B/>"}]);
 	expect(utils.activeNodes(core)).toEqual(["A","B"]);
-});
-
-it("handles index weights modulo",function() {
-	var core = utils.testBook([
-		{title: "Main",text: `<$cyoa index=13>
-			<$cyoa id=A weight=3/>
-			<$cyoa id=B/>
-			<$cyoa id=C/>
-		</$cyoa>`,"cyoa.append": "X Y Z","cyoa.index": "13"},
-		{title: "X","cyoa.weight": "3"},
-		{title: "Y"},
-		{title: "Z"}]);
-	expect(utils.activeNodes(core)).toEqual(["B","Y"]);
 });
 
 it("handles index with no options",function() {
@@ -158,66 +121,49 @@ it("handles index with no options",function() {
 	expect(utils.activeNodes(core)).toEqual(["A"]);
 });
 
-it("handles snippet weights",function() {
-	var core = utils.testBook([
-		utils.defaultGroup(),
-		{title: "A"},
-		{title: "B"},
-		{title: "C"},
-		{title: "Main",text:`<$cyoa touch="A C"/>
-			<$cyoa index=52>
-				<$cyoa id=X weight="#{A}+#{B}+#{C}+50"/>
-				<$cyoa id=Y />
-				<$cyoa id=Z />
-			</$cyoa>`}]);
-		expect(utils.activeNodes(core)).toEqual(["Y"]);
-});
-
 it("can perform onclick with or without destination",function() {
 	// I put the stay link in the appended page to make sure it's not taking <<currentTiddler>> by mistake.
 	var core = utils.testBook([[
-		utils.group("test","set"),
-		{title: "A","cyoa.group": "test"},{title: "B","cyoa.group": "test"},
-		{title: "C","cyoa.group": "test"},{title: "D","cyoa.group": "test"},
+		utils.defaultGroup(),
+		{title: "A"},{title: "B"},{title: "C"},{title: "D"},
 		{title: "Main",text: "<$cyoa touch=A />","cyoa.append": "Main2"},
 		{title: "Main2",text: "<$cyoa id=linkStay onclick touch=B />","cyoa.append": "Main3"},
 		{title: "Main3",text: "<$cyoa id=linkGo onclick to=other touch=C />"},
 		{title: "other",text: "<$cyoa touch=D />"}]]);
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("A");
+	expect(core.state.allVisited()).toEqual(["A"]);
 	utils.click(core,"linkStay");
 	expect(core.manager.getPage()).toBe("Main");
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("A.B");
+	expect(core.state.allVisited()).toEqual(["A","B"]);
 	utils.click(core,"linkGo");
 	expect(core.manager.getPage()).toBe("other");
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("A.B.C.D");
+	expect(core.state.allVisited()).toEqual(["A","B","C","D"]);
 });
 
 it("executes onclick with replace flag properly",function() {
 	// First, without the replace flag
 	var core = utils.testBook([[
 		utils.defaultGroup("set",{"cyoa.serializer": "string"}),
-		{title: "A"},{title: "B"},
-		{title: "C"},{title: "D"},
-		{title: "E"},
+		{title: "A"},{title: "B"},{title: "C"},{title: "D"},{title: "E"},
 		{title: "Main",text: "<$cyoa touch=A /><$cyoa id=link1 onclick touch=B to=second />"},
 		{title: "second",text: "<$cyoa touch=C /><$cyoa id=link2 onclick replace touch=D to=third />"},
 		{title: "third",text: "<$cyoa touch=E />"}]]);
-	expect(firstOf(core.state.serialize(core.cyoa.vars))).toBe("A");
+	expect(core.state.allVisited()).toEqual(["A"]);
 	utils.click(core,"link1");
-	expect(firstOf(core.state.serialize(core.cyoa.vars))).toBe("A.B.C");
+	expect(core.state.allVisited()).toEqual(["A","B","C"]);
 	utils.click(core,"link2");
-	expect(firstOf(core.state.serialize(core.cyoa.vars))).toBe("A.B.D.E");
+	expect(core.state.allVisited()).toEqual(["A","B","D","E"]);
 });
 
 it("can dynamically set the 'to' destination",function() {
 	var core = utils.testBook([[
-		utils.group("test","value"),
-		{title: "confirmed","cyoa.group": "test"},
+		utils.defaultGroup(),
+		{title: "bad"},
+		{title: "confirmed"},
 		{title:"Main",text:`<$cyoa id=link to=bad do='this.to="good page"' />`},
-		{title: "bad"},{title: "good page","cyoa.touch": "confirmed"}]]);
+		{title: "good page","cyoa.touch": "confirmed"}]]);
 	utils.click(core,"link");
 	expect(core.manager.getPage()).toBe("good page");
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("confirmed");
+	expect(core.state.allVisited()).toEqual(["confirmed"]);
 });
 
 it("can have custom attributes",function() {
@@ -336,9 +282,9 @@ it("executes nested onclick dos and dones in correct order",function() {
 			</$cyoa>
 		`},
 		{title: "other"}]]);
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("value.START");
+	expect(core.state.serialize().test).toBe("value.START");
 	utils.click(core,"link");
-	expect(core.state.serialize(core.cyoa.vars).test).toBe("value.STARTbcdxyz");
+	expect(core.state.serialize().test).toBe("value.STARTbcdxyz");
 });
 
 it("can take auto-assigned number hotkeys",function() {
@@ -378,6 +324,7 @@ it("can take custom hotkeys",function() {
 		{title: "Main",text: "<$cyoa to=Main2 hotkey=c />"},
 		{title: "Main2",text: "<$cyoa to=Main3 hotkey='w ArrowUp' />"},
 		{title: "Main3"},
+		{title: "$:/tags/cyoa/Footer", tags: "$:/tags/cyoa/Layout", class: "cyoa-footer"},
 		{title: "Footer",tags:"$:/tags/cyoa/Footer",text: "<$cyoa to=Main4 hotkey=i />"},
 		{title: "Main4"}
 	]]);

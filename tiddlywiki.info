@@ -17,7 +17,7 @@
 	"build": {
 		"test": [
 			"--output", "./docs/",
-			"--rendertiddler","$:/core/save/all","test.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/]plugin-type[plugin]!prefix[$:/plugins/tiddlywiki/]!prefix[$:/plugins/mythos/]!match[$:/plugins/tiddlywiki/highlight]!match[$:/plugins/flibbles/relink]]",
+			"--rendertiddler","$:/core/save/all","test.html","text/plain", "", "publishFilter", "-[prefix[$:/plugins/]plugin-type[plugin]!prefix[$:/plugins/tiddlywiki/]!prefix[$:/plugins/mythos/]!match[$:/plugins/tiddlywiki/highlight]!match[$:/plugins/flibbles/relink]] -[all[]!is[system]!prefix[test/]]",
 			"--test"
 		],
 		"index": [

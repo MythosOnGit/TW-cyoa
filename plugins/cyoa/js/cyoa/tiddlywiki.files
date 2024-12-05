@@ -141,10 +141,25 @@
 			}
 		},
 		{
+			"path": "./types/rule",
+			"filesRegExp": "^.*\\.js$",
+			"isTiddlerFile": true,
+			"fields": {
+				"module-type": "cyoaruleserializer",
+				"tags": "$:/tags/cyoa/Javascript",
+				"title": {
+					"source": "filename",
+					"prefix": "$:/plugins/mythos/cyoa/js/cyoa/types/rule/"
+				},
+				"type": "application/javascript"
+			}
+		},
+		{
 			"path": ".",
 			"filesRegExp": "^.*\\.tid$",
 			"isTiddlerFile": false,
 			"fields": {
+				"module-type": "cyoamethod",
 				"tags": "$:/tags/cyoa/Javascript",
 				"title": {
 					"source": "basename",

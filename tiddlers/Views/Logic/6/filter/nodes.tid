@@ -1,0 +1,3 @@
+filter: [prefix[Logic6/]] [field:tmap.id[17623786-32e9-4f5d-b9ad-73f9704b4cff]] [field:tmap.id[3736c040-2772-45fc-b89d-f0decc3bbfae]] [field:tmap.id[63849e5b-2bac-4a9a-92d4-dcf11f4ffc41]] [field:tmap.id[f273f3b0-9bb2-456b-b5fd-39bee60d2e22]] [field:tmap.id[e223086c-5f46-4dd1-ba8d-9fe7262eca89]] [field:tmap.id[a3138165-db4d-419d-8603-d459a9642f4b]]
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 6: Rules/filter/nodes
+type: text/vnd.tiddlywiki

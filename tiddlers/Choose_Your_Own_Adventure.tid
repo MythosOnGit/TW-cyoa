@@ -1,4 +1,6 @@
 title: Choose Your Own Adventure
+tags: Home
+list-before: Tutorials
 tmap.id: b6c2e4ee-482e-45bb-a0da-631755db6307
 
 <<plugin>> is an open-source TiddlyWiki plugin designed for creating interactive novels and games. Its visual and declarative interface doesn't require any programming knowledge to work.

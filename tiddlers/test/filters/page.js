@@ -106,8 +106,7 @@ it("fires exception when used in page-filture during compile",function() {
 	wiki.addTiddlers([
 		{title: pageConfig,text: "[[A]cyoa:page[]]"},
 		{title: "A"}]);
-	var widget = utils.createWidget();
-	widget.setVariable("cyoa-render","yes");
+	var widget = $tw.rootWidget.makeFakeWidgetWithVariables({"cyoa-render": "yes"});
 	function method() {
 		wiki.filterTiddlers("[cyoa:page[]]",widget,["A"]);
 	};

@@ -1,0 +1,5 @@
+title: $:/tags/cyoa/Header
+tags: $:/tags/cyoa/Layout
+class: cyoa-header
+
+Pages tagged with this layout tag will prepend any main content. It will exist within the same story flow as the currently displayed page.

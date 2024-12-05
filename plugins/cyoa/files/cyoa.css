@@ -106,7 +106,7 @@ table.cyoa-edit, .cyoa-edit tr, .cyoa-edit td {
 	margin-right: 3pt;
 }
 
-.cyoa-edit-field input, .cyoa-edit-caption {
+.cyoa-edit-field input, .cyoa-edit-caption, .cyoa-edit-value {
 	width: 100%;
 }
 
@@ -114,7 +114,7 @@ table.cyoa-edit, .cyoa-edit tr, .cyoa-edit td {
 	background-color: <<color cyoa-edit-fields-odd>>;
 }
 
-.cyoa-edit-field-caption, .cyoa-edit-field-group, .cyoa-edit-field-only {
+.cyoa-edit-field-caption, .cyoa-edit-field-group, .cyoa-edit-field-only, .cyoa-edit-field-value {
 	background-color: inherit;
 }
 

@@ -20,6 +20,10 @@ body {
 	border-radius: 8px;
 }
 
+#\$\:\/cyoaError:empty {
+	display: none;
+}
+
 #\$\:\/cyoaError span {
 	display: list-item;
 	list-style-type: disc;

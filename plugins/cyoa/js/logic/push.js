@@ -13,8 +13,6 @@ The stack used by this condition can be manually manipulated with in order to cr
 
 var utils = require("$:/plugins/mythos/cyoa/js/utils.js");
 
-var snippetPush = (variable,a) => (variable +".push("+utils.enquote(a)+")");
-
 exports.infoTree = function(widget) {
 	var target = widget.getAttribute("push");
 	if(target) {
@@ -27,17 +25,13 @@ exports.infoTree = function(widget) {
 	}
 };
 
-exports["do"] = function(widget,tiddler) {
+exports.push = function(widget,tiddler) {
 	var target = widget.getAttribute("push");
 	if(target) {
-		if(!widget.wiki.isCyoaPage(target)) {
+		if(target !== 'true' && !widget.wiki.isCyoaPage(target)) {
 			utils.warnForTiddler(tiddler,(widget.page ? "" : "$cyoa widget ") + "pushes non-page tiddler '"+target+"'",{wiki: widget.wiki});
 		} else {
-			return snippetPush(getVar(widget),target);
+			return target;
 		}
 	}
-};
-
-function getVar(widget) {
-	return widget.wiki.getTiddlerText("$:/config/mythos/cyoa/stack","stack");
 };

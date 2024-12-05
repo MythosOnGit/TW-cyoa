@@ -7,9 +7,23 @@ Tests the cyoamethods: shuffle, cap, hash, etc...
 
 \*/
 
-var cyoa = require("test/utils.js").cyoa;
+var utils = require("test/utils.js");
 
 describe("cyoamethods",function() {
+
+/*
+This prepares stateClasses with all the modules used as cyoa variables.
+*/
+var cyoa;
+
+beforeAll(function() {
+	cyoa = getCyoaMethods();
+});
+
+function getCyoaMethods() {
+	var emptyCore = utils.testBook([{title: "Main"}]);
+	return emptyCore.cyoa;
+};
 
 function shuffle(index,seed,deckSize) {
 	return cyoa.shuffle(index,seed)(deckSize);

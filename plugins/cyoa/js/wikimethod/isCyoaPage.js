@@ -26,6 +26,7 @@ Returns a map of all cyoa pages. Keys are the pages, the values are all true.
 exports.getCyoaPageMap = function() {
 	var wiki = this;
 	return this.getGlobalCache("cyoa-pages",function() {
+		var disqualifiers = getDisqualifyingTagMap(wiki);
 		var rtn;
 		if(fetchStack++) {
 			// This is being called recursively. Bail.
@@ -36,11 +37,23 @@ exports.getCyoaPageMap = function() {
 			var list = filter(eachSource(wiki));
 			list = list.filter((x) => {
 				var t = wiki.getTiddler(x);
-				return t
-					&& !t.isDraft()
-					&& !t.hasTag("$:/tags/cyoa/Type");
+				if(t && !t.isDraft()) {
+					var tags = t.getFieldList('tags');
+					for(var index = 0; index < tags.length; index++) {
+						if(disqualifiers[tags[index]]) {
+							return false;
+						}
+					}
+					return true;
+				}
+				return false;
 			});
 			rtn = utils.toHashMap(list);
+			// The start page is always an included page
+			var startPage = wiki.getTiddlerText("$:/config/mythos/cyoa/start");
+			if(startPage) {
+				rtn[startPage] = true;
+			}
 		} finally {
 			if(--fetchStack) {
 				// Stack went up and didn't come down, so turn it down now and return null.
@@ -70,9 +83,22 @@ function eachSource(wiki) {
 function getFilter(wiki) {
 	return wiki.getCacheForTiddler(filterPage,"cyoa-filter",function() {
 		var config = wiki.getTiddler(filterPage);
-		var text = (config && config.getFieldString("text")) || "[all[]]";
+		var text = (config && config.getFieldString("text")) || "[!tag[Virtual Page]]";
 		return wiki.compileFilter(text);
 	});
 };
+
+function getDisqualifyingTagMap(wiki) {
+	var map = Object.create(null);
+	// All layout tags are disqualifying, because those pages show up elsewhere in the DOM.
+	var layoutTags = wiki.getTiddlersWithTag('$:/tags/cyoa/Layout');
+	for(var index = 0; index < layoutTags.length; index++) {
+		map[layoutTags[index]] = true;
+		
+	}
+	// Types are disqualified too, because they render with other info that shouldn't be in the final file.
+	map["$:/tags/cyoa/Type"] = true;
+	return map;
+}
 
 })();

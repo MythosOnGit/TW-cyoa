@@ -9,14 +9,12 @@ Sets up conditions for a page and widget that has any of the tracking keywords, 
 
 "use strict";
 
-var utils = require("$:/plugins/mythos/cyoa/js/utils.js")
+var logic = require("../logic");
 
 /*
 KEYWORDS
 */
-var other = ["after","before"];
-var touch = ["touch","reset"];
-var trackers = other.concat(touch);
+var trackers = ["after","before", "touch","reset"];
 
 var prettyStrings = {
 	after: "After: ",
@@ -61,40 +59,33 @@ exports.tracks = function(widget) {
 /*
 Snippet methods
 */
-exports["if"] = function(widget) {
-	var array = [];
-	$tw.utils.each(widget.attributes,function(value,attr) {
-		if(other.indexOf(attr) >= 0) {
-			array.push.apply(array,filterAttributes(widget,value,attr));
-		}
-	});
-	return array;
+exports.after = function(widget) {
+	return makeList(widget,'after');
 };
 
-exports["done"] = function(widget,tiddler) {
-	var array = [];
-	// All tracked pages include a "touch" script because they're being touched simply be being loaded.
-	if(widget.page) {
-		var selfTouch = utils.getGroupScript(tiddler.fields.title,"touch",widget.wiki);
-		if(selfTouch) {
-			array.push(selfTouch);
-		}
-	}
-	$tw.utils.each(widget.attributes,function(value,attr) {
-		if(touch.indexOf(attr) >= 0) {
-			array.push.apply(array,filterAttributes(widget,value,attr));
-		}
-	});
-	return array;
+exports.before = function(widget) {
+	return makeList(widget,'before');
 };
 
-/*
-WIDGET TRACKING
-*/
-function filterAttributes(widget,value,attributeName) {
-	var pages = widget.wiki.filterTiddlers(value,widget);
-	for(var i = 0; i < pages.length; i++) {
-		pages[i] = utils.getGroupScript(pages[i],attributeName,widget.wiki);
+exports.touch = function(widget) {
+	return makeList(widget,'touch');
+};
+
+exports.reset = function(widget) {
+	return makeList(widget,'reset');
+};
+
+function makeList(widget,attribute) {
+	var filterStr = widget.attributes[attribute];
+	if(filterStr) {
+		return widget.wiki.filterTiddlers(filterStr,widget).filter(function(title) {
+			var tiddler = widget.wiki.getTiddler(title);
+			if(!tiddler) {
+				throw attribute + " page '" + title + "' does not exist";
+			}
+			logic.rememberTrackedTiddler(widget.wiki,title);
+			return true;
+		});
 	}
-	return pages;
+	return null;
 };

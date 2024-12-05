@@ -12,9 +12,18 @@ describe("groups",function() {
 const utils = require("test/utils.js");
 
 const defaultGroupTiddler = utils.defaultGroup();
+const defaultTitle = defaultGroupTiddler.title;
 
-function test(wiki,expected,group) {
-	expect(Object.keys(wiki.getTiddlersInCyoaGroup(group))).toEqual(expected);
+function getGroupMap(wiki) {
+	var groupMap = Object.create(null);
+	wiki.each(function(tiddler,title) {
+		var group = wiki.getTiddlerCyoaGroup(title);
+		if(group) {
+			groupMap[group] = groupMap[group] || [];
+			groupMap[group].push(title);
+		}
+	});
+	return groupMap;
 };
 
 it("ignores drafts",function() {
@@ -29,8 +38,9 @@ it("ignores drafts",function() {
 		utils.draft({title: "badPtr","cyoa.after": "XXX"}),
 		{title: "XXX"}
 	]);
-	test(wiki,["title"]);
-	test(wiki,["S_title"],"S");
+	var map = getGroupMap(wiki);
+	expect(map[defaultTitle]).toEqual(["title"]);
+	expect(map.S).toEqual(["S_title"]);
 });
 
 it("treats only correctly",function() {
@@ -40,11 +50,10 @@ it("treats only correctly",function() {
 		{title: "A", "cyoa.only": "first"},
 		{title: "B", "cyoa.only": "visited"},
 		{title: "C", "cyoa.only": "never"}]);
-	test(wiki,["A","B"]);
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual(["A","B"]);
 });
 
 it("allows nonexistent page set during wikimethod",function() {
-	// We don't want to issue warnings until we're compiling. So this is silent.
 	const wiki = new $tw.Wiki();
 	wiki.addTiddlers([
 		defaultGroupTiddler,
@@ -52,9 +61,9 @@ it("allows nonexistent page set during wikimethod",function() {
 		{title: "A","cyoa.group": "setA"},
 		{title: "B","cyoa.group": "setB"},
 	]);
-	utils.warnings(spyOn);
-	test(wiki,["A"],"setA");
-	test(wiki,["B"],"setB");
+	var map = getGroupMap(wiki);
+	expect(map.setA).toEqual(["A"]);
+	expect(map.setB).toEqual(["B"]);
 });
 
 it("handles transclusion in widget",function() {
@@ -65,7 +74,7 @@ it("handles transclusion in widget",function() {
 		{title: t},
 		{title: "tt",text: "<$cyoa after={{"+t+"!!title}} />",pointer: t}
 	]);
-	test(wiki,[t]);
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual([t]);
 });
 
 it("handles transclusion in widget using self-reference",function() {
@@ -76,7 +85,21 @@ it("handles transclusion in widget using self-reference",function() {
 		{title: t},
 		{title: "tt",text: "<$cyoa after={{!!pointer}} />",pointer: t}
 	]);
-	test(wiki,[t]);
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual([t]);
+});
+
+it("borrows info from default record if available",function() {
+	const wiki = new $tw.Wiki();
+	wiki.addTiddlers([
+		defaultGroupTiddler,
+		{title: "Always", "cyoa.only": "first"},
+		{title: "Main", text: "<$vars X=After><$cyoa after=<<X>> />"},
+		{title: "After"}
+	]);
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual(["Always"]);
+	utils.testBook([], {wiki: wiki});
+	wiki.commitCyoaGroups();
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual(["After","Always"]);
 });
 
 it("ignores list-before & list-after directives",function() {
@@ -87,7 +110,7 @@ it("ignores list-before & list-after directives",function() {
 		{title: "b","cyoa.group": "S","list-before": "a"},
 		{title: "c","cyoa.group": "S"}
 	]);
-	test(wiki,["a","b","c"],"S");
+	expect(getGroupMap(wiki).S).toEqual(["a","b","c"]);
 });
 
 it("allows non-page tiddlers",function() {
@@ -105,8 +128,9 @@ it("allows non-page tiddlers",function() {
 		{title: "qa","cyoa.group": "Q"},
 		{title: "qb","cyoa.group": "Q",tags: "notpage"},
 	]);
-	test(wiki,["a","c"]);
-	test(wiki,["qa","qb"],"Q");
+	var map = getGroupMap(wiki);
+	expect(map[defaultTitle]).toEqual(["a","c"]);
+	expect(map.Q).toEqual(["qa","qb"]);
 });
 
 it("does not allow non-existent tiddlers",function() {
@@ -116,6 +140,6 @@ it("does not allow non-existent tiddlers",function() {
 		{title: "1","cyoa.after": "zzz"},
 		{title: "2","cyoa.after": "1"},
 	]);
-	test(wiki,["1"]);
+	expect(getGroupMap(wiki)[defaultTitle]).toEqual(["1"]);
 });
 });

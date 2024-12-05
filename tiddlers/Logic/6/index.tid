@@ -1,0 +1,65 @@
+caption: Logic 6: Rules
+cyoa.before: Wanted Smelly Night
+description: Stateless pages that encapsulate concepts from other conditions.
+tags: Logic
+title: Logic6
+tmap.id: 45208c51-d166-48a7-8a8a-d6e9fb4a9713
+type: text/vnd.tiddlywiki
+
+By now, you've seen how to use the tracking of pages to decoratively describe conditions. "This page comes after that". "Page A implies page B". "Only one page in this exclusion group may be true." These are all very powerful, but as your stories become more sophisticated, you may find these become cumbersome, or awkward to use in some cases.
+
+That's where //Rules// come in.
+
+! Rules to encapsulate concepts
+
+For instance, your Sophie the Street Yrchin needs to stay out of public places if:
+
+# she's wanted by the police
+# smelly
+# or if it's not daytime.
+
+Thus, you might have a page check if it's before <<value "Wanted Smelly">> and after <<value Day>>. This works, but the problems is that you may need to repeat these same three constraints for every page where she might enter a public building. And if you ever need to add a fourth reason, you need to add it all over your story.
+
+Instead, let's make a page and call it <<page AllowedInPublic>>. Under the Groups dropdown, which we've largely ignored until now, select <<value rule>> option. Then give it all our relevant constraints. That page's configuration should look like this:
+
+> {{$:/example/Logic6||$:/plugins/mythos/cyoa/ui/EditTemplate}}
+
+Now, in all those pages that need to check whether Sophie the Urchin is allowed in, they need only check to make sure that <<page AllowedInPublic>> is set. In other words, that they come //after// <<page AllowedInPublic>>.
+
+We've just encapsulated the concept of being allowed in public. That page is true if all it's constraints are met, and false otherwise.
+
+This allows us to easily add a fourth reason to why Sophie isn't allowed in public if we need to, and only update a single tiddler. This also provides a means to test if Sophie //isn't// allowed in public by saying that a page or node must come //before// <<page AllowedInPublic>>.
+
+! Rules can depend on other rules
+
+They can nest. For instance, in our Sophie the Street Urchin example. Civic buildings have an extra requirement: Sophie must be dressed business casual.
+
+So we have another rule/page which we call <<page AllowedInGovernment>>. It must come after <<page AllowedInPublic>> and <<page NiceSuit>>. This will work exactly as expected. Both the rule must be true, and the <<page NiceSuit>> page must be visited.
+
+! Rules are stateless
+
+It's important to understand that rules //derive// their state from other pages. They do not have any persistent state themselves. This has a few implications.
+
+!! Rules have no impact on your story's URI
+
+Without state, there's nothing to record, so they correspond to nothing in the URI and are instead calculated internally whenever they're invoked.
+
+This does mean you're able to have rules that can be true even when your story first loads with an empty URI. This is useful so you don't have to set state on your loading page so you can be sure it's true.
+
+For instance. If you have a rule called <<page Human>> which comes before <<page Elf>> and <<page Dwarf>>, so that your character's default race is human if nothing has yet been specified, and you don't have to touch <<page Human>> right away so you can be sure //some// race is set. Much cleaner.
+
+!! Touching and resetting a rule does nothing
+
+As they are stateless, touching and resetting rules does nothing. They're state is always derived from other pages, and it's calculated on the fly.
+
+If you are a programmer, it might help to think of rules less like variables, and more like declarative functions.
+
+!! Only first, and only visited, are meaningless
+
+Visiting a page that is a rule cannot set it to "visited", because it has no state, and it doesn't make sense. So having a rule which depends on whether itself has or has not been visited is recursive meaninglessness.
+
+That's why the "Show Only" part of the CYOA configuration disappears when you set a page to be a rule, and it's replaced with the "Value" field, which we'll explore more in a later tutorial. For now, let's ignore that.
+
+! Demo
+
+There's more to rules, but what we have is already pretty powerful. Here's a quick demo to show off these features: <<demo>>

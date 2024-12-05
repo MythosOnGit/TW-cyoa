@@ -193,23 +193,3 @@ function extractPlaceholder(script,ptr) {
 	}
 	return script.substring(ptr,end-1);
 };
-
-exports.getGroupScript = function(page,keyword,wiki) {
-	var group,
-		tiddler = wiki.getTiddler(page);
-	if(!tiddler) {
-		throw keyword+" page '"+page+"' does not exist";
-	}
-	if(tiddler.hasTag("$:/tags/cyoa/Type")) {
-		group = page;
-		keyword = keyword + "All";
-	} else {
-		group = wiki.getTiddlerCyoaGroup(page);
-	}
-	var module = wiki.getCyoaGroupHandler(group);
-	if(module) {
-		return module[keyword](page);
-	} else {
-		return "";
-	}
-};

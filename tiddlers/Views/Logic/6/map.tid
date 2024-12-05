@@ -1,0 +1,41 @@
+title: $:/plugins/felixhayashi/tiddlymap/graph/views/Logic 6: Rules/map
+type: text/vnd.tiddlywiki
+
+{
+ "995f565a-4439-4745-b48c-e498443bcc44": {
+  "x": -150,
+  "y": 0
+ },
+ "9b218969-3942-4a6b-8107-ebc27174a136": {
+  "x": 0,
+  "y": 0
+ },
+ "17623786-32e9-4f5d-b9ad-73f9704b4cff": {
+  "x": 150,
+  "y": -150
+ },
+ "c2b543ec-c546-4d07-b267-b4d137ee71f0": {
+  "x": 300,
+  "y": 0
+ },
+ "3736c040-2772-45fc-b89d-f0decc3bbfae": {
+  "x": 150,
+  "y": 0
+ },
+ "63849e5b-2bac-4a9a-92d4-dcf11f4ffc41": {
+  "x": 0,
+  "y": -100
+ },
+ "f273f3b0-9bb2-456b-b5fd-39bee60d2e22": {
+  "x": -150,
+  "y": -150
+ },
+ "e223086c-5f46-4dd1-ba8d-9fe7262eca89": {
+  "x": 150,
+  "y": 75
+ },
+ "a3138165-db4d-419d-8603-d459a9642f4b": {
+  "x": 150,
+  "y": -75
+ }
+}

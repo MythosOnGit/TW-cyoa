@@ -5,7 +5,7 @@ type: text/vnd.tiddlywiki
 
 \function serializer.all() [[cyoatype]modules[]moduleproperty[name]addprefix[cyoa]addsuffix[serializer]modules[]]
 \function serializer.for(name) [get[cyoa.type]addprefix[cyoa]addsuffix[serializer]modules[]] :filter[<currentTiddler>moduleproperty[name]match<name>]
-\function serializer.used() [[$:/tags/cyoa/Type]tagging[]] [[$:/plugins/mythos/cyoa/stack]] :map[serializer.for{!!cyoa.serializer}]
+\function serializer.used() [[$:/tags/cyoa/Type]tagging[]] [[$:/plugins/mythos/cyoa/groups/stack]] :map[serializer.for{!!cyoa.serializer}]
 \function serializer.unused() [serializer.all[]] -[serializer.used[]]
 \import [subfilter{$:/core/config/GlobalImportFilter}]
 

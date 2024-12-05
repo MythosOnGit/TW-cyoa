@@ -7,7 +7,7 @@ Tests the cyoa StringArray utility methods.
 
 \*/
 
-const utils = require("cyoa").utils;
+var utils = require("$:/plugins/mythos/cyoa/js/cyoa/utils.js");
 
 function flip(input,delimiter) {
 	delimiter = delimiter || ".";

@@ -14,6 +14,7 @@ const utils = require("test/utils.js");
 it("issues warning if group does not exist",function() {
 	utils.warnings(spyOn);
 	var results = utils.testBook([
+		utils.defaultGroup(),
 		{title: "Main","cyoa.group": "nonexistent", "cyoa.only": "first"},
 		{title: "Other","cyoa.group": "nonexistent", "cyoa.only": "first"}]);
 	expect(utils.warnings()).toHaveBeenCalledWith("Page set 'nonexistent' specified in tiddler 'Main' does not exist.");
@@ -26,7 +27,7 @@ it("uses title for variable if no cyoa.key given",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group(name,"set"),
 		{title: "Main", "cyoa.group": name}]);
-	var state = results.state.serialize(results.cyoa.vars);
+	var state = results.state.serialize();
 	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
@@ -35,7 +36,7 @@ it("uses title for variable if cyoa.key is blank",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group("testGroup","set",{"cyoa.key":""}),
 		{title: "Main", "cyoa.group": "testGroup"}]);
-	var state = results.state.serialize(results.cyoa.vars);
+	var state = results.state.serialize();
 	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
@@ -44,7 +45,7 @@ it("uses title even if caption exists",function() {
 		// The caption field should be ignored for evaluating the variable
 		utils.group("testGroup","set",{caption: "no"}),
 		{title: "Main", "cyoa.group": "testGroup"}]);
-	var state = results.state.serialize(results.cyoa.vars);
+	var state = results.state.serialize();
 	expect(Object.keys(state)).toEqual(["testGroup"]);
 });
 
@@ -54,7 +55,7 @@ it("uses variable field for variable if given",function() {
 	var results = utils.testBook([
 		utils.group(title,"set",{"cyoa.key":variable}),
 		{title: "Main", "cyoa.group": title}]);
-	var state = results.state.serialize(results.cyoa.vars);
+	var state = results.state.serialize();
 	expect(Object.keys(state)).toEqual(["test_Var"]);
 });
 
@@ -64,8 +65,8 @@ it("uses variable field even if it's a reserved word",function() {
 	var results = utils.testBook([
 		utils.group(title,"set",{"cyoa.key":variable}),
 		{title: "Main", "cyoa.group": title}]);
-	var state = results.state.serialize(results.cyoa.vars);
-	expect(Object.keys(state)).toEqual(["_default"]);
+	var state = results.state.serialize();
+	expect(Object.keys(state)).toEqual(["default"]);
 });
 
 it("warns when no handler is passed",function() {
@@ -74,8 +75,8 @@ it("warns when no handler is passed",function() {
 	wiki.addTiddlers([
 		utils.group("testGroup"),
 		{title: "A", "cyoa.group": "testGroup"}]);
-	expect(wiki.getCyoaGroupHandler("testGroup")).toBeUndefined();
-	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: Group 'testGroup' does not specify a group handler.");
+	expect(wiki.commitCyoaGroups()).toBeUndefined();
+	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: Group 'testGroup' does not specify a type.");
 });
 
 it("warns when invalid handler is passed",function() {
@@ -84,8 +85,8 @@ it("warns when invalid handler is passed",function() {
 	wiki.addTiddlers([
 		utils.group("testGroup","invalid"),
 		{title: "A", "cyoa.group": "testGroup"}]);
-	expect(wiki.getCyoaGroupHandler("testGroup")).toBeUndefined();
-	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: Group Handler 'invalid' for group 'testGroup' does not exist.");
+	expect(wiki.commitCyoaGroups()).toBeUndefined();
+	expect(utils.warnings()).toHaveBeenCalledWith("GroupHandler warning: Type 'invalid' for group 'testGroup' does not exist.");
 });
 
 }); //groupHandlers

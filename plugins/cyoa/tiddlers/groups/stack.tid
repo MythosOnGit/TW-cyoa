@@ -1,5 +1,5 @@
 caption: stack
-title: $:/plugins/mythos/cyoa/stack
+title: $:/plugins/mythos/cyoa/groups/stack
 cyoa.type: stack
 cyoa.serializer: string
 

@@ -19,6 +19,12 @@ function Book(document) {
 			this.defaultPage = page;
 		}
 	}
+	var rules = this.document.getElementsByClassName('cyoa-rule');
+	this.rules = Object.create(null);
+	for(var index=0; index < rules.length; index++) {
+		var elem = rules[index];
+		this.rules[elem.id] = this.pages[elem.id] || new Page(this, elem);
+	}
 	this.namedNodes = Object.create(null);
 	// Gets called whenever user clicks link.
 	// Method style (link,event)
@@ -72,6 +78,10 @@ Bp.getStartPage = function() {
 	}
 	// Maybe it should just return the element?
 	return this.getPage(decodeURIComponent(starts[0].id));
+};
+
+Bp.getRule = function(ruleTitle) {
+	return this.rules[ruleTitle];
 };
 
 Bp.getNode = function(nodeTitle) {

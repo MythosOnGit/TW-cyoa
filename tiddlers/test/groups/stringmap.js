@@ -16,13 +16,13 @@ function forEachCodec(jasmineCall) {
 };
 
 function defaultGroup(codec) {
-	return utils.defaultGroup("stringmap",{"cyoa.serializer": codec});
+	return utils.defaultGroup("stringmap",{"cyoa.serializer": codec, "cyoa.key": "output"});
 };
 
 function testBook(expected,tiddlerArray) {
-	var rtn = utils.testBookDefaultVar(tiddlerArray);
-	expect(rtn.results).toEqual(expected);
-	return rtn;
+	var core = utils.testBook(tiddlerArray);
+	expect(core.state.allVisited()).toEqual(expected);
+	return core;
 };
 
 function node(name,implies,attributes) {
@@ -33,36 +33,31 @@ function node(name,implies,attributes) {
 	return fields;
 };
 
-function firstOf(state) {
-	// Just get the first item. There should only be one
-	for(var item in state) {
-		return state[item];
-	}
-};
-
 /////////// UNIT TESTS /////////////
 
 forEachCodec(codec =>
 it(codec + " doesn't use escape characters that URIencode poorly",function() {
-	var encodeSafeChars = ["_","-","!",".","'","(",")","*","~"];
+	var encodeSafeChars = ["!","'","(",")","*","-",".","A B","_","{}","~"];
 	var tiddlers = encodeSafeChars.map(ch => node(ch, null, {tags: 'grouped', "cyoa.only": "first"}));
 	tiddlers.push(
 		defaultGroup(codec),
 		{title: "Main", text: "<$list variable=title filter='[tag[grouped]]'><$cyoa done=`#{$(title)$}=\"expected-$(title)$\"` /><$list>"});
-	var results = testBook(encodeSafeChars, tiddlers);
-	expect(firstOf(results.state)).toContain('expected');
+	var core = testBook(encodeSafeChars, tiddlers);
+	var output = core.state.serialize().output;
+	expect(output).toContain('expected');
 	// Four of those characters must be escaped, but what they're
 	// escaped by should not explode in size when uriEncoded.
-	expect(results.state).not.toContain('%');
+	expect(output).not.toContain('%');
 }));
 
 it("defaults to string codec",function() {
-	var results = testBook(['TestTiddler'],[
-		utils.defaultGroup("stringmap"),
+	var core = testBook(['TestTiddler'],[
+		utils.defaultGroup("stringmap",{"cyoa.key": "output"}),
 		node('TestTiddler'),
 		{title: "Main", "cyoa.do": "#{TestTiddler} = 'TestResult'"}]);
-	expect(firstOf(results.state)).toContain("TestTiddler");
-	expect(firstOf(results.state)).toContain("TestResult");
+	var output = core.state.serialize().output;
+	expect(output).toContain("TestTiddler");
+	expect(output).toContain("TestResult");
 });
 
 forEachCodec(codec =>
@@ -78,7 +73,7 @@ it(codec + " handles mix of set and unset flags",function() {
 
 forEachCodec(codec =>
 it(codec + " supports empty strings",function() {
-	var results = testBook(['Confirm','TestA1','TestA2','TestB1','TestB2'],[
+	var core = testBook(['Confirm','TestA1','TestA2','TestB1','TestB2'],[
 		defaultGroup(codec),
 		node('Confirm'),
 		node('TestA1'),node('TestA2','TestA1'),
@@ -86,7 +81,7 @@ it(codec + " supports empty strings",function() {
 		{title: "Main", text: `
 			<$cyoa do="#{TestA2}=''" touch=TestB2 />
 			<$cyoa do="#{Confirm}='{'+[#{TestA1},#{TestA2},#{TestB1},#{TestB2}].join('+')+'}'" />`}]);
-	expect(firstOf(results.state)).toContain('{+++}');
+	expect(core.state.serialize().output).toContain('{+++}');
 }));
 
 forEachCodec(codec =>
@@ -101,20 +96,20 @@ it(codec + " can reset",function() {
 
 forEachCodec(codec =>
 it(codec + " writes empty string when not set",function() {
-	var results = testBook(["Confirm"],[
+	var core = testBook(["Confirm"],[
 		defaultGroup(codec),
 		node('Confirm'),
 		node('TestA'),node('TestB'),
 		{title: "Main", text: `
-			<$cyoa touch=TestB reset=TestB/>
+			<$cyoa touch=TestB/><$cyoa reset=TestB/>
 			<$cyoa do="#{Confirm} = 'X'+#{TestA}+'X Y'+#{TestB}+'Y'" />`}]);
 	// This should not have "undefined" or "null" sandwiched between those letter pairs.
-	expect(firstOf(results.state)).toContain('XX YY');
+	expect(core.state.serialize().output).toContain('XX YY');
 }));
 
 forEachCodec(codec =>
 it(codec + " supports exclusions",function() {
-	var results = testBook(["Confirm","TestB1","TestB2","TestD1","TestD2"],[
+	var core = testBook(["Confirm","TestB1","TestB2","TestD1","TestD2"],[
 		defaultGroup(codec),
 		node('Confirm'),
 		// We do the test once, first to test manual setting
@@ -130,8 +125,19 @@ it(codec + " supports exclusions",function() {
 		{title: "Main", text: `
 			<$cyoa do="#{TestA2}='Aval',#{TestB2}='Bval'" touch="TestC2 TestD2"/>
 			<$cyoa do="#{Confirm}= '{' + [#{TestA1},#{TestA2},#{TestB1},#{TestB2},#{TestC1},#{TestC2},#{TestD1},#{TestD2}].join('+') + '}'" />`}]);
-	expect(firstOf(results.state)).toContain("{+++Bval++++}");
+	expect(core.state.serialize().output).toContain("{+++Bval++++}");
 
+}));
+
+// This can trip up if we sort keys with sort instead of nsort (1,10,11,2,3...)
+forEachCodec(codec =>
+it(codec + " manages more than ten items",function() {
+	var titles = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+	var tiddlers = titles.map(t => ({title: t, tags: 'group'}));
+	tiddlers.push(
+		{title: "Main", text: "<$cyoa touch='[tag[group]]' />"},
+		defaultGroup(codec));
+	var results = testBook(titles, tiddlers);
 }));
 
 }); //Cyoa map

@@ -2,6 +2,7 @@ list-before: $:/core/ui/EditTemplate/body
 tags: $:/tags/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate
 
+\function subfilter.or.true(filter, title) [<filter>match[]] ~[<title>subfilter<filter>]
 \whitespace trim
 
 <%if [{!!draft.of}!is[system]] %>
@@ -20,7 +21,7 @@ title: $:/plugins/mythos/cyoa/ui/EditTemplate
 
    <$list
      variable="listItem"
-     filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/EditTemplate]!has[draft.of]]" >
+     filter="[all[shadows+tiddlers]tag[$:/tags/cyoa/EditTemplate]!has[draft.of]] :filter[function[subfilter.or.true],{!!filter},<..currentTiddler>]" >
 
     <$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
 

@@ -10,25 +10,6 @@ var utils = require('../utils');
 
 exports.name = 'stringmap';
 
-exports.touch = function(index) {
-	this.assign(index,this.set[index] || '');
-};
-
-function Value(set,index) {
-	this.set = set;
-	this.index = index;
-};
-
-Object.defineProperty(Value.prototype,'val',{
-	get: function() { return this.set.set[this.index] || '';},
-	set: function(value) { this.set.assign(this.index,value);}
-});
-
-// A short-named method for getting a getter/setter for a specific index
-exports.x = function(index) {
-	return new Value(this,index);
-};
-
 exports.is = function(index) {
 	var explicit = this.set[index];
 	if(explicit !== undefined && explicit !== null) {
@@ -45,7 +26,7 @@ exports.is = function(index) {
 	return false;
 };
 
-exports.get = function(index) {
+exports.value = function(index) {
 	return this.set[index] || '';
 };
 
@@ -61,7 +42,11 @@ exports.assign = function(index,string) {
 	}
 };
 
-exports.reset = function(index) {
+exports.touch = function(index) {
+	this.assign(index,this.set[index] || '');
+};
+
+exports.unassign = function(index) {
 	var setPlan = Object.create(null);
 	utils.removeFromTree(setPlan,index,this.data.down);
 	for(var node in setPlan) {

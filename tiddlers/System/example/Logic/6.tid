@@ -1,0 +1,7 @@
+cyoa.after: Day
+cyoa.before: Wanted Smelly
+cyoa.group: $:/plugins/mythos/cyoa/groups/rule
+tags: 
+title: $:/example/Logic6
+tmap.id: c99e5a61-3d9e-4fb4-9d06-aa01230d1d9c
+type: text/vnd.tiddlywiki

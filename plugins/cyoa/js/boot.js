@@ -177,23 +177,19 @@ boot.boot = function(window) {
 		modules.types[type][name] = module;
 	}
 	// Start booting up
-	var Lib = modules.execute("cyoa");
-	var state = new Lib.State();
-	var savers = modules.assignModulesOfType("cyoasaver");
-	var manager = new savers[boot.saver](window);
-	cyoa.core = new Lib.Core(window.document,state,manager);
 	// Assign all those methods to the global cyoa.
 	modules.assignModulesOfType("cyoamethod",cyoa);
 	cyoa.utils = modules.assignModulesOfType("cyoautils");
+	var Lib = modules.execute("cyoa");
+	var book = new Lib.Book(window.document);
+	var state = new Lib.State(cyoa.data, book);
+	var savers = modules.assignModulesOfType("cyoasaver");
+	var manager = new savers[boot.saver](window);
+	cyoa.state = state;
+	cyoa.core = new Lib.Core(window.document, state, manager, book);
 	cyoa.core.cyoa = cyoa; // getting a little wierd here
-	cyoa.book = cyoa.core.book;
+	cyoa.book = book;
 	boot.executeModules();
-	// Create state variables now that groups.js ran
-	cyoa.vars = Object.create(null);
-	for(var variable in cyoa.data) {
-		var dataSet = cyoa.data[variable];
-		state.declare(variable,dataSet.type,dataSet);
-	}
 	// Open the first page
 	cyoa.core.openPage();
 };

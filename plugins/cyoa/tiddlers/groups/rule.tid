@@ -1,0 +1,9 @@
+caption: rule
+cyoa.key: _cyoa_rule
+cyoa.type: rule
+cyoa.serializer: stateless
+tags: $:/tags/cyoa/Type
+title: $:/plugins/mythos/cyoa/groups/rule
+
+Rule pages define rules derived from other pages. They do not have a variable or a type because they are stateless, meaning they do not preserve any state in the URI. They are considered visited if they evaluate true based on their constraints, or whether any visited pages imply them.
+

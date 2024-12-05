@@ -28,9 +28,13 @@ exports.serialize = function(set,data) {
 exports.deserialize = function(string,data) {
 	var set = Object.create(null);
 	var list = utils.parseStringList(string,delimiter);
-	list = list.map(parseFloat);
+	var maxLength = data.tracked.length;
 	for (var index = 0; index < list.length; index++) {
-		utils.addToTree(set,list[index],data.up,data.down,data.exMap);
+		var value = parseFloat(list[index]);
+		// Add it, only if it's in range
+		if(value < maxLength) {
+			utils.addToTree(set,value,data.up,data.down,data.exMap);
+		}
 	}
 	return set;
 };

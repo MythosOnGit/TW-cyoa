@@ -1,0 +1,12 @@
+cyoa.append: Logic6/options
+cyoa.caption: Your hand-me-down sundress.
+cyoa.exclude: Logic6/clothing
+cyoa.only: first
+tags: Logic6/options
+title: Logic6/dress
+tmap.id: a3138165-db4d-419d-8603-d459a9642f4b
+type: text/vnd.tiddlywiki
+
+You put on your pretty sundress. Leftover from when you first rented this apartment, it's transparent and gauzy, and has always made you feel sexy.
+
+However, you are routinely yelled at by your boss for wearing it to work.

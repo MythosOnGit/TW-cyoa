@@ -9,8 +9,6 @@ cyoa:group[] -> Passes all input whose group equals the parameter
 cyoa:getgroup[] -> Returns dominantly-appended list of input tiddlers' groups
 \*/
 
-(function(){
-
 "use strict";
 
 exports.group = function(source,operator,options) {
@@ -33,18 +31,12 @@ exports.group = function(source,operator,options) {
 	return results;
 };
 
-exports["var"] = function(source,operator,options) {
-	var group = (operator && operator.operand) || options.wiki.getCyoaDefaultGroup();
-	var tiddler = options.wiki.getCyoaGroups()[group];
-	return tiddler ? [tiddler.fields.title] : [];
-};
-
 // Internal only: Used to determine the variable a group uses.
 exports.variable = function(source,operator,options) {
 	var results = [];
 	var field = (operator && operator.operand);
 	source(function(tiddler,title) {
-		results.push(options.wiki.getCyoaGroupVariable(title, field));
+		results.push(options.wiki.getCyoaGroupVariable(title,field));
 	});
 	return results;
 };
@@ -59,5 +51,3 @@ exports.getgroup = function(source,operator,options) {
 	});
 	return results;
 };
-
-})();

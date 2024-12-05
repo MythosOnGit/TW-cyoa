@@ -10,13 +10,8 @@ title: $:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node
 	&#32;
 	{{||$:/plugins/mythos/cyoa/templates/exclude-pill}}
 </$list>
-<$list
-	filter="[all[current]listed[cyoa.imply]!is[draft]first[]]"
-	variable="hasChildren">
-	<$list
-		filter="[<showAllChildren>match[yes]] ~[list[!!cyoa.imply]first[]else[]match<parent>]"
-		variable="firstChild"
-		emptyMessage="&#32;...">
+<%if [all[current]listed[cyoa.imply]!is[draft]first[]] %>
+	<%if [<showAllChildren>match[yes]] ~[list[!!cyoa.imply]cyoa.group{!!cyoa.group}first[]else[]match<parent>] %>
 		<ul class="tc-cyoa-imply-list">
 			<$let parent=<<currentTiddler>> >
 				<$list filter="[all[current]listed[cyoa.imply]!is[draft]]">
@@ -24,5 +19,7 @@ title: $:/plugins/mythos/cyoa/ui/TiddlerInfo/PageSet/Node
 				</$list>
 			</$let>
 		</ul>
-	</$list>
-</$list>
+	<%else%>
+		&#32;...
+	<%endif%>
+<%endif%>

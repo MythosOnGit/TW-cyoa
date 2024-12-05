@@ -22,25 +22,17 @@ exports.pop = function(value) {
 	}
 };
 
+exports.unassign = exports.pop;
+
 exports.top = function() {
 	return this.set[this.set.length-1];
-};
-
-exports.x = function(index) {
-	return new Value(this,index);
 };
 
 exports.is = function(index) {
 	return this.top() === index;
 };
 
-exports.get = function(index) {
-	return this.is(index);
-};
-
-exports.reset = function(index) {
-	this.pop(index);
-};
+exports.value = exports.is;
 
 exports.touch = function(index) {
 	this.push(index);
@@ -53,13 +45,3 @@ exports.clear = function() {
 exports.any = function() {
 	return this.set.length > 0;
 };
-
-function Value(stack,index) {
-	this.stack = stack;
-	this.index = index;
-};
-
-Object.defineProperty(Value.prototype,'val',{
-	get: function() { return this.stack.is(this.index);},
-	set: function(value) { this.stack.touch(this.index,value);}
-});

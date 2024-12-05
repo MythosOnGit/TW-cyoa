@@ -1,3 +1,5 @@
-$cyoa.data=<$text text=<<cyoa-data>> />;
-$cyoa.stackVariable="<$transclude tiddler="$:/config/mythos/cyoa/stack">stack</$transclude>";
-$cyoa.data[$cyoa.stackVariable]={type:"stack",encoder:"string"};
+exports.data={
+	groups:<$text text=<<cyoa-data>> />,
+	stackVariable:"<$transclude tiddler="$:/config/mythos/cyoa/stack">stack</$transclude>"
+};
+exports.data.groups[exports.data.stackVariable]={type:"stack",encoder:"string",title:"$:/plugins/mythos/cyoa/groups/stack"};

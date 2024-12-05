@@ -14,6 +14,7 @@ exports.name = 'vlq';
 exports.deserialize = function(string,data) {
 	var vlqNumbers = $cyoa.utils.parseVlqRun(string);
 	var offset = 0;
+	var maxLength = data.tracked.length;
 	var set = Object.create(null);
 	for (var i = 0; i < vlqNumbers.length; i++) {
 		var number = vlqNumbers[i];
@@ -34,8 +35,11 @@ exports.deserialize = function(string,data) {
 			}
 			offset = end;
 		} else {
-			offset += number;
-			utils.addToTree(set,offset,data.up,data.down,data.exMap);
+			offset += number + 4;
+			// Add it, only if it's in range
+			if (offset < maxLength) {
+				utils.addToTree(set,offset,data.up,data.down,data.exMap);
+			}
 			++offset;
 		}
 	}
@@ -70,8 +74,10 @@ exports.serialize = function(set,data) {
 		if(offset < bitRange) {
 			bitMap = 2**offset;
 		} else {
-			vlqNumbers.push(offset);
-			index = offset + 1;
+			// We can snip off a little bit on the number because 0-3 never
+			// occurs. We'd have used a bitrange.
+			vlqNumbers.push(offset-bitRange);
+			index += offset + 1;
 		}
 	}
 	if(bitMap > 0) {

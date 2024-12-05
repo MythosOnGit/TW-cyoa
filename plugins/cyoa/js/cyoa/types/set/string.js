@@ -46,7 +46,9 @@ exports.deserialize = function(string,data) {
 		}
 	}
 	for (var index = 0; index < list.length; index++) {
-		utils.addToTree(set,list[index],data.up,data.down,data.exMap);
+		if (list[index] !== undefined) {
+			utils.addToTree(set,list[index],data.up,data.down,data.exMap);
+		}
 	}
 	return set;
 };

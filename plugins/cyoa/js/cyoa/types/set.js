@@ -14,29 +14,18 @@ exports.is = function(item) {
 	return this.set[item] || false;
 };
 
-exports.get = function(item) {
-	return this.is(item);
-};
+exports.value = exports.is
 
-function Flag(set,index) {
-	this.set = set;
-	this.index = index;
-};
-
-Object.defineProperty(Flag.prototype,'val',{
-	get: function() { return this.set.is(this.index); },
-	set: function(value) { return (value ? this.set.touch(this.index): this.set.reset(this.index)); }
-});
-
-exports.x = function(index) {
-	return new Flag(this,index);
+exports.assign = function(index,trueOrFalse) {
+	return trueOrFalse ? this.touch(index) : this.reset(index);
 };
 
 exports.touch = function(index) {
 	utils.addToTree(this.set,index,this.data.up,this.data.down,this.data.exMap);
+	return true;
 };
 
-exports.reset = function(index) {
+exports.unassign = function(index) {
 	utils.removeFromTree(this.set,index,this.data.down);
 };
 

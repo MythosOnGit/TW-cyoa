@@ -1,5 +1,6 @@
 caption: Show only
 class: only
+filter: [!has[cyoa.group]] ~[get[cyoa.group]!cyoa.type[rule]]
 tags: $:/tags/cyoa/EditTemplate
 title: $:/plugins/mythos/cyoa/ui/EditTemplate/only
 

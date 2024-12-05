@@ -1,7 +1,7 @@
 title: $:/plugins/mythos/cyoa/compile/body
 type: text/vnd.tiddlywiki
 
-\parameters (pagefilter: "[all[tiddlers+shadows]cyoa:page[]] [cyoa:start[]]+[putfirst[]]+[appendsort[]]")
+\parameters (pagefilter: "[all[tiddlers+shadows]cyoa:page[]] [all[tiddlers+shadows]cyoa.group[$:/plugins/mythos/cyoa/groups/rule]] [cyoa:start[]]+[putfirst[]]+[appendsort[]]")
 
 \procedure page-divs()
 \whitespace trim

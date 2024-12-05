@@ -1,0 +1,22 @@
+cyoa.before: Logic6/nope
+cyoa.caption: Leave, now that you're ready.
+list-after: 
+tags: Logic6/options
+title: Logic6/end
+tmap.id: f273f3b0-9bb2-456b-b5fd-39bee60d2e22
+type: text/vnd.tiddlywiki
+
+<<annotate """
+
+This page is available only if <<page Logic6/nope>> is not. This is done by making <<page Logic6/nope>> a rule, and then setting a constraint on this page that it must come before <<page Logic6/nope>>.
+
+The "before" and "after" logic mean different things when testing against rules. It tests whether they're true or not, rather than if they're visited.
+
+When <<page Logic6/nope>> is unavailable, then this page is available.
+""" >>
+
+You depart for work. It will be an ordeal, you may die, so far you haven't had such luck.
+
+You just have to make it through the day.
+
+[[Exit.|Demo]]
